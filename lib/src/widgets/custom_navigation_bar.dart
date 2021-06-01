@@ -17,38 +17,50 @@ class CustomNavigationBar extends StatelessWidget {
       backgroundColor: Color(0xff242B30),
       unselectedItemColor: Colors.grey,
       selectedItemColor: Colors.white,
-      showSelectedLabels: true,
+      showSelectedLabels: false,
       showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.directions_boat,
+          icon: ImageIcon(
+            AssetImage('assets/icons/left_arrow_icon.png'),
           ),
           label: "Ruta",
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.alt_route,
+          icon: ImageIcon(
+            AssetImage('assets/icons/boat_icon.png'),
           ),
-          label: "Progreso",
+          label: "Ruta",
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.account_circle_outlined,
+          icon: ImageIcon(
+            AssetImage('assets/icons/avatar_icon.png'),
           ),
           label: "Perfil",
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.coffee_outlined,
+          icon: ImageIcon(
+            AssetImage('assets/icons/goals_icon.png'),
+          ),
+          label: "Progreso",
+        ),
+        BottomNavigationBarItem(
+          icon: ImageIcon(
+            AssetImage('assets/icons/coffee_icon.png'),
           ),
           label: "Cafe",
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.graphic_eq_outlined,
+          icon: ImageIcon(
+            AssetImage('assets/icons/stats_icon.png'),
           ),
           label: "Stats",
+        ),
+        BottomNavigationBarItem(
+          icon: ImageIcon(
+            AssetImage('assets/icons/right_arrow_icon.png'),
+          ),
+          label: "Ruta",
         ),
       ],
     );
