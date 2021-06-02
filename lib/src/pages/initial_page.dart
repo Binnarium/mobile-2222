@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/src/pages/login_page.dart';
 import 'package:lab_movil_2222/src/widgets/custom_navigation_bar.dart';
 
-class InitialPage extends StatelessWidget {
+class InitialPage extends StatefulWidget {
+  @override
+  _InitialPageState createState() => _InitialPageState();
+}
+
+class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Initial Page'),
+      body: PageView(
+        children: [
+          //TODO: Aquí poner la primera página
+          Center(
+            child: Text("Introduction Page (Jossue)"),
+          ),
+          LoginPage(),
+        ],
       ),
       bottomNavigationBar: CustomNavigationBar(),
     );

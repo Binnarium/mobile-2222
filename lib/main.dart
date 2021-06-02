@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'Korolev'),
         initialRoute: 'initialPage',
         //aquí van las páginas existentes, son las rutas a las páginas (pantallas)
         routes: {
