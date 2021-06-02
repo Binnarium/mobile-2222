@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/src/pages/initial_page.dart';
 import 'package:lab_movil_2222/src/providers/ui_bottomBar_provider.dart';
+import 'package:lab_movil_2222/src/themes/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Korolev'),
+        theme: ThemeData(fontFamily: 'Korolev', textTheme: korolevFont),
         initialRoute: 'initialPage',
         //aquí van las páginas existentes, son las rutas a las páginas (pantallas)
         routes: {

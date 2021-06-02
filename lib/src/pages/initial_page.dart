@@ -15,7 +15,13 @@ class _InitialPageState extends State<InitialPage> {
         children: [
           //TODO: Aquí poner la primera página
           Center(
-            child: Text("Introduction Page (Jossue)"),
+            child: Text(
+              "Introduction Page (Jossue)",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  ?.apply(color: Colors.black),
+            ),
           ),
           LoginPage(),
         ],
