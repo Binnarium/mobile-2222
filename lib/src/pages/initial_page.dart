@@ -18,7 +18,6 @@ class _InitialPageState extends State<InitialPage> {
           LoginPage(),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }

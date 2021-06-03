@@ -24,7 +24,7 @@ class CustomNavigationBar extends StatelessWidget {
           icon: ImageIcon(
             AssetImage('assets/icons/left_arrow_icon.png'),
           ),
-          label: "Ruta",
+          label: "",
         ),
         BottomNavigationBarItem(
           icon: ImageIcon(
@@ -60,7 +60,7 @@ class CustomNavigationBar extends StatelessWidget {
           icon: ImageIcon(
             AssetImage('assets/icons/right_arrow_icon.png'),
           ),
-          label: "Ruta",
+          label: "",
         ),
       ],
     );

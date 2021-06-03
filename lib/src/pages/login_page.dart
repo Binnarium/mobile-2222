@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/src/widgets/background_widget.dart';
 
 class LoginPage extends StatelessWidget {
+  //página de login donde pide usuario y contraseña
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    //safeArea para dispositivos con pantalla notch
     return SafeArea(
       child: Scaffold(
+        //Stack para apilar el background y luego el cuerpo de la pantalla
         body: Stack(
           children: [
-            _background(),
+            //Container del color rojo
+            BackgroundWidget(
+              backgroundColor: Color(0xffD52027),
+            ),
+            //contiene todo el cuerpo de la pantalla, se envía el size y el context
+            //para poder controlar varios tamaños de dispositivos y controlar
+            //la fuente
             _loginBody(size, context),
           ],
         ),
@@ -16,20 +26,15 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _background() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Color(0xffD52027),
-    );
-  }
-
+  //Cuerpo de la pantalla
   _loginBody(Size size, BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
+          //logo de 2222
           _logo(size),
           SizedBox(height: size.height * 0.05),
+          //texto inicial
           Text(
             'LOREM IPSUM VIAJE',
             style: Theme.of(context).textTheme.headline5,
@@ -40,6 +45,7 @@ class LoginPage extends StatelessWidget {
           SizedBox(height: size.height * 0.05),
           _video(),
           SizedBox(height: size.height * 0.1),
+          //formulario (falta aplicar backend)
           _loginForm(context),
         ],
       ),
@@ -54,6 +60,7 @@ class LoginPage extends StatelessWidget {
         image: AssetImage(
           'assets/backgrounds/logo_background2.png',
         ),
+        filterQuality: FilterQuality.high,
       ),
       padding: EdgeInsets.only(
         top: size.height * 0.05,
@@ -61,6 +68,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  //Párrafo de descripción
   _descriptionText(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -74,6 +82,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  //Vídeo que actualmente está como NetworkImage
   _video() {
     return Container(
       width: double.infinity,
@@ -87,6 +96,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  //Formulario de login
   _loginForm(BuildContext context) {
     return Container(
       child: Column(
@@ -137,6 +147,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  //campo de usuario
   _userField(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40),
@@ -165,6 +176,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  //campo de contraseña
   _passwordField(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40),
