@@ -10,6 +10,7 @@ class IntroductionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //tamaño de la pantalla
     final size = MediaQuery.of(context).size;
+    
     return Scaffold(
       //creando pantalla introductoria
       body: Stack(
@@ -17,7 +18,7 @@ class IntroductionPage extends StatelessWidget {
           //llamando al background
           _background(),
           //llamando al widget del arco
-          _descriptionPageBody(),
+          _arcContainer(),
           //llamando al cuerpo
           _introductionBody(size),
         ],
@@ -37,8 +38,15 @@ class IntroductionPage extends StatelessWidget {
   //Creando el cuerpo
   _introductionBody(Size size) {
     //Creando el Scroll
+    var spacedSize = size.height*0.14;
+    var daysLeftSize = size.height*0.001;
+    if(size.height<550){
+      spacedSize = size.height*0.08;
+      daysLeftSize = size.height*0.0014;
+    }
     return Column(
       children: [
+        SizedBox(height: size.height * 0.03),
         //llamando el logo introductorio
         _logoIntro(size),
         //creando el espaciado necesario
@@ -46,19 +54,19 @@ class IntroductionPage extends StatelessWidget {
         //llamando el logo UTPL pantalla inicial
         _logoUtpl(size),
         //creando el espaciado necesario
-        SizedBox(height: size.height * 0.139),
+        SizedBox(height: spacedSize),
+        
         //Texto cambiar por funcionalidad de cuenta de días
         Text(
           'FALTAN',
-          style: korolevFont.headline6
-          
+          style: korolevFont.headline6?.apply(fontSizeFactor: size.height*0.001)  
           
         ),
         SizedBox(height: size.height * 0.01),
         //Texto cambiar por funcionalidad de cuenta de días
         Text(
           '56 DÍAS',
-          style: korolevFont.headline3
+          style: korolevFont.headline3?.apply(fontSizeFactor: daysLeftSize)
 
           
         ),
@@ -66,7 +74,7 @@ class IntroductionPage extends StatelessWidget {
         SizedBox(height: size.height * 0.005),
         Text(
           'PARA ACABAR EL VIAJE',
-          style: korolevFont.headline6
+          style: korolevFont.headline6?.apply(fontSizeFactor: size.height*0.001)
         ),
         
         
@@ -85,9 +93,10 @@ class IntroductionPage extends StatelessWidget {
         image: AssetImage(
           'assets/backgrounds/logo_background1.png',
         ),
+        filterQuality: FilterQuality.high,
       ),
       padding: EdgeInsets.only(
-        top: size.height * 0.05,
+        top: size.height * 0.04,
       ),
     );
   }
@@ -108,7 +117,7 @@ class IntroductionPage extends StatelessWidget {
   }
 }
   //widget que contiene el arco
-  _descriptionPageBody() {
+  _arcContainer() {
     return Container(
         width: double.infinity,
         height: double.infinity,
@@ -118,17 +127,25 @@ class IntroductionPage extends StatelessWidget {
   }
   //Creando arco pagina introductoria
   class _ArcPainter extends CustomPainter {
+    
     @override
     void paint(Canvas canvas, Size size) {
+      var uno = size.width*0.69;
+      var dos = size.height*0.33;
+      if(size.height<550){
+        uno = size.height*0.45;
+        dos = size.width*0.63;
+      }
+      
       var paint1 = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
     canvas.drawArc(
       Rect.fromCenter(
-        center: Offset(size.width/2, size.height*1.05),
-        height: size.height*0.5,
-        width: size.width*0.9,
+        center: Offset(size.width/2, size.height),
+        height: dos,
+        width: uno,
       ),
       pi,
       pi,
