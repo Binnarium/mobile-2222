@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/src/themes/theme.dart';
 
 class IntroductionPage extends StatelessWidget {
   
@@ -13,6 +16,8 @@ class IntroductionPage extends StatelessWidget {
         children: [
           //llamando al background
           _background(),
+          //llamando al widget del arco
+          _descriptionPageBody(),
           //llamando al cuerpo
           _introductionBody(size),
         ],
@@ -32,49 +37,42 @@ class IntroductionPage extends StatelessWidget {
   //Creando el cuerpo
   _introductionBody(Size size) {
     //Creando el Scroll
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          //llamando el logo introductorio
-          _logoIntro(size),
-          //creando el espaciado necesario
-          SizedBox(height: size.height * 0.01),
-          //llamando el logo UTPL pantalla inicial
-          _logoUtpl(size),
-          //creando el espaciado necesario
-          SizedBox(height: size.height * 0.14),
-          //Texto cambiar por funcionalidad de cuenta de días
-          Text(
-            'FALTAN',
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Korolev',
-                fontWeight: FontWeight.w500,
-                fontSize: 25),
-          ),
-          //Texto cambiar por funcionalidad de cuenta de días
-          Text(
-            '56 DÍAS',
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Korolev',
-                fontWeight: FontWeight.w500,
-                fontSize: 32),
-          ),
-          //Texto cambiar por funcionalidad de cuenta de días
-          Text(
-            'PARA ACABAR EL VIAJE',
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Korolev',
-                fontWeight: FontWeight.w500,
-                fontSize: 25),
-          ),
-          SizedBox(height: size.height * 0.05),
+    return Column(
+      children: [
+        //llamando el logo introductorio
+        _logoIntro(size),
+        //creando el espaciado necesario
+        SizedBox(height: size.height * 0.03),
+        //llamando el logo UTPL pantalla inicial
+        _logoUtpl(size),
+        //creando el espaciado necesario
+        SizedBox(height: size.height * 0.139),
+        //Texto cambiar por funcionalidad de cuenta de días
+        Text(
+          'FALTAN',
+          style: korolevFont.headline6
           
-        ],
-      ),
+          
+        ),
+        SizedBox(height: size.height * 0.01),
+        //Texto cambiar por funcionalidad de cuenta de días
+        Text(
+          '56 DÍAS',
+          style: korolevFont.headline3
+
+          
+        ),
+        //Texto cambiar por funcionalidad de cuenta de días
+        SizedBox(height: size.height * 0.005),
+        Text(
+          'PARA ACABAR EL VIAJE',
+          style: korolevFont.headline6
+        ),
+        
+        
+      ],
     );
+    
     
   }
   //Creando logo introductorio
@@ -97,7 +95,7 @@ class IntroductionPage extends StatelessWidget {
   _logoUtpl(Size size) {
     return Container(
       width: double.infinity,
-      height: size.height * 0.2,
+      height: size.height * 0.17,
       child: Image(
         image: AssetImage(
           'assets/backgrounds/logo_utpl1.png',
@@ -109,4 +107,39 @@ class IntroductionPage extends StatelessWidget {
     );
   }
 }
+  //widget que contiene el arco
+  _descriptionPageBody() {
+    return Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: CustomPaint(
+          painter: _ArcPainter(),
+        ));
+  }
+  //Creando arco pagina introductoria
+  class _ArcPainter extends CustomPainter {
+    @override
+    void paint(Canvas canvas, Size size) {
+      var paint1 = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    canvas.drawArc(
+      Rect.fromCenter(
+        center: Offset(size.width/2, size.height*1.05),
+        height: size.height*0.5,
+        width: size.width*0.9,
+      ),
+      pi,
+      pi,
+      false,
+      paint1,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  }
+
+
 
