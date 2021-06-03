@@ -34,15 +34,15 @@ class CustomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: ImageIcon(
-            AssetImage('assets/icons/avatar_icon.png'),
-          ),
-          label: "Perfil",
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(
             AssetImage('assets/icons/goals_icon.png'),
           ),
           label: "Progreso",
+        ),
+        BottomNavigationBarItem(
+          icon: ImageIcon(
+            AssetImage('assets/icons/avatar_icon.png'),
+          ),
+          label: "Perfil",
         ),
         BottomNavigationBarItem(
           icon: ImageIcon(
