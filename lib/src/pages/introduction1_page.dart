@@ -8,6 +8,7 @@ class IntroductionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //tamaño de la pantalla
     final size = MediaQuery.of(context).size;
+    print('${size}');
 
     return Scaffold(
       //creando pantalla introductoria
@@ -38,11 +39,15 @@ class IntroductionPage extends StatelessWidget {
   //Creando el cuerpo
   _introductionBody(Size size) {
     //Creando el Scroll
-    var spacedSize = size.height * 0.14;
-    var daysLeftSize = size.height * 0.001;
+    double spacedSize = size.height * 0.14;
+    double daysLeftSize = size.height * 0.001;
     if (size.height < 550) {
       spacedSize = size.height * 0.08;
       daysLeftSize = size.height * 0.0014;
+    }
+    if (size.height < 650) {
+      spacedSize = size.height * 0.1;
+      daysLeftSize = size.height * 0.001;
     }
     return Column(
       children: [
@@ -122,22 +127,26 @@ _arcContainer() {
 class _ArcPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    var uno = size.width * 0.69;
-    var dos = size.height * 0.33;
+    double arcWidth = size.width * 0.69;
+    double arcHeight = size.height * 0.33;
     if (size.height < 550) {
-      uno = size.height * 0.45;
-      dos = size.width * 0.63;
+      arcWidth = size.height * 0.45;
+      arcHeight = size.width * 0.63;
+    }
+    if (size.height < 650) {
+      arcWidth = size.height * 0.45;
+      arcHeight = size.width * 0.68;
     }
 
-    var paint1 = Paint()
+    Paint paint1 = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
     canvas.drawArc(
       Rect.fromCenter(
         center: Offset(size.width / 2, size.height),
-        height: dos,
-        width: uno,
+        height: arcHeight,
+        width: arcWidth,
       ),
       pi,
       pi,
