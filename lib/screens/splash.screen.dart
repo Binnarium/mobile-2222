@@ -1,15 +1,38 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/src/themes/theme.dart';
+import 'package:lab_movil_2222/screens/login.screen.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/themes/theme.dart';
 
-class IntroductionPage extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  static const String route = '/splash';
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      Duration(seconds: 5),
+      () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) {
+            return LoginScreen();
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //tamaño de la pantalla
     final size = MediaQuery.of(context).size;
-    print('${size}');
-
     return Scaffold(
       //creando pantalla introductoria
       body: Stack(
@@ -25,18 +48,16 @@ class IntroductionPage extends StatelessWidget {
     );
   }
 
-  //Creando el background
   _background() {
     return Container(
       //largo y ancho
       width: double.infinity,
       height: double.infinity,
       //Color fondo de pantalla principal
-      color: Color(0xffD52027),
+      color: ColorsApp.backgroundRed,
     );
   }
 
-  //Creando el cuerpo
   _introductionBody(Size size) {
     //Creando el Scroll
     double spacedSize = size.height * 0.14;
@@ -78,7 +99,6 @@ class IntroductionPage extends StatelessWidget {
     );
   }
 
-  //Creando logo introductorio
   _logoIntro(Size size) {
     return Container(
       //largo y ancho del logo dentro
@@ -96,7 +116,6 @@ class IntroductionPage extends StatelessWidget {
     );
   }
 
-  //Creando logo UTPL pantalla introductoria
   _logoUtpl(Size size) {
     return Container(
       width: double.infinity,

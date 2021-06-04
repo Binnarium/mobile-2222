@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/src/providers/ui_bottomBar_provider.dart';
+import 'package:lab_movil_2222/providers/ui_bottomBar_provider.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomNavigationBar extends StatelessWidget {
       onTap: (int i) => uiProvider.selectedMenuOption = i,
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
-      backgroundColor: Color(0xff242B30),
+      backgroundColor: ColorsApp.backgroundBottomBar,
       unselectedItemColor: Colors.grey,
       selectedItemColor: Colors.white,
       showSelectedLabels: false,

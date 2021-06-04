@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/src/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
+  static const String route = '/login';
   //página de login donde pide usuario y contraseña
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class LoginPage extends StatelessWidget {
           children: [
             //Container del color rojo
             BackgroundWidget(
-              backgroundColor: Color(0xffD52027),
+              backgroundColor: ColorsApp.backgroundRed,
             ),
             //contiene todo el cuerpo de la pantalla, se envía el size y el context
             //para poder controlar varios tamaños de dispositivos y controlar
