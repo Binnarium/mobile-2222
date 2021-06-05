@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ClubHouseScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class ClubHouseScreen extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }

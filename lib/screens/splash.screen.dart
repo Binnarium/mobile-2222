@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/home.screen.dart';
-import 'package:lab_movil_2222/screens/login.screen.dart';
-import 'package:lab_movil_2222/screens/stage_screen.dart';
+import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -24,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
-            return StageScreen();
+            return RouteScreen();
           },
         ),
       ),

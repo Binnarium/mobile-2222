@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UIBottomBarProvider extends ChangeNotifier {
-  int _selectedMenuOption = 1;
+  int _selectedMenuOption = 0;
   bool _isInitialPage = false;
   bool _isFinalPage = false;
 

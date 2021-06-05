@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/providers/ui_bottomBar_provider.dart';
 import 'package:lab_movil_2222/screens/account.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:provider/provider.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   //BottomBar que va en todas las pantallas
@@ -23,21 +25,23 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   ];
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
+    final uiProvider = Provider.of<UIBottomBarProvider>(context);
+    final currentIndex = uiProvider.selectedMenuOption;
     //Controla cuando se presione un botón
     void _onItemTapped(int value) {
       setState(() {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return pages.elementAt(_selectedIndex);
+        uiProvider.selectedMenuOption = value;
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return pages.elementAt(value);
         }));
-        _selectedIndex = value;
       });
     }
 
     return BottomNavigationBar(
       onTap: _onItemTapped,
       type: BottomNavigationBarType.fixed,
-      currentIndex: _selectedIndex,
+      currentIndex: currentIndex,
       backgroundColor: ColorsApp.backgroundBottomBar,
       unselectedItemColor: Colors.grey,
       selectedItemColor: Colors.white,

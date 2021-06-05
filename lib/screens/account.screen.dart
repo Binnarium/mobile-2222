@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class AccountScreen extends StatelessWidget {
   static const String route = '/account';
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
           BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
           Center(
@@ -15,6 +16,7 @@ class AccountScreen extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }
