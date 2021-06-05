@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -31,6 +30,7 @@ class StageTitleScreen extends StatelessWidget {
             BackgroundWidget(backgroundColor: ColorsApp.backgroundOrange),
             _backgroundDecoration(size),
             _routeCurve(size),
+            _logoLeaf(size),
             _introductionBody(size),
           ],
         ),
@@ -82,7 +82,7 @@ class StageTitleScreen extends StatelessWidget {
       height: size.height * 0.35,
       child: Image(
         image: AssetImage(
-          'assets/backgrounds/black_icon_container.png',
+          'assets/backgrounds/decorations/black_icon_container.png',
         ),
         filterQuality: FilterQuality.high,
       ),
@@ -99,7 +99,7 @@ class StageTitleScreen extends StatelessWidget {
       height: size.height,
       child: Image(
         image: AssetImage(
-          'assets/backgrounds/background_decoration1.png',
+          'assets/backgrounds/decorations/background_decoration1.png',
         ),
       ),
     );
@@ -112,8 +112,29 @@ class StageTitleScreen extends StatelessWidget {
       height: size.height,
       child: Image(
         image: AssetImage(
-          'assets/backgrounds/white_route_curve_background.png',
+          'assets/backgrounds/decorations/white_route_curve_background.png',
+          
         ),
+        color: Color.fromRGBO(255, 255, 255, 100),
+        
+        
+      ),
+    );
+  }
+
+  _logoLeaf(Size size) {
+    return Container(
+      alignment: Alignment.topLeft,
+      width: size.width,
+      height: size.height,
+      child: Image(
+        image: AssetImage(
+          'assets/backgrounds/decorations/logo_leaf.png',
+          
+        ),
+        
+        
+        
       ),
     );
   }
