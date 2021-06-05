@@ -6,13 +6,15 @@ class StatisticsScreen extends StatelessWidget {
   static const String route = '/stats';
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
-        Center(
-          child: Text('Statistics Page'),
-        ),
-      ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
+          Center(
+            child: Text('Statistics Page'),
+          ),
+        ],
+      ),
     );
   }
 }

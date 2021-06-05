@@ -6,13 +6,15 @@ class ClubHouseScreen extends StatelessWidget {
   static const String route = '/clubhouse';
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
-        Center(
-          child: Text('ClubHouse Page'),
-        ),
-      ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
+          Center(
+            child: Text('ClubHouse Page'),
+          ),
+        ],
+      ),
     );
   }
 }

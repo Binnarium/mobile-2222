@@ -6,13 +6,15 @@ class RouteScreen extends StatelessWidget {
   static const String route = '/route';
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
-        Center(
-          child: Text('Route Page'),
-        ),
-      ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
+          Center(
+            child: Text('Route Page'),
+          ),
+        ],
+      ),
     );
   }
 }

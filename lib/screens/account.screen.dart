@@ -6,8 +6,8 @@ class AccountScreen extends StatelessWidget {
   static const String route = '/account';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return Center(
+      child: Stack(
         children: [
           BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
           Center(

@@ -6,13 +6,15 @@ class GoalsScreen extends StatelessWidget {
   static const String route = '/goals';
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
-        Center(
-          child: Text('Goals Page'),
-        ),
-      ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
+          Center(
+            child: Text('Goals Page'),
+          ),
+        ],
+      ),
     );
   }
 }

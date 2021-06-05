@@ -4,11 +4,12 @@ import 'package:lab_movil_2222/providers/ui_bottomBar_provider.dart';
 import 'package:lab_movil_2222/screens/account.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
+import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
-import 'package:lab_movil_2222/themes/theme.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         initialRoute: SplashScreen.route,
         //aquí van las páginas existentes, son las rutas a las páginas (pantallas)
         routes: {
+          HomeScreen.route: (BuildContext context) => HomeScreen(),
           SplashScreen.route: (BuildContext context) => SplashScreen(),
           AccountScreen.route: (BuildContext context) => AccountScreen(),
           LoginScreen.route: (BuildContext context) => LoginScreen(),

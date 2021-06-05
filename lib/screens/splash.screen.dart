@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/theme.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String route = '/splash';
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
-            return LoginScreen();
+            return HomeScreen();
           },
         ),
       ),
