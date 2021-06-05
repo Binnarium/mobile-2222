@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
+import 'package:lab_movil_2222/screens/stage_screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -19,11 +20,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 5),
+      Duration(seconds: 2),
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return StageScreen();
           },
         ),
       ),
@@ -61,15 +62,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _introductionBody(Size size) {
     //Creando el Scroll
-    double spacedSize = size.height * 0.14;
-    double daysLeftSize = size.height * 0.001;
+    double spacedSize = size.height * 0.165;
+    double daysLeftSize = size.height * 0.0011;
     if (size.height < 550) {
-      spacedSize = size.height * 0.08;
+      spacedSize = size.height * 0.19;
       daysLeftSize = size.height * 0.0014;
     }
     if (size.height < 650) {
-      spacedSize = size.height * 0.1;
-      daysLeftSize = size.height * 0.001;
+      spacedSize = size.height * 0.125;
+      daysLeftSize = size.height * 0.0011;
     }
     return Column(
       children: [
@@ -77,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
         //llamando el logo introductorio
         _logoIntro(size),
         //creando el espaciado necesario
-        SizedBox(height: size.height * 0.03),
+        SizedBox(height: size.height * 0.06),
         //llamando el logo UTPL pantalla inicial
         _logoUtpl(size),
         //creando el espaciado necesario
