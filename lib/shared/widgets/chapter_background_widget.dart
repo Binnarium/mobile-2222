@@ -4,8 +4,9 @@ import 'package:lab_movil_2222/themes/colors.dart';
 
 class ChapterBackgroundWidget extends StatelessWidget {
   final Color backgroundColor;
+  final Container? relieve;
 
-  const ChapterBackgroundWidget({required this.backgroundColor});
+  ChapterBackgroundWidget({required this.backgroundColor, this.relieve});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
       child: Stack(
         children: [
           BackgroundWidget(backgroundColor: ColorsApp.backgroundOrange),
+          _relieve(),
           _logoLeaf(),
         ],
       ),
@@ -30,5 +32,13 @@ class ChapterBackgroundWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _relieve() {
+    if (relieve == null) {
+      return Container();
+    } else {
+      return relieve;
+    }
   }
 }
