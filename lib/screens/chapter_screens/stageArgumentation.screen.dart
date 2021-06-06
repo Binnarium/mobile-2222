@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'dart:math' as math;
-
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageArgumentationScreen extends StatelessWidget {
   @override
@@ -46,10 +45,45 @@ class StageArgumentationScreen extends StatelessWidget {
   _backgroundDecoration(Size size) {
     return Stack(children: [
       _ghostImage(size),
-      _ideasImage(size),
-      _textIdea1(size),
-      _textIdea2(size),
-      _textIdea3(size),
+      Positioned(
+        top: size.height * 0.13,
+        left: size.width * 0.2,
+        child: IdeaContainerWidget(
+          text:
+              '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
+          width: size.width * 0.36,
+          height: size.height * 0.26,
+          // rotation: Matrix4.identity()
+          //   //matriz de perspectiva
+          //   ..setEntry(3, 2, 0.001)
+          //   //con esto se rota por el eje x
+          //   ..rotateX(0)
+          //   //se rota eje y
+          //   ..rotateY(0),
+        ),
+      ),
+      Positioned(
+        top: size.height * 0.3,
+        left: size.width * 0.02,
+        child: IdeaContainerWidget(
+          text:
+              '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
+          width: size.width * 0.35,
+          height: size.height * 0.25,
+          isTopRight: true,
+        ),
+      ),
+      Positioned(
+        top: size.height * 0.23,
+        left: size.width * 0.6,
+        child: IdeaContainerWidget(
+          text:
+              '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
+          width: size.width * 0.35,
+          height: size.height * 0.25,
+          isTopLeft: true,
+        ),
+      ),
     ]);
   }
 
@@ -87,74 +121,6 @@ class StageArgumentationScreen extends StatelessWidget {
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/Phasm_background_decoration.png',
-        ),
-      ),
-    );
-  }
-
-  _ideasImage(Size size) {
-    return Container(
-      padding: EdgeInsets.only(
-          top: size.height * 0.18,
-          left: size.width * 0.03,
-          right: size.width * 0.1),
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/ideas_background_decoration.png',
-        ),
-      ),
-    );
-  }
-
-  _textIdea1(Size size) {
-    return Positioned(
-      //Para dispositivos con resolución menor a (360,640)
-      top: size.height * 0.22,
-      left: size.width * 0.23,
-      child: Container(
-        width: size.width * 0.28,
-        height: size.height * 0.12,
-        child: Text(
-          '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          style: korolevFont.bodyText2
-              ?.apply(color: Colors.black, fontSizeFactor: 0.8),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  _textIdea2(Size size) {
-    return Positioned(
-      //Para dispositivos con resolución menor a (360,640)
-      top: size.height * 0.37,
-      left: size.width * 0.05,
-      child: Container(
-        width: size.width * 0.28,
-        height: size.height * 0.12,
-        child: Text(
-          '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          style: korolevFont.bodyText2
-              ?.apply(color: Colors.black, fontSizeFactor: 0.8),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  _textIdea3(Size size) {
-    return Positioned(
-      //Para dispositivos con resolución menor a (360,640)
-      top: size.height * 0.275,
-      left: size.width * 0.61,
-      child: Container(
-        width: size.width * 0.28,
-        height: size.height * 0.12,
-        child: Text(
-          '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          style: korolevFont.bodyText2
-              ?.apply(color: Colors.black, fontSizeFactor: 0.8),
-          textAlign: TextAlign.center,
         ),
       ),
     );
