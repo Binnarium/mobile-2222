@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -113,11 +113,8 @@ class StageTitleScreen extends StatelessWidget {
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/white_route_curve_background.png',
-          
         ),
         color: Color.fromRGBO(255, 255, 255, 100),
-        
-        
       ),
     );
   }
@@ -130,11 +127,7 @@ class StageTitleScreen extends StatelessWidget {
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/logo_leaf.png',
-          
         ),
-        
-        
-        
       ),
     );
   }
