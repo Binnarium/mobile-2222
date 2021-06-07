@@ -123,7 +123,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
         width: containerWidth,
         height: containerHeight,
         child: Text('AZTLÁN',
-            style: korolevFont.headline4?.apply(fontWeightDelta: 2),
+            style: korolevFont.headline6?.apply(fontSizeFactor: 1.5),
             textAlign: TextAlign.right),
       ),
     );
