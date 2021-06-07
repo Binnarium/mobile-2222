@@ -14,10 +14,10 @@ class StageTitleScreen extends StatelessWidget {
     return Scaffold(
       body: GestureDetector(
         onPanUpdate: (details) {
-          if (details.delta.dx > 0) {
+          if (details.delta.dx > 5) {
             Navigator.pop(context);
           }
-          if (details.delta.dx < 0) {
+          if (details.delta.dx < -5) {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               print('se movió a la derecha');
               return StageIntroductionScreen();
@@ -26,11 +26,11 @@ class StageTitleScreen extends StatelessWidget {
         },
         child: Stack(
           alignment: Alignment.center,
-          children: [
+          children: [  
             BackgroundWidget(backgroundColor: ColorsApp.backgroundOrange),
-            _backgroundDecoration(size),
-            _routeCurve(size),
-            _logoLeaf(size),
+            _backgroundDecoration(),
+            _routeCurve(),
+            _logoLeaf(),
             _introductionBody(size),
           ],
         ),
@@ -92,11 +92,11 @@ class StageTitleScreen extends StatelessWidget {
     );
   }
 
-  _backgroundDecoration(size) {
+  _backgroundDecoration() {
     return Container(
       alignment: Alignment.bottomCenter,
-      width: size.width,
-      height: size.height,
+      width: double.infinity,
+      height: double.infinity,
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/background_decoration1.png',
@@ -105,11 +105,11 @@ class StageTitleScreen extends StatelessWidget {
     );
   }
 
-  _routeCurve(size) {
+  _routeCurve() {
     return Container(
       alignment: Alignment.bottomCenter,
-      width: size.width,
-      height: size.height,
+      width: double.infinity,
+      height: double.infinity,
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/white_route_curve_background.png',
@@ -118,12 +118,13 @@ class StageTitleScreen extends StatelessWidget {
       ),
     );
   }
+  
 
-  _logoLeaf(Size size) {
+  _logoLeaf() {
     return Container(
       alignment: Alignment.topLeft,
-      width: size.width,
-      height: size.height,
+      width: double.infinity,
+      height: double.infinity,
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/logo_leaf.png',
