@@ -99,7 +99,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
 
     return Positioned(
       top: parentWidth * 0.05,
-      right: parentHeight * 1.1,
+      right: parentHeight * 1,
       child: Container(
         width: containerWidth,
         height: containerHeight,
@@ -115,10 +115,10 @@ class ChapterBackgroundWidget extends StatelessWidget {
     //Creando el Scroll
     double containerWidth = parentWidth * 0.7;
     double containerHeight = parentHeight * 0.4;
-
+    
     return Positioned(
       top: parentWidth * 0.15,
-      right: parentHeight * 1.1,
+      right: parentHeight * 1,
       child: Container(
         width: containerWidth,
         height: containerHeight,

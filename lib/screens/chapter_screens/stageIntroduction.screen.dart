@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
-import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
@@ -24,14 +24,12 @@ class StageIntroductionScreen extends StatelessWidget {
         },
         child: Stack(
           children: [
-            BackgroundWidget(backgroundColor: ColorsApp.backgroundOrange),
-            _backgroundDecoration(),
+            ChapterBackgroundWidget(
+                backgroundColor: ColorsApp.backgroundOrange,
+                relieve: _backgroundDecoration(),
+                hasBanner: true,
+            ),
             _routeCurve(),
-            _logoLeaf(),
-            _logoContainer(size),
-
-            _numberStage(size),
-            _titleStage(size),
             _stageBody(size),
           ],
         ),
@@ -39,87 +37,6 @@ class StageIntroductionScreen extends StatelessWidget {
       bottomNavigationBar: CustomNavigationBar(),
     );
   }
-   _numberStage(Size size) {
-    //Creando el Scroll
-    double containerWidth = size.height*0.094;
-    double containerHeight = size.height*0.035;
-    double marginLeft= size.width*0.58;
-    double marginTop= size.width*0.09;
-    double fontSize = size.height * 0.00051;
-    // if (size.height < 550) {
-    //   containerWidth = size.height * 0.19;
-    //   containerHeight = size.height * 0.0014;
-    // }
-    // if (size.height < 650) {
-    //   containerWidth = size.height * 0.125;
-    //   containerHeight = size.height * 0.001;
-    // }
-    return Container(
-      width: containerWidth,
-      height: containerHeight,
-      margin: EdgeInsets.only(left: marginLeft,top: marginTop),     
-  //     decoration: BoxDecoration(
-  //   border: Border.all(color: Colors.blueAccent)
-  // ),
-      child:Text('ETAPA 4',
-        style: korolevFont.headline3?.apply(fontSizeFactor: fontSize,
-        fontWeightDelta: 0),
-        textAlign: TextAlign.left
-      ),
-    );
-  }
-
-  _titleStage(Size size) {
-    //Creando el Scroll
-    double containerWidth = size.height*0.138;
-    double containerHeight = size.height*0.043;
-    double marginLeft= size.width*0.49;
-    double marginTop= size.width*0.15;
-    double fontSize = size.height * 0.00079;
-    // if (size.height < 550) {
-    //   containerWidth = size.height * 0.19;
-    //   containerHeight = size.height * 0.0014;
-    // }
-    // if (size.height < 650) {
-    //   containerWidth = size.height * 0.125;
-    //   containerHeight = size.height * 0.001;
-    // }
-    return Container(
-      width: containerWidth,
-      height: containerHeight,
-      margin: EdgeInsets.only(left: marginLeft,top: marginTop),     
-  //     decoration: BoxDecoration(
-  //   border: Border.all(color: Colors.blueAccent)
-  // ),
-      child:Text('AZTLÁN',
-        style: korolevFont.headline3?.apply(fontSizeFactor: fontSize,
-        fontWeightDelta: 2),
-        textAlign: TextAlign.center
-      ),
-    );
-  }
-
-  _logoContainer(size) {
-    double containerWidth = size.height*0.138;
-    double containerHeight = size.height*0.105;
-    double marginLeft= size.width*0.77;
-    double marginTop= size.width*0.066;
-    return Container(
-      //largo y ancho del logo dentro
-   
-      width: containerWidth,
-      height: containerHeight,
-      margin: EdgeInsets.only(left: marginLeft,top: marginTop),
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/black_icon_container.png',
-        ),
-        
-      ),
-      
-    );
-  }
-
   _backgroundDecoration() {
     return Container(
       alignment: Alignment.bottomCenter,
@@ -132,8 +49,7 @@ class StageIntroductionScreen extends StatelessWidget {
       ),
     );
   }
-
-  _routeCurve() {
+   _routeCurve() {
     return Container(
       alignment: Alignment.bottomCenter,
       width: double.infinity,
@@ -146,18 +62,7 @@ class StageIntroductionScreen extends StatelessWidget {
       ),
     );
   }
-  _logoLeaf() {
-    return Container(
-      alignment: Alignment.topLeft,
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/logo_leaf.png',
-        ),
-      ),
-    );
-  }
+    
 
   _stageBody(Size size) {
     double bodyContainerWidth = size.height*0.38;
