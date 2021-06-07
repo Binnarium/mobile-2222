@@ -31,6 +31,7 @@ class StageArgumentationScreen extends StatelessWidget {
               ChapterBackgroundWidget(
                 backgroundColor: ColorsApp.backgroundOrange,
                 relieve: _relieve(),
+                hasBanner: true,
               ),
               //decoración adicional del background
               _backgroundDecoration(size),
