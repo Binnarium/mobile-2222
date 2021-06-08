@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
-import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -29,13 +28,11 @@ class StageTitleScreen extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
-                relieve: _backgroundDecoration(),
-                hasBanner: true,
-            ),  
-            
+              backgroundColor: ColorsApp.backgroundOrange,
+              relieve: _backgroundDecoration(),
+              hasBanner: true,
+            ),
             _routeCurve(),
-            
             _introductionBody(size),
           ],
         ),
@@ -103,6 +100,7 @@ class StageTitleScreen extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       child: Image(
+        fit: BoxFit.cover,
         image: AssetImage(
           'assets/backgrounds/decorations/background_decoration1.png',
         ),
@@ -123,7 +121,6 @@ class StageTitleScreen extends StatelessWidget {
       ),
     );
   }
-  
 
   _logoLeaf() {
     return Container(

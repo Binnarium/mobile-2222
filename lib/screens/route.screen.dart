@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageTitle.screen.dart';
-import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -11,12 +11,12 @@ class RouteScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          BackgroundWidget(backgroundColor: ColorsApp.backgroundRed),
+          CustomBackground(backgroundColor: ColorsApp.backgroundRed),
           Center(
             child: Stack(
               children: [
                 //background
-                BackgroundWidget(backgroundColor: ColorsApp.backgroundOrange),
+                CustomBackground(backgroundColor: ColorsApp.backgroundOrange),
                 //body de las rutas (el mapa)
                 _routeBody(context),
               ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
         body: Stack(
           children: [
             //Container del color rojo
-            BackgroundWidget(
+            CustomBackground(
               backgroundColor: ColorsApp.backgroundRed,
             ),
             //contiene todo el cuerpo de la pantalla, se envía el size y el context

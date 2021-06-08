@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/widgets/background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -17,7 +17,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
     return Container(
       child: Stack(
         children: [
-          BackgroundWidget(backgroundColor: ColorsApp.backgroundOrange),
+          CustomBackground(backgroundColor: ColorsApp.backgroundOrange),
           _relieve(),
           _logoLeaf(size),
           _banner(size, context),
