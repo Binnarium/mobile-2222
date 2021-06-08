@@ -28,27 +28,18 @@ class _SplashScreenState extends State<SplashScreen> {
     //tamaño de la pantalla
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      //creando pantalla introductoria
+      /// define a color for all page since it is a single color page
+      backgroundColor: ColorsApp.backgroundRed,
+
+      /// creando pantalla introductoria
       body: Stack(
         children: [
-          //llamando al background
-          _background(),
           //llamando al widget del arco
           _arcContainer(),
           //llamando al cuerpo
           _introductionBody(size),
         ],
       ),
-    );
-  }
-
-  _background() {
-    return Container(
-      //largo y ancho
-      width: double.infinity,
-      height: double.infinity,
-      //Color fondo de pantalla principal
-      color: ColorsApp.backgroundRed,
     );
   }
 

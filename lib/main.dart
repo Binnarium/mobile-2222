@@ -16,7 +16,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //Para ocultar barra de estado
+    /// Para ocultar barra de estado
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     return MultiProvider(
@@ -27,9 +27,17 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Korolev', textTheme: korolevFont),
+
+        /// material app theme
+        theme: ThemeData(
+          fontFamily: 'Korolev',
+          textTheme: korolevFont,
+          platform: TargetPlatform.android,
+        ),
+
         initialRoute: SplashScreen.route,
-        //aquí van las páginas existentes, son las rutas a las páginas (pantallas)
+
+        /// aquí van las páginas existentes, son las rutas a las páginas (pantallas)
         routes: {
           SplashScreen.route: (BuildContext context) => SplashScreen(),
           AccountScreen.route: (BuildContext context) => AccountScreen(),
