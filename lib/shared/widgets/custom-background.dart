@@ -25,7 +25,11 @@ class CustomBackground extends StatelessWidget {
           ),
 
           /// add stack of images to the widget over the colored container
-          ...?this.backgroundImages,
+          ...?this.backgroundImages?.map(
+                (widget) => SizedBox.expand(
+                  child: widget,
+                ),
+              ),
         ],
       ),
     );

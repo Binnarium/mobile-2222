@@ -28,10 +28,10 @@ class ChapterBackgroundWidget extends StatelessWidget {
 
   _logoLeaf(Size size) {
     return Container(
-      alignment: Alignment.topLeft,
+      child: Image(
       width: size.width * 0.2,
       height: size.height * 0.18,
-      child: Image(
+        
         image: AssetImage(
           'assets/backgrounds/decorations/logo_leaf.png',
         ),
