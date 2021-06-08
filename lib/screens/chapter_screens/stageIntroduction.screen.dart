@@ -26,7 +26,7 @@ class StageIntroductionScreen extends StatelessWidget {
           children: [
             ChapterBackgroundWidget(
               backgroundColor: ColorsApp.backgroundOrange,
-              relieve: _backgroundDecoration(),
+              reliefPosition: 'bottom-right',
               hasBanner: true,
             ),
             _routeCurve(),
@@ -35,19 +35,6 @@ class StageIntroductionScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CustomNavigationBar(),
-    );
-  }
-
-  _backgroundDecoration() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/background_decoration1.png',
-        ),
-      ),
     );
   }
 

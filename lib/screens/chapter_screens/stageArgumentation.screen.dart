@@ -3,7 +3,6 @@ import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'dart:math' as math;
 
 class StageArgumentationScreen extends StatelessWidget {
   @override
@@ -30,7 +29,7 @@ class StageArgumentationScreen extends StatelessWidget {
               //widget custom que crea el background con el logo de la izq
               ChapterBackgroundWidget(
                 backgroundColor: ColorsApp.backgroundOrange,
-                relieve: _relieve(),
+                reliefPosition: 'top-right',
                 hasBanner: true,
               ),
               //decoración adicional del background
@@ -86,31 +85,6 @@ class StageArgumentationScreen extends StatelessWidget {
         ),
       ),
     ]);
-  }
-
-  _relieve() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      alignment: Alignment.topCenter,
-      child: Transform(
-        //Para girar la imagen del relieve
-        transform: Matrix4.identity()
-          //matriz de perspectiva
-          ..setEntry(3, 2, 0.001)
-          //con esto se rota por el eje x
-          ..rotateX(math.pi)
-          //se rota eje y
-          ..rotateY(math.pi),
-        //para que mantenga su eje
-        alignment: FractionalOffset.center,
-        child: Image(
-          image: AssetImage(
-            'assets/backgrounds/decorations/background_decoration1.png',
-          ),
-        ),
-      ),
-    );
   }
 
   _ghostImage(Size size) {
