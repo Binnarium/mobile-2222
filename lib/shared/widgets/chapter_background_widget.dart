@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterBackgroundWidget extends StatelessWidget {
@@ -17,7 +16,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
     return Container(
       child: Stack(
         children: [
-          CustomBackground(backgroundColor: ColorsApp.backgroundOrange),
+          CustomBackground(backgroundColor: this.backgroundColor),
           _relieve(),
           _logoLeaf(size),
           _banner(size, context),
@@ -29,12 +28,10 @@ class ChapterBackgroundWidget extends StatelessWidget {
   _logoLeaf(Size size) {
     return Container(
       child: Image(
-      width: size.width * 0.2,
-      height: size.height * 0.18,
-        
         image: AssetImage(
           'assets/backgrounds/decorations/logo_leaf.png',
         ),
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -115,7 +112,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
     //Creando el Scroll
     double containerWidth = parentWidth * 0.7;
     double containerHeight = parentHeight * 0.4;
-    
+
     return Positioned(
       top: parentWidth * 0.15,
       right: parentHeight * 1,
