@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -14,7 +15,16 @@ class StageObjetivesScreen extends StatelessWidget {
           if (details.delta.dx > 5) {
             Navigator.pop(context);
           }
-          if (details.delta.dx < -5) {}
+          if (details.delta.dx < -5) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return ResourcesScreen();
+                },
+              ),
+            );
+          }
         },
         child: Stack(
           children: [
@@ -126,7 +136,6 @@ class StageObjetivesScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                
               ),
               children: [
                 Container(
@@ -135,7 +144,7 @@ class StageObjetivesScreen extends StatelessWidget {
                   // decoration: BoxDecoration(
                   //   border: Border.all(color: Colors.white)
                   // ),
-                 
+
                   child: Image(
                     image: AssetImage(
                       'assets/backgrounds/decorations/competencias1_stage.png',
@@ -148,7 +157,7 @@ class StageObjetivesScreen extends StatelessWidget {
                   // decoration: BoxDecoration(
                   //   border: Border.all(color: Colors.white)
                   // ),
-                 
+
                   child: Image(
                     image: AssetImage(
                       'assets/backgrounds/decorations/competencias2_stage.png',
@@ -161,7 +170,7 @@ class StageObjetivesScreen extends StatelessWidget {
                   // decoration: BoxDecoration(
                   //   border: Border.all(color: Colors.white)
                   // ),
-                  
+
                   child: Image(
                     image: AssetImage(
                       'assets/backgrounds/decorations/competencia3_stage.png',

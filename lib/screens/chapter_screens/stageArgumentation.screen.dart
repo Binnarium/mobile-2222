@@ -22,7 +22,6 @@ class StageArgumentationScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    print('se movió a la derecha');
                     return StageObjetivesScreen();
                   },
                 ),
