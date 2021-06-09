@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
@@ -18,10 +19,10 @@ class StageArgumentationScreen extends StatelessWidget {
               Navigator.pop(context);
             }
             if (details.delta.dx < -5) {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   print('se movió a la derecha');
-              //   return StageIntroductionScreen();
-              // },),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                print('se movió a la derecha');
+                return StageObjetivesScreen();
+              },),);
             }
           },
           child: Stack(
