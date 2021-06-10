@@ -10,7 +10,6 @@ class ResourcesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size);
     return Scaffold(
       body: Center(
         child: GestureDetector(
@@ -48,14 +47,14 @@ class ResourcesScreen extends StatelessWidget {
 
   ///body of the screen
   _resourcesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.30;
-    double bodyMarginHeight = size.height * 0.03;
+    double bodyMarginWidth = size.width * 0.03;
+    double bodyMarginHeight = size.height * 0.18;
 
     ///sizing the container to the mobile
     return Container(
       margin: EdgeInsets.only(
-        top: bodyMarginWidth,
-        right: bodyMarginHeight,
+        top: bodyMarginHeight,
+        right: bodyMarginWidth,
       ),
 
       ///Listview of the whole screen

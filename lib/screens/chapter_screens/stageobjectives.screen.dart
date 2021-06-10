@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -21,7 +22,7 @@ class StageObjetivesScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return ResourcesScreen();
+                  return StageVideoScreen();
                 },
               ),
             );
@@ -34,7 +35,6 @@ class StageObjetivesScreen extends StatelessWidget {
               reliefPosition: 'top-left',
               hasBanner: true,
             ),
-
             _stageBody(size),
           ],
         ),
@@ -85,13 +85,13 @@ class StageObjetivesScreen extends StatelessWidget {
           ),
           SizedBox(height: spacedBodyContainers),
           Container(
-            width: double.infinity,
-            height: bodyContainerHeight * 0.30,
-            margin:
-                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-            decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-            child: _contentsBody([5, 4, 4, 4, 4, 5])
-          ),
+              width: double.infinity,
+              height: bodyContainerHeight * 0.30,
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.white)),
+              child: _contentsBody([5, 4, 4, 4, 4, 5])),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'COMPETENCIAS',
@@ -161,12 +161,13 @@ class StageObjetivesScreen extends StatelessWidget {
     return Container(
       height: double.infinity,
       width: double.infinity,
+
       ///general left padding 25
-      
+
       decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
 
       ///To resize the parent container of the list of books
-      
+
       child: ListView.builder(
           itemCount: list.length,
           itemBuilder: (context, index) {
@@ -175,10 +176,11 @@ class StageObjetivesScreen extends StatelessWidget {
               padding: EdgeInsets.all(15),
               child: Row(
                 children: [
-                  Text('${index+1}',
-                  textAlign: TextAlign.left,),
                   Text(
-                      'Contenido')
+                    '${index + 1}',
+                    textAlign: TextAlign.left,
+                  ),
+                  Text('Contenido')
                 ],
               ),
             );
