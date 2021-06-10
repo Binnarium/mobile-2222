@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -33,6 +34,7 @@ class StageObjetivesScreen extends StatelessWidget {
               reliefPosition: 'top-left',
               hasBanner: true,
             ),
+
             _stageBody(size),
           ],
         ),
@@ -46,13 +48,11 @@ class StageObjetivesScreen extends StatelessWidget {
     double bodyContainerHeight = size.height * 0.75;
     double bodyMarginLeft = size.width * 0.10;
     double bodyMarginTop = size.width * 0.30;
-    double firstImageContainerWidth = bodyContainerWidth * 0.3;
+
     double firstImageContainerHeight = bodyContainerHeight * 0.12;
-    double firstImageMarginRight = bodyContainerWidth * 0.55;
+
     double spacedBodyContainers = bodyContainerHeight * 0.015;
-    double secondImageContainerWidth = bodyContainerWidth * 0.55;
-    double secondImageContainerHeight = bodyContainerHeight * 0.20;
-    double secondImageMarginRight = bodyContainerWidth * 0.35;
+
     return Container(
       alignment: Alignment.topLeft,
       width: double.infinity,
@@ -62,17 +62,9 @@ class StageObjetivesScreen extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           SizedBox(height: spacedBodyContainers),
-          Container(
-              width: bodyContainerWidth * 0.9,
-              height: firstImageContainerHeight,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.white)),
-              child: Text(
-                'objetivo',
-                style: korolevFont.headline4?.apply(
-                    fontSizeFactor: size.height * 0.00068, fontWeightDelta: 2),
-                textAlign: TextAlign.left,
-              )),
+          ChapterTitleSection(
+            title: 'OBJETIVO',
+          ),
           SizedBox(height: spacedBodyContainers),
           Container(
               width: double.infinity,
@@ -88,47 +80,26 @@ class StageObjetivesScreen extends StatelessWidget {
                 textAlign: TextAlign.left,
               )),
           SizedBox(height: spacedBodyContainers),
-          Container(
-              width: bodyContainerWidth * 0.9,
-              height: firstImageContainerHeight,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.white)),
-              child: Text(
-                'contenidos',
-                style: korolevFont.headline4?.apply(
-                    fontSizeFactor: size.height * 0.00068, fontWeightDelta: 2),
-                textAlign: TextAlign.left,
-              )),
-          SizedBox(height: spacedBodyContainers),
-          Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.3,
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.white)),
-              child: Text(
-                '',
-                style: korolevFont.bodyText1?.apply(
-                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
-                textAlign: TextAlign.left,
-              )),
-          SizedBox(height: spacedBodyContainers),
-          Container(
-              width: bodyContainerWidth * 0.9,
-              height: firstImageContainerHeight,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.white)),
-              child: Text(
-                'competencias',
-                style: korolevFont.headline4?.apply(
-                    fontSizeFactor: size.height * 0.00068, fontWeightDelta: 2),
-                textAlign: TextAlign.left,
-              )),
+          ChapterTitleSection(
+            title: 'CONTENIDOS',
+          ),
           SizedBox(height: spacedBodyContainers),
           Container(
             width: double.infinity,
-            height: bodyContainerHeight * 0.3,
+            height: bodyContainerHeight * 0.30,
+            margin:
+                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+            decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+            child: _contentsBody([5, 4, 4, 4, 4, 5])
+          ),
+          SizedBox(height: spacedBodyContainers),
+          ChapterTitleSection(
+            title: 'COMPETENCIAS',
+          ),
+          SizedBox(height: spacedBodyContainers),
+          Container(
+            width: double.infinity,
+            height: bodyContainerHeight * 0.18,
             margin:
                 EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
             decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -182,6 +153,36 @@ class StageObjetivesScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  _contentsBody(List list) {
+    ///main container
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      ///general left padding 25
+      
+      decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+
+      ///To resize the parent container of the list of books
+      
+      child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            ///bringing a book resource per item in the list
+            return Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                children: [
+                  Text('${index+1}',
+                  textAlign: TextAlign.left,),
+                  Text(
+                      'Contenido')
+                ],
+              ),
+            );
+          }),
     );
   }
 }
