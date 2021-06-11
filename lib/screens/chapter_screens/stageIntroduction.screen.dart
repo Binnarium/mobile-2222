@@ -67,13 +67,9 @@ class StageIntroductionScreen extends StatelessWidget {
     double secondImageMarginRight = bodyContainerWidth * 0.35;
     return Container(
       alignment: Alignment.topLeft,
-      width: bodyContainerWidth,
-      height: bodyContainerHeight,
-      margin: EdgeInsets.only(
-          left: bodyMarginLeft, right: bodyMarginLeft, top: bodyMarginTop),
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.blueAccent)
-      // ),
+      width: double.infinity,
+      height: double.infinity,
+      
       child: ListView(
         children: <Widget>[
           ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
@@ -94,6 +90,8 @@ class StageIntroductionScreen extends StatelessWidget {
           Container(
               width: bodyContainerWidth * 0.9,
               height: firstImageContainerHeight,
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -103,10 +101,12 @@ class StageIntroductionScreen extends StatelessWidget {
                     fontSizeFactor: size.height * 0.00068, fontWeightDelta: 2),
                 textAlign: TextAlign.left,
               )),
-          SizedBox(height: spacedBodyContainers),
+          SizedBox(height: spacedBodyContainers*2),
           Container(
               width: bodyContainerWidth * 0.9,
               height: bodyContainerHeight * 0.3,
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -116,10 +116,11 @@ class StageIntroductionScreen extends StatelessWidget {
                     fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
                 textAlign: TextAlign.left,
               )),
-          SizedBox(height: spacedBodyContainers),
+          
           Container(
             width: secondImageContainerWidth,
             height: secondImageContainerHeight,
+            
             // decoration: BoxDecoration(
             //   border: Border.all(color: Colors.white)
             // ),
@@ -130,10 +131,12 @@ class StageIntroductionScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: spacedBodyContainers),
+          SizedBox(height: spacedBodyContainers*2),
           Container(
               width: bodyContainerWidth * 0.9,
               height: bodyContainerHeight * 0.18,
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
