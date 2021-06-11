@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -33,7 +34,6 @@ class StageObjetivesScreen extends StatelessWidget {
             ChapterBackgroundWidget(
               backgroundColor: ColorsApp.backgroundOrange,
               reliefPosition: 'top-left',
-              hasBanner: true,
             ),
             _stageBody(size),
           ],
@@ -51,13 +51,13 @@ class StageObjetivesScreen extends StatelessWidget {
     double spacedBodyContainers = bodyContainerHeight * 0.015;
 
     return Container(
-      
       alignment: Alignment.topLeft,
       width: double.infinity,
       height: double.infinity,
       margin: EdgeInsets.only(top: bodyMarginTop),
       child: ListView(
         children: <Widget>[
+          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'OBJETIVO',
@@ -89,38 +89,30 @@ class StageObjetivesScreen extends StatelessWidget {
           ChapterTitleSection(
             title: 'COMPETENCIAS',
           ),
-          SizedBox(height: spacedBodyContainers+10),
+          SizedBox(height: spacedBodyContainers + 10),
           Container(
-            
-            width: double.infinity,
-            height: bodyContainerHeight * 0.18,
-            margin:
-                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-            child: _compeBody(size)
-          ),
-          SizedBox(height: spacedBodyContainers+20),
+              width: double.infinity,
+              height: bodyContainerHeight * 0.18,
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              child: _compeBody(size)),
+          SizedBox(height: spacedBodyContainers + 20),
           Container(
-            
             width: double.infinity,
             height: bodyContainerHeight * 0.40,
-           
             child: Image(
               image: AssetImage(
                 'assets/backgrounds/decorations/white_idea_container.png',
               ),
-              
             ),
-
           ),
-          SizedBox(height: spacedBodyContainers+20),
-          
+          SizedBox(height: spacedBodyContainers + 20),
         ],
       ),
     );
   }
 
   _contentsBody(List list, Size size) {
-
     double bodyContainerHeight = size.height * 0.75;
 
     ///main container
@@ -168,86 +160,84 @@ class StageObjetivesScreen extends StatelessWidget {
           }),
     );
   }
-  _compeBody(Size size){
+
+  _compeBody(Size size) {
     return GridView(
-              scrollDirection: Axis.horizontal,
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
+      scrollDirection: Axis.horizontal,
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+      ),
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: Colors.white)
+          // ),
+
+          child: Column(
+            children: [
+              Image(
+                image: AssetImage(
+                  'assets/backgrounds/decorations/competencias1_stage.png',
+                ),
               ),
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: Colors.white)
-                  // ),
+              Text(
+                'MANEJO DEL TIEMPO',
+                style: korolevFont.bodyText1?.apply(
+                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: Colors.white)
+          // ),
 
-                  child: Column(
-                    children: [
-                      Image(
-                        image: AssetImage(
-                          'assets/backgrounds/decorations/competencias1_stage.png',
-                        ),
-                      ),
-                      Text(
-                        'MANEJO DEL TIEMPO',
-                        style: korolevFont.bodyText1?.apply(
-                            fontSizeFactor: size.height * 0.0012,
-                            fontWeightDelta: 0),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
+          child: Column(
+            children: [
+              Image(
+                image: AssetImage(
+                  'assets/backgrounds/decorations/competencias2_stage.png',
                 ),
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: Colors.white)
-                  // ),
+              ),
+              Text(
+                'TRABAJO EN EQUIPO',
+                style: korolevFont.bodyText1?.apply(
+                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: Colors.white)
+          // ),
 
-                  child: Column(
-                    children: [
-                      Image(
-                        image: AssetImage(
-                          'assets/backgrounds/decorations/competencias2_stage.png',
-                        ),
-                      ),
-                      Text(
-                        'TRABAJO EN EQUIPO',
-                        style: korolevFont.bodyText1?.apply(
-                            fontSizeFactor: size.height * 0.0012,
-                            fontWeightDelta: 0),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
+          child: Column(
+            children: [
+              Image(
+                image: AssetImage(
+                  'assets/backgrounds/decorations/competencia3_stage.png',
                 ),
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: Colors.white)
-                  // ),
-
-                  child: Column(
-                    children: [
-                      Image(
-                        image: AssetImage(
-                          'assets/backgrounds/decorations/competencia3_stage.png',
-                        ),
-                      ),
-                      Text(
-                        'INNOVACIÓN Y CREATIVIDAD',
-                        style: korolevFont.bodyText1?.apply(
-                            fontSizeFactor: size.height * 0.0012,
-                            fontWeightDelta: 0),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            );
+              ),
+              Text(
+                'INNOVACIÓN Y CREATIVIDAD',
+                style: korolevFont.bodyText1?.apply(
+                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

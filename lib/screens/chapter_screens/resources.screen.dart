@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -32,7 +33,6 @@ class ResourcesScreen extends StatelessWidget {
             children: [
               ChapterBackgroundWidget(
                 backgroundColor: ColorsApp.backgroundOrange,
-                hasBanner: true,
               ),
 
               ///body of the screen
@@ -48,18 +48,21 @@ class ResourcesScreen extends StatelessWidget {
   ///body of the screen
   _resourcesContent(Size size) {
     double bodyMarginWidth = size.width * 0.03;
-    double bodyMarginHeight = size.height * 0.18;
 
     ///sizing the container to the mobile
     return Container(
       margin: EdgeInsets.only(
-        top: bodyMarginHeight,
         right: bodyMarginWidth,
       ),
 
       ///Listview of the whole screen
       child: ListView(
         children: [
+          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          SizedBox(
+            height: 20,
+          ),
+
           ///chapter title screen widgets
           ChapterTitleSection(
             title: 'LECTURAS',

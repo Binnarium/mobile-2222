@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
@@ -34,7 +35,6 @@ class StageArgumentationScreen extends StatelessWidget {
               ChapterBackgroundWidget(
                 backgroundColor: ColorsApp.backgroundOrange,
                 reliefPosition: 'top-right',
-                hasBanner: true,
               ),
               //decoración adicional del background
               _backgroundDecoration(size),
@@ -48,6 +48,7 @@ class StageArgumentationScreen extends StatelessWidget {
 
   _backgroundDecoration(Size size) {
     return Stack(children: [
+      ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
       _ghostImage(size),
       Positioned(
         top: size.height * 0.13,

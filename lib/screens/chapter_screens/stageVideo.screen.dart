@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -35,10 +36,9 @@ class StageVideoScreen extends StatelessWidget {
             children: [
               ChapterBackgroundWidget(
                 backgroundColor: ColorsApp.backgroundOrange,
-                hasBanner: true,
                 reliefPosition: 'top-left',
               ),
-              _stageVideoContent(size),
+              _stageVideoContent(size, context),
             ],
           ),
         ),
@@ -47,17 +47,17 @@ class StageVideoScreen extends StatelessWidget {
     );
   }
 
-  _stageVideoContent(Size size) {
-    double bodyMarginHeight = size.height * 0.18;
-
+  _stageVideoContent(Size size, BuildContext context) {
     ///sizing the container to the mobile
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(
-        top: bodyMarginHeight,
-      ),
       child: ListView(
         children: [
+          ///calls the head of the chapter (logo leaf, banner)
+          ChapterHeadWidget(
+            chapterName: 'aztlán',
+            phaseName: 'etapa 4',
+          ),
+          SizedBox(height: 20),
           _videoTitleContainer(size),
           _videoContent(size),
         ],
