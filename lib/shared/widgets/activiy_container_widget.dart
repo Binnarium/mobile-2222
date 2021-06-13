@@ -16,13 +16,25 @@ class ActivityContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('grid width $width');
+    print('grid height $height');
+    SliverGridDelegate gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: width * 0.1,
+        mainAxisSpacing: height * 0.25);
+
+    ///for small height phones
+    if (height < 400) {
+      gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: width * 0.2,
+          mainAxisSpacing: height * 0.3);
+    }
+
     return Container(
       child: GridView.builder(
           physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: width * 0.2,
-              mainAxisSpacing: height * 0.3),
+          gridDelegate: gridDelegate,
           itemCount: activities.length,
           itemBuilder: (context, index) {
             ///to control the rotation of the widget
@@ -127,7 +139,7 @@ class ActivityContainerWidget extends StatelessWidget {
 
     return Container(
       margin: (height > 120)
-          ? EdgeInsets.only(top: height * 0.1)
+          ? EdgeInsets.only(top: height * 0.17)
           : EdgeInsets.only(top: height * 0.25),
       alignment: Alignment.center,
       width: width,
