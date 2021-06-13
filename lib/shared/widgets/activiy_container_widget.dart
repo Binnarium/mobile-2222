@@ -122,10 +122,15 @@ class ActivityContainerWidget extends StatelessWidget {
   }
 
   _textContainer(double width, double height, String activityName) {
+    print('width: $width');
+    print('height: $height');
+
     return Container(
-      margin: EdgeInsets.only(top: height * 0.3),
+      margin: EdgeInsets.only(top: height * 0.4),
+      alignment: Alignment.center,
       width: width,
       height: height * 0.7,
+      padding: EdgeInsets.symmetric(horizontal: 15),
       // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,12 +143,16 @@ class ActivityContainerWidget extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+          SizedBox(
+            height: 5,
+          ),
           Text(
             'Tenim ipsam voluptatem  quia voluptas sit aspe natur aut odit aut fugit sed quia',
             style: korolevFont.bodyText2
                 ?.apply(color: Colors.black, fontSizeFactor: 0.8),
             overflow: TextOverflow.ellipsis,
-            maxLines: 4,
+            textAlign: TextAlign.center,
+            maxLines: (width > 120) ? 4 : 2,
           ),
         ],
       ),
