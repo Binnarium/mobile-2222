@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/profile.screen.dart';
 
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
@@ -31,7 +32,7 @@ class ClubScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ClubScreen();
+                    return ProfileScreen();
                   },
                 ),
               );
