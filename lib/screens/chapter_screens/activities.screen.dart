@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/activiy_container_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -33,10 +34,15 @@ class ActivitiesScreen extends StatelessWidget {
 
             ///right
             if (details.delta.dx < -5) {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   print('se movió a la derecha');
-              //   return StageIntroductionScreen();
-              // },),);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    print('se movió a la derecha');
+                    return ClubScreen();
+                  },
+                ),
+              );
             }
           },
           child: Stack(

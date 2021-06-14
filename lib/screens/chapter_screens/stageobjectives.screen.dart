@@ -157,12 +157,12 @@ class StageObjetivesScreen extends StatelessWidget {
       padding: EdgeInsets.only(left: 25),
 
       ///To resize the parent container of the online resources grid
-      height: (list.length) * 50,
+      height: (list.length) * 65,
 
       child: GridView.builder(
         ///general spacing per resource
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
+            crossAxisCount: 3, crossAxisSpacing: 15, mainAxisSpacing: 15),
         itemCount: list.length,
 
         ///to avoid the scroll
