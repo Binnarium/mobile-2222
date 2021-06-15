@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String route = '/login';
-  //página de login donde pide usuario y contraseña
+
+  ///página de login donde pide usuario y contraseña
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    //safeArea para dispositivos con pantalla notch
+
+    ///safeArea para dispositivos con pantalla notch
     return SafeArea(
       child: Scaffold(
-        //Stack para apilar el background y luego el cuerpo de la pantalla
+        ///Stack para apilar el background y luego el cuerpo de la pantalla
         body: Stack(
           children: [
-            //Container del color rojo
+            ///Container del color rojo
             CustomBackground(
               backgroundColor: ColorsApp.backgroundRed,
             ),
-            //contiene todo el cuerpo de la pantalla, se envía el size y el context
-            //para poder controlar varios tamaños de dispositivos y controlar
-            //la fuente
+
+            ///contiene todo el cuerpo de la pantalla, se envía el size y el context
+            ///para poder controlar varios tamaños de dispositivos y controlar
+            ///la fuente
             _loginBody(size, context),
           ],
         ),
@@ -28,15 +33,16 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  //Cuerpo de la pantalla
+  ///Cuerpo de la pantalla
   _loginBody(Size size, BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          //logo de 2222
+          ///logo de 2222
           _logo(size),
           SizedBox(height: size.height * 0.05),
-          //texto inicial
+
+          ///texto inicial
           Text(
             'LOREM IPSUM VIAJE',
             style: Theme.of(context).textTheme.headline5,
@@ -47,7 +53,8 @@ class LoginScreen extends StatelessWidget {
           SizedBox(height: size.height * 0.05),
           _video(),
           SizedBox(height: size.height * 0.1),
-          //formulario (falta aplicar backend)
+
+          ///formulario (falta aplicar backend)
           _loginForm(context),
         ],
       ),
@@ -70,7 +77,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  //Párrafo de descripción
+  ///Párrafo de descripción
   _descriptionText(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -84,7 +91,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  //Vídeo que actualmente está como NetworkImage
+  ///Vídeo que actualmente está como NetworkImage
   _video() {
     return Container(
       width: double.infinity,
@@ -98,7 +105,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  //Formulario de login
+  ///Formulario de login
   _loginForm(BuildContext context) {
     return Container(
       child: Column(
@@ -117,39 +124,42 @@ class LoginScreen extends StatelessWidget {
           ),
           _passwordField(context),
           SizedBox(
-            height: 5,
+            height: 15,
           ),
-          TextButton(
-            onPressed: () {},
-            style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(Colors.red)),
-            child: RichText(
-              text: TextSpan(
-                text: '¿No tienes cuenta? Regístrate ',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.apply(fontSizeFactor: 0.8),
-                children: [
-                  TextSpan(
-                    text: 'aquí',
-                    style: Theme.of(context).textTheme.bodyText1?.apply(
-                        decoration: TextDecoration.underline,
-                        fontSizeFactor: 0.8),
-                  )
-                ],
-              ),
-            ),
-          ),
+          _loginButton(context),
+          _registerText(context),
           SizedBox(
-            height: 30,
+            height: 10,
           ),
         ],
       ),
     );
   }
 
-  //campo de usuario
+  TextButton _registerText(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        print('texto de registro presionado');
+      },
+      style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
+      child: RichText(
+        text: TextSpan(
+          text: '¿No tienes cuenta? Regístrate ',
+          style:
+              Theme.of(context).textTheme.bodyText1?.apply(fontSizeFactor: 0.8),
+          children: [
+            TextSpan(
+              text: 'aquí',
+              style: Theme.of(context).textTheme.bodyText1?.apply(
+                  decoration: TextDecoration.underline, fontSizeFactor: 0.8),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///campo de usuario
   _userField(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40),
@@ -178,7 +188,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  //campo de contraseña
+  ///campo de contraseña
   _passwordField(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40),
@@ -202,6 +212,29 @@ class LoginScreen extends StatelessWidget {
               .textTheme
               .headline5
               ?.apply(color: Colors.black54, fontSizeFactor: 0.8),
+        ),
+      ),
+    );
+  }
+
+  _loginButton(BuildContext context) {
+    double buttonWidth = MediaQuery.of(context).size.width;
+    return Container(
+      width: buttonWidth,
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: ColorsApp.backgroundBottomBar,
+          elevation: 5,
+        ),
+
+        ///Navigates to main screen
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(RouteScreen.route);
+        },
+        child: Text(
+          'Ingresar',
+          style: korolevFont.headline6?.apply(),
         ),
       ),
     );

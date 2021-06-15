@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'dart:math' as math;
 
 class StageArgumentationScreen extends StatelessWidget {
   @override
@@ -14,15 +15,18 @@ class StageArgumentationScreen extends StatelessWidget {
       body: Center(
         child: GestureDetector(
           onPanUpdate: (details) {
-            print('dx: ${details.delta.dx} dy: ${details.delta.dy}');
             if (details.delta.dx > 5) {
               Navigator.pop(context);
             }
             if (details.delta.dx < -5) {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   print('se movió a la derecha');
-              //   return StageIntroductionScreen();
-              // },),);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return StageObjetivesScreen();
+                  },
+                ),
+              );
             }
           },
           child: Stack(
@@ -30,8 +34,7 @@ class StageArgumentationScreen extends StatelessWidget {
               //widget custom que crea el background con el logo de la izq
               ChapterBackgroundWidget(
                 backgroundColor: ColorsApp.backgroundOrange,
-                relieve: _relieve(),
-                hasBanner: true,
+                reliefPosition: 'top-right',
               ),
               //decoración adicional del background
               _backgroundDecoration(size),
@@ -45,6 +48,7 @@ class StageArgumentationScreen extends StatelessWidget {
 
   _backgroundDecoration(Size size) {
     return Stack(children: [
+      ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
       _ghostImage(size),
       Positioned(
         top: size.height * 0.13,
@@ -86,31 +90,6 @@ class StageArgumentationScreen extends StatelessWidget {
         ),
       ),
     ]);
-  }
-
-  _relieve() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      alignment: Alignment.topCenter,
-      child: Transform(
-        //Para girar la imagen del relieve
-        transform: Matrix4.identity()
-          //matriz de perspectiva
-          ..setEntry(3, 2, 0.001)
-          //con esto se rota por el eje x
-          ..rotateX(math.pi)
-          //se rota eje y
-          ..rotateY(math.pi),
-        //para que mantenga su eje
-        alignment: FractionalOffset.center,
-        child: Image(
-          image: AssetImage(
-            'assets/backgrounds/decorations/background_decoration1.png',
-          ),
-        ),
-      ),
-    );
   }
 
   _ghostImage(Size size) {

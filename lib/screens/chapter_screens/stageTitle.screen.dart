@@ -126,31 +126,4 @@ class StageTitleScreen extends StatelessWidget {
       ),
     );
   }
-
-  _backgroundDecoration() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        fit: BoxFit.cover,
-        image: AssetImage(
-          'assets/backgrounds/decorations/background_decoration1.png',
-        ),
-      ),
-    );
-  }
-
-  _logoLeaf() {
-    return Container(
-      alignment: Alignment.topLeft,
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/logo_leaf.png',
-        ),
-      ),
-    );
-  }
 }
