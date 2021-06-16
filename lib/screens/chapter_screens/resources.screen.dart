@@ -9,6 +9,9 @@ import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ResourcesScreen extends StatelessWidget {
+  final Color primaryColor = Colors.red;
+  static String route = '/recursos';
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,12 +27,11 @@ class ResourcesScreen extends StatelessWidget {
 
             ///right
             if (details.delta.dx < -5) {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ActivitiesScreen();
-                  },
+                ActivitiesScreen.route,
+                arguments: ActivitiesScreen(
+                  primaryColor: this.primaryColor,
                 ),
               );
             }
@@ -139,7 +141,10 @@ class ResourcesScreen extends StatelessWidget {
       child: GridView.builder(
         ///general spacing per resource
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 15),
+          crossAxisCount: 2,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15,
+        ),
         itemCount: list.length,
 
         ///to avoid the scroll

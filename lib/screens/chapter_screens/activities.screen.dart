@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/clubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/activiy_container_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivitiesScreen extends StatelessWidget {
-  const ActivitiesScreen({Key? key}) : super(key: key);
+  final Color primaryColor;
+  static const route = '/activities';
+
+  const ActivitiesScreen({
+    Key? key,
+    required this.primaryColor,
+  }) : super(key: key);
+
   static const Map<String, String> activities = {
     'club-house':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
@@ -21,34 +27,28 @@ class ActivitiesScreen extends StatelessWidget {
   };
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage =
+        () => Navigator.pushNamed(context, ClubHouseScreen.route);
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: GestureDetector(
           ///To make the horizontal scroll to the next or previous page.
+          // onPanUpdate: (details) =>
+          //     (details.delta.dx > 5 ? prevPage : nextPage)(),
           onPanUpdate: (details) {
             ///left
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
+            if (details.delta.dx > 5) prevPage();
 
             ///right
-            if (details.delta.dx < -5) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    print('se movió a la derecha');
-                    return ClubScreen();
-                  },
-                ),
-              );
-            }
+            if (details.delta.dx < -5) nextPage();
           },
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
+                backgroundColor: this.primaryColor,
                 reliefPosition: 'bottom-right',
               ),
 
@@ -58,14 +58,17 @@ class ActivitiesScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
   _activitiesContent(Size size) {
-    ///sizing the container to the mobile
+    /// sizing the container to the mobile
     return Container(
-      ///Listview of the whole screen
+      /// Listview of the whole screen
       child: ListView(
         // physics: NeverScrollableScrollPhysics(),
         children: [

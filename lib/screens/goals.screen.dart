@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -17,7 +16,9 @@ class GoalsScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        activePage: NavigationBarPages.page2,
+      ),
     );
   }
 }
