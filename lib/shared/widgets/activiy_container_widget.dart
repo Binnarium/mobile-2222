@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivityContainerWidget extends StatelessWidget {
   final double width;
   final double height;
+  final String primaryColor;
   final Map<String, String> activities;
 
   const ActivityContainerWidget(
       {Key? key,
       required this.activities,
       required this.width,
-      required this.height})
+      required this.height,
+      required this.primaryColor})
       : super(key: key);
 
   @override
@@ -56,7 +57,7 @@ class ActivityContainerWidget extends StatelessWidget {
                   ..rotateZ(2.26893);
                 iconAlignment = Alignment.topRight;
                 iconPath = 'assets/icons/clubhouse_activity_icon.png';
-                activityName = 'ClubHouse';
+                activityName = 'Eventos ClubHouse';
                 break;
 
               case 1:
@@ -124,8 +125,8 @@ class ActivityContainerWidget extends StatelessWidget {
           Image(
             alignment: iconAlignment,
             image: AssetImage(iconPath),
-            width: width * 1.5,
-            height: height * 1.5,
+            width: width * 1.2,
+            height: height * 1.2,
           ),
           _textContainer(width, height, activityName),
         ],
@@ -139,7 +140,7 @@ class ActivityContainerWidget extends StatelessWidget {
 
     return Container(
       margin: (height > 120)
-          ? EdgeInsets.only(top: height * 0.17)
+          ? EdgeInsets.only(top: height * 0.1)
           : EdgeInsets.only(top: height * 0.25),
       alignment: Alignment.center,
       width: width,
@@ -153,7 +154,7 @@ class ActivityContainerWidget extends StatelessWidget {
           Text(
             activityName.toUpperCase(),
             style: korolevFont.headline6?.apply(
-              color: ColorsApp.backgroundOrange,
+              color: Color(int.parse(this.primaryColor)),
               fontSizeFactor: 0.7,
             ),
             textAlign: TextAlign.center,

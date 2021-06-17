@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageIntroductionScreen extends StatelessWidget {
+  static const String route = '/introduction';
+  final ChapterSettings chapterSettings;
+
+  const StageIntroductionScreen({
+    Key? key,
+    required this.chapterSettings,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return StageArgumentationScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
+
     final size = MediaQuery.of(context).size;
     print(size);
     return Scaffold(
       body: GestureDetector(
         onPanUpdate: (details) {
-          if (details.delta.dx > 5) {
-            Navigator.pop(context);
-          }
-          if (details.delta.dx < -5) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return StageArgumentationScreen();
-            }));
-          }
+          /// left
+          if (details.delta.dx > 5) prevPage();
+
+          /// right
+          if (details.delta.dx < -5) nextPage();
         },
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: ColorsApp.backgroundOrange,
+              backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
               reliefPosition: 'bottom-right',
             ),
             _routeCurve(),
@@ -34,7 +48,10 @@ class StageIntroductionScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
@@ -57,7 +74,6 @@ class StageIntroductionScreen extends StatelessWidget {
     double bodyContainerWidth = size.height * 0.48;
     double bodyContainerHeight = size.height * 0.75;
     double bodyMarginLeft = size.width * 0.10;
-    double bodyMarginTop = size.width * 0.30;
     double firstImageContainerWidth = bodyContainerWidth * 0.3;
     double firstImageContainerHeight = bodyContainerHeight * 0.12;
     double firstImageMarginRight = bodyContainerWidth * 0.55;
@@ -69,10 +85,13 @@ class StageIntroductionScreen extends StatelessWidget {
       alignment: Alignment.topLeft,
       width: double.infinity,
       height: double.infinity,
-      
       child: ListView(
         children: <Widget>[
-          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          ChapterHeadWidget(
+            phaseName: this.chapterSettings.phaseName,
+            chapterName: this.chapterSettings.cityName,
+            chapterImgURL: this.chapterSettings.chapterImageUrl,
+          ),
           Container(
             width: firstImageContainerWidth,
             height: firstImageContainerHeight,
@@ -101,7 +120,7 @@ class StageIntroductionScreen extends StatelessWidget {
                     fontSizeFactor: size.height * 0.00068, fontWeightDelta: 2),
                 textAlign: TextAlign.left,
               )),
-          SizedBox(height: spacedBodyContainers*2),
+          SizedBox(height: spacedBodyContainers * 2),
           Container(
               width: bodyContainerWidth * 0.9,
               height: bodyContainerHeight * 0.3,
@@ -116,11 +135,10 @@ class StageIntroductionScreen extends StatelessWidget {
                     fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
                 textAlign: TextAlign.left,
               )),
-          
           Container(
             width: secondImageContainerWidth,
             height: secondImageContainerHeight,
-            
+
             // decoration: BoxDecoration(
             //   border: Border.all(color: Colors.white)
             // ),
@@ -131,7 +149,7 @@ class StageIntroductionScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: spacedBodyContainers*2),
+          SizedBox(height: spacedBodyContainers * 2),
           Container(
               width: bodyContainerWidth * 0.9,
               height: bodyContainerHeight * 0.18,

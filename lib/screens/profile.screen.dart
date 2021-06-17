@@ -1,56 +1,34 @@
 import 'package:flutter/material.dart';
-
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
-
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/club-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ProfileScreen extends StatelessWidget {
+  static const String route = '/profile';
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
-        child: GestureDetector(
-          ///To make the horizontal scroll to the next or previous page.
-          onPanUpdate: (details) {
-            ///left
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
+        child: Stack(
+          children: [
+            ChapterBackgroundWidget(
+              backgroundColor: ColorsApp.backgroundRed,
+              reliefPosition: 'top-right',
+            ),
+            _routeCurve(),
 
-            ///right
-            if (details.delta.dx < -5) {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) {
-              //       return ClubScreen();
-              //     },
-              //   ),
-              // );
-            }
-          },
-          child: Stack(
-            children: [
-              ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundRed,
-                reliefPosition: 'top-right',
-              ),
-              _routeCurve(),
-
-              ///body of the screen
-              _resourcesContent(size),
-            ],
-          ),
+            ///body of the screen
+            _resourcesContent(size),
+          ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        activePage: NavigationBarPages.page3,
+      ),
     );
   }
 
@@ -69,7 +47,12 @@ class ProfileScreen extends StatelessWidget {
       ///Listview of the whole screen
       child: ListView(
         children: [
-          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          ChapterHeadWidget(
+            phaseName: 'etapa 4',
+            chapterName: 'aztlán',
+            chapterImgURL:
+                'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
+          ),
           SizedBox(
             height: 30,
           ),
@@ -87,9 +70,7 @@ class ProfileScreen extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
                 textAlign: TextAlign.center,
-              )
-          ),
-
+              )),
           Container(
               width: double.infinity,
               height: bodyContainerHeight * 0.12,
@@ -131,7 +112,6 @@ class ProfileScreen extends StatelessWidget {
                   )
                 ],
               )),
-
           SizedBox(
             height: 67,
           ),
@@ -154,20 +134,20 @@ class ProfileScreen extends StatelessWidget {
             height: 7,
           ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.12,
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              // child: Text(
-              //   'IMAGEN FALTANTE',
-              //   style: korolevFont.headline4?.apply(fontSizeFactor: 0.80),
-              //   overflow: TextOverflow.ellipsis,
-              //   maxLines: 4,
-              //   textAlign: TextAlign.center,
-              // )
+            width: double.infinity,
+            height: bodyContainerHeight * 0.12,
+            // decoration: BoxDecoration(
+            //   border: Border.all(color: Colors.white)
+            // ),
+            margin:
+                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+            // child: Text(
+            //   'IMAGEN FALTANTE',
+            //   style: korolevFont.headline4?.apply(fontSizeFactor: 0.80),
+            //   overflow: TextOverflow.ellipsis,
+            //   maxLines: 4,
+            //   textAlign: TextAlign.center,
+            // )
           ),
           SizedBox(
             height: 7,
@@ -187,7 +167,6 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
-
           Container(
               width: double.infinity,
               height: bodyContainerHeight * 0.12,
@@ -222,7 +201,6 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
-
           Container(
               width: double.infinity,
               height: bodyContainerHeight * 0.12,
@@ -239,7 +217,6 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
-              
         ],
       ),
     );

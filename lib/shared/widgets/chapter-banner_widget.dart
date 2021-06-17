@@ -4,7 +4,11 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 class ChapterBannerWidget extends StatelessWidget {
   final String phase;
   final String chapterName;
-  const ChapterBannerWidget({required this.phase, required this.chapterName});
+  final String chapterImgURL;
+  const ChapterBannerWidget(
+      {required this.phase,
+      required this.chapterName,
+      required this.chapterImgURL});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class ChapterBannerWidget extends StatelessWidget {
 
   _banner(Size size, BuildContext context) {
     double bannerContainerWidth = size.width * 0.6;
-    double bannerContainerHeight = size.height * 0.12;
+    double bannerContainerHeight = size.height * 0.099;
     return Container(
       width: bannerContainerWidth,
       height: bannerContainerHeight,
@@ -30,7 +34,7 @@ class ChapterBannerWidget extends StatelessWidget {
   }
 
   _logoContainer(double parentWidth, double parentHeight) {
-    double containerWidth = parentWidth * 0.35;
+    double containerWidth = parentWidth * 0.33;
     double containerHeight = parentHeight;
     return Positioned(
       right: 0,
@@ -42,7 +46,7 @@ class ChapterBannerWidget extends StatelessWidget {
         alignment: Alignment.center,
         child: Image(
           image: AssetImage(
-            'assets/backgrounds/decorations/black_icon_container.png',
+            this.chapterImgURL,
           ),
         ),
       ),
@@ -57,7 +61,7 @@ class ChapterBannerWidget extends StatelessWidget {
 
     return Positioned(
       top: parentWidth * 0.05,
-      right: parentHeight * 1,
+      right: parentHeight * 1.05,
       child: Container(
         width: containerWidth,
         height: containerHeight,
@@ -73,15 +77,15 @@ class ChapterBannerWidget extends StatelessWidget {
     //Creando el Scroll
     double containerWidth = parentWidth * 0.7;
     double containerHeight = parentHeight * 0.4;
-
+    double fontSize = (chapterName.length >= 10) ? 1.3 : 1.5;
     return Positioned(
       top: parentWidth * 0.15,
-      right: parentHeight * 1,
+      right: parentHeight * 1.05,
       child: Container(
         width: containerWidth,
         height: containerHeight,
         child: Text(chapterName.toUpperCase(),
-            style: korolevFont.headline6?.apply(fontSizeFactor: 1.5),
+            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
             textAlign: TextAlign.right),
       ),
     );

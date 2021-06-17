@@ -1,47 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/profile.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/club-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/shared/widgets/lectures-list-item_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class ClubScreen extends StatelessWidget {
+class ChapterClubhouseScreen extends StatelessWidget {
+  static const String route = '/chapterClubhouse';
+  final ChapterSettings chapterSettings;
+
+  const ChapterClubhouseScreen({Key? key, required this.chapterSettings})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: GestureDetector(
           ///To make the horizontal scroll to the next or previous page.
           onPanUpdate: (details) {
-            ///left
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
-
-            ///right
-            if (details.delta.dx < -5) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ProfileScreen();
-                  },
-                ),
-              );
-            }
+            /// left
+            if (details.delta.dx > 5) prevPage();
           },
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
+                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
                 reliefPosition: 'bottom-right',
               ),
 
@@ -51,26 +40,28 @@ class ClubScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        prevPage: prevPage,
+      ),
     );
   }
 
   ///body of the screen
   _resourcesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.03;
     double bodyContainerHeight = size.height * 0.75;
     double bodyMarginLeft = size.width * 0.10;
+    double fontSize = (size.height > 600) ? 0.97 : 0.8;
 
     ///sizing the container to the mobile
     return Container(
-      margin: EdgeInsets.only(
-        right: bodyMarginWidth,
-      ),
-
       ///Listview of the whole screen
       child: ListView(
         children: [
-          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          ChapterHeadWidget(
+            phaseName: this.chapterSettings.phaseName,
+            chapterName: this.chapterSettings.cityName,
+            chapterImgURL: this.chapterSettings.chapterImageUrl,
+          ),
           SizedBox(
             height: 50,
           ),
@@ -80,18 +71,18 @@ class ClubScreen extends StatelessWidget {
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              // margin:
+              //     EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
                 'CLUBHOUSE',
-                style: korolevFont.headline2?.apply(fontSizeFactor: 0.97),
+                style: korolevFont.headline2?.apply(fontSizeFactor: fontSize),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
           SizedBox(
             height: 10,
-          ),    
+          ),
           Container(
               width: double.infinity,
               height: bodyContainerHeight * 0.13,
@@ -102,18 +93,17 @@ class ClubScreen extends StatelessWidget {
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
                 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.',
-                style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
+                style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
-          
+
           SizedBox(
             height: 20,
           ),
           ChapterSubtitleSection(
             title: 'PRÓXIMOS ENCUENTROS',
-            
           ),
           SizedBox(
             height: 35,
@@ -133,13 +123,11 @@ class ClubScreen extends StatelessWidget {
   }
 
   ///books body method
-  
+
   ///Method of the online resources
   _onlineResourcesBody(List list) {
     ///main container
     return Container(
-      padding: EdgeInsets.only(left: 25),
-
       ///To resize the parent container of the online resources grid
       height: (list.length) * 110,
 
@@ -154,7 +142,10 @@ class ClubScreen extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           ///calls the custom widget with the item parameters
-          return ClubResourcesGridItem(theme: 'TEMA DEL ENCUENTRO', schedule: 'LUNES 12/06 // 13:30 HS.',agenda: 'AÑADIR A MI AGENDA');
+          return ClubResourcesGridItem(
+              theme: 'TEMA DEL ENCUENTRO',
+              schedule: 'LUNES 12/06 // 13:30 HS.',
+              agenda: 'AÑADIR A MI AGENDA');
         },
       ),
     );

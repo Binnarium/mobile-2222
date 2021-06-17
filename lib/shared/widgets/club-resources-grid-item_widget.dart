@@ -15,57 +15,62 @@ class ClubResourcesGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        print('recurso club presionado');
-      },
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image(
-              image: AssetImage('assets/icons/clubhouse_activity_icon.png'),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              schedule,
-              style: korolevFont.headline6?.apply(fontSizeFactor: 0.7),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-            SizedBox(
-              height: 1,
-            ),
-            Text(
-              theme,
-              style: korolevFont.headline6?.apply(fontSizeFactor: 0.6),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 6,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              width: 95,
-              height: 15,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(3)),
-                border: Border.all(color: Colors.white)
+    Size size = MediaQuery.of(context).size;
+    double fontSize = (size.height > 600) ? 0.9 : 0.7;
+    double width = (size.height > 600) ? 110 : 95;
+    double height = (size.height > 600) ? 20 : 15;
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image(
+            image: AssetImage('assets/icons/clubhouse_activity_icon.png'),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            schedule,
+            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+          SizedBox(
+            height: 1,
+          ),
+          Text(
+            theme,
+            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize - 0.1),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 6,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: () {
+                print('aniadir a agenda presionado');
+              },
+              child: Container(
+                width: width,
+                height: height,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(3)),
+                    border: Border.all(color: Colors.white)),
+                child: Text(
+                  agenda,
+                  style: korolevFont.headline6
+                      ?.apply(fontSizeFactor: fontSize - 0.3),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
-              child: Text(
-              agenda,
-              style: korolevFont.headline6?.apply(fontSizeFactor: 0.5),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 6,
             ),
-            ),
-            
-            
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

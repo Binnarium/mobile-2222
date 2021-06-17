@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -7,35 +8,38 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageVideoScreen extends StatelessWidget {
+  static const String route = '/video';
+  final ChapterSettings chapterSettings;
+
+  const StageVideoScreen({Key? key, required this.chapterSettings})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ResourcesScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: GestureDetector(
           ///To make the horizontal scroll to the next or previous page.
           onPanUpdate: (details) {
-            ///left
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
+            /// left
+            if (details.delta.dx > 5) prevPage();
 
-            ///right
-            if (details.delta.dx < -5) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ResourcesScreen();
-                  },
-                ),
-              );
-            }
+            /// right
+            if (details.delta.dx < -5) nextPage();
           },
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
+                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
                 reliefPosition: 'top-left',
               ),
               _stageVideoContent(size, context),
@@ -43,7 +47,10 @@ class StageVideoScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
@@ -54,8 +61,9 @@ class StageVideoScreen extends StatelessWidget {
         children: [
           ///calls the head of the chapter (logo leaf, banner)
           ChapterHeadWidget(
-            chapterName: 'aztlán',
-            phaseName: 'etapa 4',
+            chapterName: this.chapterSettings.cityName,
+            phaseName: this.chapterSettings.phaseName,
+            chapterImgURL: this.chapterSettings.chapterImageUrl,
           ),
           SizedBox(height: 20),
           _videoTitleContainer(size),
@@ -89,7 +97,7 @@ class StageVideoScreen extends StatelessWidget {
               'TÍTULO DEL VIDEO LOREM IPSUM SIT AMET CONSEQUTETUR'
                   .toUpperCase(),
               style: korolevFont.headline6?.apply(
-                color: ColorsApp.backgroundOrange,
+                color: Color(int.parse(chapterSettings.primaryColor)),
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -138,21 +146,26 @@ class StageVideoScreen extends StatelessWidget {
   }
 
   _podcastContainer(Size size) {
-    return InkWell(
-      onTap: () {
-        print('podcast icon pressed');
-      },
-      child: Column(
-        children: [
-          Image(
-            image: AssetImage('assets/icons/podcast_icon.png'),
+    return Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        onTap: () {
+          print('podcast icon pressed');
+        },
+        child: ClipRRect(
+          child: Column(
+            children: [
+              Image(
+                image: AssetImage('assets/icons/podcast_icon.png'),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Escucha el podcast',
+                style: korolevFont.headline6?.apply(),
+              )
+            ],
           ),
-          SizedBox(height: 20),
-          Text(
-            'Escucha el podcast',
-            style: korolevFont.headline6?.apply(),
-          )
-        ],
+        ),
       ),
     );
   }

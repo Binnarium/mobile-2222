@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/lectures-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
 class ResourcesScreen extends StatelessWidget {
-  final Color primaryColor = Colors.red;
-  static String route = '/recursos';
+  static const String route = '/resources';
+  final ChapterSettings chapterSettings;
+
+  const ResourcesScreen({Key? key, required this.chapterSettings})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ActivitiesScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: GestureDetector(
           ///To make the horizontal scroll to the next or previous page.
           onPanUpdate: (details) {
-            ///left
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
+            /// left
+            if (details.delta.dx > 5) prevPage();
 
-            ///right
-            if (details.delta.dx < -5) {
-              Navigator.pushNamed(
-                context,
-                ActivitiesScreen.route,
-                arguments: ActivitiesScreen(
-                  primaryColor: this.primaryColor,
-                ),
-              );
-            }
+            /// right
+            if (details.delta.dx < -5) nextPage();
           },
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
+                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
               ),
 
               ///body of the screen
@@ -48,24 +49,25 @@ class ResourcesScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
   ///body of the screen
   _resourcesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.03;
-
     ///sizing the container to the mobile
     return Container(
-      margin: EdgeInsets.only(
-        right: bodyMarginWidth,
-      ),
-
       ///Listview of the whole screen
       child: ListView(
         children: [
-          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          ChapterHeadWidget(
+            phaseName: this.chapterSettings.phaseName,
+            chapterName: this.chapterSettings.cityName,
+            chapterImgURL: this.chapterSettings.chapterImageUrl,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -79,7 +81,12 @@ class ResourcesScreen extends StatelessWidget {
           ),
 
           ///list of the bodys (json expected)
-          _booksBody([3, 2]),
+          _booksBody([
+            3,
+            2,
+            1,
+          ], size),
+          SizedBox(height: 30),
           ChapterTitleSection(
             title: 'RECURSOS ONLINE',
           ),
@@ -94,18 +101,23 @@ class ResourcesScreen extends StatelessWidget {
             2,
             1,
             2,
-          ]),
+          ], size),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
   }
 
-  ///books body method
-  _booksBody(List list) {
-    ///main container
+  /// books body method
+  _booksBody(List list, Size size) {
+    double bodyMarginWidth = size.width * 0.03;
+
+    /// main container
     return Container(
-      ///general left padding 25
-      padding: EdgeInsets.only(left: 25),
+      /// general left padding 25
+      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the list of books
       height: (list.length) * 150,
@@ -115,6 +127,7 @@ class ResourcesScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             ///bringing a book resource per item in the list
             return LecturesListItem(
+              size: size,
               imageURL:
                   'https://www.pngarts.com/files/8/Blank-Book-Cover-PNG-Picture.png',
               title: 'El Principito valiente',
@@ -122,20 +135,22 @@ class ResourcesScreen extends StatelessWidget {
               year: '1979',
               editorial: 'Editorial San José Ignacio de Barravanes',
               review:
-                  'Tenim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
+                  'Tenim ipsam voluptatem quia volupipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiatas sit aspernatur aut odit aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
             );
           }),
     );
   }
 
   ///Method of the online resources
-  _onlineResourcesBody(List list) {
+  _onlineResourcesBody(List list, Size size) {
+    double bodyMarginWidth = size.width * 0.03;
+
     ///main container
     return Container(
-      padding: EdgeInsets.only(left: 25),
+      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
-      height: (list.length) * 110,
+      height: (list.length) * 120,
 
       ///Creates a grid with the necesary online resources
       child: GridView.builder(
@@ -152,6 +167,8 @@ class ResourcesScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           ///calls the custom widget with the item parameters
           return OnlineResourcesGridItem(
+              color: Color(int.parse(chapterSettings.primaryColor)),
+              size: size,
               account: 'Platzi/live',
               type: 'youtube',
               description:
