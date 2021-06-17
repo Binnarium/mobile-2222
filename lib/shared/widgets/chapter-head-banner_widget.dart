@@ -19,6 +19,7 @@ class ChapterHeadWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: size.width * 0.05),
       child: Row(
+        
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ChapterLeafLogoWidget(),

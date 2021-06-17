@@ -65,6 +65,7 @@ class ResourcesScreen extends StatelessWidget {
       margin: EdgeInsets.only(
         right: bodyMarginWidth,
       ),
+     
 
       ///Listview of the whole screen
       child: ListView(

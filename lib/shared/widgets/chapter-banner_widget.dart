@@ -19,7 +19,7 @@ class ChapterBannerWidget extends StatelessWidget {
 
   _banner(Size size, BuildContext context) {
     double bannerContainerWidth = size.width * 0.6;
-    double bannerContainerHeight = size.height * 0.12;
+    double bannerContainerHeight = size.height * 0.099;
     return Container(
       width: bannerContainerWidth,
       height: bannerContainerHeight,
@@ -34,7 +34,7 @@ class ChapterBannerWidget extends StatelessWidget {
   }
 
   _logoContainer(double parentWidth, double parentHeight) {
-    double containerWidth = parentWidth * 0.35;
+    double containerWidth = parentWidth * 0.33;
     double containerHeight = parentHeight;
     return Positioned(
       right: 0,
@@ -61,7 +61,7 @@ class ChapterBannerWidget extends StatelessWidget {
 
     return Positioned(
       top: parentWidth * 0.05,
-      right: parentHeight * 1,
+      right: parentHeight * 1.05,
       child: Container(
         width: containerWidth,
         height: containerHeight,
@@ -80,7 +80,7 @@ class ChapterBannerWidget extends StatelessWidget {
 
     return Positioned(
       top: parentWidth * 0.15,
-      right: parentHeight * 1,
+      right: parentHeight * 1.05,
       child: Container(
         width: containerWidth,
         height: containerHeight,
