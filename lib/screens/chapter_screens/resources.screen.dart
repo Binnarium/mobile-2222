@@ -58,8 +58,6 @@ class ResourcesScreen extends StatelessWidget {
 
   ///body of the screen
   _resourcesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.03;
-
     ///sizing the container to the mobile
     return Container(
       ///Listview of the whole screen
@@ -104,6 +102,9 @@ class ResourcesScreen extends StatelessWidget {
             1,
             2,
           ], size),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
@@ -149,7 +150,7 @@ class ResourcesScreen extends StatelessWidget {
       margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
-      height: (list.length) * 110,
+      height: (list.length) * 120,
 
       ///Creates a grid with the necesary online resources
       child: GridView.builder(
@@ -166,6 +167,7 @@ class ResourcesScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           ///calls the custom widget with the item parameters
           return OnlineResourcesGridItem(
+              color: Color(int.parse(chapterSettings.primaryColor)),
               size: size,
               account: 'Platzi/live',
               type: 'youtube',

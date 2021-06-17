@@ -6,6 +6,7 @@ class OnlineResourcesGridItem extends StatelessWidget {
   final String type;
   final String description;
   final Size size;
+  final Color color;
 
   const OnlineResourcesGridItem({
     Key? key,
@@ -13,13 +14,14 @@ class OnlineResourcesGridItem extends StatelessWidget {
     required this.type,
     required this.description,
     required this.size,
+    required this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double fontSize = (size.height > 600) ? 0.9 : 0.7;
     return Material(
-      color: Colors.transparent,
+      type: MaterialType.transparency,
       child: InkWell(
         onTap: () {
           print('recurso online presionado');

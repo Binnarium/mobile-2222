@@ -57,7 +57,7 @@ class ActivityContainerWidget extends StatelessWidget {
                   ..rotateZ(2.26893);
                 iconAlignment = Alignment.topRight;
                 iconPath = 'assets/icons/clubhouse_activity_icon.png';
-                activityName = 'ClubHouse';
+                activityName = 'Eventos ClubHouse';
                 break;
 
               case 1:
@@ -125,8 +125,8 @@ class ActivityContainerWidget extends StatelessWidget {
           Image(
             alignment: iconAlignment,
             image: AssetImage(iconPath),
-            width: width * 1.5,
-            height: height * 1.5,
+            width: width * 1.2,
+            height: height * 1.2,
           ),
           _textContainer(width, height, activityName),
         ],
@@ -140,7 +140,7 @@ class ActivityContainerWidget extends StatelessWidget {
 
     return Container(
       margin: (height > 120)
-          ? EdgeInsets.only(top: height * 0.17)
+          ? EdgeInsets.only(top: height * 0.1)
           : EdgeInsets.only(top: height * 0.25),
       alignment: Alignment.center,
       width: width,
