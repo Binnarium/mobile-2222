@@ -130,6 +130,7 @@ class ChapterClubhouseScreen extends StatelessWidget {
     return Container(
       ///To resize the parent container of the online resources grid
       height: (list.length) * 110,
+      margin: EdgeInsets.symmetric(horizontal: 5),
 
       ///Creates a grid with the necesary online resources
       child: GridView.builder(
