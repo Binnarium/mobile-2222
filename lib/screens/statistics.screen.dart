@@ -16,7 +16,9 @@ class StatisticsScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        activePage: NavigationBarPages.page5,
+      ),
     );
   }
 }

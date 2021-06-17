@@ -4,7 +4,11 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 class ChapterBannerWidget extends StatelessWidget {
   final String phase;
   final String chapterName;
-  const ChapterBannerWidget({required this.phase, required this.chapterName});
+  final String chapterImgURL;
+  const ChapterBannerWidget(
+      {required this.phase,
+      required this.chapterName,
+      required this.chapterImgURL});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class ChapterBannerWidget extends StatelessWidget {
         alignment: Alignment.center,
         child: Image(
           image: AssetImage(
-            'assets/backgrounds/decorations/black_icon_container.png',
+            this.chapterImgURL,
           ),
         ),
       ),

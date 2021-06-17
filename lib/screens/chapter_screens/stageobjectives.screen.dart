@@ -1,53 +1,62 @@
 import 'package:flutter/material.dart';
 
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageObjetivesScreen extends StatelessWidget {
+  static const String route = '/argumentation';
+  final ChapterSettings chapterSettings;
+
+  const StageObjetivesScreen({Key? key, required this.chapterSettings})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return StageVideoScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: GestureDetector(
         onPanUpdate: (details) {
-          if (details.delta.dx > 5) {
-            Navigator.pop(context);
-          }
-          if (details.delta.dx < -5) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return StageVideoScreen();
-                },
-              ),
-            );
-          }
+          /// left
+          if (details.delta.dx > 5) prevPage();
+
+          /// right
+          if (details.delta.dx < -5) nextPage();
         },
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: ColorsApp.backgroundOrange,
+              backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
               reliefPosition: 'top-left',
             ),
             _stageBody(size),
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
   _stageBody(Size size) {
     double bodyContainerHeight = size.height * 0.75;
     double bodyMarginLeft = size.width * 0.10;
-    
 
     double spacedBodyContainers = bodyContainerHeight * 0.015;
 
@@ -55,10 +64,13 @@ class StageObjetivesScreen extends StatelessWidget {
       alignment: Alignment.topLeft,
       width: double.infinity,
       height: double.infinity,
-      
       child: ListView(
         children: <Widget>[
-          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          ChapterHeadWidget(
+            phaseName: this.chapterSettings.phaseName,
+            chapterName: this.chapterSettings.cityName,
+            chapterImgURL: this.chapterSettings.chapterImageUrl,
+          ),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'OBJETIVO',
@@ -80,13 +92,13 @@ class StageObjetivesScreen extends StatelessWidget {
             title: 'CONTENIDOS',
           ),
           SizedBox(height: spacedBodyContainers),
-          _contentsBody([ 4, 4, 5], size),
+          _contentsBody([4, 4, 5], size),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'COMPETENCIAS',
           ),
-          SizedBox(height: spacedBodyContainers+10),
-          _compeBody([4,4,4],size),
+          SizedBox(height: spacedBodyContainers + 10),
+          _compeBody([4, 4, 4], size),
           Container(
             width: double.infinity,
             height: bodyContainerHeight * 0.40,
@@ -112,12 +124,10 @@ class StageObjetivesScreen extends StatelessWidget {
       width: double.infinity,
       alignment: Alignment.center,
 
-     
-
       ///To resize the parent container of the list of books
       height: (list.length) * 75,
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: list.length,
           itemBuilder: (context, index) {
             ///bringing a book resource per item in the list
@@ -152,7 +162,8 @@ class StageObjetivesScreen extends StatelessWidget {
           }),
     );
   }
-  _compeBody(List list, Size size){
+
+  _compeBody(List list, Size size) {
     return Container(
       padding: EdgeInsets.only(left: 25),
 
@@ -169,9 +180,11 @@ class StageObjetivesScreen extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           ///calls the custom widget with the item parameters
-          return CompeResourcesGridItem(image: 'competencias${index+1}_stage', description: 'MANEJO DEL TIEMPO');
+          return CompeResourcesGridItem(
+              image: 'competencias${index + 1}_stage',
+              description: 'MANEJO DEL TIEMPO');
         },
-      ), 
+      ),
     );
   }
 }

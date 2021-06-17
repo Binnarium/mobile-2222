@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageTitleScreen extends StatelessWidget {
-  static const String route = '/stagescreen';
+  static const String route = '/title';
+  final ChapterSettings chapterSettings;
+
+  const StageTitleScreen({
+    Key? key,
+    required this.chapterSettings,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return StageIntroductionScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
+
+    // Navigator.pushNamed(context, StageIntroductionScreen.route);
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: GestureDetector(
         onPanUpdate: (details) {
-          if (details.delta.dx > 5) {
-            Navigator.pop(context);
-          }
-          if (details.delta.dx < -5) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              print('se movió a la derecha');
-              return StageIntroductionScreen();
-            }));
-          }
+          /// left
+          if (details.delta.dx > 5) prevPage();
+
+          /// right
+          if (details.delta.dx < -5) nextPage();
         },
 
         /// main content of page
@@ -32,7 +45,7 @@ class StageTitleScreen extends StatelessWidget {
           children: [
             /// first layer is the background with road-map
             CustomBackground(
-              backgroundColor: ColorsApp.backgroundOrange,
+              backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
               backgroundImages: [
                 /// pattern background
                 Image(
@@ -67,7 +80,10 @@ class StageTitleScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
@@ -88,13 +104,13 @@ class StageTitleScreen extends StatelessWidget {
       children: [
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text('ETAPA 4',
+        Text(this.chapterSettings.phaseName.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline3?.apply(
                 fontSizeFactor: size.height * 0.0006, fontWeightDelta: -1)),
         SizedBox(height: size.height * 0.01),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text('AZTLÁN',
+        Text(this.chapterSettings.cityName.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline1
                 ?.apply(fontSizeFactor: daysLeftSize, fontWeightDelta: 5)),
@@ -117,7 +133,7 @@ class StageTitleScreen extends StatelessWidget {
       height: size.height * 0.35,
       child: Image(
         image: AssetImage(
-          'assets/backgrounds/decorations/black_icon_container.png',
+          this.chapterSettings.chapterImageUrl,
         ),
         filterQuality: FilterQuality.high,
       ),

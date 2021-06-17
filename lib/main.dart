@@ -2,8 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/providers/ui_bottomBar_provider.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageTitle.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
+import 'package:lab_movil_2222/screens/club_house.screen.dart';
+import 'package:lab_movil_2222/screens/goals.screen.dart';
+import 'package:lab_movil_2222/screens/login.screen.dart';
+import 'package:lab_movil_2222/screens/profile.screen.dart';
+import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
+import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:provider/provider.dart';
 
@@ -31,28 +42,80 @@ class MyApp extends StatelessWidget {
           platform: TargetPlatform.android,
         ),
 
-        initialRoute: ResourcesScreen.route,
+        initialRoute: SplashScreen.route,
 
         /// aquí van las páginas existentes, son las rutas a las páginas (pantallas)
         onGenerateRoute: (settings) => MaterialPageRoute(builder: (context) {
-          if (settings.name == SplashScreen.route) return SplashScreen();
-          if (settings.name == ResourcesScreen.route) return ResourcesScreen();
+          switch (settings.name) {
+            case SplashScreen.route:
+              return SplashScreen();
 
-          final args = settings.arguments as ActivitiesScreen;
+            case LoginScreen.route:
+              return LoginScreen();
 
-          if (settings.name == ActivitiesScreen.route)
-            return ActivitiesScreen(
-              primaryColor: args.primaryColor,
-            );
+            case ClubHouseScreen.route:
+              return ClubHouseScreen();
 
-          return SplashScreen();
-          // SplashScreen.route:  SplashScreen(),
-          // AccountScreen.route: (BuildContext context) => AccountScreen(),
-          // LoginScreen.route: (BuildContext context) => LoginScreen(),
-          // RouteScreen.route: (BuildContext context) => RouteScreen(),
-          // GoalsScreen.route: (BuildContext context) => GoalsScreen(),
-          // ClubHouseScreen.route: (BuildContext context) => ClubHouseScreen(),
-          // StatisticsScreen.route: (BuildContext context) => StatisticsScreen(),
+            case StatisticsScreen.route:
+              return StatisticsScreen();
+
+            case RouteScreen.route:
+              return RouteScreen();
+
+            case StatisticsScreen.route:
+              return StatisticsScreen();
+
+            case GoalsScreen.route:
+              return GoalsScreen();
+
+            case ProfileScreen.route:
+              return ProfileScreen();
+
+            case StageTitleScreen.route:
+              final args = settings.arguments as StageTitleScreen;
+              return StageTitleScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            case StageIntroductionScreen.route:
+              final args = settings.arguments as StageIntroductionScreen;
+              return StageIntroductionScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            case StageObjetivesScreen.route:
+              final args = settings.arguments as StageObjetivesScreen;
+              return StageObjetivesScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            case StageArgumentationScreen.route:
+              final args = settings.arguments as StageArgumentationScreen;
+              return StageArgumentationScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            case StageVideoScreen.route:
+              final args = settings.arguments as StageVideoScreen;
+              return StageVideoScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            case ActivitiesScreen.route:
+              final args = settings.arguments as ActivitiesScreen;
+              return ActivitiesScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            case ChapterClubhouseScreen.route:
+              final args = settings.arguments as ChapterClubhouseScreen;
+              return ChapterClubhouseScreen(
+                chapterSettings: args.chapterSettings,
+              );
+
+            default:
+              return SplashScreen();
+          }
         }),
       ),
     );

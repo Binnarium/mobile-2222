@@ -1,0 +1,111 @@
+{
+    "chapter1": 
+        {
+        "primaryColor": "0xffF1682A",
+        "phaseName": "Etapa 1",
+        "cityName": "Quitu",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter2": 
+        {
+        "primaryColor": "0xffF1682A",
+        "phaseName": "Etapa 2",
+        "cityName": "El Dorado",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter3": 
+        {
+        "primaryColor": "0xffF1682A",
+        "phaseName": "Etapa 3",
+        "cityName": "Machu Picchu",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter4": 
+        {
+        "primaryColor": "0xffF1682A",
+        "phaseName": "Etapa 4",
+        "cityName": "Aztlán",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter5": 
+        {
+        "primaryColor": "0xff594998",
+        "phaseName": "Etapa 5",
+        "cityName": "Atlántida",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter6": 
+        {
+        "primaryColor": "0xffE5443F",
+        "phaseName": "Etapa 6",
+        "cityName": "Audagost",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter7": 
+        {
+        "primaryColor": "0xff99C03C",
+        "phaseName": "Etapa 7",
+        "cityName": "Troya",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter8": 
+        {
+        "primaryColor": "0xff99C03C",
+        "phaseName": "Etapa 8",
+        "cityName": "Heracleion",
+        "chapterImageURL": "assets/backgrounds/chapterImages/heracleion_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter9": 
+        {
+        "primaryColor": "0xff99C03C",
+        "phaseName": "Etapa 9",
+        "cityName": "Persépolis",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter10": 
+        {
+        "primaryColor": "0xffEF5987",
+        "phaseName": "Etapa 10",
+        "cityName": "Asgard",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter11": 
+        {
+        "primaryColor": "0xff3EB4B4",
+        "phaseName": "Etapa 11",
+        "cityName": "Angkor",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    },
+    "chapter12": 
+        {
+        "primaryColor": "0xff3EB4B4",
+        "phaseName": "Etapa 12",
+        "cityName": "Shangri-la",
+        "chapterImageURL": "assets/backgrounds/chapterImages/aztlan_chapter_img.png",
+        "decoration1URL": "assets/backgrounds/decorations/white_route_circle_curve_background.png",
+        "characterImageURL": "assets/backgrounds/decorations/Phasm_background_decoration.png"
+    }
+
+}

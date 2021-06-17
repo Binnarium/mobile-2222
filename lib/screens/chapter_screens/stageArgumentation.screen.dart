@@ -1,39 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
 class StageArgumentationScreen extends StatelessWidget {
+  static const String route = '/argumentation';
+  final ChapterSettings chapterSettings;
+
+  const StageArgumentationScreen({Key? key, required this.chapterSettings})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return StageObjetivesScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
     Size size = MediaQuery.of(context).size;
     print(size);
     return Scaffold(
       body: Center(
         child: GestureDetector(
           onPanUpdate: (details) {
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
-            if (details.delta.dx < -5) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return StageObjetivesScreen();
-                  },
-                ),
-              );
-            }
+            /// left
+            if (details.delta.dx > 5) prevPage();
+
+            /// right
+            if (details.delta.dx < -5) nextPage();
           },
           child: Stack(
             children: [
               //widget custom que crea el background con el logo de la izq
               ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
+                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
                 reliefPosition: 'top-right',
               ),
               //decoración adicional del background
@@ -42,13 +47,20 @@ class StageArgumentationScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
   _backgroundDecoration(Size size) {
     return Stack(children: [
-      ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+      ChapterHeadWidget(
+        phaseName: this.chapterSettings.phaseName,
+        chapterName: this.chapterSettings.cityName,
+        chapterImgURL: this.chapterSettings.chapterImageUrl,
+      ),
       _ghostImage(size),
       Positioned(
         top: size.height * 0.13,
@@ -58,13 +70,6 @@ class StageArgumentationScreen extends StatelessWidget {
               '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
           width: size.width * 0.36,
           height: size.height * 0.26,
-          // rotation: Matrix4.identity()
-          //   //matriz de perspectiva
-          //   ..setEntry(3, 2, 0.001)
-          //   //con esto se rota por el eje x
-          //   ..rotateX(0)
-          //   //se rota eje y
-          //   ..rotateY(0),
         ),
       ),
       Positioned(
@@ -100,7 +105,7 @@ class StageArgumentationScreen extends StatelessWidget {
       height: double.infinity,
       child: Image(
         image: AssetImage(
-          'assets/backgrounds/decorations/Phasm_background_decoration.png',
+          this.chapterSettings.characterImageUrl,
         ),
       ),
     );

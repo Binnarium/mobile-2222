@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/route.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(
       Duration(seconds: 2),
-      () => Navigator.of(context).pushReplacementNamed(ResourcesScreen.route),
+      () => Navigator.of(context).pushReplacementNamed(RouteScreen.route),
     );
   }
 

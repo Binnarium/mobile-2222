@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivityContainerWidget extends StatelessWidget {
   final double width;
   final double height;
+  final String primaryColor;
   final Map<String, String> activities;
 
   const ActivityContainerWidget(
       {Key? key,
       required this.activities,
       required this.width,
-      required this.height})
+      required this.height,
+      required this.primaryColor})
       : super(key: key);
 
   @override
@@ -153,7 +154,7 @@ class ActivityContainerWidget extends StatelessWidget {
           Text(
             activityName.toUpperCase(),
             style: korolevFont.headline6?.apply(
-              color: ColorsApp.backgroundOrange,
+              color: Color(int.parse(this.primaryColor)),
               fontSizeFactor: 0.7,
             ),
             textAlign: TextAlign.center,

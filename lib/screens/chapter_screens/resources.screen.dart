@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
+import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/lectures-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
 class ResourcesScreen extends StatelessWidget {
-  final Color primaryColor = Colors.red;
-  static String route = '/recursos';
+  static const String route = '/resources';
+  final ChapterSettings chapterSettings;
+
+  const ResourcesScreen({Key? key, required this.chapterSettings})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback nextPage = () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ActivitiesScreen(
+          chapterSettings: this.chapterSettings,
+        );
+      }));
+    };
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: GestureDetector(
           ///To make the horizontal scroll to the next or previous page.
           onPanUpdate: (details) {
-            ///left
-            if (details.delta.dx > 5) {
-              Navigator.pop(context);
-            }
+            /// left
+            if (details.delta.dx > 5) prevPage();
 
-            ///right
-            if (details.delta.dx < -5) {
-              Navigator.pushNamed(
-                context,
-                ActivitiesScreen.route,
-                arguments: ActivitiesScreen(
-                  primaryColor: this.primaryColor,
-                ),
-              );
-            }
+            /// right
+            if (details.delta.dx < -5) nextPage();
           },
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: ColorsApp.backgroundOrange,
+                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
               ),
 
               ///body of the screen
@@ -48,7 +49,10 @@ class ResourcesScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        nextPage: nextPage,
+        prevPage: prevPage,
+      ),
     );
   }
 
@@ -65,7 +69,11 @@ class ResourcesScreen extends StatelessWidget {
       ///Listview of the whole screen
       child: ListView(
         children: [
-          ChapterHeadWidget(phaseName: 'etapa 4', chapterName: 'aztlán'),
+          ChapterHeadWidget(
+            phaseName: this.chapterSettings.phaseName,
+            chapterName: this.chapterSettings.cityName,
+            chapterImgURL: this.chapterSettings.chapterImageUrl,
+          ),
           SizedBox(
             height: 20,
           ),

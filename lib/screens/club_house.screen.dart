@@ -16,7 +16,9 @@ class ClubHouseScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        activePage: NavigationBarPages.page4,
+      ),
     );
   }
 }

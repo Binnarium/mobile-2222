@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
+import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/route.screen.dart';
+import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 enum NavigationBarPages {
@@ -14,6 +17,9 @@ enum NavigationBarPages {
 const Map<NavigationBarPages, String> AppRoutes = {
   NavigationBarPages.page1: RouteScreen.route,
   NavigationBarPages.page2: GoalsScreen.route,
+  NavigationBarPages.page3: ProfileScreen.route,
+  NavigationBarPages.page4: ClubHouseScreen.route,
+  NavigationBarPages.page5: StatisticsScreen.route,
 };
 
 class CustomNavigationBar extends StatelessWidget {
