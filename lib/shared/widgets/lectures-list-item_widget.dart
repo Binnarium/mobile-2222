@@ -8,19 +8,23 @@ class LecturesListItem extends StatelessWidget {
   final String? editorial;
   final String year;
   final String? review;
+  final Size size;
 
-  const LecturesListItem(
-      {Key? key,
-      this.imageURL,
-      required this.title,
-      required this.author,
-      this.editorial,
-      required this.year,
-      this.review})
-      : super(key: key);
+  const LecturesListItem({
+    Key? key,
+    this.imageURL,
+    required this.title,
+    required this.author,
+    this.editorial,
+    required this.year,
+    this.review,
+    required this.size,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double fontSize = (size.height > 600) ? 1 : 0.9;
+
     ///Returns an InkWell so it can be tapped
     return InkWell(
       onTap: () {
@@ -29,7 +33,7 @@ class LecturesListItem extends StatelessWidget {
 
       ///Container of the resource
       child: new Container(
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(vertical: 15),
         width: double.infinity,
 
         ///static height
@@ -61,16 +65,21 @@ class LecturesListItem extends StatelessWidget {
             ),
 
             ///Makes the column flexible to avoid the overflow
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+            Expanded(
+              child: Wrap(
+                // antes era column el wrap
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     title.toUpperCase(),
-                    style: korolevFont.headline6?.apply(fontSizeFactor: 0.9),
+                    style:
+                        korolevFont.headline6?.apply(fontSizeFactor: fontSize),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
 
                   ///Seeks for editorial, if not, it's ommited
@@ -79,28 +88,28 @@ class LecturesListItem extends StatelessWidget {
                           author + ' | ' + editorial! + ' | ' + year,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style:
-                              korolevFont.headline6?.apply(fontSizeFactor: 0.7),
+                          style: korolevFont.headline6
+                              ?.apply(fontSizeFactor: fontSize - 0.2),
                         )
                       : Text(
                           author + ' | ' + year,
                           overflow: TextOverflow.ellipsis,
-                          style:
-                              korolevFont.headline6?.apply(fontSizeFactor: 0.7),
+                          style: korolevFont.headline6
+                              ?.apply(fontSizeFactor: fontSize - 0.2),
                         ),
+                  SizedBox(
+                    height: 40,
+                  ),
 
                   ///Seeks for a review, if not, it's ommited
                   (review != null)
-                      ? Expanded(
-                          flex: 3,
-                          child: Text(
-                            'Reseña: ' + review!,
-                            style: korolevFont.bodyText2
-                                ?.apply(fontSizeFactor: 0.8),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 5,
-                            textAlign: TextAlign.left,
-                          ),
+                      ? Text(
+                          'Reseña: ' + review!,
+                          style: korolevFont.bodyText2
+                              ?.apply(fontSizeFactor: fontSize - 0.1),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                          textAlign: TextAlign.left,
                         )
                       : Text(
                           'Reseña no disponible',

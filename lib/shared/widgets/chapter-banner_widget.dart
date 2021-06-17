@@ -77,7 +77,7 @@ class ChapterBannerWidget extends StatelessWidget {
     //Creando el Scroll
     double containerWidth = parentWidth * 0.7;
     double containerHeight = parentHeight * 0.4;
-
+    double fontSize = (chapterName.length >= 10) ? 1.3 : 1.5;
     return Positioned(
       top: parentWidth * 0.15,
       right: parentHeight * 1.05,
@@ -85,7 +85,7 @@ class ChapterBannerWidget extends StatelessWidget {
         width: containerWidth,
         height: containerHeight,
         child: Text(chapterName.toUpperCase(),
-            style: korolevFont.headline6?.apply(fontSizeFactor: 1.5),
+            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
             textAlign: TextAlign.right),
       ),
     );

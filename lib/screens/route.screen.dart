@@ -58,7 +58,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings: ChapterSettings.fromJson(_items["chapter1"]),
                 );
@@ -72,7 +73,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings: ChapterSettings.fromJson(_items["chapter2"]),
                 );
@@ -86,7 +88,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings: ChapterSettings.fromJson(_items["chapter5"]),
                 );
@@ -100,7 +103,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings: ChapterSettings.fromJson(_items["chapter6"]),
                 );
@@ -114,7 +118,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings: ChapterSettings.fromJson(_items["chapter8"]),
                 );
@@ -128,7 +133,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings:
                       ChapterSettings.fromJson(_items["chapter10"]),
@@ -143,7 +149,8 @@ class _RouteScreenState extends State<RouteScreen> {
                   MaterialStateProperty.all(ColorsApp.backgroundBottomBar),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return StageTitleScreen(
                   chapterSettings:
                       ChapterSettings.fromJson(_items["chapter12"]),

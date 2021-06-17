@@ -91,6 +91,7 @@ class StageTitleScreen extends StatelessWidget {
     //Creando el Scroll
     double spacedSize = size.height * 0.165;
     double daysLeftSize = size.height * 0.001;
+    double fontSize = (size.height > 600) ? 1.2 : 1;
     if (size.height < 550) {
       spacedSize = size.height * 0.19;
       daysLeftSize = size.height * 0.0014;
@@ -106,20 +107,20 @@ class StageTitleScreen extends StatelessWidget {
         //Texto cambiar por funcionalidad de cuenta de días
         Text(this.chapterSettings.phaseName.toUpperCase(),
             textAlign: TextAlign.center,
-            style: korolevFont.headline3?.apply(
-                fontSizeFactor: size.height * 0.0006, fontWeightDelta: -1)),
-        SizedBox(height: size.height * 0.01),
+            style: korolevFont.headline3
+                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1)),
+        SizedBox(height: 10),
         //Texto cambiar por funcionalidad de cuenta de días
         Text(this.chapterSettings.cityName.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline1
-                ?.apply(fontSizeFactor: daysLeftSize, fontWeightDelta: 5)),
+                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5)),
         SizedBox(height: size.height * 0.05),
         _logoContainer(size),
         SizedBox(height: size.height * 0.07),
         Text(
           'Guiados por su dios tribal, Huitzilopochtli,\nlos mexicas salieron de Aztlán en busca de\n"la señal" que indicaría el lugar para fundar\nMéxico-Tenochtitlan.',
-          style: korolevFont.bodyText1,
+          style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
           textAlign: TextAlign.center,
         ),
       ],

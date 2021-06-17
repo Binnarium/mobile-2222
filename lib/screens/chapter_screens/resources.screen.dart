@@ -62,11 +62,6 @@ class ResourcesScreen extends StatelessWidget {
 
     ///sizing the container to the mobile
     return Container(
-      margin: EdgeInsets.only(
-        right: bodyMarginWidth,
-      ),
-     
-
       ///Listview of the whole screen
       child: ListView(
         children: [
@@ -88,7 +83,12 @@ class ResourcesScreen extends StatelessWidget {
           ),
 
           ///list of the bodys (json expected)
-          _booksBody([3, 2]),
+          _booksBody([
+            3,
+            2,
+            1,
+          ], size),
+          SizedBox(height: 30),
           ChapterTitleSection(
             title: 'RECURSOS ONLINE',
           ),
@@ -103,18 +103,20 @@ class ResourcesScreen extends StatelessWidget {
             2,
             1,
             2,
-          ]),
+          ], size),
         ],
       ),
     );
   }
 
-  ///books body method
-  _booksBody(List list) {
-    ///main container
+  /// books body method
+  _booksBody(List list, Size size) {
+    double bodyMarginWidth = size.width * 0.03;
+
+    /// main container
     return Container(
-      ///general left padding 25
-      padding: EdgeInsets.only(left: 25),
+      /// general left padding 25
+      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the list of books
       height: (list.length) * 150,
@@ -124,6 +126,7 @@ class ResourcesScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             ///bringing a book resource per item in the list
             return LecturesListItem(
+              size: size,
               imageURL:
                   'https://www.pngarts.com/files/8/Blank-Book-Cover-PNG-Picture.png',
               title: 'El Principito valiente',
@@ -131,17 +134,19 @@ class ResourcesScreen extends StatelessWidget {
               year: '1979',
               editorial: 'Editorial San José Ignacio de Barravanes',
               review:
-                  'Tenim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
+                  'Tenim ipsam voluptatem quia volupipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiatas sit aspernatur aut odit aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
             );
           }),
     );
   }
 
   ///Method of the online resources
-  _onlineResourcesBody(List list) {
+  _onlineResourcesBody(List list, Size size) {
+    double bodyMarginWidth = size.width * 0.03;
+
     ///main container
     return Container(
-      padding: EdgeInsets.only(left: 25),
+      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
       height: (list.length) * 110,
@@ -161,6 +166,7 @@ class ResourcesScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           ///calls the custom widget with the item parameters
           return OnlineResourcesGridItem(
+              size: size,
               account: 'Platzi/live',
               type: 'youtube',
               description:

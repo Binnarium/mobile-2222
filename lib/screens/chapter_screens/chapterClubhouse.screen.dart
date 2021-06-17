@@ -48,16 +48,12 @@ class ChapterClubhouseScreen extends StatelessWidget {
 
   ///body of the screen
   _resourcesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.03;
     double bodyContainerHeight = size.height * 0.75;
     double bodyMarginLeft = size.width * 0.10;
+    double fontSize = (size.height > 600) ? 0.97 : 0.8;
 
     ///sizing the container to the mobile
     return Container(
-      margin: EdgeInsets.only(
-        right: bodyMarginWidth,
-      ),
-
       ///Listview of the whole screen
       child: ListView(
         children: [
@@ -75,11 +71,11 @@ class ChapterClubhouseScreen extends StatelessWidget {
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              // margin:
+              //     EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
                 'CLUBHOUSE',
-                style: korolevFont.headline2?.apply(fontSizeFactor: 0.97),
+                style: korolevFont.headline2?.apply(fontSizeFactor: fontSize),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
                 textAlign: TextAlign.center,
@@ -97,7 +93,7 @@ class ChapterClubhouseScreen extends StatelessWidget {
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
                 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.',
-                style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
+                style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
                 textAlign: TextAlign.center,
@@ -132,8 +128,6 @@ class ChapterClubhouseScreen extends StatelessWidget {
   _onlineResourcesBody(List list) {
     ///main container
     return Container(
-      padding: EdgeInsets.only(left: 25),
-
       ///To resize the parent container of the online resources grid
       height: (list.length) * 110,
 
