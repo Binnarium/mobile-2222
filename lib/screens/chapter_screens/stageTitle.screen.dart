@@ -90,15 +90,12 @@ class StageTitleScreen extends StatelessWidget {
   _introductionBody(Size size) {
     //Creando el Scroll
     double spacedSize = size.height * 0.165;
-    double daysLeftSize = size.height * 0.001;
-    double fontSize = (size.height > 600) ? 1.2 : 1;
+    double fontSize = (size.height > 700) ? 1.2 : 1.1;
     if (size.height < 550) {
       spacedSize = size.height * 0.19;
-      daysLeftSize = size.height * 0.0014;
     }
     if (size.height < 650) {
       spacedSize = size.height * 0.125;
-      daysLeftSize = size.height * 0.001;
     }
     return ListView(
       /// city logo
@@ -119,7 +116,7 @@ class StageTitleScreen extends StatelessWidget {
         _logoContainer(size),
         SizedBox(height: size.height * 0.07),
         Text(
-          'Guiados por su dios tribal, Huitzilopochtli,\nlos mexicas salieron de Aztlán en busca de\n"la señal" que indicaría el lugar para fundar\nMéxico-Tenochtitlan.',
+          'Guiados por su dios tribal, Huitzilopochtli, los mexicas salieron de Aztlán en busca de "la señal" que indicaría el lugar para fundar México-Tenochtitlan.',
           style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
           textAlign: TextAlign.center,
         ),

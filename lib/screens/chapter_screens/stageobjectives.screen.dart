@@ -81,7 +81,7 @@ class StageObjetivesScreen extends StatelessWidget {
             title: 'CONTENIDOS',
           ),
           SizedBox(height: spacedBodyContainers),
-          _contentsBody([4, 4, 5, 4, 5, 6], size),
+          _contentsBody([4, 4, 5], size),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'COMPETENCIAS',

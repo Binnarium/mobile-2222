@@ -108,7 +108,7 @@ class StageIntroductionScreen extends StatelessWidget {
           SizedBox(height: spacedBodyContainers),
           Container(
               width: bodyContainerWidth * 0.9,
-              height: firstImageContainerHeight,
+              // height: firstImageContainerHeight,
               margin:
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               // decoration: BoxDecoration(
@@ -116,11 +116,11 @@ class StageIntroductionScreen extends StatelessWidget {
               // ),
               child: Text(
                 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolo remque laudantium, totam rem aperiam',
-                style: korolevFont.headline4?.apply(
-                    fontSizeFactor: size.height * 0.00068, fontWeightDelta: 2),
+                style: korolevFont.headline4
+                    ?.apply(fontSizeFactor: 0.45, fontWeightDelta: 2),
                 textAlign: TextAlign.left,
               )),
-          SizedBox(height: spacedBodyContainers * 2),
+          SizedBox(height: spacedBodyContainers * 4),
           Container(
               width: bodyContainerWidth * 0.9,
               height: bodyContainerHeight * 0.3,
@@ -131,10 +131,10 @@ class StageIntroductionScreen extends StatelessWidget {
               // ),
               child: Text(
                 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione',
-                style: korolevFont.bodyText1?.apply(
-                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
+                style: korolevFont.bodyText1,
                 textAlign: TextAlign.left,
               )),
+          SizedBox(height: spacedBodyContainers * 4),
           Container(
             width: secondImageContainerWidth,
             height: secondImageContainerHeight,
@@ -152,7 +152,6 @@ class StageIntroductionScreen extends StatelessWidget {
           SizedBox(height: spacedBodyContainers * 2),
           Container(
               width: bodyContainerWidth * 0.9,
-              height: bodyContainerHeight * 0.18,
               margin:
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               // decoration: BoxDecoration(
@@ -160,10 +159,10 @@ class StageIntroductionScreen extends StatelessWidget {
               // ),
               child: Text(
                 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora',
-                style: korolevFont.bodyText2?.apply(
-                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
+                style: korolevFont.bodyText1,
                 textAlign: TextAlign.left,
-              ))
+              )),
+          SizedBox(height: spacedBodyContainers * 4),
         ],
       ),
     );
