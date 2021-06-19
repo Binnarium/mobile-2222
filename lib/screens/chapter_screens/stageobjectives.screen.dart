@@ -81,7 +81,7 @@ class StageObjetivesScreen extends StatelessWidget {
             title: 'CONTENIDOS',
           ),
           SizedBox(height: spacedBodyContainers),
-          _contentsBody([4, 4, 5], size),
+          _contentsBody([4, 4, 5, 4, 5, 6], size),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'COMPETENCIAS',
@@ -104,38 +104,31 @@ class StageObjetivesScreen extends StatelessWidget {
   }
 
   _objetBody(Size size) {
-    String texto = 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
-    double bodyContainerHeight = texto.length*0.45;
+    String texto =
+        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
     double bodyMarginLeft = size.width * 0.10;
     return Container(
-        width: double.infinity,
-        height: bodyContainerHeight,
-        margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-        child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: 1,
-            itemBuilder: (context, index) {
-              return Text(
-                texto,
-                style: korolevFont.bodyText1?.apply(
-                    fontSizeFactor: size.height * 0.0012, fontWeightDelta: 0),
-                textAlign: TextAlign.left,
-              );
-            }));
+      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+      child: Text(
+        texto,
+        style: korolevFont.bodyText1,
+        textAlign: TextAlign.left,
+      ),
+    );
   }
 
   _contentsBody(List list, Size size) {
     double bodyContainerHeight = size.height * 0.75;
+    double bodyContainerWidth = size.width * 0.75;
 
     ///main container
     return Container(
       ///general left padding 25
       padding: EdgeInsets.only(left: 25),
-      width: double.infinity,
-      alignment: Alignment.center,
 
       ///To resize the parent container of the list of books
-      height: (list.length) * 65,
+      height: (list.length) * bodyContainerHeight * 0.125,
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: list.length,
@@ -144,27 +137,30 @@ class StageObjetivesScreen extends StatelessWidget {
             return Row(
               children: [
                 Container(
-                    width: bodyContainerHeight * 0.1,
+                    width: bodyContainerWidth * 0.1,
                     height: bodyContainerHeight * 0.1,
+                    margin: EdgeInsets.symmetric(vertical: 5),
                     alignment: Alignment.center,
                     child: Text(
                       '${index + 1}',
-                      style: korolevFont.headline3?.apply(
-                          fontSizeFactor: size.height * 0.0012,
-                          fontWeightDelta: 1),
+                      style: korolevFont.headline3?.apply(fontWeightDelta: 1),
                       textAlign: TextAlign.center,
                     )),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
-                    width: bodyContainerHeight * 0.40,
+                    width: bodyContainerWidth,
                     height: bodyContainerHeight * 0.1,
-                    
-                    
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    // decoration:
+                    //     BoxDecoration(border: Border.all(color: Colors.white)),
                     child: Text(
                       'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse',
-                      style: korolevFont.bodyText1?.apply(
-                          fontSizeFactor: size.height * 0.0012,
-                          fontWeightDelta: 0),
+                      style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.9),
                       textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
                     )),
               ],
             );
@@ -174,14 +170,15 @@ class StageObjetivesScreen extends StatelessWidget {
 
   _compeBody(List list, Size size) {
     return Container(
-      
-      
       ///To resize the parent container of the online resources grid
       height: (list.length) * 55,
-      width: (list.length)*75,
+      width: (list.length) * 75,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.only(left: 60),
+        padding: (size.height > 700)
+            ? EdgeInsets.only(left: 60)
+            : EdgeInsets.only(left: 30),
+
         ///general spacing per resource
         itemCount: list.length,
 
@@ -192,7 +189,6 @@ class StageObjetivesScreen extends StatelessWidget {
           return CompeResourcesListItem(
               image: 'competencias${index + 1}_stage',
               description: 'MANEJO\n DEL TIEMPO');
-              
         },
       ),
     );

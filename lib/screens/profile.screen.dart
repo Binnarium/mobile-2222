@@ -57,8 +57,6 @@ class ProfileScreen extends StatelessWidget {
             height: 30,
           ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.048,
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -71,19 +69,19 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
+          SizedBox(
+            height: 10,
+          ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.12,
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.white)),
               margin:
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
                 'RODRIGO ZAMORANO',
                 style: korolevFont.headline3?.apply(fontSizeFactor: 0.77),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 4,
+                maxLines: 2,
                 textAlign: TextAlign.center,
               )),
           SizedBox(
@@ -103,58 +101,70 @@ class ProfileScreen extends StatelessWidget {
                     image: AssetImage(
                         'assets/backgrounds/decorations/elipse_profile.png'),
                   ),
-                  Text(
-                    'Profesor de xxx xxx xxxxx xxx\nOtra información secundaria',
-                    style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    textAlign: TextAlign.left,
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Profesor de xxx xxx xxxxx xxx',
+                        style:
+                            korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Otra información secundaria',
+                        style:
+                            korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
                   )
                 ],
               )),
           SizedBox(
-            height: 67,
+            height: bodyContainerHeight * 0.12,
           ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.12,
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.white)),
               margin:
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
-                'NIVELES COMPLETADOS 4',
+                'NIVELES COMPLETADOS',
                 style: korolevFont.headline4?.apply(fontSizeFactor: 0.80),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
           SizedBox(
-            height: 7,
+            height: 10,
           ),
           Container(
-            width: double.infinity,
-            height: bodyContainerHeight * 0.12,
-            // decoration: BoxDecoration(
-            //   border: Border.all(color: Colors.white)
-            // ),
-            margin:
-                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-            // child: Text(
-            //   'IMAGEN FALTANTE',
-            //   style: korolevFont.headline4?.apply(fontSizeFactor: 0.80),
-            //   overflow: TextOverflow.ellipsis,
-            //   maxLines: 4,
-            //   textAlign: TextAlign.center,
-            // )
-          ),
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.white)),
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              child: Text(
+                '4',
+                style: korolevFont.headline4?.apply(),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 4,
+                textAlign: TextAlign.center,
+              )),
           SizedBox(
-            height: 7,
+            height: bodyContainerHeight * 0.12,
           ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.08,
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -167,9 +177,10 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
+          SizedBox(
+            height: 10,
+          ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.12,
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -184,11 +195,9 @@ class ProfileScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               )),
           SizedBox(
-            height: 7,
+            height: 30,
           ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.05,
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -201,9 +210,10 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
+          SizedBox(
+            height: 10,
+          ),
           Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.12,
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -217,6 +227,9 @@ class ProfileScreen extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.center,
               )),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );

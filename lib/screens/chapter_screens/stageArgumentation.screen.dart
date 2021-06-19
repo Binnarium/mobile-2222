@@ -43,6 +43,7 @@ class StageArgumentationScreen extends StatelessWidget {
               ),
               //decoración adicional del background
               _backgroundDecoration(size),
+              _ideas(size),
             ],
           ),
         ),
@@ -55,31 +56,57 @@ class StageArgumentationScreen extends StatelessWidget {
   }
 
   _backgroundDecoration(Size size) {
-    return Stack(children: [
-      ChapterHeadWidget(
-        phaseName: this.chapterSettings.phaseName,
-        chapterName: this.chapterSettings.cityName,
-        chapterImgURL: this.chapterSettings.chapterImageUrl,
+    return Container(
+      width: size.width,
+      height: size.height,
+      decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+      child: ListView(children: [
+        ChapterHeadWidget(
+          phaseName: this.chapterSettings.phaseName,
+          chapterName: this.chapterSettings.cityName,
+          chapterImgURL: this.chapterSettings.chapterImageUrl,
+        ),
+        _ghostImage(size),
+      ]),
+    );
+  }
+
+  _ghostImage(Size size) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      width: size.width,
+      height: size.height * 0.75,
+      child: Image(
+        image: AssetImage(
+          this.chapterSettings.characterImageUrl,
+        ),
       ),
-      _ghostImage(size),
+    );
+  }
+
+  _ideas(Size size) {
+    double widthFactor = (size.height > 700) ? 0.38 : 0.36;
+    double heightFactor = (size.height > 700) ? 0.3 : 0.26;
+    return Stack(children: [
       Positioned(
-        top: size.height * 0.13,
-        left: size.width * 0.2,
+        top: (size.height > 700) ? size.height * 0.13 : size.height * 0.1,
+        left: (size.height > 700) ? size.width * 0.2 : size.width * 0.26,
         child: IdeaContainerWidget(
           text:
               '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          width: size.width * 0.36,
-          height: size.height * 0.26,
+          width: size.width * widthFactor,
+          height: size.height * heightFactor,
         ),
       ),
       Positioned(
-        top: size.height * 0.3,
+        top: (size.height > 700) ? size.height * 0.28 : size.height * 0.25,
         left: size.width * 0.02,
         child: IdeaContainerWidget(
           text:
               '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          width: size.width * 0.35,
-          height: size.height * 0.25,
+          width: size.width * widthFactor,
+          height: size.height * heightFactor,
           isTopRight: true,
         ),
       ),
@@ -89,25 +116,11 @@ class StageArgumentationScreen extends StatelessWidget {
         child: IdeaContainerWidget(
           text:
               '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          width: size.width * 0.35,
-          height: size.height * 0.25,
+          width: size.width * widthFactor,
+          height: size.height * heightFactor,
           isTopLeft: true,
         ),
       ),
     ]);
-  }
-
-  _ghostImage(Size size) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage(
-          this.chapterSettings.characterImageUrl,
-        ),
-      ),
-    );
   }
 }

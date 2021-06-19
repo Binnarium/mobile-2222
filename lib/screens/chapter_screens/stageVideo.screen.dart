@@ -4,7 +4,6 @@ import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageVideoScreen extends StatelessWidget {
@@ -78,7 +77,6 @@ class StageVideoScreen extends StatelessWidget {
       child: Container(
         color: Colors.white,
         width: size.width,
-        height: size.height * 0.15,
         padding:
             EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 10),
         child: Column(
@@ -101,6 +99,9 @@ class StageVideoScreen extends StatelessWidget {
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(
+              height: 20,
             ),
           ],
         ),

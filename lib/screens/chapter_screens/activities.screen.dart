@@ -71,10 +71,8 @@ class ActivitiesScreen extends StatelessWidget {
   }
 
   _activitiesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.03;
     /// sizing the container to the mobile
     return Container(
-      
       /// Listview of the whole screen
       child: ListView(
         // physics: NeverScrollableScrollPhysics(),

@@ -21,13 +21,24 @@ class ChapterBannerWidget extends StatelessWidget {
     double bannerContainerWidth = size.width * 0.6;
     double bannerContainerHeight = size.height * 0.099;
     return Container(
-      width: bannerContainerWidth,
-      height: bannerContainerHeight,
-      child: Stack(
+      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Column(
+            children: [
+              _numberStage(bannerContainerWidth, bannerContainerHeight),
+              _titleStage(bannerContainerWidth, bannerContainerHeight),
+            ],
+          ),
+          (size.width > 380)
+              ? SizedBox(
+                  width: 10,
+                )
+              : SizedBox(
+                  width: 5,
+                ),
           _logoContainer(bannerContainerWidth, bannerContainerHeight),
-          _numberStage(bannerContainerWidth, bannerContainerHeight),
-          _titleStage(bannerContainerWidth, bannerContainerHeight),
         ],
       ),
     );
@@ -36,18 +47,15 @@ class ChapterBannerWidget extends StatelessWidget {
   _logoContainer(double parentWidth, double parentHeight) {
     double containerWidth = parentWidth * 0.33;
     double containerHeight = parentHeight;
-    return Positioned(
-      right: 0,
-      child: Container(
-        //largo y ancho del logo dentro
-        width: containerWidth,
-        height: containerHeight,
-        // margin: EdgeInsets.only(left: marginLeft, top: marginTop),
-        alignment: Alignment.center,
-        child: Image(
-          image: AssetImage(
-            this.chapterImgURL,
-          ),
+    return Container(
+      //largo y ancho del logo dentro
+      width: containerWidth,
+      height: containerHeight,
+      // margin: EdgeInsets.only(left: marginLeft, top: marginTop),
+      alignment: Alignment.center,
+      child: Image(
+        image: AssetImage(
+          this.chapterImgURL,
         ),
       ),
     );
@@ -59,17 +67,13 @@ class ChapterBannerWidget extends StatelessWidget {
     double containerHeight = parentHeight * 0.3;
     // double fontSize = size.height * 0.00051;
 
-    return Positioned(
-      top: parentWidth * 0.05,
-      right: parentHeight * 1.05,
-      child: Container(
-        width: containerWidth,
-        height: containerHeight,
-        alignment: Alignment.centerRight,
-        child: Text(phase.toUpperCase(),
-            style: korolevFont.headline5?.apply(fontSizeFactor: 0.7),
-            textAlign: TextAlign.left),
-      ),
+    return Container(
+      width: containerWidth,
+      height: containerHeight,
+      alignment: Alignment.centerRight,
+      child: Text(phase.toUpperCase(),
+          style: korolevFont.headline5?.apply(fontSizeFactor: 0.7),
+          textAlign: TextAlign.left),
     );
   }
 
@@ -78,16 +82,12 @@ class ChapterBannerWidget extends StatelessWidget {
     double containerWidth = parentWidth * 0.7;
     double containerHeight = parentHeight * 0.4;
     double fontSize = (chapterName.length >= 10) ? 1.3 : 1.5;
-    return Positioned(
-      top: parentWidth * 0.15,
-      right: parentHeight * 1.05,
-      child: Container(
-        width: containerWidth,
-        height: containerHeight,
-        child: Text(chapterName.toUpperCase(),
-            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
-            textAlign: TextAlign.right),
-      ),
+    return Container(
+      width: containerWidth,
+      height: containerHeight,
+      child: Text(chapterName.toUpperCase(),
+          style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
+          textAlign: TextAlign.right),
     );
   }
 }
