@@ -59,7 +59,7 @@ class StageArgumentationScreen extends StatelessWidget {
     return Container(
       width: size.width,
       height: size.height,
-      decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       child: ListView(children: [
         ChapterHeadWidget(
           phaseName: this.chapterSettings.phaseName,

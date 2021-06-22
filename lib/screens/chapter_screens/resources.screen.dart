@@ -91,7 +91,7 @@ class ResourcesScreen extends StatelessWidget {
             title: 'RECURSOS ONLINE',
           ),
           SizedBox(
-            height: 20,
+            height: 40,
           ),
 
           ///calling the body of online resources, expected a json
@@ -159,6 +159,7 @@ class ResourcesScreen extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 15,
           mainAxisSpacing: 15,
+          // mainAxisExtent: 180,
         ),
         itemCount: list.length,
 

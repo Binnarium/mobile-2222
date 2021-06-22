@@ -27,6 +27,7 @@ class OnlineResourcesGridItem extends StatelessWidget {
           print('recurso online presionado');
         },
         child: Container(
+          // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -15,21 +15,17 @@ class ChapterHeadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.only(right: size.width * 0.05),
-      child: Row(
-        
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ChapterLeafLogoWidget(),
-          ChapterBannerWidget(
-            phase: phaseName,
-            chapterName: chapterName,
-            chapterImgURL: this.chapterImgURL,
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ChapterLeafLogoWidget(),
+        ChapterBannerWidget(
+          phase: phaseName,
+          chapterName: chapterName,
+          chapterImgURL: this.chapterImgURL,
+        ),
+      ],
     );
   }
 }
