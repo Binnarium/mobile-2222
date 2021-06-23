@@ -112,7 +112,7 @@ class ResourcesScreen extends StatelessWidget {
 
   /// books body method
   _booksBody(List list, Size size) {
-    double bodyMarginWidth = size.width * 0.03;
+    double bodyMarginWidth = size.width * 0.05;
 
     /// main container
     return Container(
@@ -120,10 +120,11 @@ class ResourcesScreen extends StatelessWidget {
       margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the list of books
-      height: (list.length) * 150,
+
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: list.length,
+          shrinkWrap: true,
           itemBuilder: (context, index) {
             ///bringing a book resource per item in the list
             return LecturesListItem(
@@ -143,14 +144,13 @@ class ResourcesScreen extends StatelessWidget {
 
   ///Method of the online resources
   _onlineResourcesBody(List list, Size size) {
-    double bodyMarginWidth = size.width * 0.03;
+    double bodyMarginWidth = size.width * 0.05;
 
     ///main container
     return Container(
       margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
-      height: (list.length) * 120,
 
       ///Creates a grid with the necesary online resources
       child: GridView.builder(
@@ -159,9 +159,13 @@ class ResourcesScreen extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 15,
           mainAxisSpacing: 15,
-          // mainAxisExtent: 180,
+          // childAspectRatio: 1,
         ),
         itemCount: list.length,
+
+        /// property that sizes the container automaticly according
+        /// the items
+        shrinkWrap: true,
 
         ///to avoid the scroll
         physics: NeverScrollableScrollPhysics(),
@@ -173,7 +177,7 @@ class ResourcesScreen extends StatelessWidget {
               account: 'Platzi/live',
               type: 'youtube',
               description:
-                  'Tenim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque');
+                  'Tenim ipsam voluptatem quia voluptenim ipsam voluptatem quia voluptas sienim ipsam voluptatem quia voluptas sienim ipsam voluptatem quia voluptas sienim ipsam voluptatem quia voluptas sias sit aspernatur aut odit aut fugit,sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque');
         },
       ),
     );

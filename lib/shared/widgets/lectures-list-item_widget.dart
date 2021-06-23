@@ -37,9 +37,10 @@ class LecturesListItem extends StatelessWidget {
         child: new Container(
           margin: EdgeInsets.symmetric(vertical: 15),
           width: double.infinity,
+          decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
 
           ///static height
-          height: 120,
+          // height: 120,
           child: Row(
             children: [
               ///seeks if an image url is provided, otherwise returns the no image png
@@ -70,8 +71,9 @@ class LecturesListItem extends StatelessWidget {
               Expanded(
                 child: Wrap(
                   // antes era column el wrap
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.start,
+                  alignment: WrapAlignment.start,
+                  spacing: 10,
+
                   children: [
                     Text(
                       title.toUpperCase(),
@@ -80,9 +82,9 @@ class LecturesListItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
 
                     ///Seeks for editorial, if not, it's ommited
                     (editorial != null)
@@ -99,9 +101,9 @@ class LecturesListItem extends StatelessWidget {
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           ),
-                    SizedBox(
-                      height: 40,
-                    ),
+                    // SizedBox(
+                    //   height: 40,
+                    // ),
 
                     ///Seeks for a review, if not, it's ommited
                     (review != null)
@@ -110,7 +112,7 @@ class LecturesListItem extends StatelessWidget {
                             style: korolevFont.bodyText2
                                 ?.apply(fontSizeFactor: fontSize - 0.1),
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 4,
+                            maxLines: 8,
                             textAlign: TextAlign.left,
                           )
                         : Text(

@@ -27,15 +27,15 @@ class OnlineResourcesGridItem extends StatelessWidget {
           print('recurso online presionado');
         },
         child: Container(
-          // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            // alignment: WrapAlignment.start,
+            spacing: 2,
+            runSpacing: 10,
             children: [
               Image(
                 image: AssetImage('assets/icons/${type}_icon.png'),
-              ),
-              SizedBox(
-                height: 5,
               ),
               Text(
                 account,
@@ -43,15 +43,12 @@ class OnlineResourcesGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
-              SizedBox(
-                height: 5,
-              ),
               Text(
                 description,
                 style: korolevFont.headline6
                     ?.apply(fontSizeFactor: fontSize - 0.2),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 6,
+                maxLines: 9,
               ),
             ],
           ),

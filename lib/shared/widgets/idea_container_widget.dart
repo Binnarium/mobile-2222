@@ -31,7 +31,8 @@ class IdeaContainerWidget extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      alignment: Alignment.center,
+      decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+      // alignment: Alignment.center,
       child: Stack(
         children: [
           _ideasImage(width, height),
@@ -84,6 +85,9 @@ class IdeaContainerWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         child: Image(
+          height: height,
+          width: width,
+          fit: BoxFit.fill,
           image: AssetImage(
             'assets/backgrounds/decorations/bubble_background_decoration.png',
           ),
@@ -97,11 +101,11 @@ class IdeaContainerWidget extends StatelessWidget {
     //configuración por defecto para el bottomLeft
     EdgeInsetsGeometry margin = EdgeInsets.only(left: 10, right: 10);
     //configuración por defecto para el BottomRight
-    if (isBottomRight == true) {
+    if (isBottomLeft == true) {
       margin = EdgeInsets.only(
-        left: 4,
+        left: 8,
         right: 8,
-        top: 10,
+        // top: 10,
       );
     }
     //configuración por defecto para el topRight
@@ -109,22 +113,24 @@ class IdeaContainerWidget extends StatelessWidget {
       margin = EdgeInsets.only(
         left: 4,
         right: 8,
-        bottom: 10,
+        // bottom: 10,
       );
     }
     //configuración por defecto para el topLeft
     if (isTopLeft == true) {
       margin = EdgeInsets.only(
         left: 10,
-        right: 4,
+        right: 8,
         bottom: 15,
       );
     }
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       //se emplea la configuración por defecto
       margin: margin,
       alignment: Alignment.center,
+      width: width,
+      height: height,
       // color: Colors.red,
       child: Text(
         //se emplea el texto recibido por entrada

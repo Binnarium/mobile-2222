@@ -21,8 +21,8 @@ class ActivityContainerWidget extends StatelessWidget {
     print('grid height $height');
     SliverGridDelegate gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: width * 0.1,
-        mainAxisSpacing: height * 0.25);
+        crossAxisSpacing: width * 0.2,
+        mainAxisSpacing: height * 0.3);
 
     ///for small height phones
     if (height < 400) {
@@ -33,10 +33,12 @@ class ActivityContainerWidget extends StatelessWidget {
     }
 
     return Container(
+      decoration: BoxDecoration(border: Border.all(color: Colors.red)),
       child: GridView.builder(
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: gridDelegate,
           itemCount: activities.length,
+          shrinkWrap: true,
           itemBuilder: (context, index) {
             ///to control the rotation of the widget
             Matrix4 rotation = Matrix4.rotationX(0);
@@ -108,7 +110,7 @@ class ActivityContainerWidget extends StatelessWidget {
   Widget _activity(double width, double height, Matrix4 rotation,
       Alignment iconAlignment, String iconPath, String activityName) {
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.green)),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -118,15 +120,16 @@ class ActivityContainerWidget extends StatelessWidget {
             child: Image(
               image: AssetImage(
                   'assets/backgrounds/decorations/bubble_background_decoration_type2.png'),
-              width: width * 1.2,
-              height: height * 1.2,
+              // width: width,
+              // height: height,
+              fit: BoxFit.fill,
             ),
           ),
           Image(
             alignment: iconAlignment,
             image: AssetImage(iconPath),
-            width: width * 1.2,
-            height: height * 1.2,
+            width: width * 1.5,
+            height: height * 1.5,
           ),
           _textContainer(width, height, activityName),
         ],
@@ -139,17 +142,20 @@ class ActivityContainerWidget extends StatelessWidget {
     print('height: $height');
 
     return Container(
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+
       margin: (height > 120)
-          ? EdgeInsets.only(top: height * 0.1)
+          ? EdgeInsets.only(top: height * 0.15)
           : EdgeInsets.only(top: height * 0.25),
-      alignment: Alignment.center,
-      width: width,
-      height: (height > 120) ? height * 0.7 : height * 0.7,
+      // alignment: Alignment.center,
+      width: width * 1.2,
+      height: height,
       padding: EdgeInsets.symmetric(horizontal: 15),
       // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             activityName.toUpperCase(),

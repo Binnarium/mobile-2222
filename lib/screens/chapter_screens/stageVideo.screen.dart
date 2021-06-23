@@ -78,7 +78,7 @@ class StageVideoScreen extends StatelessWidget {
         color: Colors.white,
         width: size.width,
         padding:
-            EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 10),
+            EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -92,16 +92,12 @@ class StageVideoScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'TÍTULO DEL VIDEO LOREM IPSUM SIT AMET CONSEQUTETUR'
-                  .toUpperCase(),
+              'TÍTULO DEL VIDEO LOREM IPSUM SIT AM CONSEQUTETUR'.toUpperCase(),
               style: korolevFont.headline6?.apply(
                 color: Color(int.parse(chapterSettings.primaryColor)),
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(
-              height: 20,
+              // maxLines: 2,
+              // overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
