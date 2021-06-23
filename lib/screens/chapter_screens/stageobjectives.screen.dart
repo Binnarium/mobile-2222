@@ -105,8 +105,8 @@ class StageObjetivesScreen extends StatelessWidget {
 
   _objetBody(Size size) {
     String texto =
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
-    double bodyMarginLeft = size.width * 0.10;
+        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi temporaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+    double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
