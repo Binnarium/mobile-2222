@@ -31,7 +31,7 @@ class IdeaContainerWidget extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
       // alignment: Alignment.center,
       child: Stack(
         children: [
@@ -103,9 +103,9 @@ class IdeaContainerWidget extends StatelessWidget {
     //configuración por defecto para el BottomRight
     if (isBottomLeft == true) {
       margin = EdgeInsets.only(
-        left: 8,
+        left: (size.height > 700) ? 12 : 8,
         right: 8,
-        // top: 10,
+        top: (size.height > 700) ? 0 : 10,
       );
     }
     //configuración por defecto para el topRight
@@ -113,7 +113,7 @@ class IdeaContainerWidget extends StatelessWidget {
       margin = EdgeInsets.only(
         left: 4,
         right: 8,
-        // bottom: 10,
+        bottom: (size.height > 700) ? 0 : 15,
       );
     }
     //configuración por defecto para el topLeft
@@ -125,7 +125,7 @@ class IdeaContainerWidget extends StatelessWidget {
       );
     }
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       //se emplea la configuración por defecto
       margin: margin,
       alignment: Alignment.center,

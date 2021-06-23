@@ -112,7 +112,10 @@ class ActivitiesScreen extends StatelessWidget {
     ///0.12 is the height of the banner
     double containerHeight = size.height - size.height * 0.4;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: bodymarginWidth),
+      margin: EdgeInsets.only(
+          left: bodymarginWidth,
+          right: bodymarginWidth,
+          bottom: bodymarginWidth * 2),
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       child: Stack(
         alignment: Alignment.center,

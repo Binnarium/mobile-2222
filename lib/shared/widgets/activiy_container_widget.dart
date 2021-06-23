@@ -33,7 +33,7 @@ class ActivityContainerWidget extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
       child: GridView.builder(
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: gridDelegate,
@@ -110,7 +110,7 @@ class ActivityContainerWidget extends StatelessWidget {
   Widget _activity(double width, double height, Matrix4 rotation,
       Alignment iconAlignment, String iconPath, String activityName) {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -142,7 +142,7 @@ class ActivityContainerWidget extends StatelessWidget {
     print('height: $height');
 
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
 
       margin: (height > 120)
           ? EdgeInsets.only(top: height * 0.15)

@@ -143,27 +143,25 @@ class StageVideoScreen extends StatelessWidget {
   }
 
   _podcastContainer(Size size) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: () {
-          print('podcast icon pressed');
-        },
-        child: ClipRRect(
-          child: Column(
-            children: [
-              Image(
+    return Column(
+      children: [
+        Material(
+            type: MaterialType.circle,
+            color: Colors.transparent,
+            child: InkResponse(
+              onTap: () {
+                print('podcast icon pressed');
+              },
+              child: Image(
                 image: AssetImage('assets/icons/podcast_icon.png'),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Escucha el podcast',
-                style: korolevFont.headline6?.apply(),
-              )
-            ],
-          ),
-        ),
-      ),
+            )),
+        SizedBox(height: 20),
+        Text(
+          'Escucha el podcast',
+          style: korolevFont.headline6?.apply(),
+        )
+      ],
     );
   }
 }

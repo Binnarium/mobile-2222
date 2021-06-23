@@ -29,6 +29,7 @@ class LecturesListItem extends StatelessWidget {
     return Material(
       type: MaterialType.transparency,
       child: InkWell(
+        borderRadius: BorderRadius.circular(15),
         onTap: () {
           print('libro presionado');
         },
@@ -37,7 +38,7 @@ class LecturesListItem extends StatelessWidget {
         child: new Container(
           margin: EdgeInsets.symmetric(vertical: 15),
           width: double.infinity,
-          decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+          // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
 
           ///static height
           // height: 120,

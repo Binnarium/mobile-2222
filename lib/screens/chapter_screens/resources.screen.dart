@@ -136,7 +136,7 @@ class ResourcesScreen extends StatelessWidget {
               year: '1979',
               editorial: 'Editorial San José Ignacio de Barravanes',
               review:
-                  'Tenim ipsam voluptatem quia volupipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiatas sit aspernatur aut odit aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
+                  'Tenim ipsam voluptatem q aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
             );
           }),
     );
@@ -158,7 +158,7 @@ class ResourcesScreen extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 15,
-          mainAxisSpacing: 15,
+          mainAxisSpacing: 15, mainAxisExtent: (size.height > 700) ? 200 : 180,
           // childAspectRatio: 1,
         ),
         itemCount: list.length,
@@ -177,7 +177,7 @@ class ResourcesScreen extends StatelessWidget {
               account: 'Platzi/live',
               type: 'youtube',
               description:
-                  'Tenim ipsam voluptatem quia voluptenim ipsam voluptatem quia voluptas sienim ipsam voluptatem quia voluptas sienim ipsam voluptatem quia voluptas sienim ipsam voluptatem quia voluptas sias sit aspernatur aut odit aut fugit,sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque');
+                  'Tenim ipsam voluptatem quia voluptenim  quia voluptas sias sit aspernatur aut odit aut fugit,sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque');
         },
       ),
     );

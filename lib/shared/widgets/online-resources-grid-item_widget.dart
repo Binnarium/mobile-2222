@@ -23,19 +23,21 @@ class OnlineResourcesGridItem extends StatelessWidget {
     return Material(
       type: MaterialType.transparency,
       child: InkWell(
+        borderRadius: BorderRadius.circular(15),
         onTap: () {
           print('recurso online presionado');
         },
         child: Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+          // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             // alignment: WrapAlignment.start,
-            spacing: 2,
+            spacing: 5,
             runSpacing: 10,
             children: [
               Image(
                 image: AssetImage('assets/icons/${type}_icon.png'),
+                filterQuality: FilterQuality.high,
               ),
               Text(
                 account,

@@ -87,20 +87,20 @@ class StageArgumentationScreen extends StatelessWidget {
 
   _ideas(Size size) {
     double widthFactor = (size.height > 700) ? 0.4 : 0.36;
-    double heightFactor = (size.height > 700) ? 0.15 : 0.26;
+    double heightFactor = (size.height > 700) ? 0.15 : 0.15;
     return Stack(children: [
       Positioned(
-        top: (size.height > 700) ? size.height * 0.18 : size.height * 0.1,
-        left: (size.height > 700) ? size.width * 0.25 : size.width * 0.26,
+        top: (size.height > 700) ? size.height * 0.18 : size.height * 0.2,
+        left: (size.height > 700) ? size.width * 0.25 : size.width * 0.3,
         child: IdeaContainerWidget(
           text:
               '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
-          width: 160,
-          height: 120,
+          width: size.width * widthFactor,
+          height: size.height * heightFactor,
         ),
       ),
       Positioned(
-        top: (size.height > 700) ? size.height * 0.33 : size.height * 0.25,
+        top: (size.height > 700) ? size.height * 0.33 : size.height * 0.33,
         left: size.width * 0.02,
         child: IdeaContainerWidget(
           text:
@@ -111,8 +111,8 @@ class StageArgumentationScreen extends StatelessWidget {
         ),
       ),
       Positioned(
-        top: (size.height > 700) ? size.height * 0.3 : size.height * 0.25,
-        left: size.width * 0.6,
+        top: (size.height > 700) ? size.height * 0.3 : size.height * 0.3,
+        left: (size.height > 700) ? size.width * 0.6 : size.width * 0.62,
         child: IdeaContainerWidget(
           text:
               '¿Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequu?',
