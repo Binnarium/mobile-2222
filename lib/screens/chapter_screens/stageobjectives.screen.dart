@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/conten-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -105,7 +106,7 @@ class StageObjetivesScreen extends StatelessWidget {
 
   _objetBody(Size size) {
     String texto =
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi temporaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -119,51 +120,23 @@ class StageObjetivesScreen extends StatelessWidget {
   }
 
   _contentsBody(List list, Size size) {
-    double bodyContainerHeight = size.height * 0.75;
-    double bodyContainerWidth = size.width * 0.75;
+    double bodyMarginLeft = size.width * 0.05;
 
     ///main container
     return Container(
       ///general left padding 25
-      padding: EdgeInsets.only(left: 25),
+      width: double.infinity,
+      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
 
       ///To resize the parent container of the list of books
-      height: (list.length) * bodyContainerHeight * 0.125,
+      //height: (list.length) * bodyContainerHeight * 0.125,
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: list.length,
+          shrinkWrap: true,
           itemBuilder: (context, index) {
-            ///bringing a book resource per item in the list
-            return Row(
-              children: [
-                Container(
-                    width: bodyContainerWidth * 0.1,
-                    height: bodyContainerHeight * 0.1,
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${index + 1}',
-                      style: korolevFont.headline3?.apply(fontWeightDelta: 1),
-                      textAlign: TextAlign.center,
-                    )),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                    width: bodyContainerWidth,
-                    height: bodyContainerHeight * 0.1,
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    // decoration:
-                    //     BoxDecoration(border: Border.all(color: Colors.white)),
-                    child: Text(
-                      'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse',
-                      style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.9),
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                    )),
-              ],
-            );
+          String texto = 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse';
+            return ContenResourcesListItem(index: '${index+1}', description: texto);
           }),
     );
   }
@@ -175,9 +148,10 @@ class StageObjetivesScreen extends StatelessWidget {
       width: (list.length) * 75,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: (size.height > 700)
-            ? EdgeInsets.only(left: 60)
-            : EdgeInsets.only(left: 30),
+        shrinkWrap: true,
+        // padding: (size.height > 700)
+        //     ? EdgeInsets.only(left: 60)
+        //     : EdgeInsets.only(left: 30),
 
         ///general spacing per resource
         itemCount: list.length,

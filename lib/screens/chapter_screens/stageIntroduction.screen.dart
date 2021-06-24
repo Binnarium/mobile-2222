@@ -73,7 +73,7 @@ class StageIntroductionScreen extends StatelessWidget {
    _stageBody(Size size) {
     double bodyContainerHeight = size.height * 0.75;
 
-    double spacedBodyContainers = bodyContainerHeight * 0.035;
+    double spacedBodyContainers = bodyContainerHeight * 0.04;
 
     return Container(
       alignment: Alignment.topLeft,
@@ -99,15 +99,7 @@ class StageIntroductionScreen extends StatelessWidget {
           SizedBox(height: spacedBodyContainers),
           _objetBody3(size),
           SizedBox(height: spacedBodyContainers),
-          Container(
-            width: double.infinity,
-            height: bodyContainerHeight * 0.40,
-            child: Image(
-              image: AssetImage(
-                'assets/backgrounds/decorations/white_idea_container.png',
-              ),
-            ),
-          ),
+          
           SizedBox(height: spacedBodyContainers + 20),
         ],
       ),
@@ -123,28 +115,16 @@ class StageIntroductionScreen extends StatelessWidget {
       margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
       child: Text(
         texto,
-        style: korolevFont.bodyText1,
+        style: korolevFont.headline6,
         textAlign: TextAlign.left,
       ),
     );
   }
-  _objetBody(Size size) {
-    String texto =
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolo remque laudantium, totam rem aperiam';
-    double bodyMarginLeft = size.width * 0.05;
-    return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      child: Text(
-        texto,
-        style: korolevFont.bodyText1,
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
+  
+  
   _objetBody2(Size size) {
     String texto =
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolo remque laudantium, totam rem aperiam';
+        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -158,7 +138,7 @@ class StageIntroductionScreen extends StatelessWidget {
   }
   _objetBody3(Size size) {
     String texto =
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolo remque laudantium, totam rem aperiam';
+        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -176,16 +156,22 @@ class StageIntroductionScreen extends StatelessWidget {
 
   _imageOne(Size size) {
     double marginRight = size.width * 0.05;
+    double widthImagen = size.width*0.20;
+    double heightImagen= size.width*0.20;
+    if(size.width>550){
+      widthImagen = size.width*0.1;
+      heightImagen = size.height*0.2;
+    }else{
+      widthImagen = size.width*0.17;
+      heightImagen = size.height*0.1;
+    }
     return Container(
       margin: EdgeInsets.only(right: marginRight,left: marginRight),
       
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.white)
-      // ),
       child: Image(
-        alignment: Alignment.centerLeft,
-        width: size.width*0.19,
-        height: size.height*0.16,
+        alignment: Alignment.bottomLeft,
+        width: widthImagen,
+        height: heightImagen,
         image: AssetImage(
           'assets/backgrounds/decorations/logo_stage_prin.png',
         ),
@@ -194,14 +180,14 @@ class StageIntroductionScreen extends StatelessWidget {
   }
   _imageTwo(Size size) {
     double marginRight = size.width * 0.05;
-    double widthImagen = size.width*0.25;
+    double widthImagen = size.width*0.20;
     double heightImagen= size.width*0.20;
-    if(size.width<390){
-      widthImagen = size.width*0.26;
-      heightImagen = size.height*0.26;
+    if(size.width>550){
+      widthImagen = size.width*0.37;
+      heightImagen = size.height*0.36;
     }else{
-      widthImagen = size.width*0.29;
-      heightImagen = size.height*0.285;
+      widthImagen = size.width*0.17;
+      heightImagen = size.height*0.16;
     }
     return Container(
       margin: EdgeInsets.only(right: marginRight,left: marginRight),
