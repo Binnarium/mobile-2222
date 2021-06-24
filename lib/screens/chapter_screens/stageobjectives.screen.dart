@@ -89,15 +89,8 @@ class StageObjetivesScreen extends StatelessWidget {
           ),
           SizedBox(height: spacedBodyContainers + 10),
           _compeBody([4, 4, 4], size),
-          Container(
-            width: double.infinity,
-            height: bodyContainerHeight * 0.40,
-            child: Image(
-              image: AssetImage(
-                'assets/backgrounds/decorations/white_idea_container.png',
-              ),
-            ),
-          ),
+          SizedBox(height: spacedBodyContainers + 20),
+          _decorationWhite(size),
           SizedBox(height: spacedBodyContainers + 20),
         ],
       ),
@@ -106,7 +99,7 @@ class StageObjetivesScreen extends StatelessWidget {
 
   _objetBody(Size size) {
     String texto =
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse';
+        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -135,26 +128,37 @@ class StageObjetivesScreen extends StatelessWidget {
           itemCount: list.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-          String texto = 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse';
-            return ContenResourcesListItem(index: '${index+1}', description: texto);
+            String texto =
+                'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse';
+            return ContenResourcesListItem(
+                index: '${index + 1}', description: texto);
           }),
     );
   }
 
   _compeBody(List list, Size size) {
-    return Container(
-      ///To resize the parent container of the online resources grid
-      height: (list.length) * 55,
-      width: (list.length) * 75,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        // padding: (size.height > 700)
-        //     ? EdgeInsets.only(left: 60)
-        //     : EdgeInsets.only(left: 30),
+    double bodyMarginWidth = size.width * 0.05;
 
+    ///main container
+    return Container(
+      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
+
+      ///To resize the parent container of the online resources grid
+
+      ///Creates a grid with the necesary online resources
+      child: GridView.builder(
         ///general spacing per resource
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15, mainAxisExtent: (size.height > 700) ? 200 : 180,
+          // childAspectRatio: 1,
+        ),
         itemCount: list.length,
+
+        /// property that sizes the container automaticly according
+        /// the items
+        shrinkWrap: true,
 
         ///to avoid the scroll
         physics: NeverScrollableScrollPhysics(),
@@ -162,8 +166,24 @@ class StageObjetivesScreen extends StatelessWidget {
           ///calls the custom widget with the item parameters
           return CompeResourcesListItem(
               image: 'competencias${index + 1}_stage',
-              description: 'MANEJO\n DEL TIEMPO');
+              description: 'MANEJO DEL TIEMPO');
         },
+      ),
+    );
+  }
+
+  _decorationWhite(Size size) {
+    double bodyContainerHeight = size.height * 0.35;
+    if(size.width>500){
+      bodyContainerHeight =size.height * 0.80;
+    }
+    return Container(
+      width: double.infinity,
+      height: bodyContainerHeight,
+      child: Image(
+        image: AssetImage(
+          'assets/backgrounds/decorations/white_idea_container.png',
+        ),
       ),
     );
   }

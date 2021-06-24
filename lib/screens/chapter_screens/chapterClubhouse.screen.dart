@@ -65,40 +65,11 @@ class ChapterClubhouseScreen extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-          Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.12,
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              // margin:
-              //     EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'CLUBHOUSE',
-                style: korolevFont.headline2?.apply(fontSizeFactor: fontSize),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
+          _titleClub(size),
           SizedBox(
             height: 10,
           ),
-          Container(
-              width: double.infinity,
-              height: bodyContainerHeight * 0.13,
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.',
-                style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
-
+          _bodyClub(size),
           SizedBox(
             height: 20,
           ),
@@ -110,7 +81,7 @@ class ChapterClubhouseScreen extends StatelessWidget {
           ),
 
           ///calling the body of online resources, expected a json
-          _onlineResourcesBody([
+          _onlineResourcesBody(size,[
             2,
             3,
             2,
@@ -122,22 +93,55 @@ class ChapterClubhouseScreen extends StatelessWidget {
     );
   }
 
-  ///books body method
+  _titleClub(Size size) {
+    String texto =
+        'CLUBHOUSE';
+    
+    return Container(
+      
+      child: Text(
+        texto,
+        style: korolevFont.headline2,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+  _bodyClub(Size size) {
+    double bodyMarginWidth = size.width * 0.05;
 
+    String texto =
+        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.';
+    
+    return Container(
+      margin: EdgeInsets.only(left: bodyMarginWidth, right: bodyMarginWidth),
+      child: Text(
+        texto,
+        style: korolevFont.bodyText2,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
   ///Method of the online resources
-  _onlineResourcesBody(List list) {
+  _onlineResourcesBody(Size size ,List list) {
     ///main container
     return Container(
       ///To resize the parent container of the online resources grid
-      height: (list.length) * 110,
+      
       margin: EdgeInsets.symmetric(horizontal: 5),
 
       ///Creates a grid with the necesary online resources
       child: GridView.builder(
-        ///general spacing per resource
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 5),
+          crossAxisCount: 2,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15, mainAxisExtent: (size.height > 700) ? 200 : 180,
+          // childAspectRatio: 1,
+        ),
         itemCount: list.length,
+
+        /// property that sizes the container automaticly according
+        /// the items
+        shrinkWrap: true,
 
         ///to avoid the scroll
         physics: NeverScrollableScrollPhysics(),

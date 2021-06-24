@@ -35,8 +35,11 @@ class ProfileScreen extends StatelessWidget {
   ///body of the screen
   _resourcesContent(Size size) {
     double bodyMarginWidth = size.width * 0.03;
-    double bodyContainerHeight = size.height * 0.75;
+    double bodyContainerHeight = size.height * 0.33;
     double bodyMarginLeft = size.width * 0.10;
+    if(size.width>500){
+      bodyContainerHeight = size.height * 0.99;
+    }
 
     ///sizing the container to the mobile
     return Container(
@@ -85,11 +88,11 @@ class ProfileScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               )),
           SizedBox(
-            height: 10,
+            height: 30,
           ),
           Container(
               width: double.infinity,
-              height: bodyContainerHeight * 0.13,
+              height: bodyContainerHeight*0.35,
               // decoration: BoxDecoration(
               //   border: Border.all(color: Colors.white)
               // ),
@@ -132,7 +135,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               )),
           SizedBox(
-            height: bodyContainerHeight * 0.12,
+            height: 40,
           ),
           Container(
               // decoration:
@@ -162,7 +165,7 @@ class ProfileScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               )),
           SizedBox(
-            height: bodyContainerHeight * 0.12,
+            height: bodyContainerHeight*0.5,
           ),
           Container(
               // decoration: BoxDecoration(

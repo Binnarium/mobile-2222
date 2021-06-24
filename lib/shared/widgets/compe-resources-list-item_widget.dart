@@ -15,28 +15,43 @@ class CompeResourcesListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(right: 17),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image(
+      margin: EdgeInsets.symmetric(vertical: 15),
+      width: double.infinity,
+      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+
+      ///static height
+      // height: 120,
+      child: Column(
+        children: [
+          ///seeks if an image url is provided, otherwise returns the no image png
+          
+          Image(
               image: AssetImage('assets/backgrounds/decorations/$image.png'),
               height: 60,
+              alignment: Alignment.center,
             ),
-            SizedBox(
-              height: 15,
+            SizedBox(height: 9,),
+          ///Makes the column flexible to avoid the overflow
+          Expanded(
+            child: Wrap(
+              // antes era column el wrap
+              alignment: WrapAlignment.center,
+              spacing: 10,
+
+              children: [
+                Text(
+                  description,
+                  style: korolevFont.bodyText1,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 4,
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            Text(
-              description,
-              style: korolevFont.headline4?.apply(fontSizeFactor: 0.5),
-              textAlign: TextAlign.center,
-              
-              maxLines: 2,
-            ),
-          ],
-        ),
-        
-      );
+          ),
+        ],
+      ),
+    );
     
   }
 }
