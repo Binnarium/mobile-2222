@@ -110,7 +110,7 @@ class ActivityContainerWidget extends StatelessWidget {
   Widget _activity(double width, double height, Matrix4 rotation,
       Alignment iconAlignment, String iconPath, String activityName) {
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+      //decoration: BoxDecoration(border: Border.all(color: Colors.green)),
       child: Stack(
         alignment: Alignment.center,
         children: [
