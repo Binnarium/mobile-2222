@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class RouteScreen extends StatefulWidget {
-  static const String route = '/route';
+  static const String route = '/cities';
 
   @override
   _RouteScreenState createState() => _RouteScreenState();
