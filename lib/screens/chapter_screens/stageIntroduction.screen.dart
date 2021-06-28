@@ -47,7 +47,7 @@ class StageIntroductionScreen extends StatelessWidget {
             /// first layer is the background with road-map
             ChapterBackgroundWidget(
               backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
-              reliefPosition: 'top-left',
+              reliefPosition: 'bottom-right',
             ),
 
             /// scroll-able content
