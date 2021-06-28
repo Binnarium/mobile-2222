@@ -5,12 +5,12 @@ import 'chapter-leaf-logo_widget.dart';
 
 class ChapterHeadWidget extends StatelessWidget {
   final String phaseName;
-  final String chapterName;
-  final String chapterImgURL;
+  final String? chapterName;
+  final String? chapterImgURL;
   const ChapterHeadWidget({
     required this.phaseName,
-    required this.chapterName,
-    required this.chapterImgURL,
+    this.chapterName,
+    this.chapterImgURL,
   });
 
   @override
@@ -20,11 +20,16 @@ class ChapterHeadWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ChapterLeafLogoWidget(),
-        ChapterBannerWidget(
-          phase: phaseName,
-          chapterName: chapterName,
-          chapterImgURL: this.chapterImgURL,
-        ),
+
+        /// to check if the page is the introduction page, so we can't show
+        /// the banner widget.
+        (phaseName.compareTo('introduction') != 0)
+            ? ChapterBannerWidget(
+                phase: this.phaseName,
+                chapterName: this.chapterName!,
+                chapterImgURL: this.chapterImgURL!,
+              )
+            : Container(),
       ],
     );
   }

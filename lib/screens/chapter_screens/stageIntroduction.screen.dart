@@ -77,9 +77,7 @@ class StageIntroductionScreen extends StatelessWidget {
       /// city logo
       children: [
         ChapterHeadWidget(
-          phaseName: this.chapterSettings.phaseName,
-          chapterName: this.chapterSettings.cityName,
-          chapterImgURL: this.chapterSettings.chapterImageUrl,
+          phaseName: 'introduction',
         ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
