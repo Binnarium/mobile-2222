@@ -78,9 +78,9 @@ class StageObjetivesScreen extends StatelessWidget {
           ChapterTitleSection(
             title: 'OBJETIVO',
           ),
-          SizedBox(height: spacedBodyContainers),
+          SizedBox(height: spacedBodyContainers+15),
           _objetBody(size),
-          SizedBox(height: spacedBodyContainers),
+          SizedBox(height: spacedBodyContainers+15),
           ChapterTitleSection(
             title: 'CONTENIDOS',
           ),
