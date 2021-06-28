@@ -59,6 +59,9 @@ class StageObjetivesScreen extends StatelessWidget {
     double bodyContainerHeight = size.height * 0.75;
 
     double spacedBodyContainers = bodyContainerHeight * 0.035;
+    if(size.width>550){
+      spacedBodyContainers = bodyContainerHeight * 0.065;
+    }
 
     return Container(
       alignment: Alignment.topLeft,
