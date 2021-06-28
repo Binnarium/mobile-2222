@@ -53,7 +53,7 @@ class LecturesListItem extends StatelessWidget {
                         image: NetworkImage(imageURL!),
                         fit: BoxFit.fill,
                         width: 80,
-                        height: 110,
+                        // height: 110,
                       ))
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),
@@ -61,7 +61,7 @@ class LecturesListItem extends StatelessWidget {
                         image: AssetImage('assets/backgrounds/no-image.png'),
                         fit: BoxFit.fill,
                         width: 80,
-                        height: 100,
+                        // height: 200,
                       ),
                     ),
               SizedBox(
@@ -80,8 +80,6 @@ class LecturesListItem extends StatelessWidget {
                       title.toUpperCase(),
                       style: korolevFont.headline6
                           ?.apply(fontSizeFactor: fontSize),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
                     ),
                     // SizedBox(
                     //   height: 20,
@@ -91,14 +89,11 @@ class LecturesListItem extends StatelessWidget {
                     (editorial != null)
                         ? Text(
                             author + ' | ' + editorial! + ' | ' + year,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           )
                         : Text(
                             author + ' | ' + year,
-                            overflow: TextOverflow.ellipsis,
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           ),
@@ -112,8 +107,6 @@ class LecturesListItem extends StatelessWidget {
                             'Reseña: ' + review!,
                             style: korolevFont.bodyText2
                                 ?.apply(fontSizeFactor: fontSize - 0.1),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 8,
                             textAlign: TextAlign.left,
                           )
                         : Text(

@@ -31,6 +31,7 @@ class IdeaContainerWidget extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      constraints: BoxConstraints(maxWidth: 170),
       // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
       // alignment: Alignment.center,
       child: Stack(

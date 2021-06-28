@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/route.screen.dart';
+import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
@@ -230,7 +230,7 @@ class LoginScreen extends StatelessWidget {
 
         ///Navigates to main screen
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(RouteScreen.route);
+          Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
         },
         child: Text(
           'Ingresar',

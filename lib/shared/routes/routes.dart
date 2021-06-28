@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageTitle.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
-import 'package:lab_movil_2222/screens/route.screen.dart';
+import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 
@@ -30,8 +30,8 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case StatisticsScreen.route:
           return StatisticsScreen();
 
-        case RouteScreen.route:
-          return RouteScreen();
+        case CitiesScreen.route:
+          return CitiesScreen();
 
         case StatisticsScreen.route:
           return StatisticsScreen();
@@ -42,15 +42,15 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ProfileScreen.route:
           return ProfileScreen();
 
-        case StageTitleScreen.route:
-          final args = settings.arguments as StageTitleScreen;
-          return StageTitleScreen(
-            chapterSettings: args.chapterSettings,
-          );
-
         case StageIntroductionScreen.route:
           final args = settings.arguments as StageIntroductionScreen;
           return StageIntroductionScreen(
+            chapterSettings: args.chapterSettings,
+          );
+
+        case StageHistoryScreen.route:
+          final args = settings.arguments as StageHistoryScreen;
+          return StageHistoryScreen(
             chapterSettings: args.chapterSettings,
           );
 

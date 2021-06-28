@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -20,14 +19,15 @@ class StageIntroductionScreen extends StatelessWidget {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return StageArgumentationScreen(
+        return StageHistoryScreen(
           chapterSettings: this.chapterSettings,
         );
       }));
     };
 
+    // Navigator.pushNamed(context, StageIntroductionScreen.route);
+
     final size = MediaQuery.of(context).size;
-    print(size);
     return Scaffold(
       body: GestureDetector(
         onPanUpdate: (details) {
@@ -37,14 +37,46 @@ class StageIntroductionScreen extends StatelessWidget {
           /// right
           if (details.delta.dx < -5) nextPage();
         },
+
+        /// main content of page
+        /// the content includes a background with images, and scroll-able content
         child: Stack(
+          alignment: Alignment.center,
           children: [
-            ChapterBackgroundWidget(
+            /// first layer is the background with road-map
+            CustomBackground(
               backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
-              reliefPosition: 'bottom-right',
+              backgroundImages: [
+                /// pattern background
+                Image(
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                  image: AssetImage(
+                    'assets/backgrounds/decorations/background_decoration1.png',
+                  ),
+                ),
+
+                /// path background
+                Image(
+                  alignment: Alignment.bottomCenter,
+                  image: AssetImage(
+                    'assets/backgrounds/decorations/white_route_curve_background.png',
+                  ),
+                  color: Color.fromRGBO(255, 255, 255, 100),
+                ),
+
+                /// 2222 logo
+                Image(
+                  alignment: Alignment.topLeft,
+                  image: AssetImage(
+                    'assets/backgrounds/decorations/logo_leaf.png',
+                  ),
+                ),
+              ],
             ),
-            _routeCurve(),
-            _stageBody(size),
+
+            /// scroll-able content
+            _introductionBody(size),
           ],
         ),
       ),
@@ -55,156 +87,57 @@ class StageIntroductionScreen extends StatelessWidget {
     );
   }
 
-  _routeCurve() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/white_route_curve_background.png',
-        ),
-        color: Color.fromRGBO(255, 255, 255, 100),
-      ),
-    );
-  }
-
-  ///scroll-able content
-   _stageBody(Size size) {
-    double bodyContainerHeight = size.height * 0.75;
-
-    double spacedBodyContainers = bodyContainerHeight * 0.04;
-
-    return Container(
-      alignment: Alignment.topLeft,
-      width: double.infinity,
-      height: double.infinity,
-      child: ListView(
-        children: <Widget>[
-          ChapterHeadWidget(
-            phaseName: this.chapterSettings.phaseName,
-            chapterName: this.chapterSettings.cityName,
-            chapterImgURL: this.chapterSettings.chapterImageUrl,
-          ),
-          SizedBox(height: spacedBodyContainers),
-          _imageOne(size),
-          SizedBox(height: spacedBodyContainers),
-          _objetBody1(size),
-          SizedBox(height: spacedBodyContainers),
-          _objetBody2(size),
-          SizedBox(height: spacedBodyContainers),
-          
-          
-          _imageTwo(size),
-          SizedBox(height: spacedBodyContainers),
-          _objetBody3(size),
-          SizedBox(height: spacedBodyContainers),
-          
-          SizedBox(height: spacedBodyContainers + 20),
-        ],
-      ),
-    );
-  }
-
-  _objetBody1(Size size) {
-    String texto =
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolo remque laudantium, totam rem aperiam';
-    double bodyMarginLeft = size.width * 0.05;
-    return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      child: Text(
-        texto,
-        style: korolevFont.headline6,
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
-  
-  
-  _objetBody2(Size size) {
-    String texto =
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione';
-    double bodyMarginLeft = size.width * 0.05;
-    return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      child: Text(
-        texto,
-        style: korolevFont.bodyText1,
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
-  _objetBody3(Size size) {
-    String texto =
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
-    double bodyMarginLeft = size.width * 0.05;
-    return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      child: Text(
-        texto,
-        style: korolevFont.bodyText1,
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
-
-  
-
-
-  _imageOne(Size size) {
-    double marginRight = size.width * 0.05;
-    double widthImagen = size.width*0.20;
-    double heightImagen= size.width*0.20;
-    if(size.width>550){
-      widthImagen = size.width*0.1;
-      heightImagen = size.height*0.2;
-    }else{
-      widthImagen = size.width*0.17;
-      heightImagen = size.height*0.1;
+  _introductionBody(Size size) {
+    //Creando el Scroll
+    double spacedSize = size.height * 0.165;
+    double fontSize = (size.height > 700) ? 1.2 : 1.1;
+    if (size.height < 550) {
+      spacedSize = size.height * 0.19;
     }
-    return Container(
-      margin: EdgeInsets.only(right: marginRight,left: marginRight),
-      
-      child: Image(
-        alignment: Alignment.bottomLeft,
-        width: widthImagen,
-        height: heightImagen,
-        image: AssetImage(
-          'assets/backgrounds/decorations/logo_stage_prin.png',
-        ),
-      ),
-    );
-  }
-  _imageTwo(Size size) {
-    double marginRight = size.width * 0.05;
-    double widthImagen = size.width*0.20;
-    double heightImagen= size.width*0.20;
-    if(size.width>550){
-      widthImagen = size.width*0.37;
-      heightImagen = size.height*0.36;
-    }else{
-      widthImagen = size.width*0.17;
-      heightImagen = size.height*0.16;
+    if (size.height < 650) {
+      spacedSize = size.height * 0.125;
     }
-    return Container(
-      margin: EdgeInsets.only(right: marginRight,left: marginRight),
-      
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.white)
-      // ),
-      child: Image(
-        alignment: Alignment.centerLeft,
-        width: widthImagen,
-        height: heightImagen,
-        image: AssetImage(
-          'assets/backgrounds/decorations/logo_stage_secun.png',
+    return ListView(
+      /// city logo
+      children: [
+        SizedBox(height: spacedSize),
+        //Texto cambiar por funcionalidad de cuenta de días
+        Text(this.chapterSettings.phaseName.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: korolevFont.headline3
+                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1)),
+        SizedBox(height: 10),
+        //Texto cambiar por funcionalidad de cuenta de días
+        Text(this.chapterSettings.cityName.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: korolevFont.headline1
+                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5)),
+        SizedBox(height: size.height * 0.05),
+        _logoContainer(size),
+        SizedBox(height: size.height * 0.07),
+        Text(
+          'Guiados por su dios tribal, Huitzilopochtli, los mexicas salieron de Aztlán en busca de "la señal" que indicaría el lugar para fundar México-Tenochtitlan.',
+          style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
+          textAlign: TextAlign.center,
         ),
-      ),
+      ],
     );
   }
 
-  
+  _logoContainer(size) {
+    return Container(
+      //largo y ancho del logo dentro
+      width: double.infinity,
+      height: size.height * 0.35,
+      child: Image(
+        image: AssetImage(
+          this.chapterSettings.chapterImageUrl,
+        ),
+        filterQuality: FilterQuality.high,
+      ),
+      padding: EdgeInsets.only(
+        top: size.height * 0.04,
+      ),
+    );
+  }
 }

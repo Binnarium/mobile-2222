@@ -11,7 +11,7 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageObjetivesScreen extends StatelessWidget {
-  static const String route = '/argumentation';
+  static const String route = '/objectives';
   final ChapterSettings chapterSettings;
 
   const StageObjetivesScreen({Key? key, required this.chapterSettings})
@@ -174,8 +174,8 @@ class StageObjetivesScreen extends StatelessWidget {
 
   _decorationWhite(Size size) {
     double bodyContainerHeight = size.height * 0.35;
-    if(size.width>500){
-      bodyContainerHeight =size.height * 0.80;
+    if (size.width > 500) {
+      bodyContainerHeight = size.height * 0.80;
     }
     return Container(
       width: double.infinity,
