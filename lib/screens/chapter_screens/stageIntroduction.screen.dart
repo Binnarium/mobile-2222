@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
-import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -44,35 +45,9 @@ class StageIntroductionScreen extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             /// first layer is the background with road-map
-            CustomBackground(
+            ChapterBackgroundWidget(
               backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
-              backgroundImages: [
-                /// pattern background
-                Image(
-                  fit: BoxFit.fitWidth,
-                  alignment: Alignment.bottomCenter,
-                  image: AssetImage(
-                    'assets/backgrounds/decorations/background_decoration1.png',
-                  ),
-                ),
-
-                /// path background
-                Image(
-                  alignment: Alignment.bottomCenter,
-                  image: AssetImage(
-                    'assets/backgrounds/decorations/white_route_curve_background.png',
-                  ),
-                  color: Color.fromRGBO(255, 255, 255, 100),
-                ),
-
-                /// 2222 logo
-                Image(
-                  alignment: Alignment.topLeft,
-                  image: AssetImage(
-                    'assets/backgrounds/decorations/logo_leaf.png',
-                  ),
-                ),
-              ],
+              reliefPosition: 'top-left',
             ),
 
             /// scroll-able content
@@ -89,17 +64,23 @@ class StageIntroductionScreen extends StatelessWidget {
 
   _introductionBody(Size size) {
     //Creando el Scroll
-    double spacedSize = size.height * 0.165;
+    double spacedSize = size.height * 0.08;
     double fontSize = (size.height > 700) ? 1.2 : 1.1;
+    double bodyMarginLeft = size.width * 0.05;
     if (size.height < 550) {
-      spacedSize = size.height * 0.19;
+      spacedSize = size.height * 0.15;
     }
     if (size.height < 650) {
-      spacedSize = size.height * 0.125;
+      spacedSize = size.height * 0.08;
     }
     return ListView(
       /// city logo
       children: [
+        ChapterHeadWidget(
+          phaseName: this.chapterSettings.phaseName,
+          chapterName: this.chapterSettings.cityName,
+          chapterImgURL: this.chapterSettings.chapterImageUrl,
+        ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
         Text(this.chapterSettings.phaseName.toUpperCase(),
@@ -115,11 +96,15 @@ class StageIntroductionScreen extends StatelessWidget {
         SizedBox(height: size.height * 0.05),
         _logoContainer(size),
         SizedBox(height: size.height * 0.07),
-        Text(
-          'Guiados por su dios tribal, Huitzilopochtli, los mexicas salieron de Aztlán en busca de "la señal" que indicaría el lugar para fundar México-Tenochtitlan.',
-          style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
-          textAlign: TextAlign.center,
+        Container(
+          margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+          child: Text(
+            'Guiados por su dios tribal, Huitzilopochtli, los mexicas salieron de Aztlán en busca de "la señal" que indicaría el lugar para fundar México-Tenochtitlan.',
+            style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
+            textAlign: TextAlign.center,
+          ),
         ),
+        SizedBox(height: size.height * 0.07),
       ],
     );
   }
