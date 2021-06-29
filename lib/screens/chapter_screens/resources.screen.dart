@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/Reading.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
@@ -12,7 +12,7 @@ import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const ResourcesScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -53,8 +53,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor:
-                    Color(int.parse(widget.chapterSettings.primaryColor)),
+                backgroundColor: Color(widget.chapterSettings.primaryColor),
               ),
 
               ///body of the screen
@@ -143,7 +142,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    Color(int.parse(widget.chapterSettings.primaryColor)),
+                    Color(widget.chapterSettings.primaryColor),
                   ),
                 ),
               );
@@ -196,7 +195,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         itemBuilder: (context, index) {
           ///calls the custom widget with the item parameters
           return OnlineResourcesGridItem(
-              color: Color(int.parse(widget.chapterSettings.primaryColor)),
+              color: Color(widget.chapterSettings.primaryColor),
               size: size,
               account: 'Platzi/live',
               type: 'youtube',
@@ -212,8 +211,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
     await FirebaseFirestore.instance.collection('readings').get().then(
       (QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach(
-          (doc) {
+        querySnapshot.docs.toList().asMap().forEach(
+          (index, doc) {
             final readTemp = new ReadingModel(
               coverUrl: doc['coverUrl'],
               author: doc['author'],
@@ -225,7 +224,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             print(readTemp.toJson());
 
             readingsListTemp.add(readTemp);
-            // _readingsList.add(readTemp);
             print('Lo que viene de firebase: ${doc.data().toString()}');
           },
         );

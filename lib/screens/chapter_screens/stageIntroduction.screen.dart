@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageIntroductionScreen extends StatelessWidget {
   static const String route = '/introduction';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const StageIntroductionScreen({
     Key? key,
@@ -46,7 +46,7 @@ class StageIntroductionScreen extends StatelessWidget {
           children: [
             /// first layer is the background with road-map
             ChapterBackgroundWidget(
-              backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+              backgroundColor: Color(chapterSettings.primaryColor),
               reliefPosition: 'bottom-right',
             ),
 
@@ -113,7 +113,7 @@ class StageIntroductionScreen extends StatelessWidget {
       width: double.infinity,
       height: size.height * 0.35,
       child: Image(
-        image: AssetImage(
+        image: NetworkImage(
           this.chapterSettings.chapterImageUrl,
         ),
         filterQuality: FilterQuality.high,

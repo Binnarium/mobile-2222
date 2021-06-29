@@ -53,7 +53,7 @@ class LecturesListItem extends StatelessWidget {
                         image: NetworkImage(imageURL!),
                         fit: BoxFit.fill,
                         width: 80,
-                        // height: 110,
+                        height: 110,
                       ))
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),

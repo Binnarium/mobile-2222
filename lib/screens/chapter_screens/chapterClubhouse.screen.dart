@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
@@ -10,7 +10,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterClubhouseScreen extends StatelessWidget {
   static const String route = '/chapterClubhouse';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const ChapterClubhouseScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -30,7 +30,7 @@ class ChapterClubhouseScreen extends StatelessWidget {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+                backgroundColor: Color(chapterSettings.primaryColor),
                 reliefPosition: 'bottom-right',
               ),
 
@@ -81,7 +81,7 @@ class ChapterClubhouseScreen extends StatelessWidget {
           ),
 
           ///calling the body of online resources, expected a json
-          _onlineResourcesBody(size,[
+          _onlineResourcesBody(size, [
             2,
             3,
             2,
@@ -94,11 +94,9 @@ class ChapterClubhouseScreen extends StatelessWidget {
   }
 
   _titleClub(Size size) {
-    String texto =
-        'CLUBHOUSE';
-    
+    String texto = 'CLUBHOUSE';
+
     return Container(
-      
       child: Text(
         texto,
         style: korolevFont.headline2,
@@ -106,12 +104,13 @@ class ChapterClubhouseScreen extends StatelessWidget {
       ),
     );
   }
+
   _bodyClub(Size size) {
     double bodyMarginWidth = size.width * 0.05;
 
     String texto =
         'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.';
-    
+
     return Container(
       margin: EdgeInsets.only(left: bodyMarginWidth, right: bodyMarginWidth),
       child: Text(
@@ -121,12 +120,13 @@ class ChapterClubhouseScreen extends StatelessWidget {
       ),
     );
   }
+
   ///Method of the online resources
-  _onlineResourcesBody(Size size ,List list) {
+  _onlineResourcesBody(Size size, List list) {
     ///main container
     return Container(
       ///To resize the parent container of the online resources grid
-      
+
       margin: EdgeInsets.symmetric(horizontal: 5),
 
       ///Creates a grid with the necesary online resources

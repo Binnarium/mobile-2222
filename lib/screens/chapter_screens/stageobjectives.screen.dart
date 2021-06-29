@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -12,7 +12,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageObjetivesScreen extends StatelessWidget {
   static const String route = '/objectives';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const StageObjetivesScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -41,7 +41,7 @@ class StageObjetivesScreen extends StatelessWidget {
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+              backgroundColor: Color(chapterSettings.primaryColor),
               reliefPosition: 'top-left',
             ),
             _stageBody(size),
@@ -59,7 +59,7 @@ class StageObjetivesScreen extends StatelessWidget {
     double bodyContainerHeight = size.height * 0.75;
 
     double spacedBodyContainers = bodyContainerHeight * 0.035;
-    if(size.width>550){
+    if (size.width > 550) {
       spacedBodyContainers = bodyContainerHeight * 0.065;
     }
 
@@ -78,9 +78,9 @@ class StageObjetivesScreen extends StatelessWidget {
           ChapterTitleSection(
             title: 'OBJETIVO',
           ),
-          SizedBox(height: spacedBodyContainers+15),
+          SizedBox(height: spacedBodyContainers + 15),
           _objetBody(size),
-          SizedBox(height: spacedBodyContainers+15),
+          SizedBox(height: spacedBodyContainers + 15),
           ChapterTitleSection(
             title: 'CONTENIDOS',
           ),

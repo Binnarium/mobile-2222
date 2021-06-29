@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/activiy_container_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivitiesScreen extends StatelessWidget {
   static const String route = '/activities';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const ActivitiesScreen({
     Key? key,
@@ -53,7 +53,7 @@ class ActivitiesScreen extends StatelessWidget {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+                backgroundColor: Color(chapterSettings.primaryColor),
                 reliefPosition: 'bottom-right',
               ),
 
@@ -122,12 +122,13 @@ class ActivitiesScreen extends StatelessWidget {
         children: [
           ///background chapter image
           Image(
-            image: AssetImage(this.chapterSettings.chapterImageUrl),
+            image: NetworkImage(this.chapterSettings.chapterImageUrl),
             width: containerWidth * 0.5,
             height: containerHeight * 0.5,
           ),
           Image(
-            image: AssetImage(this.chapterSettings.decoration1Url),
+            image: AssetImage(
+                "assets/backgrounds/decorations/white_route_circle_curve_background.png"),
             width: containerWidth * 0.85,
             height: containerHeight * 0.85,
             color: Color.fromRGBO(255, 255, 255, 0.5),
@@ -137,7 +138,7 @@ class ActivitiesScreen extends StatelessWidget {
             activities: _activities,
             width: containerWidth,
             height: containerHeight,
-            primaryColor: this.chapterSettings.primaryColor,
+            primaryColor: this.chapterSettings.primaryColor.toString(),
           )
         ],
       ),

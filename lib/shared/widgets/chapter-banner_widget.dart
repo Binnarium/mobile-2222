@@ -58,7 +58,7 @@ class ChapterBannerWidget extends StatelessWidget {
       /// condition when screen is on landscape
       width: (parentWidth > 350) ? containerWidth * 0.5 : containerWidth,
       fit: BoxFit.contain,
-      image: AssetImage(
+      image: NetworkImage(
         this.chapterImgURL,
       ),
     );

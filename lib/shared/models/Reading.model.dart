@@ -31,7 +31,7 @@ class ReadingModel {
         author: json["author"],
         about: json["about"],
         name: json["name"],
-        publishedDate: json["publishedDate"],
+        publishedDate: json["publishedDate"].toString(),
         id: json["id"],
       );
 

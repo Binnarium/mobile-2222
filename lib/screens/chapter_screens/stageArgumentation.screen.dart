@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
 
 class StageArgumentationScreen extends StatelessWidget {
   static const String route = '/argumentation';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const StageArgumentationScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -38,7 +38,7 @@ class StageArgumentationScreen extends StatelessWidget {
             children: [
               //widget custom que crea el background con el logo de la izq
               ChapterBackgroundWidget(
-                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+                backgroundColor: Color(chapterSettings.primaryColor),
                 reliefPosition: 'top-right',
               ),
               //decoración adicional del background
@@ -79,7 +79,7 @@ class StageArgumentationScreen extends StatelessWidget {
       height: size.height * 0.75,
       child: Image(
         image: AssetImage(
-          this.chapterSettings.characterImageUrl,
+          "assets/backgrounds/decorations/Phasm_background_decoration.png",
         ),
       ),
     );

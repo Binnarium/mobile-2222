@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageVideoScreen extends StatelessWidget {
   static const String route = '/video';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const StageVideoScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -38,7 +38,7 @@ class StageVideoScreen extends StatelessWidget {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+                backgroundColor: Color(chapterSettings.primaryColor),
                 reliefPosition: 'top-left',
               ),
               _stageVideoContent(size, context),
@@ -94,7 +94,7 @@ class StageVideoScreen extends StatelessWidget {
             Text(
               'TÍTULO DEL VIDEO LOREM IPSUM SIT AM CONSEQUTETUR'.toUpperCase(),
               style: korolevFont.headline6?.apply(
-                color: Color(int.parse(chapterSettings.primaryColor)),
+                color: Color(chapterSettings.primaryColor),
               ),
               // maxLines: 2,
               // overflow: TextOverflow.ellipsis,

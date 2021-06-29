@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageHistoryScreen extends StatelessWidget {
   static const String route = '/history';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const StageHistoryScreen({
     Key? key,
@@ -40,7 +40,7 @@ class StageHistoryScreen extends StatelessWidget {
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+              backgroundColor: Color(chapterSettings.primaryColor),
               reliefPosition: 'bottom-right',
             ),
             _routeCurve(),
