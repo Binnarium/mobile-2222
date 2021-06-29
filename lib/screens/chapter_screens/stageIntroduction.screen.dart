@@ -167,7 +167,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           dynamic data = documentSnapshot.data()!;
-          description = data['description'].toString();
+          description = data['description'];
         }
       },
     );
