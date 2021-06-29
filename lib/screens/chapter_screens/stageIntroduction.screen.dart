@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
@@ -6,7 +7,7 @@ import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class StageIntroductionScreen extends StatelessWidget {
+class StageIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
   final FirebaseChapterSettings chapterSettings;
 
@@ -16,12 +17,23 @@ class StageIntroductionScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _StageIntroductionScreenState createState() =>
+      _StageIntroductionScreenState();
+}
+
+class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return StageHistoryScreen(
-          chapterSettings: this.chapterSettings,
+          chapterSettings: this.widget.chapterSettings,
         );
       }));
     };
@@ -46,7 +58,7 @@ class StageIntroductionScreen extends StatelessWidget {
           children: [
             /// first layer is the background with road-map
             ChapterBackgroundWidget(
-              backgroundColor: Color(chapterSettings.primaryColor),
+              backgroundColor: Color(widget.chapterSettings.primaryColor),
               reliefPosition: 'bottom-right',
             ),
 
@@ -81,26 +93,45 @@ class StageIntroductionScreen extends StatelessWidget {
         ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(this.chapterSettings.phaseName.toUpperCase(),
+        Text(this.widget.chapterSettings.phaseName.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline3
                 ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1)),
         SizedBox(height: 10),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(this.chapterSettings.cityName.toUpperCase(),
+        Text(this.widget.chapterSettings.cityName.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline1
                 ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5)),
         SizedBox(height: size.height * 0.05),
         _logoContainer(size),
         SizedBox(height: size.height * 0.07),
-        Container(
-          margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-          child: Text(
-            'Guiados por su dios tribal, Huitzilopochtli, los mexicas salieron de Aztlán en busca de "la señal" que indicaría el lugar para fundar México-Tenochtitlan.',
-            style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
-            textAlign: TextAlign.center,
-          ),
+        FutureBuilder(
+          future: _readIntroductionText(),
+          builder: (BuildContext context, AsyncSnapshot<String> readings) {
+            if (readings.hasError) {
+              return Text(readings.error.toString());
+            }
+
+            if (readings.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Color(this.widget.chapterSettings.primaryColor),
+                  ),
+                ),
+              );
+            }
+            return Container(
+              margin:
+                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              child: Text(
+                readings.data.toString(),
+                style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
+                textAlign: TextAlign.center,
+              ),
+            );
+          },
         ),
         SizedBox(height: size.height * 0.07),
       ],
@@ -114,7 +145,7 @@ class StageIntroductionScreen extends StatelessWidget {
       height: size.height * 0.35,
       child: Image(
         image: NetworkImage(
-          this.chapterSettings.chapterImageUrl,
+          this.widget.chapterSettings.chapterImageUrl,
         ),
         filterQuality: FilterQuality.high,
       ),
@@ -122,5 +153,25 @@ class StageIntroductionScreen extends StatelessWidget {
         top: size.height * 0.04,
       ),
     );
+  }
+
+  Future<String> _readIntroductionText() async {
+    String description = "";
+    await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('introduction')
+        .get()
+        .then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          dynamic data = documentSnapshot.data()!;
+          description = data['description'].toString();
+        }
+      },
+    );
+    // print('description antes de enviar: $description');
+    return description;
   }
 }

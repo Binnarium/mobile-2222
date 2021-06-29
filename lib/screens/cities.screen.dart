@@ -25,7 +25,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
   }
 
   void _asyncLecture() async {
-    settings = await readChapterConfigurations();
+    settings = await _readChapterConfigurations();
   }
 
   @override
@@ -76,7 +76,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
     );
   }
 
-  Future<List<FirebaseChapterSettings>> readChapterConfigurations() async {
+  Future<List<FirebaseChapterSettings>> _readChapterConfigurations() async {
     List<FirebaseChapterSettings> settings = [];
 
     ///  reading chapter configurations
@@ -96,10 +96,10 @@ class _CitiesScreenState extends State<CitiesScreen> {
               chapterImageUrl: doc["iconUrl"],
             );
             print(confTemp.toJson());
-            print('${doc['configuration']}');
+            // print('${doc['configuration']}');
             settings.add(confTemp);
 
-            print('Lo que viene de firebase: ${doc.data().toString()}');
+            // print('Lo que viene de firebase: ${doc.data().toString()}');
           },
         );
       },

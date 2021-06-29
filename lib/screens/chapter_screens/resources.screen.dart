@@ -24,7 +24,6 @@ class ResourcesScreen extends StatefulWidget {
 class _ResourcesScreenState extends State<ResourcesScreen> {
   @override
   void initState() {
-    _readings();
     super.initState();
   }
 
@@ -224,7 +223,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             print(readTemp.toJson());
 
             readingsListTemp.add(readTemp);
-            print('Lo que viene de firebase: ${doc.data().toString()}');
+            // print('Lo que viene de firebase: ${doc.data().toString()}');
           },
         );
       },
