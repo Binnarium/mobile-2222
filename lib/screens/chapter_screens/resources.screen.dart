@@ -242,7 +242,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               publishedDate: doc['publishedDate'].toString(),
               id: 'id',
             );
-            print(readTemp.toJson());
+            // print(readTemp.toJson());
 
             readingsListTemp.add(readTemp);
             // print('Lo que viene de firebase: ${doc.data().toString()}');
@@ -260,7 +260,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       (QuerySnapshot querySnapshot) {
         querySnapshot.docs.toList().asMap().forEach(
           (index, doc) {
-            print(doc.data());
+            // print(doc.data());
             final resourceTemp = new OnlineResourceModel(
               kind: doc['kind'],
               name: doc['name'],
