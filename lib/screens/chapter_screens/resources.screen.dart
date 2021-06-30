@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/Reading.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
@@ -130,7 +131,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       ///To resize the parent container of the list of books
 
       child: FutureBuilder(
-          future: _readings(),
+          future: _readBooks(),
           builder: (BuildContext context,
               AsyncSnapshot<List<ReadingModel>> readings) {
             if (readings.hasError) {
@@ -175,37 +176,58 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       ///To resize the parent container of the online resources grid
 
       ///Creates a grid with the necesary online resources
-      child: GridView.builder(
-        ///general spacing per resource
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15, mainAxisExtent: (size.height > 700) ? 200 : 180,
-          // childAspectRatio: 1,
-        ),
-        itemCount: list.length,
+      child: FutureBuilder(
+          future: _readOnlineResources(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<OnlineResourceModel>> resources) {
+            if (resources.hasError) {
+              return Text(resources.error.toString());
+            }
 
-        /// property that sizes the container automaticly according
-        /// the items
-        shrinkWrap: true,
+            if (resources.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Colors.white,
+                  ),
+                ),
+              );
+            }
+            return GridView.builder(
+              ///general spacing per resource
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                mainAxisExtent: (size.height > 700) ? 200 : 180,
+                // childAspectRatio: 1,
+              ),
+              itemCount: resources.data!.length,
 
-        ///to avoid the scroll
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          ///calls the custom widget with the item parameters
-          return OnlineResourcesGridItem(
-              color: Color(widget.chapterSettings.primaryColor),
-              size: size,
-              account: 'Platzi/live',
-              type: 'youtube',
-              description:
-                  'Tenim ipsam voluptatem quia voluptenim  quia voluptas sias sit aspernatur aut odit aut fugit,sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque');
-        },
-      ),
+              /// property that sizes the container automaticly according
+              /// the items
+              shrinkWrap: true,
+
+              ///to avoid the scroll
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                ///calls the custom widget with the item parameters
+                return OnlineResourcesGridItem(
+                  color: Color(widget.chapterSettings.primaryColor),
+                  size: size,
+                  name: resources.data![index].name,
+                  kind: resources.data![index].kind,
+                  description: resources.data![index].description,
+                  id: resources.data![index].id,
+                  redirect: resources.data![index].redirect,
+                );
+              },
+            );
+          }),
     );
   }
 
-  Future<List<ReadingModel>> _readings() async {
+  Future<List<ReadingModel>> _readBooks() async {
     final List<ReadingModel> readingsListTemp = [];
 
     await FirebaseFirestore.instance.collection('readings').get().then(
@@ -229,5 +251,29 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       },
     );
     return readingsListTemp;
+  }
+
+  Future<List<OnlineResourceModel>> _readOnlineResources() async {
+    final List<OnlineResourceModel> resourcesListTemp = [];
+
+    await FirebaseFirestore.instance.collection('online-resources').get().then(
+      (QuerySnapshot querySnapshot) {
+        querySnapshot.docs.toList().asMap().forEach(
+          (index, doc) {
+            print(doc.data());
+            final resourceTemp = new OnlineResourceModel(
+              kind: doc['kind'],
+              name: doc['name'],
+              redirect: doc['redirect'],
+              description: doc['description'],
+              id: doc['id'],
+            );
+            resourcesListTemp.add(resourceTemp);
+            // print('Lo que viene de firebase: ${doc.data().toString()}');
+          },
+        );
+      },
+    );
+    return resourcesListTemp;
   }
 }
