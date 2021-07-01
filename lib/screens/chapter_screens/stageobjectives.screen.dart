@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
@@ -10,7 +11,7 @@ import 'package:lab_movil_2222/shared/widgets/conten-resources-list-item_widget.
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class StageObjetivesScreen extends StatelessWidget {
+class StageObjetivesScreen extends StatefulWidget {
   static const String route = '/objectives';
   final FirebaseChapterSettings chapterSettings;
 
@@ -18,12 +19,27 @@ class StageObjetivesScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  _StageObjectivesScreenState createState() => _StageObjectivesScreenState();
+}
+
+class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
+  @override
+  void initState() {
+    _asyncLecture();
+    super.initState();
+  }
+
+  void _asyncLecture() async {
+    await _readContents();
+  }
+
+  @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return StageVideoScreen(
-          chapterSettings: this.chapterSettings,
+          chapterSettings: this.widget.chapterSettings,
         );
       }));
     };
@@ -41,7 +57,7 @@ class StageObjetivesScreen extends StatelessWidget {
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: Color(chapterSettings.primaryColor),
+              backgroundColor: Color(this.widget.chapterSettings.primaryColor),
               reliefPosition: 'top-left',
             ),
             _stageBody(size),
@@ -70,9 +86,9 @@ class StageObjetivesScreen extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           ChapterHeadWidget(
-            phaseName: this.chapterSettings.phaseName,
-            chapterName: this.chapterSettings.cityName,
-            chapterImgURL: this.chapterSettings.chapterImageUrl,
+            phaseName: this.widget.chapterSettings.phaseName,
+            chapterName: this.widget.chapterSettings.cityName,
+            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
           ),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
@@ -85,13 +101,13 @@ class StageObjetivesScreen extends StatelessWidget {
             title: 'CONTENIDOS',
           ),
           SizedBox(height: spacedBodyContainers),
-          _contentsBody([4, 4, 5], size),
+          _contentsBody(size),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'COMPETENCIAS',
           ),
           SizedBox(height: spacedBodyContainers + 10),
-          _compeBody([4, 4, 4], size),
+          _compeBody([1, 2, 3], size),
           SizedBox(height: spacedBodyContainers + 20),
           _decorationWhite(size),
           SizedBox(height: spacedBodyContainers + 20),
@@ -101,12 +117,35 @@ class StageObjetivesScreen extends StatelessWidget {
   }
 
   _objetBody(Size size) {
-    String texto =
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora';
+    String texto = 'hpla';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+
       margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+      // child: FutureBuilder(
+      //   future: _readObjective(),
+      //   builder: (BuildContext context, AsyncSnapshot<List<dynamic>> objective) {
+      //     if (objective.hasError) {
+      //       return Text(objective.error.toString());
+      //     }
+
+      //     if (objective.connectionState == ConnectionState.waiting) {
+      //       return Center(
+      //         child: CircularProgressIndicator(
+      //           valueColor: new AlwaysStoppedAnimation<Color>(
+      //             Color(this.widget.chapterSettings.primaryColor),
+      //           ),
+      //         ),
+      //       );
+      //     }
+      //     return Text(
+      //       objective.data!.elementAt(0).toString(),
+      //       style: korolevFont.bodyText1,
+      //       textAlign: TextAlign.left,
+      //     );
+      //   },
+      // )
       child: Text(
         texto,
         style: korolevFont.bodyText1,
@@ -115,7 +154,7 @@ class StageObjetivesScreen extends StatelessWidget {
     );
   }
 
-  _contentsBody(List list, Size size) {
+  _contentsBody(Size size) {
     double bodyMarginLeft = size.width * 0.05;
 
     ///main container
@@ -126,15 +165,33 @@ class StageObjetivesScreen extends StatelessWidget {
 
       ///To resize the parent container of the list of books
       //height: (list.length) * bodyContainerHeight * 0.125,
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: list.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            String texto =
-                'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conse';
-            return ContenResourcesListItem(
-                index: '${index + 1}', description: texto);
+      child: FutureBuilder(
+          future: _readContents(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<dynamic>> contents) {
+            if (contents.hasError) {
+              return Text(contents.error.toString());
+            }
+
+            if (contents.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Color(this.widget.chapterSettings.primaryColor),
+                  ),
+                ),
+              );
+            }
+
+            return ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: contents.data?.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  String texto = contents.data!.elementAt(index);
+                  return ContenResourcesListItem(
+                      index: '${index + 1}', description: texto);
+                });
           }),
     );
   }
@@ -190,4 +247,44 @@ class StageObjetivesScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<List<dynamic>> _readContents() async {
+    List contentsTemp = [];
+    await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('objective')
+        .get()
+        .then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          contentsTemp = documentSnapshot.get('content');
+
+          print('ideas temp : $contentsTemp');
+        }
+      },
+    );
+    return contentsTemp;
+  }
+
+  // Future<List<dynamic>> _readObjective() async {
+  //   String contentsTemp = '';
+  //   await FirebaseFirestore.instance
+  //       .collection('cities')
+  //       .doc(this.widget.chapterSettings.id)
+  //       .collection('pages')
+  //       .doc('objective')
+  //       .get()
+  //       .then(
+  //     (DocumentSnapshot documentSnapshot) {
+  //       if (documentSnapshot.exists) {
+  //         contentsTemp = documentSnapshot.get('objective');
+
+  //         // print('ideas temp : $contentsTemp');
+  //       }
+  //     },
+  //   );
+  //   return contentsTemp;
+  // }
 }
