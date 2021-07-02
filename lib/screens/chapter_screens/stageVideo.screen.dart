@@ -67,6 +67,10 @@ class StageVideoScreen extends StatelessWidget {
           SizedBox(height: 20),
           _videoTitleContainer(size),
           _videoContent(size),
+          _videoTitleContainer(size),
+          SizedBox(height: 30),
+          _podcastContainer(),
+          SizedBox(height: 30),
         ],
       ),
     );
@@ -116,9 +120,8 @@ class StageVideoScreen extends StatelessWidget {
           ),
           _videoContainer(),
           SizedBox(
-            height: 50,
+            height: 30,
           ),
-          _podcastContainer(size),
         ],
       ),
     );
@@ -142,7 +145,7 @@ class StageVideoScreen extends StatelessWidget {
     );
   }
 
-  _podcastContainer(Size size) {
+  _podcastContainer() {
     return Column(
       children: [
         Material(
