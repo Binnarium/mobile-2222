@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/conten-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/idea_unlearn_container_widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
@@ -31,6 +32,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
   void _asyncLecture() async {
     await _readContents();
+    await _readCompe();
   }
 
   @override
@@ -107,7 +109,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             title: 'COMPETENCIAS',
           ),
           SizedBox(height: spacedBodyContainers + 10),
-          _compeBody([1, 2, 3], size),
+          _compeBody(size),
           SizedBox(height: spacedBodyContainers + 20),
           _decorationWhite(size),
           SizedBox(height: spacedBodyContainers + 20),
@@ -120,38 +122,32 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     String texto = 'hpla';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+        // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
 
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      // child: FutureBuilder(
-      //   future: _readObjective(),
-      //   builder: (BuildContext context, AsyncSnapshot<List<dynamic>> objective) {
-      //     if (objective.hasError) {
-      //       return Text(objective.error.toString());
-      //     }
+        margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+        child: FutureBuilder(
+          future: _readObjective(),
+          builder: (BuildContext context, AsyncSnapshot<String> objective) {
+            if (objective.hasError) {
+              return Text(objective.error.toString());
+            }
 
-      //     if (objective.connectionState == ConnectionState.waiting) {
-      //       return Center(
-      //         child: CircularProgressIndicator(
-      //           valueColor: new AlwaysStoppedAnimation<Color>(
-      //             Color(this.widget.chapterSettings.primaryColor),
-      //           ),
-      //         ),
-      //       );
-      //     }
-      //     return Text(
-      //       objective.data!.elementAt(0).toString(),
-      //       style: korolevFont.bodyText1,
-      //       textAlign: TextAlign.left,
-      //     );
-      //   },
-      // )
-      child: Text(
-        texto,
-        style: korolevFont.bodyText1,
-        textAlign: TextAlign.left,
-      ),
-    );
+            if (objective.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Color(this.widget.chapterSettings.primaryColor),
+                  ),
+                ),
+              );
+            }
+            return Text(
+              objective.data.toString(),
+              style: korolevFont.bodyText1,
+              textAlign: TextAlign.left,
+            );
+          },
+        ));
   }
 
   _contentsBody(Size size) {
@@ -196,7 +192,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     );
   }
 
-  _compeBody(List list, Size size) {
+  _compeBody(Size size) {
     double bodyMarginWidth = size.width * 0.05;
 
     ///main container
@@ -206,46 +202,81 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       ///To resize the parent container of the online resources grid
 
       ///Creates a grid with the necesary online resources
-      child: GridView.builder(
-        ///general spacing per resource
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15, mainAxisExtent: (size.height > 700) ? 200 : 180,
-          // childAspectRatio: 1,
-        ),
-        itemCount: list.length,
+      child: FutureBuilder(
+          future: _readCompe(),
+          builder: (BuildContext context, AsyncSnapshot<List<dynamic>> compe) {
+            if (compe.hasError) {
+              return Text(compe.error.toString());
+            }
 
-        /// property that sizes the container automaticly according
-        /// the items
-        shrinkWrap: true,
+            if (compe.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Color(this.widget.chapterSettings.primaryColor),
+                  ),
+                ),
+              );
+            }
+            return GridView.builder(
+              ///general spacing per resource
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                mainAxisExtent: (size.height > 700) ? 200 : 180,
+                // childAspectRatio: 1,
+              ),
+              itemCount: compe.data?.length,
 
-        ///to avoid the scroll
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          ///calls the custom widget with the item parameters
-          return CompeResourcesListItem(
-              image: 'competencias${index + 1}_stage',
-              description: 'MANEJO DEL TIEMPO');
-        },
-      ),
+              /// property that sizes the container automaticly according
+              /// the items
+              shrinkWrap: true,
+
+              ///to avoid the scroll
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                ///calls the custom widget with the item parameters
+                return CompeResourcesListItem(
+                    kind: compe.data!.elementAt(index),
+                    description: compe.data!.elementAt(index));
+              },
+            );
+          }),
     );
   }
 
   _decorationWhite(Size size) {
     double bodyContainerHeight = size.height * 0.35;
+    double bodyContainerWidth = size.width *0.95;
     if (size.width > 500) {
       bodyContainerHeight = size.height * 0.80;
     }
+
     return Container(
-      width: double.infinity,
-      height: bodyContainerHeight,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/white_idea_container.png',
-        ),
-      ),
-    );
+        child: FutureBuilder(
+            future: _readIdea(),
+            builder: (BuildContext context, AsyncSnapshot<String> idea) {
+              if (idea.hasError) {
+                return Text(idea.error.toString());
+              }
+
+              if (idea.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      Color(this.widget.chapterSettings.primaryColor),
+                    ),
+                  ),
+                );
+              }
+              return IdeaUnlearnContainerWidget(
+                text: idea.data!.toString(),
+                color: Color(this.widget.chapterSettings.primaryColor),
+                width: bodyContainerWidth,
+                height: bodyContainerHeight,
+              );
+            }));
   }
 
   Future<List<dynamic>> _readContents() async {
@@ -268,23 +299,69 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     return contentsTemp;
   }
 
-  // Future<List<dynamic>> _readObjective() async {
-  //   String contentsTemp = '';
-  //   await FirebaseFirestore.instance
-  //       .collection('cities')
-  //       .doc(this.widget.chapterSettings.id)
-  //       .collection('pages')
-  //       .doc('objective')
-  //       .get()
-  //       .then(
-  //     (DocumentSnapshot documentSnapshot) {
-  //       if (documentSnapshot.exists) {
-  //         contentsTemp = documentSnapshot.get('objective');
+  Future<String> _readObjective() async {
+    String contentsTemp = "";
+    await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('objective')
+        .get()
+        .then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          contentsTemp = documentSnapshot.get('objective').toString();
 
-  //         // print('ideas temp : $contentsTemp');
-  //       }
-  //     },
-  //   );
-  //   return contentsTemp;
-  // }
+          // print('ideas temp : $contentsTemp');
+        }
+      },
+    );
+    return contentsTemp;
+  }
+
+  Future<List<dynamic>> _readCompe() async {
+    List contentsTemp = [];
+    await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('objective')
+        .get()
+        .then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          contentsTemp = documentSnapshot.get('competencies');
+
+          print('ideas temp : $contentsTemp');
+        }
+      },
+    );
+    return contentsTemp;
+  }
+
+  Future<String> _readIdea() async {
+    String contentsTemp = "";
+    DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('objective')
+        .get();
+
+    if (objectiveSnapshot.exists) {
+      dynamic data = objectiveSnapshot.data()!;
+      //to access to firebase reference
+      List<DocumentReference> ideasRef = (data['ideas'] as List<dynamic>)
+          .map((e) => e as DocumentReference)
+          .toList();
+
+      var idea = ideasRef[0];
+      DocumentSnapshot ideaSnapshot = await idea.get();
+      contentsTemp = ideaSnapshot.get('text');
+      print("toStrigng" + contentsTemp);
+    }
+
+    print("Prueba" + contentsTemp);
+    return contentsTemp;
+  }
 }

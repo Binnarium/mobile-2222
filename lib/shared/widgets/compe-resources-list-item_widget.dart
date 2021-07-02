@@ -2,18 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class CompeResourcesListItem extends StatelessWidget {
-  
-  final String image;
+  final String kind;
+  // final String image;
   final String description;
 
   const CompeResourcesListItem(
       {Key? key,
-      required this.image,
+      required this.kind,
+      // required this.image,
       required this.description})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String kindIcon = this.kind.replaceAll("COMPETENCIES#", '').toLowerCase() ;
+    String description ='';
+    if(kindIcon == 'time_management'){
+      description = "MANEJO DEL TIEMPO";
+    }else if(kindIcon == 'team_work'){
+      description = "TRABAJO DE EQUIPO";
+    }else if(kindIcon == 'innovation_creativity'){
+      description = "INNOVACIÓN Y CREATIVIDAD";
+    }
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       width: double.infinity,
@@ -26,7 +36,7 @@ class CompeResourcesListItem extends StatelessWidget {
           ///seeks if an image url is provided, otherwise returns the no image png
           
           Image(
-              image: AssetImage('assets/backgrounds/decorations/$image.png'),
+              image: AssetImage('assets/icons/${kindIcon}_icon.png'),
               height: 60,
               alignment: Alignment.center,
             ),
