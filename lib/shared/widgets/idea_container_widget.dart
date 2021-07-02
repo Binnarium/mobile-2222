@@ -26,15 +26,18 @@ class IdeaContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     //contenedor principal que contendrá la imagen y el texto en un stack
     return Container(
       width: width,
       height: height,
-      alignment: Alignment.center,
+      constraints: BoxConstraints(maxWidth: 170),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+      // alignment: Alignment.center,
       child: Stack(
         children: [
           _ideasImage(width, height),
-          _textIdea(width, height, text),
+          _textIdea(size, width, height, text),
         ],
       ),
     );
@@ -83,6 +86,9 @@ class IdeaContainerWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         child: Image(
+          height: height,
+          width: width,
+          fit: BoxFit.fill,
           image: AssetImage(
             'assets/backgrounds/decorations/bubble_background_decoration.png',
           ),
@@ -92,43 +98,47 @@ class IdeaContainerWidget extends StatelessWidget {
   }
 
   //donde se crea el container que tiene el texto como child
-  _textIdea(double? width, double? height, String text) {
+  _textIdea(Size size, double? width, double? height, String text) {
     //configuración por defecto para el bottomLeft
-    EdgeInsetsGeometry padding = EdgeInsets.only(left: 8, right: 4);
+    EdgeInsetsGeometry margin = EdgeInsets.only(left: 10, right: 10);
     //configuración por defecto para el BottomRight
-    if (isBottomRight == true) {
-      padding = EdgeInsets.only(
-        left: 4,
+    if (isBottomLeft == true) {
+      margin = EdgeInsets.only(
+        left: (size.height > 700) ? 12 : 8,
         right: 8,
-        top: 10,
+        top: (size.height > 700) ? 0 : 10,
       );
     }
     //configuración por defecto para el topRight
     if (isTopRight == true) {
-      padding = EdgeInsets.only(
+      margin = EdgeInsets.only(
         left: 4,
         right: 8,
-        bottom: 10,
+        bottom: (size.height > 700) ? 0 : 15,
       );
     }
     //configuración por defecto para el topLeft
     if (isTopLeft == true) {
-      padding = EdgeInsets.only(
+      margin = EdgeInsets.only(
         left: 10,
-        right: 4,
+        right: 8,
         bottom: 15,
       );
     }
     return Container(
+      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       //se emplea la configuración por defecto
-      padding: padding,
+      margin: margin,
       alignment: Alignment.center,
+      width: width,
+      height: height,
       // color: Colors.red,
       child: Text(
         //se emplea el texto recibido por entrada
         text,
-        style: korolevFont.bodyText2
-            ?.apply(color: Colors.black, fontSizeFactor: 0.7),
+        style: korolevFont.bodyText2?.apply(
+            color: Colors.black,
+            fontSizeFactor: (size.height > 700) ? 0.8 : 0.73),
         textAlign: TextAlign.center,
       ),
     );

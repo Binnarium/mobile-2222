@@ -31,7 +31,7 @@ class ClubResourcesGridItem extends StatelessWidget {
           ),
           Text(
             schedule,
-            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
+            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize - 0.1),
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageVideoScreen extends StatelessWidget {
   static const String route = '/video';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const StageVideoScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -39,7 +38,7 @@ class StageVideoScreen extends StatelessWidget {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+                backgroundColor: Color(chapterSettings.primaryColor),
                 reliefPosition: 'top-left',
               ),
               _stageVideoContent(size, context),
@@ -78,9 +77,8 @@ class StageVideoScreen extends StatelessWidget {
       child: Container(
         color: Colors.white,
         width: size.width,
-        height: size.height * 0.15,
         padding:
-            EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 10),
+            EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -94,13 +92,12 @@ class StageVideoScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'TÍTULO DEL VIDEO LOREM IPSUM SIT AMET CONSEQUTETUR'
-                  .toUpperCase(),
+              'TÍTULO DEL VIDEO LOREM IPSUM SIT AM CONSEQUTETUR'.toUpperCase(),
               style: korolevFont.headline6?.apply(
-                color: Color(int.parse(chapterSettings.primaryColor)),
+                color: Color(chapterSettings.primaryColor),
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+              // maxLines: 2,
+              // overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
@@ -146,27 +143,25 @@ class StageVideoScreen extends StatelessWidget {
   }
 
   _podcastContainer(Size size) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: () {
-          print('podcast icon pressed');
-        },
-        child: ClipRRect(
-          child: Column(
-            children: [
-              Image(
+    return Column(
+      children: [
+        Material(
+            type: MaterialType.circle,
+            color: Colors.transparent,
+            child: InkResponse(
+              onTap: () {
+                print('podcast icon pressed');
+              },
+              child: Image(
                 image: AssetImage('assets/icons/podcast_icon.png'),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Escucha el podcast',
-                style: korolevFont.headline6?.apply(),
-              )
-            ],
-          ),
-        ),
-      ),
+            )),
+        SizedBox(height: 20),
+        Text(
+          'Escucha el podcast',
+          style: korolevFont.headline6?.apply(),
+        )
+      ],
     );
   }
 }

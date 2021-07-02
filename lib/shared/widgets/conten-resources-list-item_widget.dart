@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class CompeResourcesListItem extends StatelessWidget {
-  final String kind;
-  // final String image;
+class ContenResourcesListItem extends StatelessWidget {
+  final String index;
   final String description;
 
-  const CompeResourcesListItem(
-      {Key? key,
-      required this.kind,
-      // required this.image,
-      required this.description})
+  const ContenResourcesListItem(
+      {Key? key, required this.index, required this.description})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String kindIcon = this.kind.replaceAll("COMPETENCIES#", '').toLowerCase() ;
-    String description ='';
-    if(kindIcon == 'time_management'){
-      description = "MANEJO DEL TIEMPO";
-    }else if(kindIcon == 'team_work'){
-      description = "TRABAJO DE EQUIPO";
-    }else if(kindIcon == 'innovation_creativity'){
-      description = "INNOVACIÓN Y CREATIVIDAD";
-    }
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       width: double.infinity,
@@ -31,21 +18,24 @@ class CompeResourcesListItem extends StatelessWidget {
 
       ///static height
       // height: 120,
-      child: Column(
+      child: Row(
         children: [
           ///seeks if an image url is provided, otherwise returns the no image png
-          
-          Image(
-              image: AssetImage('assets/icons/${kindIcon}_icon.png'),
-              height: 60,
-              alignment: Alignment.center,
-            ),
-            SizedBox(height: 9,),
+          Text(
+            index.toUpperCase(),
+            style: korolevFont.headline3,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+
           ///Makes the column flexible to avoid the overflow
           Expanded(
             child: Wrap(
               // antes era column el wrap
-              alignment: WrapAlignment.center,
+              alignment: WrapAlignment.start,
               spacing: 10,
 
               children: [
@@ -54,7 +44,6 @@ class CompeResourcesListItem extends StatelessWidget {
                   style: korolevFont.bodyText1,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 4,
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -62,6 +51,5 @@ class CompeResourcesListItem extends StatelessWidget {
         ],
       ),
     );
-    
   }
 }

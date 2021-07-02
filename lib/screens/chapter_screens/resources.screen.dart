@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
-import 'package:lab_movil_2222/shared/models/ChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
+import 'package:lab_movil_2222/shared/models/Reading.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -8,12 +11,22 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/lectures-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
 
-class ResourcesScreen extends StatelessWidget {
+class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
-  final ChapterSettings chapterSettings;
+  final FirebaseChapterSettings chapterSettings;
 
   const ResourcesScreen({Key? key, required this.chapterSettings})
       : super(key: key);
+
+  @override
+  _ResourcesScreenState createState() => _ResourcesScreenState();
+}
+
+class _ResourcesScreenState extends State<ResourcesScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +34,7 @@ class ResourcesScreen extends StatelessWidget {
     VoidCallback nextPage = () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return ActivitiesScreen(
-          chapterSettings: this.chapterSettings,
+          chapterSettings: this.widget.chapterSettings,
         );
       }));
     };
@@ -40,7 +53,7 @@ class ResourcesScreen extends StatelessWidget {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(int.parse(chapterSettings.primaryColor)),
+                backgroundColor: Color(widget.chapterSettings.primaryColor),
               ),
 
               ///body of the screen
@@ -64,9 +77,9 @@ class ResourcesScreen extends StatelessWidget {
       child: ListView(
         children: [
           ChapterHeadWidget(
-            phaseName: this.chapterSettings.phaseName,
-            chapterName: this.chapterSettings.cityName,
-            chapterImgURL: this.chapterSettings.chapterImageUrl,
+            phaseName: this.widget.chapterSettings.phaseName,
+            chapterName: this.widget.chapterSettings.cityName,
+            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
           ),
           SizedBox(
             height: 20,
@@ -81,17 +94,13 @@ class ResourcesScreen extends StatelessWidget {
           ),
 
           ///list of the bodys (json expected)
-          _booksBody([
-            3,
-            2,
-            1,
-          ], size),
+          _booksBody(size),
           SizedBox(height: 30),
           ChapterTitleSection(
             title: 'RECURSOS ONLINE',
           ),
           SizedBox(
-            height: 20,
+            height: 40,
           ),
 
           ///calling the body of online resources, expected a json
@@ -111,8 +120,8 @@ class ResourcesScreen extends StatelessWidget {
   }
 
   /// books body method
-  _booksBody(List list, Size size) {
-    double bodyMarginWidth = size.width * 0.03;
+  _booksBody(Size size) {
+    double bodyMarginWidth = size.width * 0.05;
 
     /// main container
     return Container(
@@ -120,61 +129,151 @@ class ResourcesScreen extends StatelessWidget {
       margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the list of books
-      height: (list.length) * 150,
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            ///bringing a book resource per item in the list
-            return LecturesListItem(
-              size: size,
-              imageURL:
-                  'https://www.pngarts.com/files/8/Blank-Book-Cover-PNG-Picture.png',
-              title: 'El Principito valiente',
-              author: 'Daniel Novillo',
-              year: '1979',
-              editorial: 'Editorial San José Ignacio de Barravanes',
-              review:
-                  'Tenim ipsam voluptatem quia volupipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiaipsam voluptatem quiatas sit aspernatur aut odit aut fugit, sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam',
-            );
+
+      child: FutureBuilder(
+          future: _readBooks(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<ReadingModel>> readings) {
+            if (readings.hasError) {
+              return Text(readings.error.toString());
+            }
+
+            if (readings.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Color(widget.chapterSettings.primaryColor),
+                  ),
+                ),
+              );
+            }
+            return ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: readings.data?.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  ///bringing a book resource per item in the list
+                  return LecturesListItem(
+                      size: size,
+                      imageURL: readings.data?[index].coverUrl.toString(),
+                      title: readings.data![index].name.toString(),
+                      author: readings.data![index].author.toString(),
+                      year: readings.data![index].publishedDate.toString(),
+                      review: readings.data![index].about.toString());
+                });
           }),
     );
   }
 
   ///Method of the online resources
   _onlineResourcesBody(List list, Size size) {
-    double bodyMarginWidth = size.width * 0.03;
+    double bodyMarginWidth = size.width * 0.05;
 
     ///main container
     return Container(
       margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
-      height: (list.length) * 120,
 
       ///Creates a grid with the necesary online resources
-      child: GridView.builder(
-        ///general spacing per resource
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15,
-        ),
-        itemCount: list.length,
+      child: FutureBuilder(
+          future: _readOnlineResources(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<OnlineResourceModel>> resources) {
+            if (resources.hasError) {
+              return Text(resources.error.toString());
+            }
 
-        ///to avoid the scroll
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          ///calls the custom widget with the item parameters
-          return OnlineResourcesGridItem(
-              color: Color(int.parse(chapterSettings.primaryColor)),
-              size: size,
-              account: 'Platzi/live',
-              type: 'youtube',
-              description:
-                  'Tenim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,sed quia conseunde omnis iste natus error sit voluptatem accusantium doloremque');
-        },
-      ),
+            if (resources.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Colors.white,
+                  ),
+                ),
+              );
+            }
+            return GridView.builder(
+              ///general spacing per resource
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                mainAxisExtent: (size.height > 700) ? 200 : 180,
+                // childAspectRatio: 1,
+              ),
+              itemCount: resources.data!.length,
+
+              /// property that sizes the container automaticly according
+              /// the items
+              shrinkWrap: true,
+
+              ///to avoid the scroll
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                ///calls the custom widget with the item parameters
+                return OnlineResourcesGridItem(
+                  color: Color(widget.chapterSettings.primaryColor),
+                  size: size,
+                  name: resources.data![index].name,
+                  kind: resources.data![index].kind,
+                  description: resources.data![index].description,
+                  id: resources.data![index].id,
+                  redirect: resources.data![index].redirect,
+                );
+              },
+            );
+          }),
     );
+  }
+
+  Future<List<ReadingModel>> _readBooks() async {
+    final List<ReadingModel> readingsListTemp = [];
+
+    await FirebaseFirestore.instance.collection('readings').get().then(
+      (QuerySnapshot querySnapshot) {
+        querySnapshot.docs.toList().asMap().forEach(
+          (index, doc) {
+            final readTemp = new ReadingModel(
+              coverUrl: doc['coverUrl'],
+              author: doc['author'],
+              about: doc['about'],
+              name: doc['name'],
+              publishedDate: doc['publishedDate'].toString(),
+              id: 'id',
+            );
+            // print(readTemp.toJson());
+
+            readingsListTemp.add(readTemp);
+            // print('Lo que viene de firebase: ${doc.data().toString()}');
+          },
+        );
+      },
+    );
+    return readingsListTemp;
+  }
+
+  Future<List<OnlineResourceModel>> _readOnlineResources() async {
+    final List<OnlineResourceModel> resourcesListTemp = [];
+
+    await FirebaseFirestore.instance.collection('online-resources').get().then(
+      (QuerySnapshot querySnapshot) {
+        querySnapshot.docs.toList().asMap().forEach(
+          (index, doc) {
+            // print(doc.data());
+            final resourceTemp = new OnlineResourceModel(
+              kind: doc['kind'],
+              name: doc['name'],
+              redirect: doc['redirect'],
+              description: doc['description'],
+              id: doc['id'],
+            );
+            resourcesListTemp.add(resourceTemp);
+            // print('Lo que viene de firebase: ${doc.data().toString()}');
+          },
+        );
+      },
+    );
+    return resourcesListTemp;
   }
 }
