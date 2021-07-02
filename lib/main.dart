@@ -7,6 +7,11 @@ import 'package:lab_movil_2222/shared/routes/routes.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:provider/provider.dart';
 
+/// ignore: slash_for_doc_comments
+/// ignore: todo
+/// TODO: follow this steps to install flutter firebase
+/// properly https://firebase.flutter.dev/docs/overview#initializing-flutterfire
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
