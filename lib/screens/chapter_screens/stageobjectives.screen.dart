@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
@@ -39,11 +40,13 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return StageVideoScreen(
+      Navigator.pushNamed(
+        context,
+        StageVideoScreen.route,
+        arguments: StageVideoScreen(
           chapterSettings: this.widget.chapterSettings,
-        );
-      }));
+        ),
+      );
     };
 
     final size = MediaQuery.of(context).size;
@@ -248,7 +251,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
   _decorationWhite(Size size) {
     double bodyContainerHeight = size.height * 0.35;
-    double bodyContainerWidth = size.width *0.95;
+    double bodyContainerWidth = size.width * 0.95;
     if (size.width > 500) {
       bodyContainerHeight = size.height * 0.80;
     }

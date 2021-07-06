@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/Reading.model.dart';
@@ -32,11 +33,13 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return ActivitiesScreen(
+      Navigator.pushNamed(
+        context,
+        ActivitiesScreen.route,
+        arguments: ActivitiesScreen(
           chapterSettings: this.widget.chapterSettings,
-        );
-      }));
+        ),
+      );
     };
     Size size = MediaQuery.of(context).size;
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -18,6 +19,15 @@ class ChapterClubhouseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
+    // VoidCallback nextPage = () {
+    //   Navigator.pushNamed(
+    //     context,
+    //     ChapterClubhouseScreen.route,
+    //     arguments: ChapterClubhouseScreen(
+    //       chapterSettings: this.chapterSettings,
+    //     ),
+    //   );
+    // };
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
