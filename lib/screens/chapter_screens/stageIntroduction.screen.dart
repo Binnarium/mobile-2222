@@ -32,13 +32,13 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
   Widget build(BuildContext context) {
     VoidCallback prevPage =
         () => Navigator.pushReplacementNamed(context, CitiesScreen.route);
-    VoidCallback nextPage = () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return StageHistoryScreen(
-          chapterSettings: this.widget.chapterSettings,
+    VoidCallback nextPage = () => Navigator.pushNamed(
+          context,
+          StageHistoryScreen.route,
+          arguments: StageHistoryScreen(
+            chapterSettings: this.widget.chapterSettings,
+          ),
         );
-      }));
-    };
 
     // Navigator.pushNamed(context, StageIntroductionScreen.route);
 

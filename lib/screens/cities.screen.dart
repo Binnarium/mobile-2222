@@ -1,13 +1,11 @@
-import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
 class CitiesScreen extends StatefulWidget {
   static const String route = '/cities';
@@ -69,7 +67,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
                     MaterialStateProperty.all(Color(data[i].primaryColor)),
               ),
               onPressed: () {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
                   StageIntroductionScreen.route,
                   arguments: StageIntroductionScreen(

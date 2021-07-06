@@ -85,7 +85,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           );
 
         default:
-          throw ("Unhandled route, fixme");
+          return CitiesScreen();
       }
     },
   );
