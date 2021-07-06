@@ -239,7 +239,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               author: doc['author'],
               about: doc['about'],
               name: doc['name'],
-              publishedDate: doc['publishedDate'].toString(),
+              publishedDate:
+                  (doc['publishedDate'] as Timestamp).toDate().toString(),
               id: 'id',
             );
             // print(readTemp.toJson());
