@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
-import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -13,14 +13,6 @@ enum NavigationBarPages {
   page4,
   page5,
 }
-
-const Map<NavigationBarPages, String> AppRoutes = {
-  NavigationBarPages.page1: CitiesScreen.route,
-  NavigationBarPages.page2: GoalsScreen.route,
-  NavigationBarPages.page3: ProfileScreen.route,
-  NavigationBarPages.page4: ClubHouseScreen.route,
-  NavigationBarPages.page5: StatisticsScreen.route,
-};
 
 class CustomNavigationBar extends StatelessWidget {
   const CustomNavigationBar({
@@ -36,65 +28,93 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Controla cuando se presione un botón
-    void _onItemTapped(int value) {
-      String tapped = AppRoutes.values.toList()[value];
-      Navigator.pushReplacementNamed(context, tapped);
-    }
-
-    return BottomNavigationBar(
-      onTap: _onItemTapped,
-      type: BottomNavigationBarType.fixed,
-      currentIndex: AppRoutes.keys.toList().indexOf(this.activePage),
-      backgroundColor: ColorsApp.backgroundBottomBar,
-      unselectedItemColor: Colors.grey,
-      selectedItemColor: Colors.white,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      items: [
-        // BottomNavigationBarItem(
-        //   icon: ImageIcon(
-        //     AssetImage('assets/icons/left_arrow_icon.png'),
-        //   ),
-        //   label: "",
-        // ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(
-            AssetImage('assets/icons/boat_icon.png'),
+    return Container(
+      color: ColorsApp.backgroundBottomBar,
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: this.prevPage,
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/left_arrow_icon.png'),
+                color: this.prevPage == null
+                    ? ColorsApp.backgroundBottomBar
+                    : Colors.grey,
+              ),
+            ),
           ),
-          label: "Ruta",
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(
-            AssetImage('assets/icons/goals_icon.png'),
+          GestureDetector(
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, CitiesScreen.route),
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/boat_icon.png'),
+                color: this.activePage == NavigationBarPages.page1
+                    ? Colors.white
+                    : Colors.grey,
+              ),
+            ),
           ),
-          label: "Progreso",
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(
-            AssetImage('assets/icons/avatar_icon.png'),
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, GoalsScreen.route),
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/goals_icon.png'),
+                color: this.activePage == NavigationBarPages.page2
+                    ? Colors.white
+                    : Colors.grey,
+              ),
+            ),
           ),
-          label: "Perfil",
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(
-            AssetImage('assets/icons/coffee_icon.png'),
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, ProfileScreen.route),
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/avatar_icon.png'),
+                color: this.activePage == NavigationBarPages.page3
+                    ? Colors.white
+                    : Colors.grey,
+              ),
+            ),
           ),
-          label: "Cafe",
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(
-            AssetImage('assets/icons/stats_icon.png'),
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, ClubHouseScreen.route),
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/coffee_icon.png'),
+                color: this.activePage == NavigationBarPages.page4
+                    ? Colors.white
+                    : Colors.grey,
+              ),
+            ),
           ),
-          label: "Stats",
-        ),
-        // BottomNavigationBarItem(
-        //   icon: ImageIcon(
-        //     AssetImage('assets/icons/right_arrow_icon.png'),
-        //   ),
-        //   label: "",
-        // ),
-      ],
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, StatisticsScreen.route),
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/stats_icon.png'),
+                color: this.activePage == NavigationBarPages.page5
+                    ? Colors.white
+                    : Colors.grey,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: this.nextPage,
+            child: Container(
+              child: ImageIcon(
+                AssetImage('assets/icons/right_arrow_icon.png'),
+                color: this.nextPage == null
+                    ? ColorsApp.backgroundBottomBar
+                    : Colors.grey,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+
   }
 }
