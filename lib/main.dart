@@ -15,10 +15,10 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(App2222());
 }
 
-class MyApp extends StatelessWidget {
+class App2222 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// Para ocultar barra de estado
