@@ -24,7 +24,7 @@ jobs:
         run: flutter test
   
   build:
-    name:  Build Web App for release
+    name:  Build Web App for preview
     needs: test
     runs-on: macos-latest
     steps:
