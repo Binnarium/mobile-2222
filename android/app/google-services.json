@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "590170055799",
+    "project_id": "lab-movil-2222",
+    "storage_bucket": "lab-movil-2222.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590170055799:android:0ed898d2b50bec751b9272",
+        "android_client_info": {
+          "package_name": "com.binnariumedu.lab_movil_2222"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590170055799-0hvg1p1ajq8ko2bk0gla9aqge6ock3l2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArgfdtQwZ5rSOrNSQeOxaOgXoliz0WRmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590170055799-0hvg1p1ajq8ko2bk0gla9aqge6ock3l2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
