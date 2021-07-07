@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
-import 'dart:math' as math;
 
 class IdeaUnlearnContainerWidget extends StatelessWidget {
   //width del contenedor
@@ -10,6 +7,7 @@ class IdeaUnlearnContainerWidget extends StatelessWidget {
   final Color color;
   //height del contenedor
   final double? height;
+
   //texto que irá dentro del contenedor
   final String text;
   //para determinar dónde se encuentra el lado más extenso de la imagen del contenedor
@@ -98,9 +96,11 @@ class IdeaUnlearnContainerWidget extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Image(
-              image: AssetImage(
-            'assets/icons/idea_unlearn_icon.png',
-          ))
+            image: AssetImage(
+              'assets/icons/idea_unlearn_icon.png',
+            ),
+            color: color,
+          )
         ],
       ),
     );

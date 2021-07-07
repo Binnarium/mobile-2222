@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -19,11 +20,13 @@ class StageHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return StageArgumentationScreen(
+      Navigator.pushNamed(
+        context,
+        StageArgumentationScreen.route,
+        arguments: StageArgumentationScreen(
           chapterSettings: this.chapterSettings,
-        );
-      }));
+        ),
+      );
     };
 
     final size = MediaQuery.of(context).size;
@@ -166,7 +169,7 @@ class StageHistoryScreen extends StatelessWidget {
         width: widthImagen,
         height: heightImagen,
         image: AssetImage(
-          'assets/backgrounds/decorations/logo_stage_prin.png',
+          'assets/backgrounds/decorations/logo_stage_secun.png',
         ),
       ),
     );

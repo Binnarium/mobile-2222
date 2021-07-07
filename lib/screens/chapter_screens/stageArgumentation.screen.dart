@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -20,7 +21,6 @@ class StageArgumentationScreen extends StatefulWidget {
 }
 
 class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
-  String _ilustrationURL = "";
   @override
   void initState() {
     _asyncLecture();
@@ -35,12 +35,15 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return StageObjetivesScreen(
+      Navigator.pushNamed(
+        context,
+        StageObjetivesScreen.route,
+        arguments: StageObjetivesScreen(
           chapterSettings: this.widget.chapterSettings,
-        );
-      }));
+        ),
+      );
     };
+
     Size size = MediaQuery.of(context).size;
     print(size);
     return Scaffold(
@@ -191,7 +194,6 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           ideasTemp = documentSnapshot.get('ideas');
-          _ilustrationURL = documentSnapshot.get('illustrationUrl').toString();
           // print('ideas temp : $ideasTemp');
         }
       },
