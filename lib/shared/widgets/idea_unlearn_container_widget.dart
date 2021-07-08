@@ -102,7 +102,7 @@ class IdeaUnlearnContainerWidget extends StatelessWidget {
               'assets/icons/idea_unlearn_icon.png',
             ),
             color: color,
-            height: (size.height > 700) ? height : height! * 0.3,
+            height: (size.height > 700) ? height!*0.60 : height! * 0.3,
           )
         ],
       ),

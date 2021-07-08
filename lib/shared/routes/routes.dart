@@ -5,7 +5,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
@@ -67,9 +67,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             chapterSettings: args.chapterSettings,
           );
 
-        case StageVideoScreen.route:
-          final args = settings.arguments as StageVideoScreen;
-          return StageVideoScreen(
+        case ContentScreen.route:
+          final args = settings.arguments as ContentScreen;
+          return ContentScreen(
             chapterSettings: args.chapterSettings,
           );
 

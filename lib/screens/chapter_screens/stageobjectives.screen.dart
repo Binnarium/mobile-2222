@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
@@ -40,8 +40,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     VoidCallback nextPage = () {
       Navigator.pushNamed(
         context,
-        StageVideoScreen.route,
-        arguments: StageVideoScreen(
+        ContentScreen.route,
+        arguments: ContentScreen(
           chapterSettings: this.widget.chapterSettings,
         ),
       );
@@ -120,6 +120,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   _objetBody(Size size) {
+    
     double bodyMarginLeft = size.width * 0.05;
     return Container(
         // decoration: BoxDecoration(border: Border.all(color: Colors.white)),

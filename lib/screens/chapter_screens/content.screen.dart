@@ -11,18 +11,18 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:video_player/video_player.dart';
 
-class StageVideoScreen extends StatefulWidget {
+class ContentScreen extends StatefulWidget {
   static const String route = '/video';
   final FirebaseChapterSettings chapterSettings;
 
-  const StageVideoScreen({Key? key, required this.chapterSettings})
+  const ContentScreen({Key? key, required this.chapterSettings})
       : super(key: key);
 
   @override
-  _StageVideoScreenState createState() => _StageVideoScreenState();
+  _ContentScreenState createState() => _ContentScreenState();
 }
 
-class _StageVideoScreenState extends State<StageVideoScreen> {
+class _ContentScreenState extends State<ContentScreen> {
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
