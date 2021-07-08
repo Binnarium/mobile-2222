@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:audio_session/audio_session.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
@@ -128,7 +130,9 @@ class _StageVideoScreenState extends State<StageVideoScreen> {
               contentsTemp
                   .add(_titleContainer(size, content.author, content.title));
               contentsTemp.add(SizedBox(height: 30));
-              contentsTemp.add(_podcastContainer());
+              contentsTemp.add(_PodcastAudioPlayer(
+                audioUrl: content.url,
+              ));
               contentsTemp.add(SizedBox(height: 30));
             }
           }
@@ -166,29 +170,6 @@ class _StageVideoScreenState extends State<StageVideoScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  _podcastContainer() {
-    return Column(
-      children: [
-        Material(
-            type: MaterialType.circle,
-            color: Colors.transparent,
-            child: InkResponse(
-              onTap: () {
-                print('podcast icon pressed');
-              },
-              child: Image(
-                image: AssetImage('assets/icons/podcast_icon.png'),
-              ),
-            )),
-        SizedBox(height: 20),
-        Text(
-          'Escucha el podcast',
-          style: korolevFont.headline6?.apply(),
-        )
-      ],
     );
   }
 
@@ -360,8 +341,9 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
     return Stack(
       children: <Widget>[
         AnimatedSwitcher(
-          duration: Duration(milliseconds: 50),
-          reverseDuration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 200),
+          reverseDuration: Duration(milliseconds: 400),
+          switchInCurve: Curves.easeIn,
           child: widget.controller.value.isPlaying
               ? SizedBox.shrink()
               : Container(
@@ -421,6 +403,94 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _PodcastAudioPlayer extends StatefulWidget {
+  final String audioUrl;
+  _PodcastAudioPlayer({Key? key, required this.audioUrl}) : super(key: key);
+
+  @override
+  __PodcastAudioPlayerState createState() => __PodcastAudioPlayerState();
+}
+
+class __PodcastAudioPlayerState extends State<_PodcastAudioPlayer> {
+  final AudioPlayer _player = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  Future<void> _init() async {
+    // Inform the operating system of our app's audio attributes etc.
+    // We pick a reasonable default for an app that plays speech.
+    final session = await AudioSession.instance;
+    await session.configure(AudioSessionConfiguration.speech());
+    // Listen to errors during playback.
+    _player.playbackEventStream.listen((event) {},
+        onError: (Object e, StackTrace stackTrace) {
+      print('A stream error occurred: $e');
+    });
+    // Try to load audio from a source and catch any errors.
+    try {
+      await _player
+          .setAudioSource(AudioSource.uri(Uri.parse(this.widget.audioUrl)));
+    } catch (e) {
+      print("Error loading audio source: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    // Release decoders and buffers back to the operating system making them
+    // available for other apps to use.
+    _player.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _podcastContainer();
+  }
+
+  _podcastContainer() {
+    return Column(
+      children: [
+        Material(
+            type: MaterialType.circle,
+            color: Colors.transparent,
+            child: InkResponse(
+              onTap: () async {
+                if (_player.playing) {
+                  print("entró a pause");
+                  if (_player.position >= _player.duration!) {
+                    print("entro!!!!!!!!!!!!!");
+                    _player.seek(Duration.zero);
+                    _player.play();
+                  } else {
+                    _player.pause();
+                  }
+                } else {
+                  print("entró a play");
+
+                  _player.play();
+                }
+                print('duracion de audio: ${_player.duration}');
+                print('player state: ${_player.position}');
+              },
+              child: Image(
+                image: AssetImage('assets/icons/podcast_icon.png'),
+              ),
+            )),
+        SizedBox(height: 20),
+        Text(
+          'Escucha el podcast',
+          style: korolevFont.headline6?.apply(),
+        )
       ],
     );
   }

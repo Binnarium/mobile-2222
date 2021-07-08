@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -58,10 +57,6 @@ class ChapterClubhouseScreen extends StatelessWidget {
 
   ///body of the screen
   _resourcesContent(Size size) {
-    double bodyContainerHeight = size.height * 0.75;
-    double bodyMarginLeft = size.width * 0.10;
-    double fontSize = (size.height > 600) ? 0.97 : 0.8;
-
     ///sizing the container to the mobile
     return Container(
       ///Listview of the whole screen

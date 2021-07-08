@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
-
 import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -122,7 +120,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   _objetBody(Size size) {
-    String texto = 'hpla';
     double bodyMarginLeft = size.width * 0.05;
     return Container(
         // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
