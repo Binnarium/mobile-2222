@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
 
           ///texto inicial
           Text(
-            'LOREM IPSUM VIAJE',
+            'Laboratorio Móvil 2222'.toUpperCase(),
             style: Theme.of(context).textTheme.headline5,
             textAlign: TextAlign.center,
           ),
