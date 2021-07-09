@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 HistoryModel historyModelFromJson(String str) =>
@@ -36,7 +34,7 @@ class HistoryModel {
         url: json["url"],
         width: json["width"],
         title: json["title"],
-        text: json["text"],       
+        text: json["text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,7 +46,59 @@ class HistoryModel {
         "width": width,
         "title": title,
         "text": text,
-        
-        
       };
+}
+
+abstract class HistoryDto {
+  final String kind;
+
+  HistoryDto({
+    required this.kind,
+  });
+
+  static HistoryDto fromJson(Map<String, dynamic> payload) {
+    final String kind = payload['kind'];
+    if (kind == 'HISTORY#TITLE')
+      return TitleHistoryDto(
+        kind: kind,
+        title: payload['title'],
+      );
+    else if (kind == 'HISTORY#TEXT')
+      return TextHistoryDto(
+        kind: kind,
+        text: payload['text'],
+      );
+    else
+      return ImageHistoryDto(
+        kind: kind,
+        url: payload['url'],
+      );
+  }
+}
+
+class TitleHistoryDto extends HistoryDto {
+  final String? title;
+
+  TitleHistoryDto({
+    required String kind,
+    this.title,
+  }) : super(kind: kind);
+}
+
+class TextHistoryDto extends HistoryDto {
+  final String? text;
+
+  TextHistoryDto({
+    required String kind,
+    this.text,
+  }) : super(kind: kind);
+}
+
+class ImageHistoryDto extends HistoryDto {
+  final String? url;
+
+  ImageHistoryDto({
+    required String kind,
+    this.url,
+  }) : super(kind: kind);
 }

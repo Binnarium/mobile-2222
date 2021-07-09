@@ -1,6 +1,6 @@
+import 'package:audio_session/audio_session.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
@@ -117,13 +117,13 @@ class _ContentScreenState extends State<ContentScreen> {
               contentsTemp.add(SizedBox(height: 30));
               contentsTemp
                   .add(_titleContainer(size, content.author, content.title));
-
-              contentsTemp.add(new _VideoPlayerSegment(
+              final video = _VideoPlayerSegment(
                 videoUrl: content.url,
                 description: content.description,
                 color: Color(widget.chapterSettings.primaryColor),
-              ));
-              contentsTemp.add(SizedBox(height: 30));
+              );
+              contentsTemp.add(video);
+              contentsTemp.add(SizedBox(height: 30));              
 
               /// if kind == podcast then returns an audio container
             } else if (content.kind.compareTo("CONTENT#PODCAST") == 0) {
