@@ -24,7 +24,7 @@ jobs:
         run: flutter test
   
   build:
-    name:  Build Web App for release
+    name:  Build Web App for preview
     needs: test
     runs-on: macos-latest
     steps:
@@ -48,7 +48,8 @@ jobs:
           name: webapp
           path: build/web
           
-  deploy:
+  preview:
+    name: Deploy to preview channel
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     needs: build
     runs-on: ubuntu-latest
