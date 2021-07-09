@@ -47,7 +47,6 @@ class ActivityContainerWidget extends StatelessWidget {
             String iconPath = '';
             String activityName = '';
 
-            ///TODO: Await for a json sample to know how to handle every activity
             ///for now its hardcoded
             switch (index) {
               case 0:

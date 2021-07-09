@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageVideo.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
-import 'package:lab_movil_2222/shared/models/Reading.model.dart';
+import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -136,7 +135,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       child: FutureBuilder(
           future: _readBooks(),
           builder: (BuildContext context,
-              AsyncSnapshot<List<ReadingModel>> readings) {
+              AsyncSnapshot<List<LectureModel>> readings) {
             if (readings.hasError) {
               return Text(readings.error.toString());
             }
@@ -230,14 +229,14 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     );
   }
 
-  Future<List<ReadingModel>> _readBooks() async {
-    final List<ReadingModel> readingsListTemp = [];
+  Future<List<LectureModel>> _readBooks() async {
+    final List<LectureModel> readingsListTemp = [];
 
     await FirebaseFirestore.instance.collection('readings').get().then(
       (QuerySnapshot querySnapshot) {
         querySnapshot.docs.toList().asMap().forEach(
           (index, doc) {
-            final readTemp = new ReadingModel(
+            final readTemp = new LectureModel(
               coverUrl: doc['coverUrl'],
               author: doc['author'],
               about: doc['about'],
