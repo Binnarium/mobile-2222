@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
+import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
@@ -36,27 +38,48 @@ class LoginScreen extends StatelessWidget {
   ///Cuerpo de la pantalla
   _loginBody(Size size, BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          ///logo de 2222
-          _logo(size),
-          SizedBox(height: size.height * 0.05),
+      child: FutureBuilder(
+        future: _readLoginContent(),
+        builder: (BuildContext context, AsyncSnapshot<LoginDto> loginInfo) {
+          if (loginInfo.hasError) {
+            return Text(loginInfo.error.toString());
+          }
 
-          ///texto inicial
-          Text(
-            'LOREM IPSUM VIAJE',
-            style: Theme.of(context).textTheme.headline5,
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: size.height * 0.05),
-          _descriptionText(context),
-          SizedBox(height: size.height * 0.05),
-          _video(),
-          SizedBox(height: size.height * 0.1),
+          if (loginInfo.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(
+                  ColorsApp.backgroundRed,
+                ),
+              ),
+            );
+          }
+          return Column(
+            children: [
+              ///logo de 2222
+              _logo(size),
+              SizedBox(height: size.height * 0.05),
 
-          ///formulario (falta aplicar backend)
-          _loginForm(context),
-        ],
+              ///texto inicial
+              Text(
+                'Laboratorio Móvil 2222'.toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .apply(fontSizeFactor: 1.3),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: size.height * 0.05),
+              _descriptionText(context, loginInfo.data!.pageTitle),
+              SizedBox(height: size.height * 0.05),
+              _video(),
+              SizedBox(height: size.height * 0.1),
+
+              ///formulario (falta aplicar backend)
+              _loginForm(context),
+            ],
+          );
+        },
       ),
     );
   }
@@ -78,12 +101,12 @@ class LoginScreen extends StatelessWidget {
   }
 
   ///Párrafo de descripción
-  _descriptionText(BuildContext context) {
+  _descriptionText(BuildContext context, String description) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas',
+        description,
         style:
             Theme.of(context).textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
         textAlign: TextAlign.center,
@@ -112,7 +135,10 @@ class LoginScreen extends StatelessWidget {
         children: [
           Text(
             'Comienza tu aventura',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context)
+                .textTheme
+                .headline6!
+                .apply(fontSizeFactor: 1.3),
             textAlign: TextAlign.center,
           ),
           SizedBox(
@@ -146,12 +172,12 @@ class LoginScreen extends StatelessWidget {
         text: TextSpan(
           text: '¿No tienes cuenta? Regístrate ',
           style:
-              Theme.of(context).textTheme.bodyText1?.apply(fontSizeFactor: 0.8),
+              Theme.of(context).textTheme.headline6?.apply(fontSizeFactor: 0.7),
           children: [
             TextSpan(
               text: 'aquí',
-              style: Theme.of(context).textTheme.bodyText1?.apply(
-                  decoration: TextDecoration.underline, fontSizeFactor: 0.8),
+              style: Theme.of(context).textTheme.headline6?.apply(
+                  decoration: TextDecoration.underline, fontSizeFactor: 0.7),
             )
           ],
         ),
@@ -238,5 +264,17 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<LoginDto> _readLoginContent() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('cities')
+        .doc('welcome')
+        .get();
+    if (!snap.exists) new ErrorDescription('Document welcome does not exists');
+    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
+
+    final result = LoginDto.fromJson(payload);
+    return result;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -28,7 +27,7 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   }
 
   void _asyncLecture() async {
-    await _readIdeas();
+    await _readQuestions();
   }
 
   @override
@@ -65,7 +64,7 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
               ),
               //decoración adicional del background
               _backgroundDecoration(size),
-              _ideas(size),
+              // _ideas(size),
             ],
           ),
         ),
@@ -79,9 +78,6 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
 
   _backgroundDecoration(Size size) {
     return Container(
-      width: size.width,
-      height: size.height,
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       child: ListView(children: [
         ChapterHeadWidget(
           phaseName: this.widget.chapterSettings.phaseName,
@@ -111,14 +107,21 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
           );
         }
         return Container(
-          alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          width: size.width,
-          height: size.height * 0.75,
-          child: Image(
-            image: NetworkImage(
-              url.data.toString(),
-            ),
+          height: size.height * 0.78,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            child: Stack(children: [
+              Center(
+                child: Image(
+                  fit: BoxFit.contain,
+                  width: size.width * 0.78,
+                  image: NetworkImage(
+                    url.data.toString(),
+                  ),
+                ),
+              ),
+              _ideas(size),
+            ]),
           ),
         );
       },
@@ -126,10 +129,10 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   }
 
   _ideas(Size size) {
-    double widthFactor = (size.height > 700) ? 0.4 : 0.36;
-    double heightFactor = (size.height > 700) ? 0.15 : 0.15;
+    double widthFactor = 0.36;
+    double heightFactor = 0.15;
     return FutureBuilder(
-      future: _readIdeas(),
+      future: _readQuestions(),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> ideas) {
         if (ideas.hasError) {
           return Text(ideas.error.toString());
@@ -144,79 +147,77 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
             ),
           );
         }
+        List<Align> bubbles = [];
+        for (var i = 0; i < ideas.data!.length; i++) {
+          if (ideas.data?.elementAt(i) != null) {
+            Align bubble = _createBubble(
+                i, ideas.data?.elementAt(i), size, widthFactor, heightFactor);
+            bubbles.add(bubble);
+          }
+        }
         return Stack(
-          children: [
-            Positioned(
-              top: (size.height > 700) ? size.height * 0.18 : size.height * 0.2,
-              left: (size.height > 700) ? size.width * 0.25 : size.width * 0.3,
-              child: IdeaContainerWidget(
-                text: ideas.data!.elementAt(0),
-                width: size.width * widthFactor,
-                height: size.height * heightFactor,
-              ),
-            ),
-            Positioned(
-              top:
-                  (size.height > 700) ? size.height * 0.33 : size.height * 0.33,
-              left: size.width * 0.02,
-              child: IdeaContainerWidget(
-                text: ideas.data!.elementAt(1),
-                width: size.width * widthFactor,
-                height: size.height * heightFactor,
-                isTopRight: true,
-              ),
-            ),
-            Positioned(
-              top: (size.height > 700) ? size.height * 0.3 : size.height * 0.3,
-              left: (size.height > 700) ? size.width * 0.6 : size.width * 0.62,
-              child: IdeaContainerWidget(
-                text: ideas.data!.elementAt(2),
-                width: size.width * widthFactor,
-                height: size.height * heightFactor,
-                isTopLeft: true,
-              ),
-            ),
-          ],
+          children: bubbles,
         );
       },
     );
   }
 
-  Future<List<dynamic>> _readIdeas() async {
+  Future<List<dynamic>> _readQuestions() async {
     List<dynamic> ideasTemp = [];
-    await FirebaseFirestore.instance
+    final data = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.widget.chapterSettings.id)
         .collection('pages')
         .doc('argument')
-        .get()
-        .then(
-      (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          ideasTemp = documentSnapshot.get('ideas');
-          // print('ideas temp : $ideasTemp');
-        }
-      },
-    );
+        .get();
+
+    if (data.exists) {
+      ideasTemp = data.get('questions');
+    }
+
     return ideasTemp;
   }
 
   Future<String> _readIlustrationURL() async {
-    String url = "";
-    await FirebaseFirestore.instance
+    final snap = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.widget.chapterSettings.id)
         .collection('pages')
         .doc('argument')
-        .get()
-        .then(
-      (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          url = documentSnapshot.get('illustrationUrl').toString();
-          // print('ideas temp : $url');
-        }
-      },
-    );
+        .get();
+
+    if (!snap.exists)
+      new ErrorDescription(' URL of Illustration does not exists');
+
+    String url = snap.get('illustration')['url'].toString();
+
     return url;
+  }
+
+  Align _createBubble(
+      int i, String idea, Size size, double width, double height) {
+    Map<int, Alignment> aligns = {
+      0: Alignment(-1, -0.6),
+      1: Alignment(1, -0.6),
+      2: Alignment(0, -1),
+      3: Alignment(-1, 0.8),
+      4: Alignment(1, 0.8),
+    };
+    Map<int, String> orientations = {
+      0: "TopRight",
+      1: "TopLeft",
+      2: "BottomLeft",
+      3: "TopRight",
+      4: "TopLeft",
+    };
+    return Align(
+      alignment: aligns[i]!,
+      child: IdeaContainerWidget(
+        text: idea,
+        width: size.width * width,
+        height: size.height * height,
+        orientation: orientations[i],
+      ),
+    );
   }
 }

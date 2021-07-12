@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/activiy_container_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -91,7 +90,7 @@ class ActivitiesScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
             child: Text(
-              'Actividades de ${this.chapterSettings.cityName}'.toUpperCase(),
+              'Actividades'.toUpperCase(),
               style: korolevFont.headline2?.apply(fontSizeFactor: 0.8),
               textAlign: TextAlign.center,
             ),

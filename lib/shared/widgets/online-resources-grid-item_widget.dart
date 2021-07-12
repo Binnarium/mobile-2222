@@ -8,7 +8,7 @@ class OnlineResourcesGridItem extends StatelessWidget {
   final String description;
   final Size size;
   final String redirect;
-  final String id;
+  final String? id;
 
   final Color color;
 
@@ -20,7 +20,7 @@ class OnlineResourcesGridItem extends StatelessWidget {
     required this.name,
     required this.kind,
     required this.redirect,
-    required this.id,
+    this.id,
   }) : super(key: key);
 
   @override

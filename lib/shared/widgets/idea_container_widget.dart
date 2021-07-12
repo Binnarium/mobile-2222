@@ -10,19 +10,10 @@ class IdeaContainerWidget extends StatelessWidget {
   //texto que irá dentro del contenedor
   final String text;
   //para determinar dónde se encuentra el lado más extenso de la imagen del contenedor
-  final bool? isBottomLeft;
-  final bool? isBottomRight;
-  final bool? isTopLeft;
-  final bool? isTopRight;
+  final String? orientation;
 
   const IdeaContainerWidget(
-      {this.width,
-      this.height,
-      required this.text,
-      this.isBottomLeft = true,
-      this.isBottomRight,
-      this.isTopLeft,
-      this.isTopRight});
+      {this.width, this.height, required this.text, this.orientation});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +39,7 @@ class IdeaContainerWidget extends StatelessWidget {
     //por defecto la imagen tiene rotación con el lado extenso bottomLeft
     Matrix4 rotation = Matrix4.rotationX(0);
     //rotación para poner el lado extenso en topRight
-    if (isTopRight == true) {
+    if (orientation == "TopRight") {
       rotation = Matrix4.identity()
         //matriz de perspectiva
         ..setEntry(3, 2, 0.001)
@@ -58,7 +49,7 @@ class IdeaContainerWidget extends StatelessWidget {
         ..rotateY(math.pi);
     }
     //rotación para poner el lado extenso TopLeft
-    if (isTopLeft == true) {
+    if (orientation == "TopLeft") {
       rotation = Matrix4.identity()
         //matriz de perspectiva
         ..setEntry(3, 2, 0.001)
@@ -68,7 +59,7 @@ class IdeaContainerWidget extends StatelessWidget {
         ..rotateY(0);
     }
     //rotación para poner el lado extenso BottomRight
-    if (isBottomRight == true) {
+    if (orientation == "BottomRight") {
       rotation = Matrix4.identity()
         //matriz de perspectiva
         ..setEntry(3, 2, 0.001)
@@ -102,7 +93,7 @@ class IdeaContainerWidget extends StatelessWidget {
     //configuración por defecto para el bottomLeft
     EdgeInsetsGeometry margin = EdgeInsets.only(left: 10, right: 10);
     //configuración por defecto para el BottomRight
-    if (isBottomLeft == true) {
+    if (orientation == "BottomLeft") {
       margin = EdgeInsets.only(
         left: (size.height > 700) ? 12 : 8,
         right: 8,
@@ -110,7 +101,7 @@ class IdeaContainerWidget extends StatelessWidget {
       );
     }
     //configuración por defecto para el topRight
-    if (isTopRight == true) {
+    if (orientation == "TopRight") {
       margin = EdgeInsets.only(
         left: 4,
         right: 8,
@@ -118,7 +109,7 @@ class IdeaContainerWidget extends StatelessWidget {
       );
     }
     //configuración por defecto para el topLeft
-    if (isTopLeft == true) {
+    if (orientation == "TopLeft") {
       margin = EdgeInsets.only(
         left: 10,
         right: 8,

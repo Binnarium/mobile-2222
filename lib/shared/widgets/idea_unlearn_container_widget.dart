@@ -66,7 +66,9 @@ class IdeaUnlearnContainerWidget extends StatelessWidget {
   //donde se crea el container que tiene el texto como child
   _textIdea(Size size, double? width, double? height, String text) {
     //configuración por defecto para el bottomLeft
-    EdgeInsetsGeometry margin = EdgeInsets.only(top: 55, left: 25, right: 25);
+    EdgeInsetsGeometry margin = (size.height > 700)
+        ? EdgeInsets.only(top: 55, left: 25, right: 25)
+        : EdgeInsets.only(top: 25, left: 30, right: 30);
     //configuración por defecto para el BottomRight
 
     return Container(
@@ -77,13 +79,13 @@ class IdeaUnlearnContainerWidget extends StatelessWidget {
       width: width,
       height: height,
       // color: Colors.red,
-      child: Column(
+      child: Wrap(
+        alignment: WrapAlignment.center,
         children: [
           Text(
             'IDEAS PARA DESAPRENDER',
             style: korolevFont.headline4?.apply(
-                color: color, fontSizeFactor: (size.width > 700) ? 0.8 : 0.73),
-            textAlign: TextAlign.center,
+                color: color, fontSizeFactor: (size.width > 700) ? 0.8 : 0.6),
           ),
           SizedBox(height: 35),
           Text(
@@ -91,15 +93,16 @@ class IdeaUnlearnContainerWidget extends StatelessWidget {
             text,
             style: korolevFont.bodyText1?.apply(
                 color: Colors.black,
-                fontSizeFactor: (size.height > 700) ? 0.9 : 0.83),
+                fontSizeFactor: (size.height > 700) ? 0.9 : 0.85),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 10),
+          SizedBox(height: (size.height > 700) ? 10 : 80),
           Image(
             image: AssetImage(
               'assets/icons/idea_unlearn_icon.png',
             ),
             color: color,
+            height: (size.height > 700) ? height!*0.60 : height! * 0.3,
           )
         ],
       ),

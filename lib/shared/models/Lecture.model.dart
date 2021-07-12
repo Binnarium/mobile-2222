@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final readingModel = readingModelFromJson(jsonString);
+//     final LectureModel = LectureModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ReadingModel readingModelFromJson(String str) =>
-    ReadingModel.fromJson(json.decode(str));
+LectureModel lectureModelFromJson(String str) =>
+    LectureModel.fromJson(json.decode(str));
 
-String readingModelToJson(ReadingModel data) => json.encode(data.toJson());
+String lectureModelToJson(LectureModel data) => json.encode(data.toJson());
 
-class ReadingModel {
-  ReadingModel({
+class LectureModel {
+  LectureModel({
     required this.coverUrl,
     required this.author,
     required this.about,
@@ -26,7 +26,7 @@ class ReadingModel {
   String publishedDate;
   String id;
 
-  factory ReadingModel.fromJson(Map<String, dynamic> json) => ReadingModel(
+  factory LectureModel.fromJson(Map<String, dynamic> json) => LectureModel(
         coverUrl: json["coverUrl"],
         author: json["author"],
         about: json["about"],
