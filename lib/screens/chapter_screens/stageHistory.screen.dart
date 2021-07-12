@@ -107,49 +107,66 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     );
   }
 
-  Widget _historyBody1(Size size, String? texto) {
+  Widget _titleHistory(Size size, TitleHistoryDto history) {
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       //decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      child: Text(
-        texto!,
-        style: korolevFont.headline6,
-        textAlign: TextAlign.left,
-      ),
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft,bottom: bodyMarginLeft),
+      
+      child: history.title == null
+          ? Text(
+              'No se ha cargado texto',
+              style: korolevFont.headline6,
+              textAlign: TextAlign.left,
+            )
+          : Text(
+              history.title as String,
+              style: korolevFont.headline6,
+              textAlign: TextAlign.left,
+            ),
     );
   }
 
-  Widget _historyBody2(Size size, String? texto) {
+  Widget _textHistory(Size size, TextHistoryDto history) {
     double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-      child: Text(
-        texto!,
-        style: korolevFont.bodyText1,
-        textAlign: TextAlign.left,
-      ),
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft,bottom: bodyMarginLeft),
+      child: history.text == null
+          ? Text('No se ha cargado texto')
+          : Text(
+              history.text as String,
+              style: korolevFont.bodyText1,
+              textAlign: TextAlign.left,
+            ),
     );
   }
 
   Widget _buildHistoryImage(Size size, ImageHistoryDto history) {
     double marginRight = size.width * 0.05;
-    double widthImagen = size.width * 0.20;
-    double heightImagen = size.width * 0.20;
+    // double widthImagen = size.width * 0.20;
+    // double heightImagen = size.width * 0.20;
 
-    if (size.width > 550) {
-      widthImagen = size.width * 0.1;
-      heightImagen = size.height * 0.2;
-    } else {
-      widthImagen = size.width * 0.17;
-      heightImagen = size.height * 0.1;
-    }
+    // if (size.width > 550) {
+    //   widthImagen = size.width * 0.1;
+    //   heightImagen = size.height * 0.2;
+    // } else {
+    //   widthImagen = size.width * 0.17;
+    //   heightImagen = size.height * 0.1;
+    // }
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(right: marginRight, left: marginRight),
+      margin: EdgeInsets.only(right: marginRight, left: marginRight,bottom: marginRight),
       child: history.url == null
-          ? Text('No se ha subido ninguna imagen')
+          ? Container(
+            alignment: Alignment.center,
+            height: 150,
+            width: 150,
+            color: Colors.black,
+            child: Text('No ha imagen subida',textAlign: TextAlign.center,),
+          )
           : Image(
               image: NetworkImage(
                 history.url as String,
@@ -213,11 +230,11 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
 
               final List<Widget> contentWidgets = historyContent.map((history) {
                 if (history is TitleHistoryDto)
-                  return _historyBody1(size, history.title);
+                  return _titleHistory(size, history);
                 if (history is ImageHistoryDto)
                   return _buildHistoryImage(size, history);
                 if (history is TextHistoryDto)
-                  return _historyBody2(size, history.text);
+                  return _textHistory(size, history);
                 throw ErrorDescription('Kind of history content not found');
               }).toList();
 

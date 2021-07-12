@@ -90,7 +90,7 @@ class ActivitiesScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
             child: Text(
-              'Actividades de ${this.chapterSettings.cityName}'.toUpperCase(),
+              'Actividades'.toUpperCase(),
               style: korolevFont.headline2?.apply(fontSizeFactor: 0.8),
               textAlign: TextAlign.center,
             ),

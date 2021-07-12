@@ -1,60 +1,59 @@
-// To parse this JSON data, do
-//
-//     final videoPodcastModel = videoPodcastModelFromJson(jsonString);
+abstract class ContentDto {
+  final String kind;
 
-import 'dart:convert';
-
-VideoPodcastModel videoPodcastModelFromJson(String str) =>
-    VideoPodcastModel.fromJson(json.decode(str));
-
-String videoPodcastModelToJson(VideoPodcastModel data) =>
-    json.encode(data.toJson());
-
-class VideoPodcastModel {
-  VideoPodcastModel({
-    required this.duration,
-    required this.path,
+  ContentDto._({
     required this.kind,
-    this.author,
-    required this.name,
-    this.format,
-    this.description,
-    required this.title,
-    required this.url,
   });
 
-  int duration;
-  String path;
-  String kind;
-  String? author;
-  String name;
-  String? format;
-  String? description;
-  String? title;
-  String url;
-
-  factory VideoPodcastModel.fromJson(Map<String, dynamic> json) =>
-      VideoPodcastModel(
-        duration: json["duration"],
-        path: json["path"],
-        kind: json["kind"],
-        author: json["author"],
-        name: json["name"],
-        format: json["format"],
-        description: json["description"],
-        title: json["title"],
-        url: json["url"],
+  static ContentDto fromJson(Map<String, dynamic> payload) {
+    final String kind = payload['kind'];
+    if (kind == 'CONTENT#VIDEO')
+      return VideoDto(
+        kind: kind,
+        title: payload['title'],
+        url: payload['url'],
+        author: payload['author'],
+        description: payload['description'],
       );
+    else
+      return PodcastDto(
+        kind: kind,
+        url: payload['url'],
+        author: payload['author'],
+        title: payload['title'],
+        description: payload['description'],
+      );
+  }
+}
 
-  Map<String, dynamic> toJson() => {
-        "duration": duration,
-        "path": path,
-        "kind": kind,
-        "author": author,
-        "name": name,
-        "format": format,
-        "description": description,
-        "title": title,
-        "url": url,
-      };
+class VideoDto extends ContentDto {
+  final String url;
+  final String? author;
+  final String? description;
+  final String? title;
+
+  VideoDto({
+    required String kind,
+    required this.url,
+    this.title,
+    this.author,
+    this.description,
+  }) : super._(kind: kind);
+}
+
+class PodcastDto extends ContentDto {
+  final String? text;
+  final String url;
+  final String? author;
+  final String? description;
+  final String? title;
+
+  PodcastDto({
+    required String kind,
+    required this.url,
+    this.author,
+    this.description,
+    this.title,
+    this.text,
+  }) : super._(kind: kind);
 }

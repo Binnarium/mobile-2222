@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 2),
+      Duration(seconds: 5),
       () => Navigator.of(context).pushReplacementNamed(LoginScreen.route),
     );
   }
@@ -55,32 +56,46 @@ class _SplashScreenState extends State<SplashScreen> {
       spacedSize = size.height * 0.125;
       daysLeftSize = size.height * 0.0011;
     }
-    return Column(
-      children: [
-        SizedBox(height: size.height * 0.03),
-        //llamando el logo introductorio
-        _logoIntro(size),
-        //creando el espaciado necesario
-        SizedBox(height: size.height * 0.06),
-        //llamando el logo UTPL pantalla inicial
-        _logoUtpl(size),
-        //creando el espaciado necesario
-        SizedBox(height: spacedSize),
+    return FutureBuilder(
+      future: _daysLeftReading(),
+      builder: (BuildContext context, AsyncSnapshot<String> days) {
+        if (days.hasError) {
+          return Text(days.error.toString());
+        }
+        if (days.hasData) {
+          return Column(
+            children: [
+              SizedBox(height: size.height * 0.03),
+              //llamando el logo introductorio
+              _logoIntro(size),
+              //creando el espaciado necesario
+              SizedBox(height: size.height * 0.06),
+              //llamando el logo UTPL pantalla inicial
+              _logoUtpl(size),
+              //creando el espaciado necesario
+              SizedBox(height: spacedSize),
 
-        //Texto cambiar por funcionalidad de cuenta de días
-        Text('FALTAN',
-            style: korolevFont.headline6
-                ?.apply(fontSizeFactor: size.height * 0.001)),
-        SizedBox(height: size.height * 0.01),
-        //Texto cambiar por funcionalidad de cuenta de días
-        Text('56 DÍAS',
-            style: korolevFont.headline3?.apply(fontSizeFactor: daysLeftSize)),
-        //Texto cambiar por funcionalidad de cuenta de días
-        SizedBox(height: size.height * 0.005),
-        Text('PARA ACABAR EL VIAJE',
-            style: korolevFont.headline6
-                ?.apply(fontSizeFactor: size.height * 0.001)),
-      ],
+              //Texto cambiar por funcionalidad de cuenta de días
+              Text('FALTAN',
+                  style: korolevFont.headline6
+                      ?.apply(fontSizeFactor: size.height * 0.001)),
+              SizedBox(height: size.height * 0.01),
+              //Texto cambiar por funcionalidad de cuenta de días
+
+              Text(days.data! + " DÍAS",
+                  style: korolevFont.headline3
+                      ?.apply(fontSizeFactor: daysLeftSize)),
+
+              //Texto cambiar por funcionalidad de cuenta de días
+              SizedBox(height: size.height * 0.005),
+              Text('PARA ACABAR EL VIAJE',
+                  style: korolevFont.headline6
+                      ?.apply(fontSizeFactor: size.height * 0.001)),
+            ],
+          );
+        }
+        return Text("Error loading daysleft _configuration_");
+      },
     );
   }
 
@@ -115,16 +130,33 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-}
 
 //widget que contiene el arco
-_arcContainer() {
-  return Container(
+  _arcContainer() {
+    return Container(
       width: double.infinity,
       height: double.infinity,
       child: CustomPaint(
         painter: _ArcPainter(),
-      ));
+      ),
+    );
+  }
+
+  Future<String> _daysLeftReading() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('application')
+        .doc('_configuration_')
+        .get();
+
+    if (!snap.exists)
+      new ErrorDescription('Document _configuration_ does not exists');
+
+    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
+    final DateTime date =
+        (payload['courseFinalizationDate'] as Timestamp).toDate();
+    final Duration daysLeft = date.difference(DateTime.now());
+    return daysLeft.inDays.toString();
+  }
 }
 
 //Creando arco pagina introductoria

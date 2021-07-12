@@ -93,13 +93,11 @@ class _ContentScreenState extends State<ContentScreen> {
   _pageContent(Size size) {
     return FutureBuilder(
         future: _readContents(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<VideoPodcastModel>> contents) {
-          if (contents.hasError) {
-            return Text(contents.error.toString());
-          }
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ContentDto>> contents) {
+          if (contents.hasError) return Text(contents.error.toString());
 
-          if (contents.connectionState == ConnectionState.waiting) {
+          if (contents.connectionState == ConnectionState.waiting)
             return Center(
               child: CircularProgressIndicator(
                 valueColor: new AlwaysStoppedAnimation<Color>(
@@ -107,37 +105,36 @@ class _ContentScreenState extends State<ContentScreen> {
                 ),
               ),
             );
-          }
-          List<Widget> contentsTemp = [];
 
-          /// for that builds a specific widget depending on his kind
-          for (VideoPodcastModel content in contents.data!) {
-            /// if kind == video then returns a video container
-            if (content.kind.compareTo("CONTENT#VIDEO") == 0) {
-              contentsTemp.add(SizedBox(height: 30));
-              contentsTemp
-                  .add(_titleContainer(size, content.author, content.title));
-              final video = _VideoPlayerSegment(
-                videoUrl: content.url,
-                description: content.description,
-                color: Color(widget.chapterSettings.primaryColor),
+          final List<ContentDto> contentTemp =
+              contents.data as List<ContentDto>;
+
+          final List<Widget> contentWidgets = contentTemp.map<Widget>((c) {
+            if (c is VideoDto)
+              return Column(
+                children: [
+                  _titleContainer(size, c.author, c.title),
+                  _VideoPlayerSegment(
+                    videoUrl: c.url,
+                    description: c.description,
+                    color: Color(widget.chapterSettings.primaryColor),
+                  ),
+                ],
               );
-              contentsTemp.add(video);
-              contentsTemp.add(SizedBox(height: 30));              
-
-              /// if kind == podcast then returns an audio container
-            } else if (content.kind.compareTo("CONTENT#PODCAST") == 0) {
-              contentsTemp
-                  .add(_titleContainer(size, content.author, content.title));
-              contentsTemp.add(SizedBox(height: 30));
-              contentsTemp.add(_PodcastAudioPlayer(
-                audioUrl: content.url,
-              ));
-              contentsTemp.add(SizedBox(height: 30));
-            }
-          }
+            if (c is PodcastDto)
+              return Column(
+                children: [
+                  _titleContainer(size, c.author, c.title),
+                  _PodcastAudioPlayer(
+                    audioUrl: c.url,
+                    description: c.description,
+                  ),
+                ],
+              );
+            throw ErrorDescription('Kind of content not found');
+          }).toList();
           return Column(
-            children: contentsTemp,
+            children: contentWidgets,
           );
         });
   }
@@ -173,38 +170,19 @@ class _ContentScreenState extends State<ContentScreen> {
     );
   }
 
-  Future<List<VideoPodcastModel>> _readContents() async {
-    List<dynamic> data = [];
-    List<VideoPodcastModel> contents = [];
-    await FirebaseFirestore.instance
+  Future<List<ContentDto>> _readContents() async {
+    final snap = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.widget.chapterSettings.id)
         .collection('pages')
         .doc('content')
-        .get()
-        .then(
-      (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          data = documentSnapshot.get('content');
-          // print('contents temp : $data'.toString());
-          for (var i = 0; i < data.length; i++) {
-            final contentTemp = new VideoPodcastModel(
-              duration: data[i]["duration"],
-              path: data[i]["path"],
-              kind: data[i]["kind"],
-              author: data[i]?["author"],
-              name: data[i]["name"],
-              format: data[i]?["format"],
-              description: data[i]?["description"],
-              title: data[i]?["title"],
-              url: data[i]["url"],
-            );
+        .get();
+    if (!snap.exists) new ErrorDescription('Document history does not exists');
+    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
+    final List<dynamic> data = payload['content'];
 
-            contents.add(contentTemp);
-          }
-        }
-      },
-    );
+    // print('contents temp : $data'.toString());
+    final contents = data.map((e) => ContentDto.fromJson(e)).toList();
     return contents;
   }
 }
@@ -410,7 +388,9 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
 
 class _PodcastAudioPlayer extends StatefulWidget {
   final String audioUrl;
-  _PodcastAudioPlayer({Key? key, required this.audioUrl}) : super(key: key);
+  final String? description;
+  _PodcastAudioPlayer({Key? key, required this.audioUrl, this.description})
+      : super(key: key);
 
   @override
   __PodcastAudioPlayerState createState() => __PodcastAudioPlayerState();
@@ -460,6 +440,9 @@ class __PodcastAudioPlayerState extends State<_PodcastAudioPlayer> {
   _podcastContainer() {
     return Column(
       children: [
+        SizedBox(height: 30),
+        _textContent(this.widget.description),
+        SizedBox(height: 30),
         Material(
             type: MaterialType.circle,
             color: Colors.transparent,
@@ -468,7 +451,7 @@ class __PodcastAudioPlayerState extends State<_PodcastAudioPlayer> {
                 if (_player.playing) {
                   print("entró a pause");
                   if (_player.position >= _player.duration!) {
-                    print("entro!!!!!!!!!!!!!");
+                    print("reiniciar audio");
                     _player.seek(Duration.zero);
                     _player.play();
                   } else {
@@ -490,8 +473,16 @@ class __PodcastAudioPlayerState extends State<_PodcastAudioPlayer> {
         Text(
           'Escucha el podcast',
           style: korolevFont.headline6?.apply(),
-        )
+        ),
+        SizedBox(height: 30),
       ],
+    );
+  }
+
+  _textContent(String? description) {
+    return Text(
+      (description == null) ? '' : description,
+      style: korolevFont.bodyText1?.apply(),
     );
   }
 }
