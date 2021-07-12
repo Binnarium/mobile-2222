@@ -1,44 +1,34 @@
-// To parse this JSON data, do
-//
-//     final onlineResourceModel = onlineResourceModelFromJson(jsonString);
+import 'package:flutter/cupertino.dart';
 
-import 'dart:convert';
+abstract class ResourcesDto {
+  final String kind;
 
-OnlineResourceModel onlineResourceModelFromJson(String str) =>
-    OnlineResourceModel.fromJson(json.decode(str));
-
-String onlineResourceModelToJson(OnlineResourceModel data) =>
-    json.encode(data.toJson());
-
-class OnlineResourceModel {
-  OnlineResourceModel({
+  ResourcesDto._({
     required this.kind,
-    required this.name,
-    required this.redirect,
-    required this.description,
-    required this.id,
   });
 
-  String redirect;
-  String kind;
-  String name;
-  String description;
-  String id;
-
-  factory OnlineResourceModel.fromJson(Map<String, dynamic> json) =>
-      OnlineResourceModel(
-        id: json["id"],
-        kind: json["kind"],
-        name: json["name"],
-        description: json["description"],
-        redirect: json["redirect"],
+  static ResourcesDto fromJson(Map<String, dynamic> payload) {
+    final String kind = payload['kind'];
+    if (kind.contains('RESOURCE#'))
+      return OnlineResourceDto._(
+        kind: kind,
+        name: payload['name'],
+        description: payload['description'],
+        redirect: payload['redirect'],
       );
+    else
+      throw ErrorDescription("Online resource kind not found");
+  }
+}
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "kind": kind,
-        "name": name,
-        "description": description,
-        "redirect": redirect,
-      };
+class OnlineResourceDto extends ResourcesDto {
+  final String? name;
+  final String? redirect;
+  final String? description;
+  OnlineResourceDto._({
+    required String kind,
+    this.name,
+    this.redirect,
+    this.description,
+  }) : super._(kind: kind);
 }
