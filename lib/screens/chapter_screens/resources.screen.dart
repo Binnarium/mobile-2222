@@ -4,7 +4,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
-import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -271,18 +270,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         final resources = querySnapshot.docs
             .map((e) => ResourcesDto.fromJson(e.data() as Map<String, dynamic>))
             .toList();
-
-        // print(doc.data());
-
-        // final resourceTemp = new OnlineResourceDto(
-        //   kind: doc['kind'],
-        //   name: doc['name'],
-        //   redirect: doc['redirect'],
-        //   description: doc['description'],
-        //   id: doc['id'],
-        // );
-
-        // print('Lo que viene de firebase: ${doc.data().toString()}');
         resourcesListTemp = resources;
       },
     );
