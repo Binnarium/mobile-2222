@@ -38,48 +38,52 @@ class LoginScreen extends StatelessWidget {
   ///Cuerpo de la pantalla
   _loginBody(Size size, BuildContext context) {
     return SingleChildScrollView(
-      child: FutureBuilder(
-        future: _readLoginContent(),
-        builder: (BuildContext context, AsyncSnapshot<LoginDto> loginInfo) {
-          if (loginInfo.hasError) {
-            return Text(loginInfo.error.toString());
-          }
+      child: Column(
+        children: [
+          FutureBuilder(
+            future: _readLoginContent(),
+            builder: (BuildContext context, AsyncSnapshot<LoginDto> loginInfo) {
+              if (loginInfo.hasError) {
+                return Text(loginInfo.error.toString());
+              }
 
-          if (loginInfo.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  ColorsApp.backgroundRed,
-                ),
-              ),
-            );
-          }
-          return Column(
-            children: [
-              ///logo de 2222
-              _logo(size),
-              SizedBox(height: size.height * 0.05),
+              if (loginInfo.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      ColorsApp.backgroundRed,
+                    ),
+                  ),
+                );
+              }
+              return Column(
+                children: [
+                  ///logo de 2222
+                  _logo(size),
+                  SizedBox(height: size.height * 0.05),
 
-              ///texto inicial
-              Text(
-                'Laboratorio Móvil 2222'.toUpperCase(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .apply(fontSizeFactor: 1.3),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: size.height * 0.05),
-              _descriptionText(context, loginInfo.data!.pageTitle),
-              SizedBox(height: size.height * 0.05),
-              _video(),
-              SizedBox(height: size.height * 0.1),
+                  ///texto inicial
+                  Text(
+                    'Laboratorio Móvil 2222'.toUpperCase(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .apply(fontSizeFactor: 1.3),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: size.height * 0.05),
+                  _descriptionText(context, loginInfo.data!.pageTitle),
+                  SizedBox(height: size.height * 0.05),
+                  _video(),
+                  SizedBox(height: size.height * 0.1),
+                ],
+              );
+            },
+          ),
 
-              ///formulario (falta aplicar backend)
-              _loginForm(context),
-            ],
-          );
-        },
+          /// formulario (falta aplicar backend)
+          _loginForm(context),
+        ],
       ),
     );
   }

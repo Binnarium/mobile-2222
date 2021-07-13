@@ -31,7 +31,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
   void _asyncLecture() async {
     await _readContents();
-    await _readCompe();
+    await _readCompetences();
   }
 
   @override
@@ -112,7 +112,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           SizedBox(height: spacedBodyContainers + 10),
           _compeBody(size),
           SizedBox(height: spacedBodyContainers + 20),
-          _decorationWhite(size),
+          ///_decorationWhite(size),
           SizedBox(height: spacedBodyContainers + 20),
         ],
       ),
@@ -120,7 +120,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   _objetBody(Size size) {
-    
     double bodyMarginLeft = size.width * 0.05;
     return Container(
         // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -204,7 +203,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
       ///Creates a grid with the necesary online resources
       child: FutureBuilder(
-          future: _readCompe(),
+          future: _readCompetences(),
           builder: (BuildContext context, AsyncSnapshot<List<dynamic>> compe) {
             if (compe.hasError) {
               return Text(compe.error.toString());
@@ -311,7 +310,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
         .then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          contentsTemp = documentSnapshot.get('objective').toString();
+          contentsTemp = documentSnapshot.get('mainObjective').toString();
 
           // print('ideas temp : $contentsTemp');
         }
@@ -320,23 +319,50 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     return contentsTemp;
   }
 
-  Future<List<dynamic>> _readCompe() async {
-    List contentsTemp = [];
-    await FirebaseFirestore.instance
+  // Future<List<dynamic>> _readCompe() async {
+  //   List contentsTemp = [];
+  //   await FirebaseFirestore.instance
+  //       .collection('cities')
+  //       .doc(this.widget.chapterSettings.id)
+  //       .collection('pages')
+  //       .doc('objective')
+  //       .get()
+  //       .then(
+  //     (DocumentSnapshot documentSnapshot) {
+  //       if (documentSnapshot.exists) {
+  //         contentsTemp = documentSnapshot.get('competencies');
+
+  //         print('ideas temp : $contentsTemp');
+  //       }
+  //     },
+  //   );
+  //   return contentsTemp;
+  // }
+
+  Future<List<dynamic>> _readCompetences() async {
+    List<dynamic> contentsTemp = [];
+    DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.widget.chapterSettings.id)
         .collection('pages')
         .doc('objective')
-        .get()
-        .then(
-      (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          contentsTemp = documentSnapshot.get('competencies');
+        .get();
 
-          print('ideas temp : $contentsTemp');
-        }
-      },
-    );
+    if (objectiveSnapshot.exists) {
+      dynamic data = objectiveSnapshot.data()!;
+      //to access to firebase reference
+      List<DocumentReference> ideasRef = (data['competences'] as List<dynamic>)
+          .map((e) => e as DocumentReference)
+          .toList();
+      List<dynamic> ideas = [];
+
+      for (var i = 0; i < ideasRef.length; i++) {
+        ideas.add(ideasRef[i]);
+        DocumentSnapshot ideaSnapshot = await ideas[i].get();
+        contentsTemp.add(ideaSnapshot.get('name'));
+      }
+    }
+
     return contentsTemp;
   }
 

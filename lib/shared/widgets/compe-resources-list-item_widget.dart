@@ -50,7 +50,7 @@ class CompeResourcesListItem extends StatelessWidget {
 
               children: [
                 Text(
-                  description,
+                  this.description,
                   style: korolevFont.bodyText1,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 4,
