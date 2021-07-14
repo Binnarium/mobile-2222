@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class CompeResourcesListItem extends StatelessWidget {
-  final String kind;
-  // final String image;
-  final String description;
+  final String name;
+  final String? kind;
+  final Map<String, dynamic> image;
+  final String? id;
 
   const CompeResourcesListItem(
       {Key? key,
-      required this.kind,
-      // required this.image,
-      required this.description})
+      required this.name,
+      required this.image,
+      this.kind,
+      this.id
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String kindIcon = this.kind.replaceAll("COMPETENCIES#", '').toLowerCase() ;
-    String description ='';
-    if(kindIcon == 'time_management'){
-      description = "MANEJO DEL TIEMPO";
-    }else if(kindIcon == 'team_work'){
-      description = "TRABAJO DE EQUIPO";
-    }else if(kindIcon == 'innovation_creativity'){
-      description = "INNOVACIÓN Y CREATIVIDAD";
-    }
+   
+    NetworkImage imageNe;
+    String imageurl='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShMSIXzP_rbfUPmoKrBDCxlBFCITYnuzuVHg&usqp=CAU';
+    image['url']==null ?  imageNe= new NetworkImage(imageurl) : imageNe = new NetworkImage(image['url']);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       width: double.infinity,
@@ -32,11 +30,12 @@ class CompeResourcesListItem extends StatelessWidget {
       ///static height
       // height: 120,
       child: Column(
+        
         children: [
           ///seeks if an image url is provided, otherwise returns the no image png
           
           Image(
-              image: AssetImage('assets/icons/${kindIcon}_icon.png'),
+              image: imageNe,
               height: 60,
               alignment: Alignment.center,
             ),
@@ -50,7 +49,7 @@ class CompeResourcesListItem extends StatelessWidget {
 
               children: [
                 Text(
-                  this.description,
+                  this.name,
                   style: korolevFont.bodyText1,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 4,
