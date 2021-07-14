@@ -62,6 +62,15 @@ class _SplashScreenState extends State<SplashScreen> {
         if (days.hasError) {
           return Text(days.error.toString());
         }
+        if (days.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(
+                ColorsApp.backgroundRed,
+              ),
+            ),
+          );
+        }
         if (days.hasData) {
           return Column(
             children: [

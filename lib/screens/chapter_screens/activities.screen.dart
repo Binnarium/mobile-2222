@@ -131,7 +131,9 @@ class ActivitiesScreen extends StatelessWidget {
           Image(
             image: AssetImage(
                 "assets/backgrounds/decorations/white_route_circle_curve_background.png"),
-            width: containerWidth * 0.85,
+            width: (size.height > 700)
+                ? containerWidth * 0.9
+                : containerWidth * 0.85,
             height: containerHeight * 0.85,
             color: Color.fromRGBO(255, 255, 255, 0.5),
           ),
