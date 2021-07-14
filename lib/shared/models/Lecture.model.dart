@@ -1,46 +1,26 @@
-// To parse this JSON data, do
-//
-//     final LectureModel = LectureModelFromJson(jsonString);
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'dart:convert';
-
-LectureModel lectureModelFromJson(String str) =>
-    LectureModel.fromJson(json.decode(str));
-
-String lectureModelToJson(LectureModel data) => json.encode(data.toJson());
-
-class LectureModel {
-  LectureModel({
-    required this.coverUrl,
-    required this.author,
-    required this.about,
-    required this.name,
-    required this.publishedDate,
-    required this.id,
+class LecturesDto {
+  final String? about;
+  final String? author;
+  final String? coverUrl;
+  final String? name;
+  final Timestamp? publishedDate;
+  LecturesDto._({
+    this.about,
+    this.author,
+    this.coverUrl,
+    this.name,
+    this.publishedDate,
   });
 
-  String coverUrl;
-  String author;
-  String about;
-  String name;
-  String publishedDate;
-  String id;
-
-  factory LectureModel.fromJson(Map<String, dynamic> json) => LectureModel(
-        coverUrl: json["coverUrl"],
-        author: json["author"],
-        about: json["about"],
-        name: json["name"],
-        publishedDate: json["publishedDate"].toString(),
-        id: json["id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "coverUrl": coverUrl,
-        "author": author,
-        "about": about,
-        "name": name,
-        "publishedDate": publishedDate,
-        "id": id,
-      };
+  static LecturesDto fromJson(Map<String, dynamic> payload) {
+    return LecturesDto._(
+      about: payload['about'],
+      author: payload['author'],
+      coverUrl: payload['cover']['url'],
+      name: payload['name'],
+      publishedDate: payload['publishedDate'],
+    );
+  }
 }

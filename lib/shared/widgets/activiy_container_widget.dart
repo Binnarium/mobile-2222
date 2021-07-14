@@ -129,8 +129,8 @@ class ActivityContainerWidget extends StatelessWidget {
             alignment: iconAlignment,
             child: Image(
               image: AssetImage(iconPath),
-              width: (height > 155) ? width * 1.5 : width * 0.25,
-              height: (height > 155) ? height * 1.5 : height * 0.25,
+              width: (height > 155) ? width * 0.25 : width * 0.25,
+              height: (height > 155) ? height * 0.25 : height * 0.25,
             ),
           ),
           _textContainer(width, height, activityName),
@@ -144,7 +144,7 @@ class ActivityContainerWidget extends StatelessWidget {
     print('height: $height');
 
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
       margin: (height > 120)
           ? (height > 175)
               ? EdgeInsets.only(top: 0)

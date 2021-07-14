@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -6,7 +7,7 @@ class LecturesListItem extends StatelessWidget {
   final String title;
   final String author;
   final String? editorial;
-  final String year;
+  final Timestamp year;
   final String? review;
   final Size size;
 
@@ -23,7 +24,7 @@ class LecturesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = (size.height > 600) ? 1 : 0.9;
+    double fontSize = 0.9;
 
     ///Returns an InkWell so it can be tapped
     return Material(
@@ -51,9 +52,9 @@ class LecturesListItem extends StatelessWidget {
                       child: FadeInImage(
                         placeholder: AssetImage('assets/gifs/giphy.gif'),
                         image: NetworkImage(imageURL!),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         width: 80,
-                        height: 110,
+                        // height: 110,
                       ))
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),
@@ -61,11 +62,10 @@ class LecturesListItem extends StatelessWidget {
                         image: AssetImage('assets/backgrounds/no-image.png'),
                         fit: BoxFit.fill,
                         width: 80,
-                        // height: 200,
                       ),
                     ),
               SizedBox(
-                width: 10,
+                width: 15,
               ),
 
               ///Makes the column flexible to avoid the overflow
@@ -73,7 +73,8 @@ class LecturesListItem extends StatelessWidget {
                 child: Wrap(
                   // antes era column el wrap
                   alignment: WrapAlignment.start,
-                  spacing: 10,
+                  spacing: 15,
+                  runSpacing: 7,
 
                   children: [
                     Text(
@@ -81,38 +82,53 @@ class LecturesListItem extends StatelessWidget {
                       style: korolevFont.headline6
                           ?.apply(fontSizeFactor: fontSize),
                     ),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
 
                     ///Seeks for editorial, if not, it's ommited
                     (editorial != null)
                         ? Text(
-                            author + ' | ' + editorial! + ' | ' + year,
+                            author +
+                                ' | ' +
+                                editorial! +
+                                ' | ' +
+                                year.toDate().year.toString(),
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           )
                         : Text(
-                            author + ' | ' + year,
+                            author + ' | ' + year.toDate().year.toString(),
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           ),
-                    // SizedBox(
-                    //   height: 40,
-                    // ),
 
                     ///Seeks for a review, if not, it's ommited
                     (review != null)
-                        ? Text(
-                            'Reseña: ' + review!,
-                            style: korolevFont.bodyText2
-                                ?.apply(fontSizeFactor: fontSize - 0.1),
-                            textAlign: TextAlign.left,
+                        ? RichText(
+                            text: TextSpan(
+                                text: 'Reseña: ',
+                                style: korolevFont.bodyText2?.apply(
+                                  fontSizeFactor: fontSize,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: review!,
+                                    style: korolevFont.bodyText2?.apply(
+                                      fontSizeFactor: fontSize,
+                                    ),
+                                  )
+                                ]),
                           )
                         : Text(
                             'Reseña no disponible',
                             style: korolevFont.bodyText2,
                           ),
+                    Container(
+                      height: 10,
+                    ),
+                    Container(
+                      width: size.width * 0.2,
+                      height: 1,
+                      color: Colors.white,
+                    ),
                   ],
                 ),
               ),
