@@ -11,24 +11,32 @@ class ContenResourcesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final espacio;
+    final especioTexto;
+    index=='1' ? espacio=5.0: espacio=0.0;
+    index=='1' ? especioTexto=5.60: especioTexto=0.0;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       width: double.infinity,
       // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-
+      
       ///static height
       // height: 120,
       child: Row(
         children: [
           ///seeks if an image url is provided, otherwise returns the no image png
+          SizedBox(
+            width: espacio,
+            
+          ),
+
           Text(
-            index.toUpperCase(),
+            index.toUpperCase(),            
             style: korolevFont.headline3,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
+            
           ),
           SizedBox(
-            width: 10,
+            width: especioTexto,
           ),
 
           ///Makes the column flexible to avoid the overflow
