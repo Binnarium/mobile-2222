@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
@@ -135,7 +136,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       child: FutureBuilder(
           future: _readBooks(),
           builder: (BuildContext context,
-              AsyncSnapshot<List<LectureModel>> readings) {
+              AsyncSnapshot<List<LecturesDto>> readings) {
             if (readings.hasError) {
               return Text(readings.error.toString());
             }
@@ -149,19 +150,25 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 ),
               );
             }
+            final List<LecturesDto> readingsTemp =
+                readings.data as List<LecturesDto>;
             return ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: readings.data?.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  ///bringing a book resource per item in the list
+                  final item = readingsTemp.elementAt(index);
+
+                  ///calls the custom widget with the item parameters
+
                   return LecturesListItem(
-                      size: size,
-                      imageURL: readings.data?[index].coverUrl.toString(),
-                      title: readings.data![index].name.toString(),
-                      author: readings.data![index].author.toString(),
-                      year: readings.data![index].publishedDate.toString(),
-                      review: readings.data![index].about.toString());
+                    title: item.name!,
+                    author: item.author!,
+                    year: item.publishedDate!,
+                    size: size,
+                    review: item.about,
+                    imageURL: item.coverUrl,
+                  );
                 });
           }),
     );
@@ -172,8 +179,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     double bodyMarginWidth = size.width * 0.05;
 
     ///main container
-    return Container(
-      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
+    return Padding(
+      padding: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
 
@@ -197,15 +204,13 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             }
             final List<ResourcesDto> resourcesTemp =
                 resources.data as List<ResourcesDto>;
-            return GridView.builder(
+            return StaggeredGridView.countBuilder(
               ///general spacing per resource
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                mainAxisExtent: (size.height > 700) ? 200 : 180,
-                // childAspectRatio: 1,
-              ),
+              crossAxisCount: 2,
+
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
               itemCount: resourcesTemp.length,
 
               /// property that sizes the container automaticly according
@@ -223,7 +228,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     color: Color(widget.chapterSettings.primaryColor),
                     size: size,
                     name: item.name!,
-                    kind: item.kind,
+                    kind: item.kind!,
                     description: item.description!,
                     redirect: item.redirect!,
                   );
@@ -235,44 +240,39 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     );
   }
 
-  Future<List<LectureModel>> _readBooks() async {
-    final List<LectureModel> readingsListTemp = [];
+  Future<List<LecturesDto>> _readBooks() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('resources')
+        .get();
 
-    await FirebaseFirestore.instance.collection('readings').get().then(
-      (QuerySnapshot querySnapshot) {
-        querySnapshot.docs.toList().asMap().forEach(
-          (index, doc) {
-            final readTemp = new LectureModel(
-              coverUrl: doc['coverUrl'],
-              author: doc['author'],
-              about: doc['about'],
-              name: doc['name'],
-              publishedDate:
-                  (doc['publishedDate'] as Timestamp).toDate().toString(),
-              id: 'id',
-            );
-            // print(readTemp.toJson());
+    if (!snap.exists)
+      new ErrorDescription('Document resources does not exists');
+    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
+    final List<dynamic> data = payload['readings'];
 
-            readingsListTemp.add(readTemp);
-            // print('Lo que viene de firebase: ${doc.data().toString()}');
-          },
-        );
-      },
-    );
-    return readingsListTemp;
+    final readingsResources = data.map((e) => LecturesDto.fromJson(e)).toList();
+
+    return readingsResources;
   }
 
   Future<List<ResourcesDto>> _readOnlineResources() async {
-    List<ResourcesDto> resourcesListTemp = [];
+    final snap = await FirebaseFirestore.instance
+        .collection('cities')
+        .doc(this.widget.chapterSettings.id)
+        .collection('pages')
+        .doc('resources')
+        .get();
 
-    await FirebaseFirestore.instance.collection('online-resources').get().then(
-      (QuerySnapshot querySnapshot) {
-        final resources = querySnapshot.docs
-            .map((e) => ResourcesDto.fromJson(e.data() as Map<String, dynamic>))
-            .toList();
-        resourcesListTemp = resources;
-      },
-    );
-    return resourcesListTemp;
+    if (!snap.exists)
+      new ErrorDescription('Document resources does not exists');
+    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
+    final List<dynamic> data = payload['externalLinks'];
+
+    final onlineResources = data.map((e) => ResourcesDto.fromJson(e)).toList();
+
+    return onlineResources;
   }
 }
