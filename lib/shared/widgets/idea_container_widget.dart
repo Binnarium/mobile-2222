@@ -36,42 +36,41 @@ class IdeaContainerWidget extends StatelessWidget {
 
   //donde se crea la imagen blanca
   _ideasImage(double? width, double? height) {
-    //por defecto la imagen tiene rotación con el lado extenso bottomLeft
-    Matrix4 rotation = Matrix4.rotationX(0);
-    //rotación para poner el lado extenso en topRight
-    if (orientation == "TopRight") {
-      rotation = Matrix4.identity()
+    Map<String, Matrix4> rotations = {
+      "BottomLeft": Matrix4.rotationX(0),
+      "TopRight": Matrix4.identity()
         //matriz de perspectiva
         ..setEntry(3, 2, 0.001)
         //con esto se rota por el eje x
         ..rotateX(math.pi)
         //se rota eje y
-        ..rotateY(math.pi);
-    }
-    //rotación para poner el lado extenso TopLeft
-    if (orientation == "TopLeft") {
-      rotation = Matrix4.identity()
+        ..rotateY(math.pi),
+      "TopLeft": Matrix4.identity()
         //matriz de perspectiva
         ..setEntry(3, 2, 0.001)
         //con esto se rota por el eje x
         ..rotateX(math.pi)
         //se rota eje y
-        ..rotateY(0);
-    }
-    //rotación para poner el lado extenso BottomRight
-    if (orientation == "BottomRight") {
-      rotation = Matrix4.identity()
+        ..rotateY(0),
+      "BottomRight": Matrix4.identity()
         //matriz de perspectiva
         ..setEntry(3, 2, 0.001)
         //con esto se rota por el eje x
         ..rotateX(0)
         //se rota eje y
-        ..rotateY(math.pi);
-    }
-
+        ..rotateY(math.pi),
+      "CenterLeft": Matrix4.identity()
+        //matriz de perspectiva
+        ..setEntry(3, 2, 0.001)
+        //con esto se rota por el eje x
+        ..rotateX(math.pi)
+        //se rota eje y
+        ..rotateY(0)
+        ..rotateZ(0.3),
+    };
     return Transform(
       //se emplea las rotaciones de arriba
-      transform: rotation,
+      transform: rotations[orientation]!,
       //para que rote en el mismo eje
       alignment: FractionalOffset.center,
       child: Container(
@@ -90,37 +89,32 @@ class IdeaContainerWidget extends StatelessWidget {
 
   //donde se crea el container que tiene el texto como child
   _textIdea(Size size, double? width, double? height, String text) {
-    //configuración por defecto para el bottomLeft
-    EdgeInsetsGeometry margin = EdgeInsets.only(left: 10, right: 10);
-    //configuración por defecto para el BottomRight
-    if (orientation == "BottomLeft") {
-      margin = EdgeInsets.only(
-        left: (size.height > 820) ? 12 : 10,
+    Map<String, EdgeInsets> margins = {
+      "BottomLeft": EdgeInsets.only(
+        left: (size.height > 820 && size.width >= 375) ? 20 : 15,
         right: 8,
         top: (size.height > 820) ? 0 : 10,
-      );
-    }
-    //configuración por defecto para el topRight
-    if (orientation == "TopRight") {
-      margin = EdgeInsets.only(
-        top: (size.height > 820) ? 0 : 10,
+      ),
+      "TopRight": EdgeInsets.only(
+        top: (size.height > 800) ? 0 : 10,
         left: 10,
-        right: 15,
-        bottom: (size.height > 820) ? 0 : 15,
-      );
-    }
-    //configuración por defecto para el topLeft
-    if (orientation == "TopLeft") {
-      margin = EdgeInsets.only(
+        right: 20,
+        bottom: 10,
+      ),
+      "TopLeft": EdgeInsets.only(
         left: 15,
         right: 10,
         bottom: 15,
-      );
-    }
+      ),
+      "CenterLeft": (size.height > 800 && size.width >= 375)
+          ? EdgeInsets.only(left: 20, right: 10)
+          : EdgeInsets.only(left: 15, right: 10),
+    };
+
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       //se emplea la configuración por defecto
-      margin: margin,
+      margin: margins[orientation],
       alignment: Alignment.center,
       width: width,
       height: height,
@@ -131,10 +125,10 @@ class IdeaContainerWidget extends StatelessWidget {
 
         style: korolevFont.bodyText1?.apply(
           color: Colors.black,
-          fontSizeFactor: (size.height > 700)
-              ? (size.height > 800)
-                  ? 0.8
-                  : 0.7
+          fontSizeFactor: (size.height > 600)
+              ? (size.height > 800 || size.width >= 380)
+                  ? 0.85
+                  : 0.65
               : 0.6,
         ),
 

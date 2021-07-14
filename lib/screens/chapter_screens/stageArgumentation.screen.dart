@@ -109,14 +109,16 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
         return Container(
           height: size.height * 0.825,
           // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          // padding: EdgeInsets.symmetric(horizontal: 10),
           child: Container(
             child: Stack(children: [
               Container(
+                // decoration:
+                // BoxDecoration(border: Border.all(color: Colors.green)),
                 alignment: Alignment.bottomLeft,
                 child: Image(
                   // alignment: Alignment.bottomLeft,
-
+                  width: size.width * 0.8,
                   image: NetworkImage(
                     url.data.toString(),
                   ),
@@ -132,15 +134,15 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
 
   _ideas(Size size) {
     double widthFactor = (size.height > 800)
-        ? 0.4
+        ? 0.5
         : (size.height > 700)
-            ? 0.38
+            ? 0.45
             : 0.4;
     double heightFactor = (size.height > 800)
-        ? 0.17
+        ? 0.2
         : (size.height > 700)
-            ? 0.16
-            : 0.18;
+            ? 0.2
+            : 0.2;
     return FutureBuilder(
       future: _readQuestions(),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> ideas) {
@@ -207,15 +209,15 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   Align _createBubble(
       int i, String idea, Size size, double width, double height) {
     Map<int, Alignment> aligns = {
-      0: Alignment(-1, -0.4),
-      1: Alignment(1, -0.4),
-      2: Alignment(0, -0.9),
+      0: Alignment(-0.8, -0.7),
+      1: (size.width > 400) ? Alignment(0.9, -0.3) : Alignment(0.9, -0.2),
+      2: (size.height > 800) ? Alignment(0.9, 0.8) : Alignment(0.9, 0.7),
       3: Alignment(-1, 0.8),
       4: Alignment(1, 0.8),
     };
     Map<int, String> orientations = {
       0: "TopRight",
-      1: "TopLeft",
+      1: "CenterLeft",
       2: "BottomLeft",
       3: "TopRight",
       4: "TopLeft",
