@@ -22,8 +22,8 @@ class IdeaContainerWidget extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      constraints: BoxConstraints(maxWidth: 170),
-      // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+      constraints: BoxConstraints(maxWidth: 200),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       // alignment: Alignment.center,
       child: Stack(
         children: [
@@ -95,24 +95,25 @@ class IdeaContainerWidget extends StatelessWidget {
     //configuración por defecto para el BottomRight
     if (orientation == "BottomLeft") {
       margin = EdgeInsets.only(
-        left: (size.height > 700) ? 12 : 8,
+        left: (size.height > 820) ? 12 : 10,
         right: 8,
-        top: (size.height > 700) ? 0 : 10,
+        top: (size.height > 820) ? 0 : 10,
       );
     }
     //configuración por defecto para el topRight
     if (orientation == "TopRight") {
       margin = EdgeInsets.only(
-        left: 4,
-        right: 8,
-        bottom: (size.height > 700) ? 0 : 15,
+        top: (size.height > 820) ? 0 : 10,
+        left: 10,
+        right: 15,
+        bottom: (size.height > 820) ? 0 : 15,
       );
     }
     //configuración por defecto para el topLeft
     if (orientation == "TopLeft") {
       margin = EdgeInsets.only(
-        left: 10,
-        right: 8,
+        left: 15,
+        right: 10,
         bottom: 15,
       );
     }
@@ -127,9 +128,16 @@ class IdeaContainerWidget extends StatelessWidget {
       child: Text(
         //se emplea el texto recibido por entrada
         text,
-        style: korolevFont.bodyText2?.apply(
-            color: Colors.black,
-            fontSizeFactor: (size.height > 700) ? 0.8 : 0.73),
+
+        style: korolevFont.bodyText1?.apply(
+          color: Colors.black,
+          fontSizeFactor: (size.height > 700)
+              ? (size.height > 800)
+                  ? 0.8
+                  : 0.7
+              : 0.6,
+        ),
+
         textAlign: TextAlign.center,
       ),
     );

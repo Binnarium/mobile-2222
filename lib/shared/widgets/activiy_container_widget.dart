@@ -17,15 +17,15 @@ class ActivityContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('grid width $width');
-    print('grid height $height');
+    // print('grid width $width');
+    // print('grid height $height');
     SliverGridDelegate gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: width * 0.2,
         mainAxisSpacing: height * 0.3);
 
     ///for small height phones
-    if (height < 400) {
+    if (height < 700) {
       gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: width * 0.2,
@@ -100,7 +100,7 @@ class ActivityContainerWidget extends StatelessWidget {
                 break;
             }
 
-            return _activity(width * 0.3, height * 0.3, rotation, iconAlignment,
+            return _activity(width * 0.4, height * 0.4, rotation, iconAlignment,
                 iconPath, activityName);
           }),
     );
@@ -109,9 +109,10 @@ class ActivityContainerWidget extends StatelessWidget {
   Widget _activity(double width, double height, Matrix4 rotation,
       Alignment iconAlignment, String iconPath, String activityName) {
     return Container(
-      //decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
       child: Stack(
         alignment: Alignment.center,
+        // fit: StackFit.expand,
         children: [
           Transform(
             transform: rotation,
@@ -124,11 +125,13 @@ class ActivityContainerWidget extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-          Image(
+          Container(
             alignment: iconAlignment,
-            image: AssetImage(iconPath),
-            width: width * 1.5,
-            height: height * 1.5,
+            child: Image(
+              image: AssetImage(iconPath),
+              width: (height > 155) ? width * 1.5 : width * 0.25,
+              height: (height > 155) ? height * 1.5 : height * 0.25,
+            ),
           ),
           _textContainer(width, height, activityName),
         ],
@@ -142,38 +145,38 @@ class ActivityContainerWidget extends StatelessWidget {
 
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-
       margin: (height > 120)
-          ? EdgeInsets.only(top: height * 0.15)
+          ? (height > 175)
+              ? EdgeInsets.only(top: 0)
+              : EdgeInsets.only(top: height * 0.1, bottom: height * 0.05)
           : EdgeInsets.only(top: height * 0.25),
-      // alignment: Alignment.center,
-      width: width * 1.2,
+      alignment: Alignment.center,
+      width: width * 1.3,
       height: height,
       padding: EdgeInsets.symmetric(horizontal: 15),
-      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             activityName.toUpperCase(),
             style: korolevFont.headline6?.apply(
               color: Color(int.parse(this.primaryColor)),
-              fontSizeFactor: 0.7,
+              fontSizeFactor: 0.8,
             ),
             textAlign: TextAlign.center,
           ),
           SizedBox(
-            height: 5,
+            height: (height > 155) ? 10 : 5,
           ),
           Text(
             'Tenim ipsam voluptatem  quia voluptas sit aspe natur aut odit aut fugit sed quia',
-            style: korolevFont.bodyText2
+            style: korolevFont.bodyText1
                 ?.apply(color: Colors.black, fontSizeFactor: 0.7),
-            overflow: TextOverflow.ellipsis,
+            // overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            maxLines: (height > 120) ? 5 : 3,
+            // maxLines: (height > 120) ? 5 : 3,
           ),
         ],
       ),

@@ -107,14 +107,16 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
           );
         }
         return Container(
-          height: size.height * 0.78,
+          height: size.height * 0.825,
+          // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Container(
             child: Stack(children: [
-              Center(
+              Container(
+                alignment: Alignment.bottomLeft,
                 child: Image(
-                  fit: BoxFit.contain,
-                  width: size.width * 0.78,
+                  // alignment: Alignment.bottomLeft,
+
                   image: NetworkImage(
                     url.data.toString(),
                   ),
@@ -129,8 +131,16 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   }
 
   _ideas(Size size) {
-    double widthFactor = 0.36;
-    double heightFactor = 0.15;
+    double widthFactor = (size.height > 800)
+        ? 0.4
+        : (size.height > 700)
+            ? 0.38
+            : 0.4;
+    double heightFactor = (size.height > 800)
+        ? 0.17
+        : (size.height > 700)
+            ? 0.16
+            : 0.18;
     return FutureBuilder(
       future: _readQuestions(),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> ideas) {
@@ -197,9 +207,9 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   Align _createBubble(
       int i, String idea, Size size, double width, double height) {
     Map<int, Alignment> aligns = {
-      0: Alignment(-1, -0.6),
-      1: Alignment(1, -0.6),
-      2: Alignment(0, -1),
+      0: Alignment(-1, -0.4),
+      1: Alignment(1, -0.4),
+      2: Alignment(0, -0.9),
       3: Alignment(-1, 0.8),
       4: Alignment(1, 0.8),
     };
