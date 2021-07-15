@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:video_player/video_player.dart';
 
@@ -141,6 +140,7 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
             onPrimary: this.widget.color,
             primary: Colors.white,
             alignment: Alignment.center,
+            padding: EdgeInsets.all(0),
           ),
         ),
       );
