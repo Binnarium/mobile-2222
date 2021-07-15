@@ -5,11 +5,11 @@ class ActivityContainerWidget extends StatelessWidget {
   final double width;
   final double height;
   final String primaryColor;
-  final Map<String, String> activities;
+  final Map<String, dynamic> enabledActivities;
 
   const ActivityContainerWidget(
       {Key? key,
-      required this.activities,
+      required this.enabledActivities,
       required this.width,
       required this.height,
       required this.primaryColor})
@@ -32,74 +32,26 @@ class ActivityContainerWidget extends StatelessWidget {
           mainAxisSpacing: height * 0.3);
     }
 
+    List<_ActivityItem> showActivities = _showActivities(enabledActivities);
+
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
       child: GridView.builder(
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: gridDelegate,
-          itemCount: activities.length,
+          itemCount: 4,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            ///to control the rotation of the widget
-            Matrix4 rotation = Matrix4.rotationX(0);
-            //rotación para poner el lado extenso en topRight
-            Alignment iconAlignment = Alignment.topRight;
-            String iconPath = '';
-            String activityName = '';
-
-            ///for now its hardcoded
-            switch (index) {
-              case 0:
-                rotation = Matrix4.identity()
-                  //matriz de perspectiva
-                  ..setEntry(3, 2, 0.001)
-
-                  ///rota manecilla de reloj en radianes
-                  ..rotateZ(2.26893);
-                iconAlignment = Alignment.topRight;
-                iconPath = 'assets/icons/clubhouse_activity_icon.png';
-                activityName = 'Eventos ClubHouse';
-                break;
-
-              case 1:
-                rotation = Matrix4.identity()
-                  //matriz de perspectiva
-                  ..setEntry(3, 2, 0.001)
-
-                  ///rota manecilla de reloj en radianes
-                  ..rotateZ(3.31613);
-                iconAlignment = Alignment.topLeft;
-                iconPath = 'assets/icons/lectures_activity_icon.png';
-                activityName = 'Círculo de Lectores';
-                break;
-
-              case 2:
-                rotation = Matrix4.identity()
-                  //matriz de perspectiva
-                  ..setEntry(3, 2, 0.001)
-
-                  ///rota manecilla de reloj en radianes
-                  ..rotateZ(0);
-                iconAlignment = Alignment.topLeft;
-
-                iconPath = 'assets/icons/multiple_choice_activity_icon.png';
-                activityName = 'Multiple Choice';
-                break;
-
-              case 3:
-                rotation = Matrix4.identity()
-                  //matriz de perspectiva
-                  ..setEntry(3, 2, 0.001)
-
-                  ///rota manecilla de reloj en radianes
-                  ..rotateZ(4.71239);
-                iconAlignment = Alignment.topRight;
-
-                iconPath = 'assets/icons/project_activity_icon.png';
-                activityName = 'Proyecto docente';
-                break;
+            /// to avoid the null in the grid view
+            if (showActivities.length < 4) {
+              if (index >= showActivities.length) {
+                return Container();
+              }
             }
-
+            Matrix4 rotation = showActivities.elementAt(index).rotation;
+            //rotación para poner el lado extenso en topRight
+            Alignment iconAlignment = showActivities.elementAt(index).alignment;
+            String iconPath = showActivities.elementAt(index).iconPath;
+            String activityName = showActivities.elementAt(index).name;
             return _activity(width * 0.4, height * 0.4, rotation, iconAlignment,
                 iconPath, activityName);
           }),
@@ -144,7 +96,7 @@ class ActivityContainerWidget extends StatelessWidget {
     print('height: $height');
 
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
       margin: (height > 120)
           ? (height > 175)
               ? EdgeInsets.only(top: 0)
@@ -182,4 +134,100 @@ class ActivityContainerWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ActivityItem {
+  final String name;
+  final Matrix4 rotation;
+  final Alignment alignment;
+  final String iconPath;
+
+  _ActivityItem(
+      {required this.name,
+      required this.rotation,
+      required this.alignment,
+      required this.iconPath});
+}
+
+List<_ActivityItem> _showActivities(Map<String, dynamic> activitiesToPaint) {
+  Map<int, Map<String, dynamic>> activitiesSettings = {
+    0: {
+      "rotation": Matrix4.identity()
+        //matriz de perspectiva
+        ..setEntry(3, 2, 0.001)
+
+        ///rota manecilla de reloj en radianes
+        ..rotateZ(2.26893),
+      "iconAlignment": Alignment.topRight,
+    },
+    1: {
+      "rotation": Matrix4.identity()
+        //matriz de perspectiva
+        ..setEntry(3, 2, 0.001)
+
+        ///rota manecilla de reloj en radianes
+        ..rotateZ(3.31613),
+      "iconAlignment": Alignment.topLeft,
+    },
+    2: {
+      "rotation": Matrix4.identity()
+        //matriz de perspectiva
+        ..setEntry(3, 2, 0.001)
+
+        ///rota manecilla de reloj en radianes
+        ..rotateZ(0),
+      "iconAlignment": Alignment.topLeft,
+    },
+    3: {
+      "rotation": Matrix4.identity()
+        //matriz de perspectiva
+        ..setEntry(3, 2, 0.001)
+
+        ///rota manecilla de reloj en radianes
+        ..rotateZ(4.71239),
+      "iconAlignment": Alignment.topRight,
+    },
+    4: {}
+  };
+
+  List<_ActivityItem> activities = [];
+  Map<String, dynamic> enabledActivitiesTemp = new Map();
+  enabledActivitiesTemp = activitiesToPaint;
+  int index = 0;
+  for (var item in enabledActivitiesTemp.entries) {
+    if (item.key == "clubhouse" && item.value == true) {
+      activities.add(new _ActivityItem(
+        name: 'Eventos ClubHouse',
+        rotation: activitiesSettings[index]!["rotation"],
+        alignment: activitiesSettings[index]!["iconAlignment"],
+        iconPath: 'assets/icons/clubhouse_activity_icon.png',
+      ));
+      index++;
+    } else if (item.key == "readings" && item.value == true) {
+      activities.add(new _ActivityItem(
+        name: 'Círculo de Lectores',
+        rotation: activitiesSettings[index]?["rotation"],
+        alignment: activitiesSettings[index]?["iconAlignment"],
+        iconPath: 'assets/icons/lectures_activity_icon.png',
+      ));
+      index++;
+    } else if (item.key == "questionary" && item.value == true) {
+      activities.add(new _ActivityItem(
+        name: 'Cuestionario',
+        rotation: activitiesSettings[index]!["rotation"],
+        alignment: activitiesSettings[index]!["iconAlignment"],
+        iconPath: 'assets/icons/multiple_choice_activity_icon.png',
+      ));
+      index++;
+    } else if (item.key == "project" && item.value == true) {
+      activities.add(new _ActivityItem(
+        name: 'Proyecto docente',
+        rotation: activitiesSettings[index]!["rotation"],
+        alignment: activitiesSettings[index]!["iconAlignment"],
+        iconPath: 'assets/icons/project_activity_icon.png',
+      ));
+      index++;
+    }
+  }
+  return activities;
 }

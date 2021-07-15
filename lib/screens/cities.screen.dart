@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,24 +90,17 @@ class _CitiesScreenState extends State<CitiesScreen> {
 
   Future<List<FirebaseChapterSettings>> _readChapterConfigurations() async {
     ///  reading chapter configurations
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+
+    List<FirebaseChapterSettings> settingsTemp = [];
+
+    final snap = await FirebaseFirestore.instance
         .collection('cities')
         .orderBy("stage")
         .get();
-    List<FirebaseChapterSettings> settings = querySnapshot.docs.map(
-      (element) {
-        final data = element.data() as Map<String, dynamic>;
-        final confTemp = new FirebaseChapterSettings(
-          id: data["id"],
-          primaryColor: data["configuration"]["colorHex"],
-          phaseName: "etapa " + data["stage"].toString(),
-          cityName: data["name"],
-          chapterImageUrl: data["iconUrl"],
-        );
-        return confTemp;
-      },
-    ).toList();
-
-    return settings;
+    final settings = snap.docs
+        .map((e) => FirebaseChapterSettings.fromJson(e.data()))
+        .toList();
+    settingsTemp = settings;
+    return settingsTemp;
   }
 }
