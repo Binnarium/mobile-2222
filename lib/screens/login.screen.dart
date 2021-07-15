@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
+import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -64,7 +65,7 @@ class LoginScreen extends StatelessWidget {
 
                   ///texto inicial
                   Text(
-                    'Laboratorio Móvil 2222'.toUpperCase(),
+                    'LabMóvil 2222'.toUpperCase(),
                     style: Theme.of(context)
                         .textTheme
                         .headline6!
@@ -75,7 +76,11 @@ class LoginScreen extends StatelessWidget {
                   _descriptionText(context, loginInfo.data!.pageTitle),
                   SizedBox(height: size.height * 0.05),
                   _video(),
-                  SizedBox(height: size.height * 0.1),
+                  SizedBox(height: size.height * 0.05),
+                  _profundityText(context, loginInfo.data!.profundityText),
+                  SizedBox(height: size.height * 0.05),
+                  _sheetButton(context),
+                  SizedBox(height: size.height * 0.05),
                 ],
               );
             },
@@ -117,6 +122,44 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  _profundityText(BuildContext context, String depthText) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      child: Text(
+        depthText,
+        style:
+            Theme.of(context).textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
+        textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+
+  _sheetButton(BuildContext context) {
+    double buttonWidth = MediaQuery.of(context).size.width;
+    return Container(
+      width: buttonWidth,
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: ColorsApp.backgroundBottomBar,
+          elevation: 5,
+        ),
+
+        ///Navigates to main screen
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(TeamScreen.route);
+        },
+        child: Text(
+          'Ficha de Equipo',
+          style: korolevFont.headline6?.apply(),
+        ),
+      ),
+    );
+  }
+
 
   ///Vídeo que actualmente está como NetworkImage
   _video() {
