@@ -105,7 +105,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           _objetBody(size),
           SizedBox(height: spacedBodyContainers + 15),
           ChapterTitleSection(
-            title: 'CONTENIDOS',
+            title: 'IDEAS PARA DESAPRENDER',
           ),
           SizedBox(height: spacedBodyContainers),
           _contentsBody(size),
