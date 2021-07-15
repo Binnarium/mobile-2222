@@ -14,6 +14,7 @@ import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
+import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
 
 MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
   return MaterialPageRoute(
@@ -21,6 +22,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
       switch (settings.name) {
         case SplashScreen.route:
           return SplashScreen();
+
+        case TeamScreen.route:
+          return TeamScreen();
 
         case LoginScreen.route:
           return LoginScreen();
