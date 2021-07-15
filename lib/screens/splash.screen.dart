@@ -15,12 +15,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  // final bool _visible = true;
   @override
   void initState() {
     super.initState();
     Timer(
       Duration(seconds: 15),
-      () => Navigator.of(context).pushReplacementNamed(LoginScreen.route),
+      () => _createRoute(context),
     );
   }
 
@@ -165,6 +166,42 @@ class _SplashScreenState extends State<SplashScreen> {
         (payload['courseFinalizationDate'] as Timestamp).toDate();
     final Duration daysLeft = date.difference(DateTime.now());
     return daysLeft.inDays.toString();
+  }
+
+  void _createRoute(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return LoginScreen();
+        },
+        transitionDuration: Duration(seconds: 4),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = Offset(1.0, 0.0);
+          var end = Offset.zero;
+          var curve = Curves.easeInQuart;
+
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+          // return ScaleTransition(
+          //   scale: animation,
+          //   child: child,
+          // );
+          // return Align(
+          //   child: SizeTransition(
+          //     sizeFactor: animation,
+          //     // position: animation.drive(tween),
+          //     child: child,
+          //     axisAlignment: 0.0,
+          //   ),
+          // );
+        },
+      ),
+    );
   }
 }
 

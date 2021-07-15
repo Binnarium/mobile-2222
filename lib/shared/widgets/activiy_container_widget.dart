@@ -192,31 +192,29 @@ List<_ActivityItem> _showActivities(Map<String, dynamic> activitiesToPaint) {
 
   List<_ActivityItem> activities = [];
   Map<String, dynamic> enabledActivitiesTemp = new Map();
-  enabledActivitiesTemp = activitiesToPaint;
+  enabledActivitiesTemp = {
+    "questionary": activitiesToPaint["questionary"],
+    "clubhouse": activitiesToPaint["clubhouse"],
+    "project": activitiesToPaint["project"],
+  };
+  activitiesToPaint;
+
   int index = 0;
   for (var item in enabledActivitiesTemp.entries) {
-    if (item.key == "clubhouse" && item.value == true) {
-      activities.add(new _ActivityItem(
-        name: 'Eventos ClubHouse',
-        rotation: activitiesSettings[index]!["rotation"],
-        alignment: activitiesSettings[index]!["iconAlignment"],
-        iconPath: 'assets/icons/clubhouse_activity_icon.png',
-      ));
-      index++;
-    } else if (item.key == "readings" && item.value == true) {
-      activities.add(new _ActivityItem(
-        name: 'Círculo de Lectores',
-        rotation: activitiesSettings[index]?["rotation"],
-        alignment: activitiesSettings[index]?["iconAlignment"],
-        iconPath: 'assets/icons/lectures_activity_icon.png',
-      ));
-      index++;
-    } else if (item.key == "questionary" && item.value == true) {
+    if (item.key == "questionary" && item.value == true) {
       activities.add(new _ActivityItem(
         name: 'Cuestionario',
         rotation: activitiesSettings[index]!["rotation"],
         alignment: activitiesSettings[index]!["iconAlignment"],
         iconPath: 'assets/icons/multiple_choice_activity_icon.png',
+      ));
+      index++;
+    } else if (item.key == "clubhouse" && item.value == true) {
+      activities.add(new _ActivityItem(
+        name: 'Eventos ClubHouse',
+        rotation: activitiesSettings[index]!["rotation"],
+        alignment: activitiesSettings[index]!["iconAlignment"],
+        iconPath: 'assets/icons/clubhouse_activity_icon.png',
       ));
       index++;
     } else if (item.key == "project" && item.value == true) {
@@ -225,6 +223,14 @@ List<_ActivityItem> _showActivities(Map<String, dynamic> activitiesToPaint) {
         rotation: activitiesSettings[index]!["rotation"],
         alignment: activitiesSettings[index]!["iconAlignment"],
         iconPath: 'assets/icons/project_activity_icon.png',
+      ));
+      index++;
+    } else if (item.key == "readings" && item.value == true) {
+      activities.add(new _ActivityItem(
+        name: 'Círculo de Lectores',
+        rotation: activitiesSettings[index]?["rotation"],
+        alignment: activitiesSettings[index]?["iconAlignment"],
+        iconPath: 'assets/icons/lectures_activity_icon.png',
       ));
       index++;
     }
