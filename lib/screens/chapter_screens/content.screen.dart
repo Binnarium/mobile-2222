@@ -116,7 +116,7 @@ class _ContentScreenState extends State<ContentScreen> {
             if (c is VideoDto)
               return Column(
                 children: [
-                  _titleContainer(size, c.author, c.title),
+                  _titleContainer(size, c.author, c.title, " - vídeo"),
                   VideoPlayerSegment(
                     videoUrl: c.url,
                     description: c.description,
@@ -127,10 +127,11 @@ class _ContentScreenState extends State<ContentScreen> {
             if (c is PodcastDto)
               return Column(
                 children: [
-                  _titleContainer(size, c.author, c.title),
+                  _titleContainer(size, c.author, c.title, " - podcast"),
                   PodcastAudioPlayer(
                     audioUrl: c.url,
                     description: c.description,
+                    color: Color(widget.chapterSettings.primaryColor),
                   ),
                 ],
               );
@@ -142,7 +143,7 @@ class _ContentScreenState extends State<ContentScreen> {
         });
   }
 
-  _titleContainer(Size size, String? author, String? title) {
+  _titleContainer(Size size, String? author, String? title, String kind) {
     return UnconstrainedBox(
       child: Container(
         color: Colors.white,
@@ -152,12 +153,18 @@ class _ContentScreenState extends State<ContentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              (author == null) ? '' : author.toUpperCase(),
-              style: korolevFont.headline5
-                  ?.apply(color: Colors.black, fontSizeFactor: 0.7),
-              overflow: TextOverflow.ellipsis,
-            ),
+            RichText(
+                text: TextSpan(
+                    text: (author == null) ? '' : author.toUpperCase(),
+                    style: korolevFont.headline5
+                        ?.apply(color: Colors.black, fontSizeFactor: 0.7),
+                    children: [
+                  TextSpan(
+                    text: kind.toUpperCase(),
+                    style: korolevFont.headline5
+                        ?.apply(color: Colors.black45, fontSizeFactor: 0.7),
+                  )
+                ])),
             SizedBox(
               height: 10,
             ),

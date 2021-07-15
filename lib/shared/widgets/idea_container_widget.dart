@@ -128,7 +128,7 @@ class IdeaContainerWidget extends StatelessWidget {
           fontSizeFactor: (size.height > 600)
               ? (size.height > 800 || size.width >= 380)
                   ? 0.85
-                  : 0.65
+                  : 0.8
               : 0.6,
         ),
 
