@@ -17,11 +17,11 @@ class ActivitiesScreen extends StatelessWidget {
   }) : super(key: key);
 
   static const Map<String, String> _activities = {
-    'club-house':
+    'clubhouse':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'lectures':
+    'readings':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'mult-choice':
+    'questionary':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
     'project':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
@@ -139,7 +139,7 @@ class ActivitiesScreen extends StatelessWidget {
           ),
 
           ActivityContainerWidget(
-            activities: _activities,
+            enabledActivities: this.chapterSettings.enabledPages!,
             width: containerWidth,
             height: containerHeight,
             primaryColor: this.chapterSettings.primaryColor.toString(),
