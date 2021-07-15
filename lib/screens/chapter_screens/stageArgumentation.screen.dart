@@ -79,6 +79,9 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   _backgroundDecoration(Size size) {
     return Container(
       child: ListView(children: [
+        SizedBox(
+          height: 10,
+        ),
         ChapterHeadWidget(
           phaseName: this.widget.chapterSettings.phaseName,
           chapterName: this.widget.chapterSettings.cityName,

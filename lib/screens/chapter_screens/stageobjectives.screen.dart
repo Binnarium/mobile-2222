@@ -89,6 +89,9 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       height: double.infinity,
       child: ListView(
         children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
           ChapterHeadWidget(
             phaseName: this.widget.chapterSettings.phaseName,
             chapterName: this.widget.chapterSettings.cityName,
@@ -113,7 +116,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           SizedBox(height: spacedBodyContainers + 10),
           _compeBody(size),
           SizedBox(height: spacedBodyContainers + 20),
-
           _decorationWhite(size),
           SizedBox(height: spacedBodyContainers + 20),
         ],
@@ -286,13 +288,12 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     String texto = idea.data!.elementAt(0);
-                      return IdeaUnlearnContainerWidget(
+                    return IdeaUnlearnContainerWidget(
                       text: texto,
                       color: Color(this.widget.chapterSettings.primaryColor),
                       width: bodyContainerWidth,
                       height: bodyContainerHeight,
                     );
-                    
                   });
             }));
   }
