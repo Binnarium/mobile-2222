@@ -19,7 +19,9 @@ class ChapterHeadWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ChapterLeafLogoWidget(),
+        (phaseName.compareTo('introduction') == 0)
+            ? ChapterLeafLogoWidget()
+            : Container(),
 
         /// to check if the page is the introduction page, so we can't show
         /// the banner widget.

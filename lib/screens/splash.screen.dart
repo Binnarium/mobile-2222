@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 5),
+      Duration(seconds: 15),
       () => Navigator.of(context).pushReplacementNamed(LoginScreen.route),
     );
   }
@@ -61,6 +61,15 @@ class _SplashScreenState extends State<SplashScreen> {
       builder: (BuildContext context, AsyncSnapshot<String> days) {
         if (days.hasError) {
           return Text(days.error.toString());
+        }
+        if (days.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(
+                ColorsApp.backgroundRed,
+              ),
+            ),
+          );
         }
         if (days.hasData) {
           return Column(

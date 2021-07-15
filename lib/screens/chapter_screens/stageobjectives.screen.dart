@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/shared/models/Competence.model.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
@@ -88,6 +89,9 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       height: double.infinity,
       child: ListView(
         children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
           ChapterHeadWidget(
             phaseName: this.widget.chapterSettings.phaseName,
             chapterName: this.widget.chapterSettings.cityName,
@@ -112,7 +116,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           SizedBox(height: spacedBodyContainers + 10),
           _compeBody(size),
           SizedBox(height: spacedBodyContainers + 20),
-          ///_decorationWhite(size),
+          _decorationWhite(size),
           SizedBox(height: spacedBodyContainers + 20),
         ],
       ),
@@ -204,7 +208,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       ///Creates a grid with the necesary online resources
       child: FutureBuilder(
           future: _readCompetences(),
-          builder: (BuildContext context, AsyncSnapshot<List<dynamic>> compe) {
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CompetenceModel>> compe) {
             if (compe.hasError) {
               return Text(compe.error.toString());
             }
@@ -218,6 +223,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                 ),
               );
             }
+            final List<CompetenceModel> compeTemp =
+                compe.data as List<CompetenceModel>;
             return GridView.builder(
               ///general spacing per resource
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -227,7 +234,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                 mainAxisExtent: (size.height > 700) ? 200 : 180,
                 // childAspectRatio: 1,
               ),
-              itemCount: compe.data?.length,
+              itemCount: compeTemp.length,
 
               /// property that sizes the container automaticly according
               /// the items
@@ -237,9 +244,14 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 ///calls the custom widget with the item parameters
-                return CompeResourcesListItem(
-                    kind: compe.data!.elementAt(index),
-                    description: compe.data!.elementAt(index));
+                final item = compeTemp.elementAt(index);
+                if (item is CompetenceModel) {
+                  return CompeResourcesListItem(
+                    name: item.name,
+                    image: item.image,
+                  );
+                }
+                return Text('Kind of content not found');
               },
             );
           }),
@@ -256,7 +268,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     return Container(
         child: FutureBuilder(
             future: _readIdea(),
-            builder: (BuildContext context, AsyncSnapshot<String> idea) {
+            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> idea) {
               if (idea.hasError) {
                 return Text(idea.error.toString());
               }
@@ -270,12 +282,19 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                   ),
                 );
               }
-              return IdeaUnlearnContainerWidget(
-                text: idea.data!.toString(),
-                color: Color(this.widget.chapterSettings.primaryColor),
-                width: bodyContainerWidth,
-                height: bodyContainerHeight,
-              );
+              return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 1,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    String texto = idea.data!.elementAt(0);
+                    return IdeaUnlearnContainerWidget(
+                      text: texto,
+                      color: Color(this.widget.chapterSettings.primaryColor),
+                      width: bodyContainerWidth,
+                      height: bodyContainerHeight,
+                    );
+                  });
             }));
   }
 
@@ -291,8 +310,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           contentsTemp = documentSnapshot.get('content');
-
-          print('ideas temp : $contentsTemp');
         }
       },
     );
@@ -319,28 +336,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     return contentsTemp;
   }
 
-  // Future<List<dynamic>> _readCompe() async {
-  //   List contentsTemp = [];
-  //   await FirebaseFirestore.instance
-  //       .collection('cities')
-  //       .doc(this.widget.chapterSettings.id)
-  //       .collection('pages')
-  //       .doc('objective')
-  //       .get()
-  //       .then(
-  //     (DocumentSnapshot documentSnapshot) {
-  //       if (documentSnapshot.exists) {
-  //         contentsTemp = documentSnapshot.get('competencies');
-
-  //         print('ideas temp : $contentsTemp');
-  //       }
-  //     },
-  //   );
-  //   return contentsTemp;
-  // }
-
-  Future<List<dynamic>> _readCompetences() async {
-    List<dynamic> contentsTemp = [];
+  Future<List<CompetenceModel>> _readCompetences() async {
     DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.widget.chapterSettings.id)
@@ -351,44 +347,36 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     if (objectiveSnapshot.exists) {
       dynamic data = objectiveSnapshot.data()!;
       //to access to firebase reference
-      List<DocumentReference> ideasRef = (data['competences'] as List<dynamic>)
-          .map((e) => e as DocumentReference)
-          .toList();
-      List<dynamic> ideas = [];
+      List<Future<CompetenceModel>> ideasRef =
+          (data['competences'] as List<dynamic>)
+              .map((e) => e as DocumentReference)
+              .map((e) async {
+        final payload = await e.get();
 
-      for (var i = 0; i < ideasRef.length; i++) {
-        ideas.add(ideasRef[i]);
-        DocumentSnapshot ideaSnapshot = await ideas[i].get();
-        contentsTemp.add(ideaSnapshot.get('name'));
-      }
+        return CompetenceModel(name: payload['name'], image: payload['image']);
+      }).toList();
+
+      return await Future.wait(ideasRef);
     }
 
-    return contentsTemp;
+    return [];
   }
 
-  Future<String> _readIdea() async {
-    String contentsTemp = "";
-    DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
+  Future<List<dynamic>> _readIdea() async {
+    List<dynamic> ideaTemp = [];
+    await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.widget.chapterSettings.id)
         .collection('pages')
         .doc('objective')
-        .get();
-
-    if (objectiveSnapshot.exists) {
-      dynamic data = objectiveSnapshot.data()!;
-      //to access to firebase reference
-      List<DocumentReference> ideasRef = (data['ideas'] as List<dynamic>)
-          .map((e) => e as DocumentReference)
-          .toList();
-
-      var idea = ideasRef[0];
-      DocumentSnapshot ideaSnapshot = await idea.get();
-      contentsTemp = ideaSnapshot.get('text');
-      print("toStrigng" + contentsTemp);
-    }
-
-    print("Prueba" + contentsTemp);
-    return contentsTemp;
+        .get()
+        .then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          ideaTemp = documentSnapshot.get('ideas');
+        }
+      },
+    );
+    return ideaTemp;
   }
 }

@@ -94,6 +94,9 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
       height: double.infinity,
       child: ListView(
         children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
           ChapterHeadWidget(
             phaseName: this.widget.chapterSettings.phaseName,
             chapterName: this.widget.chapterSettings.cityName,
@@ -112,8 +115,9 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     return Container(
       //decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft,bottom: bodyMarginLeft),
-      
+      margin: EdgeInsets.only(
+          left: bodyMarginLeft, right: bodyMarginLeft, bottom: bodyMarginLeft),
+
       child: history.title == null
           ? Text(
               'No se ha cargado texto',
@@ -133,7 +137,8 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft,bottom: bodyMarginLeft),
+      margin: EdgeInsets.only(
+          left: bodyMarginLeft, right: bodyMarginLeft, bottom: bodyMarginLeft),
       child: history.text == null
           ? Text('No se ha cargado texto')
           : Text(
@@ -158,15 +163,19 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     // }
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(right: marginRight, left: marginRight,bottom: marginRight),
+      margin: EdgeInsets.only(
+          right: marginRight, left: marginRight, bottom: marginRight),
       child: history.url == null
           ? Container(
-            alignment: Alignment.center,
-            height: 150,
-            width: 150,
-            color: Colors.black,
-            child: Text('No ha imagen subida',textAlign: TextAlign.center,),
-          )
+              alignment: Alignment.center,
+              height: 150,
+              width: 150,
+              color: Colors.black,
+              child: Text(
+                'No ha imagen subida',
+                textAlign: TextAlign.center,
+              ),
+            )
           : Image(
               image: NetworkImage(
                 history.url as String,

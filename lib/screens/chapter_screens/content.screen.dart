@@ -73,6 +73,10 @@ class _ContentScreenState extends State<ContentScreen> {
       /// builds an initial Listview with the banner at first element
       child: ListView(
         children: [
+          SizedBox(
+            height: 10,
+          ),
+
           ///calls the head of the chapter (logo leaf, banner)
           ChapterHeadWidget(
             chapterName: this.widget.chapterSettings.cityName,

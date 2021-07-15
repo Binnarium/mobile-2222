@@ -17,11 +17,11 @@ class ActivitiesScreen extends StatelessWidget {
   }) : super(key: key);
 
   static const Map<String, String> _activities = {
-    'club-house':
+    'clubhouse':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'lectures':
+    'readings':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'mult-choice':
+    'questionary':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
     'project':
         'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
@@ -79,6 +79,9 @@ class ActivitiesScreen extends StatelessWidget {
       child: ListView(
         // physics: NeverScrollableScrollPhysics(),
         children: [
+          SizedBox(
+            height: 10,
+          ),
           ChapterHeadWidget(
             phaseName: this.chapterSettings.phaseName,
             chapterName: this.chapterSettings.cityName,
@@ -131,13 +134,15 @@ class ActivitiesScreen extends StatelessWidget {
           Image(
             image: AssetImage(
                 "assets/backgrounds/decorations/white_route_circle_curve_background.png"),
-            width: containerWidth * 0.85,
+            width: (size.height > 700)
+                ? containerWidth * 0.9
+                : containerWidth * 0.85,
             height: containerHeight * 0.85,
             color: Color.fromRGBO(255, 255, 255, 0.5),
           ),
 
           ActivityContainerWidget(
-            activities: _activities,
+            enabledActivities: this.chapterSettings.enabledPages!,
             width: containerWidth,
             height: containerHeight,
             primaryColor: this.chapterSettings.primaryColor.toString(),

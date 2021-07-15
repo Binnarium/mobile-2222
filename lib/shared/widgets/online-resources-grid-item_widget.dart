@@ -25,7 +25,8 @@ class OnlineResourcesGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String kindIcon = this.kind.replaceAll("RESOURCE#", '');
+    String kindIcon = this.kind.replaceAll("LINK#", '');
+    print("kindIcon: $kindIcon");
     double fontSize = (size.height > 600) ? 0.9 : 0.7;
     return Material(
       type: MaterialType.transparency,
@@ -41,24 +42,29 @@ class OnlineResourcesGridItem extends StatelessWidget {
             // alignment: WrapAlignment.start,
             spacing: 5,
             runSpacing: 10,
+
             children: [
-              Image(
-                image: AssetImage(
-                    'assets/icons/${kindIcon.toLowerCase()}_icon.png'),
-                filterQuality: FilterQuality.high,
-              ),
+              (kindIcon.contains("OTHER"))
+                  ? Icon(
+                      Icons.link_rounded,
+                      color: Colors.white,
+                    )
+                  : Image(
+                      image: AssetImage(
+                          'assets/icons/${kindIcon.toLowerCase()}_icon.png'),
+                      filterQuality: FilterQuality.high,
+                    ),
               Text(
                 name,
                 style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                // overflow: TextOverflow.ellipsis,
+                // maxLines: 2,
               ),
               Text(
                 description,
-                style: korolevFont.headline6
-                    ?.apply(fontSizeFactor: fontSize - 0.2),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 9,
+                style: korolevFont.bodyText2,
+                // overflow: TextOverflow.ellipsis,
+                // maxLines: 9,
               ),
             ],
           ),

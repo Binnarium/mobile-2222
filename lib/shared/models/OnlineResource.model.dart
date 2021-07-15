@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 
 abstract class ResourcesDto {
-  final String kind;
+  final String? kind;
 
   ResourcesDto._({
-    required this.kind,
+    this.kind,
   });
 
   static ResourcesDto fromJson(Map<String, dynamic> payload) {
-    final String kind = payload['kind'];
-    if (kind.contains('RESOURCE#'))
+    final String? kind = payload['kind'];
+    if (kind == null) {
+      throw ErrorDescription("Online resource kind is empty");
+    }
+    if (kind.contains('LINK#'))
       return OnlineResourceDto._(
         kind: kind,
-        name: payload['name'],
+        name: payload['title'],
         description: payload['description'],
-        redirect: payload['redirect'],
+        redirect: payload['link'],
       );
     else
       throw ErrorDescription("Online resource kind not found");
