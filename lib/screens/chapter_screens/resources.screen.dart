@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
@@ -32,15 +34,26 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        ActivitiesScreen.route,
-        arguments: ActivitiesScreen(
-          chapterSettings: this.widget.chapterSettings,
-        ),
-      );
-    };
+    VoidCallback nextPage =
+        (this.widget.chapterSettings.enabledPages!["activities"])
+            ? () {
+                Navigator.pushNamed(
+                  context,
+                  ActivitiesScreen.route,
+                  arguments: ActivitiesScreen(
+                    chapterSettings: this.widget.chapterSettings,
+                  ),
+                );
+              }
+            : () {
+                Navigator.pushNamed(
+                  context,
+                  ChapterClubhouseScreen.route,
+                  arguments: ChapterClubhouseScreen(
+                    chapterSettings: this.widget.chapterSettings,
+                  ),
+                );
+              };
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
@@ -79,6 +92,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       ///Listview of the whole screen
       child: ListView(
         children: [
+          SizedBox(
+            height: 10,
+          ),
           ChapterHeadWidget(
             phaseName: this.widget.chapterSettings.phaseName,
             chapterName: this.widget.chapterSettings.cityName,

@@ -62,6 +62,9 @@ class ChapterClubhouseScreen extends StatelessWidget {
       ///Listview of the whole screen
       child: ListView(
         children: [
+          SizedBox(
+            height: 10,
+          ),
           ChapterHeadWidget(
             phaseName: this.chapterSettings.phaseName,
             chapterName: this.chapterSettings.cityName,
