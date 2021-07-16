@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
+import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -74,8 +75,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * 0.05),
                   _descriptionText(context, loginInfo.data!.pageTitle),
-                  SizedBox(height: size.height * 0.05),
-                  _video(),
+                  _video(loginInfo.data!.welcomeVideo["url"],
+                      ColorsApp.backgroundRed),
                   SizedBox(height: size.height * 0.05),
                   _profundityText(context, loginInfo.data!.profundityText),
                   SizedBox(height: size.height * 0.05),
@@ -136,7 +137,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-
   _sheetButton(BuildContext context) {
     double buttonWidth = MediaQuery.of(context).size.width;
     return Container(
@@ -160,18 +160,11 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-
   ///Vídeo que actualmente está como NetworkImage
-  _video() {
-    return Container(
-      width: double.infinity,
-      height: 200,
-      padding: EdgeInsets.symmetric(horizontal: 30),
-      child: FadeInImage(
-        placeholder: AssetImage('assets/gifs/giphy.gif'),
-        image: NetworkImage(
-            "http://altsolutions.es/wp-content/uploads/2017/02/alt-solutions-subida-de-videos-en-youtube.jpg"),
-      ),
+  _video(String url, Color color) {
+    return VideoPlayerSegment(
+      videoUrl: url,
+      color: color,
     );
   }
 
