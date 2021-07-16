@@ -78,7 +78,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
                 children: [
                   Image.network(data[i].chapterImageUrl, width: 30),
                   Container(width: 10),
-                  Text(data[i].cityName),
+                  Text("${(i + 1)}. ${(data[i].cityName)}"),
                 ],
               ),
             ),

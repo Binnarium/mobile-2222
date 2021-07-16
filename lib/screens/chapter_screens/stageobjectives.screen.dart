@@ -7,9 +7,8 @@ import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/conten-resources-list-item_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/shared/widgets/idea_unlearn_container_widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
@@ -31,7 +30,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   void _asyncLecture() async {
-    await _readContents();
     await _readCompetences();
   }
 
@@ -105,19 +103,16 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           _objetBody(size),
           SizedBox(height: spacedBodyContainers + 15),
           ChapterTitleSection(
-            title: 'CONTENIDOS',
+            title: 'IDEAS PARA DESAPRENDER',
           ),
           SizedBox(height: spacedBodyContainers),
-          _contentsBody(size),
+          _ideasBody(size),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
             title: 'COMPETENCIAS',
           ),
           SizedBox(height: spacedBodyContainers + 10),
           _compeBody(size),
-          SizedBox(height: spacedBodyContainers + 20),
-          _decorationWhite(size),
-          SizedBox(height: spacedBodyContainers + 20),
         ],
       ),
     );
@@ -154,7 +149,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
         ));
   }
 
-  _contentsBody(Size size) {
+  _ideasBody(Size size) {
     double bodyMarginLeft = size.width * 0.05;
 
     ///main container
@@ -166,7 +161,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       ///To resize the parent container of the list of books
       //height: (list.length) * bodyContainerHeight * 0.125,
       child: FutureBuilder(
-          future: _readContents(),
+          future: _readIdea(),
           builder:
               (BuildContext context, AsyncSnapshot<List<dynamic>> contents) {
             if (contents.hasError) {
@@ -188,9 +183,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                 itemCount: contents.data?.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  String texto = contents.data!.elementAt(index);
-                  return ContenResourcesListItem(
-                      index: '${index + 1}', description: texto);
+                  final texto = contents.data!.elementAt(index);
+                  return IdeaResourcesListItem(description: texto);
                 });
           }),
     );
@@ -204,7 +198,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
 
       ///To resize the parent container of the online resources grid
-
       ///Creates a grid with the necesary online resources
       child: FutureBuilder(
           future: _readCompetences(),
@@ -256,64 +249,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             );
           }),
     );
-  }
-
-  _decorationWhite(Size size) {
-    double bodyContainerHeight = size.height * 0.35;
-    double bodyContainerWidth = size.width * 0.95;
-    if (size.width > 500) {
-      bodyContainerHeight = size.height * 0.80;
-    }
-
-    return Container(
-        child: FutureBuilder(
-            future: _readIdea(),
-            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> idea) {
-              if (idea.hasError) {
-                return Text(idea.error.toString());
-              }
-
-              if (idea.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                      Color(this.widget.chapterSettings.primaryColor),
-                    ),
-                  ),
-                );
-              }
-              return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 1,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    String texto = idea.data!.elementAt(0);
-                    return IdeaUnlearnContainerWidget(
-                      text: texto,
-                      color: Color(this.widget.chapterSettings.primaryColor),
-                      width: bodyContainerWidth,
-                      height: bodyContainerHeight,
-                    );
-                  });
-            }));
-  }
-
-  Future<List<dynamic>> _readContents() async {
-    List contentsTemp = [];
-    await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('objective')
-        .get()
-        .then(
-      (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          contentsTemp = documentSnapshot.get('content');
-        }
-      },
-    );
-    return contentsTemp;
   }
 
   Future<String> _readObjective() async {

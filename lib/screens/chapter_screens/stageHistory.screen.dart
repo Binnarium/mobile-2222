@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/History.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -32,8 +33,8 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     VoidCallback nextPage = () {
       Navigator.pushNamed(
         context,
-        StageArgumentationScreen.route,
-        arguments: StageArgumentationScreen(
+        StageMonsterScreen.route,
+        arguments: StageMonsterScreen(
           chapterSettings: this.widget.chapterSettings,
         ),
       );

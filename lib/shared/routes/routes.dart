@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
@@ -14,6 +15,7 @@ import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
+import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
 
 MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
   return MaterialPageRoute(
@@ -21,6 +23,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
       switch (settings.name) {
         case SplashScreen.route:
           return SplashScreen();
+
+        case TeamScreen.route:
+          return TeamScreen();
 
         case LoginScreen.route:
           return LoginScreen();
@@ -55,6 +60,11 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             chapterSettings: args.chapterSettings,
           );
 
+        case StageMonsterScreen.route:
+          final args = settings.arguments as StageMonsterScreen;
+          return StageMonsterScreen(
+            chapterSettings: args.chapterSettings,
+          );
         case StageArgumentationScreen.route:
           final args = settings.arguments as StageArgumentationScreen;
           return StageArgumentationScreen(

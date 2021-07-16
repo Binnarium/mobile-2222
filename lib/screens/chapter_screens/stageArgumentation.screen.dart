@@ -115,18 +115,6 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
           // padding: EdgeInsets.symmetric(horizontal: 10),
           child: Container(
             child: Stack(children: [
-              Container(
-                // decoration:
-                // BoxDecoration(border: Border.all(color: Colors.green)),
-                alignment: Alignment.bottomLeft,
-                child: Image(
-                  // alignment: Alignment.bottomLeft,
-                  width: size.width * 0.8,
-                  image: NetworkImage(
-                    url.data.toString(),
-                  ),
-                ),
-              ),
               _ideas(size),
             ]),
           ),
@@ -140,12 +128,12 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
         ? 0.5
         : (size.height > 700)
             ? 0.45
-            : 0.4;
+            : 0.5;
     double heightFactor = (size.height > 800)
         ? 0.2
         : (size.height > 700)
             ? 0.2
-            : 0.2;
+            : 0.25;
     return FutureBuilder(
       future: _readQuestions(),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> ideas) {
