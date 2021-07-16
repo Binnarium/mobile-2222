@@ -50,7 +50,7 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
         children: [
           _textContent(size, description),
           SizedBox(
-            height: 50,
+            height: 30,
           ),
 
           /// calls the video player
