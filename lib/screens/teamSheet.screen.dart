@@ -37,11 +37,9 @@ class TeamScreen extends StatelessWidget {
   ///body of the screen
   _resourcesContent(Size size, BuildContext context) {
     double bodyMarginWidth = size.width * 0.03;
-    double bodyContainerHeight = size.height * 0.33;
+    
     double bodyMarginLeft = size.width * 0.10;
-    if (size.width > 500) {
-      bodyContainerHeight = size.height * 0.99;
-    }
+   
 
     ///sizing the container to the mobile
     return Container(
