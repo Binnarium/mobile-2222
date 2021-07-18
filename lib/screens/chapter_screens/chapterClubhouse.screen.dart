@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -8,7 +10,7 @@ import 'package:lab_movil_2222/shared/widgets/club-resources-grid-item_widget.da
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class ChapterClubhouseScreen extends StatelessWidget {
+class ChapterClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
   final FirebaseChapterSettings chapterSettings;
 
@@ -16,17 +18,34 @@ class ChapterClubhouseScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  _ChapterClubhouseScreenState createState() => _ChapterClubhouseScreenState();
+}
+
+class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
+  late List<FirebaseChapterSettings> chapters;
+  @override
+  void initState() {
+    super.initState();
+    _asyncLecture();
+  }
+
+  void _asyncLecture() async {
+    chapters = await _readChapterConfigurations();
+  }
+
+  @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
-    // VoidCallback nextPage = () {
-    //   Navigator.pushNamed(
-    //     context,
-    //     ChapterClubhouseScreen.route,
-    //     arguments: ChapterClubhouseScreen(
-    //       chapterSettings: this.chapterSettings,
-    //     ),
-    //   );
-    // };
+    VoidCallback nextPage = () {
+      Navigator.pushNamed(
+        context,
+        StageIntroductionScreen.route,
+        arguments: StageIntroductionScreen(
+            chapterSettings: ((this.widget.chapterSettings.stage! + 1) > 12)
+                ? chapters[0]
+                : chapters[this.widget.chapterSettings.stage!]),
+      );
+    };
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
@@ -35,11 +54,14 @@ class ChapterClubhouseScreen extends StatelessWidget {
           onPanUpdate: (details) {
             /// left
             if (details.delta.dx > 5) prevPage();
+
+            /// right
+            if (details.delta.dx < -5) nextPage();
           },
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(chapterSettings.primaryColor),
+                backgroundColor: Color(widget.chapterSettings.primaryColor),
                 reliefPosition: 'bottom-right',
               ),
 
@@ -66,9 +88,9 @@ class ChapterClubhouseScreen extends StatelessWidget {
             height: 10,
           ),
           ChapterHeadWidget(
-            phaseName: this.chapterSettings.phaseName,
-            chapterName: this.chapterSettings.cityName,
-            chapterImgURL: this.chapterSettings.chapterImageUrl,
+            phaseName: this.widget.chapterSettings.phaseName,
+            chapterName: this.widget.chapterSettings.cityName,
+            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
           ),
           SizedBox(
             height: 50,
@@ -162,5 +184,20 @@ class ChapterClubhouseScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<List<FirebaseChapterSettings>> _readChapterConfigurations() async {
+    ///  reading chapter configurations
+    List<FirebaseChapterSettings> settingsTemp = [];
+
+    final snap = await FirebaseFirestore.instance
+        .collection('cities')
+        .orderBy("stage")
+        .get();
+    final settings = snap.docs
+        .map((e) => FirebaseChapterSettings.fromJson(e.data()))
+        .toList();
+    settingsTemp = settings;
+    return settingsTemp;
   }
 }

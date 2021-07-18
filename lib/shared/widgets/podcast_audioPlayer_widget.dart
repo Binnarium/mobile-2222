@@ -85,6 +85,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
             ),
           ],
         ),
+        SizedBox(height: 30),
       ],
     );
   }

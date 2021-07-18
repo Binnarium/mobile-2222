@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
@@ -288,7 +287,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     final List<dynamic> data = payload['externalLinks'];
 
     final onlineResources = data.map((e) => ResourcesDto.fromJson(e)).toList();
-
     return onlineResources;
   }
 }
