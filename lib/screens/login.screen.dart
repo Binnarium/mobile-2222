@@ -77,7 +77,6 @@ class LoginScreen extends StatelessWidget {
                   _descriptionText(context, loginInfo.data!.pageTitle),
                   _video(loginInfo.data!.welcomeVideo["url"],
                       ColorsApp.backgroundRed),
-                  SizedBox(height: size.height * 0.05),
                   _profundityText(context, loginInfo.data!.profundityText),
                   SizedBox(height: size.height * 0.05),
                   _sheetButton(context),

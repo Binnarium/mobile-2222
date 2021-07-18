@@ -16,16 +16,6 @@ class ActivitiesScreen extends StatelessWidget {
     required this.chapterSettings,
   }) : super(key: key);
 
-  static const Map<String, String> _activities = {
-    'clubhouse':
-        'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'readings':
-        'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'questionary':
-        'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-    'project':
-        'Tenim ipsam voluptatem quia voluptas sit aspe natur aut odit aut fugit sed quia',
-  };
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);

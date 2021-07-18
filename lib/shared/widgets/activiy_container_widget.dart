@@ -32,7 +32,7 @@ class ActivityContainerWidget extends StatelessWidget {
           mainAxisSpacing: height * 0.3);
     }
 
-    List<_ActivityItem> showActivities = _showActivities(enabledActivities);
+    List<dynamic> showActivities = _showActivities(enabledActivities);
 
     return Container(
       child: GridView.builder(
@@ -47,13 +47,19 @@ class ActivityContainerWidget extends StatelessWidget {
                 return Container();
               }
             }
-            Matrix4 rotation = showActivities.elementAt(index).rotation;
-            //rotación para poner el lado extenso en topRight
-            Alignment iconAlignment = showActivities.elementAt(index).alignment;
-            String iconPath = showActivities.elementAt(index).iconPath;
-            String activityName = showActivities.elementAt(index).name;
-            return _activity(width * 0.4, height * 0.4, rotation, iconAlignment,
-                iconPath, activityName);
+            if (index != 2) {
+              Matrix4 rotation = showActivities.elementAt(index).rotation;
+              //rotación para poner el lado extenso en topRight
+              Alignment iconAlignment =
+                  showActivities.elementAt(index).alignment;
+              String iconPath = showActivities.elementAt(index).iconPath;
+              String activityName = showActivities.elementAt(index).name;
+              return _activity(width * 0.4, height * 0.4, rotation,
+                  iconAlignment, iconPath, activityName);
+            }
+            return Container(
+              height: 1,
+            );
           }),
     );
   }
@@ -149,7 +155,7 @@ class _ActivityItem {
       required this.iconPath});
 }
 
-List<_ActivityItem> _showActivities(Map<String, dynamic> activitiesToPaint) {
+List<dynamic> _showActivities(Map<String, dynamic> activitiesToPaint) {
   Map<int, Map<String, dynamic>> activitiesSettings = {
     0: {
       "rotation": Matrix4.identity()
@@ -190,14 +196,14 @@ List<_ActivityItem> _showActivities(Map<String, dynamic> activitiesToPaint) {
     4: {}
   };
 
-  List<_ActivityItem> activities = [];
+  List<dynamic> activities = [];
   Map<String, dynamic> enabledActivitiesTemp = new Map();
   enabledActivitiesTemp = {
     "questionary": activitiesToPaint["questionary"],
     "clubhouse": activitiesToPaint["clubhouse"],
+    "readings": activitiesToPaint["readings"],
     "project": activitiesToPaint["project"],
   };
-  activitiesToPaint;
 
   int index = 0;
   for (var item in enabledActivitiesTemp.entries) {
@@ -225,12 +231,9 @@ List<_ActivityItem> _showActivities(Map<String, dynamic> activitiesToPaint) {
         iconPath: 'assets/icons/project_activity_icon.png',
       ));
       index++;
-    } else if (item.key == "readings" && item.value == true) {
-      activities.add(new _ActivityItem(
-        name: 'Círculo de Lectores',
-        rotation: activitiesSettings[index]?["rotation"],
-        alignment: activitiesSettings[index]?["iconAlignment"],
-        iconPath: 'assets/icons/lectures_activity_icon.png',
+    } else if (item.key == "readings") {
+      activities.add(new Container(
+        height: 1,
       ));
       index++;
     }
