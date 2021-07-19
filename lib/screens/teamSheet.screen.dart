@@ -58,7 +58,7 @@ class TeamScreen extends StatelessWidget {
               margin:
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
-                'FICHA DE EQUIPO',
+                'Equipo 2222'.toUpperCase(),
                 style: korolevFont.headline5?.apply(fontSizeFactor: 0.96),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,

@@ -153,7 +153,7 @@ class HomeScreen extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Ficha de Equipo',
+                text: 'Equipo 2222',
                 style: Theme.of(context).textTheme.headline6?.apply(
                     decoration: TextDecoration.underline, fontSizeFactor: 0.7),
               )
