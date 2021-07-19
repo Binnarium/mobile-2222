@@ -104,20 +104,11 @@ class LecturesListItem extends StatelessWidget {
 
                     ///Seeks for a review, if not, it's ommited
                     (review != null)
-                        ? RichText(
-                            text: TextSpan(
-                                text: 'Reseña: ',
-                                style: korolevFont.bodyText2?.apply(
-                                  fontSizeFactor: fontSize,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: review!,
-                                    style: korolevFont.bodyText2?.apply(
-                                      fontSizeFactor: fontSize,
-                                    ),
-                                  )
-                                ]),
+                        ? Text(
+                            review!,
+                            style: korolevFont.bodyText2?.apply(
+                              fontSizeFactor: fontSize,
+                            ),
                           )
                         : Text(
                             'Reseña no disponible',

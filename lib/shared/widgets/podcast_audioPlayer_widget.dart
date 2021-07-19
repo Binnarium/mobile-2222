@@ -4,11 +4,11 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:audio_session/audio_session.dart';
 
 class PodcastAudioPlayer extends StatefulWidget {
-  final String audioUrl;
+  final String? audioUrl;
   final Color color;
   final String? description;
   PodcastAudioPlayer(
-      {Key? key, required this.audioUrl, this.description, required this.color})
+      {Key? key, this.audioUrl, this.description, required this.color})
       : super(key: key);
 
   @override
@@ -34,13 +34,17 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
         onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
     });
-    // Try to load audio from a source and catch any errors.
-    try {
-      await _player
-          .setAudioSource(AudioSource.uri(Uri.parse(this.widget.audioUrl)));
-    } catch (e) {
-      print("Error loading audio source: $e");
+    if (this.widget.audioUrl == null) {
+      print("error, no podcast link available");
+    } else {
+      try {
+        await _player
+            .setAudioSource(AudioSource.uri(Uri.parse(this.widget.audioUrl!)));
+      } catch (e) {
+        print("Error loading audio source: $e");
+      }
     }
+    // Try to load audio from a source and catch any errors.
   }
 
   @override
@@ -54,7 +58,10 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return _podcastContainer(size);
+    if (this.widget.audioUrl != null) {
+      return _podcastContainer(size);
+    }
+    return (Text("No podcast Link available"));
   }
 
   _podcastContainer(Size size) {
@@ -67,6 +74,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
           children: [
             _textContent(this.widget.description, size),
             // SizedBox(height: 30),
+
             Container(
               width: size.width * 0.4,
               child: Column(
@@ -95,7 +103,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       width: size.width * 0.5,
       child: Text(
-        (description == null) ? '' : description,
+        (description == null) ? 'No description Available' : description,
         style: korolevFont.bodyText1?.apply(),
       ),
     );
@@ -119,7 +127,6 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
             size),
         _buildVideoButton(
             Icon(Icons.forward_5_rounded), _forward5Seconds, size),
-        // Expanded(child: Container()),
       ],
     );
   }

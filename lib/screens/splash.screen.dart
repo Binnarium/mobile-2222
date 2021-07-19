@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 15),
+      Duration(seconds: 5),
       () => _createRoute(context),
     );
   }
@@ -177,17 +177,21 @@ class _SplashScreenState extends State<SplashScreen> {
         pageBuilder: (context, animation, secondaryAnimation) {
           return LoginScreen();
         },
-        transitionDuration: Duration(seconds: 3),
+        transitionDuration: Duration(seconds: 5),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(0.0, 1.0);
-          var end = Offset.zero;
-          var curve = Curves.easeInQuart;
+          // var begin = Offset(0.0, 1.0);
+          // var end = Offset.zero;
+          // var curve = Curves.easeInQuart;
 
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          // var tween =
+          //     Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-          return SlideTransition(
-            position: animation.drive(tween),
+          // return SlideTransition(
+          //   position: animation.drive(tween),
+          //   child: child,
+          // );
+          return FadeTransition(
+            opacity: animation,
             child: child,
           );
         },
