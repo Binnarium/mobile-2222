@@ -84,6 +84,7 @@ class HomeScreen extends StatelessWidget {
                   _sheetButton(context),
                   SizedBox(height: size.height * 0.01),
                   _loginButton(context),
+                  SizedBox(height: size.height * 0.02),
                 ],
               );
             },
@@ -132,7 +133,7 @@ class HomeScreen extends StatelessWidget {
       child: Text(
         depthText,
         style:
-            Theme.of(context).textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
+            Theme.of(context).textTheme.bodyText2?.apply(fontSizeFactor: 1.1),
         textAlign: TextAlign.justify,
       ),
     );
