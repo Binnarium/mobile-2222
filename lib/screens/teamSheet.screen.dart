@@ -106,10 +106,11 @@ class TeamScreen extends StatelessWidget {
 
         ///Navigates to main screen
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          // Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          Navigator.of(context).pop();
         },
         child: Text(
-          'MAPA',
+          'Home Screen',
           style: korolevFont.headline6?.apply(),
         ),
       ),

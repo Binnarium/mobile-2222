@@ -9,6 +9,8 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
+import 'home.screen.dart';
+
 class CitiesScreen extends StatefulWidget {
   static const String route = '/cities';
 
@@ -29,7 +31,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
           IconButton(
               onPressed: () {
                 ///TODO: PONER LA PANTALLA DE INFORMACIÓN
-                Navigator.pushNamed(context, LoginScreen.route);
+                Navigator.pushNamed(context, HomeScreen.route);
               },
               icon: Icon(Icons.help_outline_rounded))
         ],

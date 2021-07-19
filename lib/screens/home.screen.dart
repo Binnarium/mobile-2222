@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/cities.screen.dart';
+
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
@@ -8,8 +8,10 @@ import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String route = '/login';
+import 'cities.screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  static const String route = '/home';
 
   ///página de login donde pide usuario y contraseña
   @override
@@ -81,13 +83,13 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: size.height * 0.01),
                   _sheetButton(context),
                   SizedBox(height: size.height * 0.01),
+                  _loginButton(context),
                 ],
               );
             },
           ),
 
           /// formulario (falta aplicar backend)
-          _loginForm(context),
         ],
       ),
     );
@@ -143,15 +145,11 @@ class LoginScreen extends StatelessWidget {
       width: double.infinity,
       child: TextButton(
         onPressed: () {
-           Navigator.of(context).pushNamed(TeamScreen.route);
+          Navigator.of(context).pushNamed(TeamScreen.route);
         },
         style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
-        
         child: RichText(
           text: TextSpan(
-            
-            
-                
             children: [
               TextSpan(
                 text: 'Ficha de Equipo',
@@ -165,7 +163,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-
   ///Vídeo que actualmente está como NetworkImage
   _video(String url, Color color) {
     return VideoPlayerSegment(
@@ -173,123 +170,7 @@ class LoginScreen extends StatelessWidget {
       color: color,
     );
   }
-
-  ///Formulario de login
-  _loginForm(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            'Comienza tu aventura',
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .apply(fontSizeFactor: 1.3),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          _userField(context),
-          SizedBox(
-            height: 10,
-          ),
-          _passwordField(context),
-          SizedBox(
-            height: 15,
-          ),
-          _loginButton(context),
-          _registerText(context),
-          SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
-    );
-  }
-
-  TextButton _registerText(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        print('texto de registro presionado');
-      },
-      style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
-      child: RichText(
-        text: TextSpan(
-          text: '¿No tienes cuenta? Regístrate ',
-          style:
-              Theme.of(context).textTheme.headline6?.apply(fontSizeFactor: 0.7),
-          children: [
-            TextSpan(
-              text: 'aquí',
-              style: Theme.of(context).textTheme.headline6?.apply(
-                  decoration: TextDecoration.underline, fontSizeFactor: 0.7),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  ///campo de usuario
-  _userField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      height: 40,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: TextField(
-        cursorColor: Colors.black54,
-        style: Theme.of(context)
-            .textTheme
-            .headline5
-            ?.apply(color: Colors.black54, fontSizeFactor: 0.8),
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.name,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: 'usuario',
-          hintStyle: Theme.of(context)
-              .textTheme
-              .headline5
-              ?.apply(color: Colors.black54, fontSizeFactor: 0.8),
-        ),
-      ),
-    );
-  }
-
-  ///campo de contraseña
-  _passwordField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      height: 40,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: TextField(
-        cursorColor: Colors.black54,
-        style: Theme.of(context).textTheme.headline5?.apply(
-              color: Colors.black54,
-              fontSizeFactor: 0.8,
-            ),
-        textAlign: TextAlign.center,
-        obscureText: true,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: 'password',
-          hintStyle: Theme.of(context)
-              .textTheme
-              .headline5
-              ?.apply(color: Colors.black54, fontSizeFactor: 0.8),
-        ),
-      ),
-    );
-  }
-
-  _loginButton(BuildContext context) {
+   _loginButton(BuildContext context) {
     double buttonWidth = MediaQuery.of(context).size.width;
     return Container(
       width: buttonWidth,
@@ -302,10 +183,11 @@ class LoginScreen extends StatelessWidget {
 
         ///Navigates to main screen
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          // Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          Navigator.of(context).pop();
         },
         child: Text(
-          'Ingresar',
+          'Cities Screen',
           style: korolevFont.headline6?.apply(),
         ),
       ),
