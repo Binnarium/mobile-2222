@@ -28,9 +28,7 @@ class TeamScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(
-        activePage: NavigationBarPages.page3,
-      ),
+      
     );
   }
 
