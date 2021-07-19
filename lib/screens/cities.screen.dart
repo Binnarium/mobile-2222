@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class CitiesScreen extends StatefulWidget {
   static const String route = '/cities';
@@ -15,28 +18,41 @@ class CitiesScreen extends StatefulWidget {
 
 class _CitiesScreenState extends State<CitiesScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Center(
-            child: Stack(
-              children: [
-                //background
-                CustomBackground(backgroundColor: Color(0xff353839)),
-                //body de las rutas (el mapa)
-                _routeBody(context),
-              ],
-            ),
-          ),
+      appBar: AppBar(
+        elevation: 10,
+        backgroundColor: ColorsApp.backgroundBottomBar,
+        backwardsCompatibility: false,
+        leading: Container(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                ///TODO: PONER LA PANTALLA DE INFORMACIÓN
+                Navigator.pushNamed(context, LoginScreen.route);
+              },
+              icon: Icon(Icons.help_outline_rounded))
         ],
       ),
+      body: _citiesView(context),
       bottomNavigationBar: CustomNavigationBar(),
+    );
+  }
+
+  Stack _citiesView(BuildContext context) {
+    return Stack(
+      children: [
+        Center(
+          child: Stack(
+            children: [
+              //background
+              CustomBackground(backgroundColor: Color(0xff353839)),
+              //body de las rutas (el mapa)
+              _routeBody(context),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
