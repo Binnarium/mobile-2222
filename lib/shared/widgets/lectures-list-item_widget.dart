@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LecturesListItem extends StatelessWidget {
   final String? imageURL;
@@ -32,7 +33,7 @@ class LecturesListItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
-          print('libro presionado');
+          launch("https://www.google.com/search?q=${this.title}");
         },
 
         ///Container of the resource
@@ -54,7 +55,7 @@ class LecturesListItem extends StatelessWidget {
                         image: NetworkImage(imageURL!),
                         fit: BoxFit.cover,
                         width: 80,
-                        // height: 110,
+                        height: 110,
                       ))
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),
@@ -62,6 +63,7 @@ class LecturesListItem extends StatelessWidget {
                         image: AssetImage('assets/backgrounds/no-image.png'),
                         fit: BoxFit.fill,
                         width: 80,
+                        height: 110,
                       ),
                     ),
               SizedBox(

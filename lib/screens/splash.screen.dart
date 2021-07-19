@@ -34,13 +34,16 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: ColorsApp.backgroundRed,
 
       /// creando pantalla introductoria
-      body: Stack(
-        children: [
-          //llamando al widget del arco
-          _arcContainer(),
-          //llamando al cuerpo
-          _introductionBody(size),
-        ],
+      body: GestureDetector(
+        onTap: () => _createRoute(context),
+        child: Stack(
+          children: [
+            //llamando al widget del arco
+            _arcContainer(),
+            //llamando al cuerpo
+            _introductionBody(size),
+          ],
+        ),
       ),
     );
   }
@@ -174,9 +177,9 @@ class _SplashScreenState extends State<SplashScreen> {
         pageBuilder: (context, animation, secondaryAnimation) {
           return LoginScreen();
         },
-        transitionDuration: Duration(seconds: 4),
+        transitionDuration: Duration(seconds: 3),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(1.0, 0.0);
+          var begin = Offset(0.0, 1.0);
           var end = Offset.zero;
           var curve = Curves.easeInQuart;
 
@@ -187,18 +190,6 @@ class _SplashScreenState extends State<SplashScreen> {
             position: animation.drive(tween),
             child: child,
           );
-          // return ScaleTransition(
-          //   scale: animation,
-          //   child: child,
-          // );
-          // return Align(
-          //   child: SizeTransition(
-          //     sizeFactor: animation,
-          //     // position: animation.drive(tween),
-          //     child: child,
-          //     axisAlignment: 0.0,
-          //   ),
-          // );
         },
       ),
     );
