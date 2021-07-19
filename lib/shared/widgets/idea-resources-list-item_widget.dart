@@ -3,10 +3,8 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class IdeaResourcesListItem extends StatelessWidget {
   final String? description;
-  
 
-  const IdeaResourcesListItem({Key? key, this.description})
-      : super(key: key);
+  const IdeaResourcesListItem({Key? key, this.description}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +12,7 @@ class IdeaResourcesListItem extends StatelessWidget {
     this.description == null
         ? descTemp = 'No se ha cargado una idea'.toUpperCase()
         : descTemp = this.description!;
-   
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       width: double.infinity,
@@ -22,34 +20,17 @@ class IdeaResourcesListItem extends StatelessWidget {
 
       ///static height
       // height: 120,
-      child: Row(
-        children: [
-          Container(            
-            alignment: Alignment.center,
-            child: Text(
-              '-',
-              style: korolevFont.headline3,
-            ),
-          ),
-          SizedBox(
-            width: 5,
-            
-          ),
-          Expanded(
-            child: Wrap(
-              // antes era column el wrap
-              alignment: WrapAlignment.start,
-              spacing: 5,
+      child: Wrap(
+        // antes era column el wrap
+        alignment: WrapAlignment.start,
+        spacing: 5,
 
-              children: [
-                Text(
-                  descTemp,
-                  style: korolevFont.bodyText1,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              ],
-            ),
+        children: [
+          Text(
+            descTemp,
+            style: korolevFont.bodyText1,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
           ),
         ],
       ),
