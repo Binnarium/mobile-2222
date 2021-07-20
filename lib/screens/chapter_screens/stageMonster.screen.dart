@@ -7,7 +7,6 @@ import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 
-
 class StageMonsterScreen extends StatefulWidget {
   static const String route = '/monster';
   final FirebaseChapterSettings chapterSettings;
@@ -103,7 +102,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
           // decoration:
           // BoxDecoration(border: Border.all(color: Colors.green)),
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Image(
             alignment: Alignment.center,
             // width: size.width * 0.8,

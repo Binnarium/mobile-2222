@@ -27,14 +27,14 @@ abstract class ContentDto {
 }
 
 class VideoDto extends ContentDto {
-  final String url;
+  final String? url;
   final String? author;
   final String? description;
   final String? title;
 
   VideoDto({
     required String kind,
-    required this.url,
+    this.url,
     this.title,
     this.author,
     this.description,
@@ -43,14 +43,14 @@ class VideoDto extends ContentDto {
 
 class PodcastDto extends ContentDto {
   final String? text;
-  final String url;
+  final String? url;
   final String? author;
   final String? description;
   final String? title;
 
   PodcastDto({
     required String kind,
-    required this.url,
+    this.url,
     this.author,
     this.description,
     this.title,

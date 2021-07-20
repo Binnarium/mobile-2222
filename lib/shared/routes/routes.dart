@@ -11,6 +11,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.da
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
+import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
@@ -23,7 +24,10 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
       switch (settings.name) {
         case SplashScreen.route:
           return SplashScreen();
-
+          
+        case HomeScreen.route:
+          return HomeScreen();
+          
         case TeamScreen.route:
           return TeamScreen();
 

@@ -118,7 +118,7 @@ class _ContentScreenState extends State<ContentScreen> {
                 children: [
                   _titleContainer(size, c.author, c.title, " - vídeo"),
                   VideoPlayerSegment(
-                    videoUrl: c.url,
+                    videoUrl: c.url!,
                     description: c.description,
                     color: Color(widget.chapterSettings.primaryColor),
                   ),
@@ -155,7 +155,9 @@ class _ContentScreenState extends State<ContentScreen> {
           children: [
             RichText(
                 text: TextSpan(
-                    text: (author == null) ? '' : author.toUpperCase(),
+                    text: (author == null)
+                        ? 'No author available'
+                        : author.toUpperCase(),
                     style: korolevFont.headline5
                         ?.apply(color: Colors.black, fontSizeFactor: 0.7),
                     children: [
@@ -169,7 +171,7 @@ class _ContentScreenState extends State<ContentScreen> {
               height: 10,
             ),
             Text(
-              (title == null) ? '' : title.toUpperCase(),
+              (title == null) ? 'No title Available' : title.toUpperCase(),
               style: korolevFont.headline6?.apply(
                 color: Color(widget.chapterSettings.primaryColor),
               ),

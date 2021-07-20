@@ -4,11 +4,11 @@ import 'package:video_player/video_player.dart';
 
 /// Class that creates a video player depending on video URL and the description of the video
 class VideoPlayerSegment extends StatefulWidget {
-  final String videoUrl;
+  final String? videoUrl;
   final Color color;
   final String? description;
   VideoPlayerSegment(
-      {Key? key, required this.videoUrl, this.description, required this.color})
+      {Key? key, this.videoUrl, this.description, required this.color})
       : super(key: key);
 
   @override
@@ -25,8 +25,13 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
   @override
   void initState() {
     /// initialization of the controller with the given url
-    _controller = VideoPlayerController.network(this.widget.videoUrl);
-    _initializeVideoPlayerFuture = _controller.initialize();
+    if (this.widget.videoUrl != null) {
+      _controller = VideoPlayerController.network(this.widget.videoUrl!);
+      _initializeVideoPlayerFuture = _controller.initialize();
+    } else {
+      print("error video link no available");
+    }
+
     super.initState();
   }
 
@@ -40,7 +45,10 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return _videoContent(size, this.widget.description, this.widget.videoUrl);
+    if (this.widget.videoUrl == null) {
+      return Text("Video link not available");
+    }
+    return _videoContent(size, this.widget.description, this.widget.videoUrl!);
   }
 
   _videoContent(Size size, String? description, String url) {
@@ -49,9 +57,6 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
       child: Column(
         children: [
           _textContent(size, description),
-          SizedBox(
-            height: 30,
-          ),
 
           /// calls the video player
           _videoContainer(size, url),
@@ -66,9 +71,12 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
   }
 
   _textContent(Size size, String? description) {
-    return Text(
-      (description == null) ? '' : description,
-      style: korolevFont.bodyText1?.apply(),
+    return Container(
+      padding: EdgeInsets.only(bottom: 30),
+      child: Text(
+        (description == null) ? '' : description,
+        style: korolevFont.bodyText1?.apply(),
+      ),
     );
   }
 
@@ -132,18 +140,22 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
     );
   }
 
-  Widget _buildVideoButton(Widget child, Function() onPressed) => Container(
-        child: ElevatedButton(
-          onPressed: onPressed,
-          child: child,
-          style: ElevatedButton.styleFrom(
-            onPrimary: this.widget.color,
-            primary: Colors.white,
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(0),
-          ),
+  Widget _buildVideoButton(Widget child, Function() onPressed) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width * 0.125,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: child,
+        style: ElevatedButton.styleFrom(
+          onPrimary: this.widget.color,
+          primary: Colors.white,
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(0),
         ),
-      );
+      ),
+    );
+  }
 
   Future _rewind5Seconds() async => (_goToPosition(
       (currentPosition) => currentPosition - Duration(seconds: 5)));

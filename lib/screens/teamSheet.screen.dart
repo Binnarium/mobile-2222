@@ -28,9 +28,7 @@ class TeamScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(
-        activePage: NavigationBarPages.page3,
-      ),
+      
     );
   }
 
@@ -60,7 +58,7 @@ class TeamScreen extends StatelessWidget {
               margin:
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
-                'FICHA DE EQUIPO',
+                'Equipo 2222'.toUpperCase(),
                 style: korolevFont.headline5?.apply(fontSizeFactor: 0.96),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
@@ -106,10 +104,11 @@ class TeamScreen extends StatelessWidget {
 
         ///Navigates to main screen
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          // Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          Navigator.of(context).pop();
         },
         child: Text(
-          'MAPA',
+          'Home Screen',
           style: korolevFont.headline6?.apply(),
         ),
       ),
