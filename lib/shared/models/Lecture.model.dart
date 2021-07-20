@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class LecturesDto {
   final String? about;
   final String? author;
   final String? coverUrl;
   final String? name;
-  final Timestamp? publishedDate;
+  final int? publishedDate;
   LecturesDto._({
     this.about,
     this.author,
@@ -20,7 +18,7 @@ class LecturesDto {
       author: payload['author'],
       coverUrl: payload['cover']['url'],
       name: payload['name'],
-      publishedDate: payload['publishedDate'],
+      publishedDate: payload['publishedYear'],
     );
   }
 }

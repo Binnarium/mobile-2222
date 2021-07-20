@@ -231,11 +231,6 @@ List<dynamic> _showActivities(Map<String, dynamic> activitiesToPaint) {
         iconPath: 'assets/icons/project_activity_icon.png',
       ));
       index++;
-    } else if (item.key == "readings") {
-      activities.add(new Container(
-        height: 1,
-      ));
-      index++;
     }
   }
   return activities;

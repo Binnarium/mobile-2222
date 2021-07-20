@@ -143,7 +143,8 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
   Widget _buildVideoButton(Widget child, Function() onPressed) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width * 0.125,
+      width: size.width * 0.10,
+      height: size.height * 0.05,
       child: ElevatedButton(
         onPressed: onPressed,
         child: child,
@@ -174,24 +175,24 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
   }
 
   /// to change the icon
-  Future<Icon> _playButtonIcon() async {
-    if (_controller.value.position == _controller.value.duration) {
-      _controller.initialize();
-      _controller.play();
-      setState(() {});
-      return Icon(Icons.replay_rounded);
-    } else {
-      if (_controller.value.isPlaying) {
-        _controller.pause();
-        setState(() {});
-        return Icon(Icons.pause_rounded);
-      } else {
-        _controller.play();
-        setState(() {});
-        return Icon(Icons.play_arrow_rounded);
-      }
-    }
-  }
+  // Future<Icon> _playButtonIcon() async {
+  //   if (_controller.value.position == _controller.value.duration) {
+  //     _controller.initialize();
+  //     _controller.play();
+  //     setState(() {});
+  //     return Icon(Icons.replay_rounded);
+  //   } else {
+  //     if (_controller.value.isPlaying) {
+  //       _controller.pause();
+  //       setState(() {});
+  //       return Icon(Icons.pause_rounded);
+  //     } else {
+  //       _controller.play();
+  //       setState(() {});
+  //       return Icon(Icons.play_arrow_rounded);
+  //     }
+  //   }
+  // }
 
   Future _goToPosition(
     Duration Function(Duration currentPosition) builder,
@@ -233,13 +234,13 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
               ? SizedBox.shrink()
               : Container(
                   color: Colors.black38,
-                  child: Center(
-                    child: Icon(
-                      Icons.play_arrow_rounded,
-                      color: Colors.white,
-                      size: 100.0,
-                    ),
-                  ),
+                  // child: Center(
+                  //   // child: Icon(
+                  //   //   // Icons.play_arrow_rounded,
+                  //   //   // color: Colors.white,
+                  //   //   // size: 100.0,
+                  //   // ),
+                  // ),
                 ),
         ),
 
