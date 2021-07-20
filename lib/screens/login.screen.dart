@@ -71,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
 
-          ///logo de 2222
+          /// data is available
+          /// logo de 2222
           _logo(size),
           SizedBox(height: size.height * 0.05),
 
@@ -84,6 +85,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 .apply(fontSizeFactor: 1.3),
             textAlign: TextAlign.center,
           ),
+          SizedBox(height: size.height * 0.05),
+          _descriptionText(context, this.widget.loginPayload!.pageTitle),
+          _video(this.widget.loginPayload!.welcomeVideo["url"],
+              ColorsApp.backgroundRed),
+          _profundityText(context, this.widget.loginPayload!.profundityText),
+          SizedBox(height: size.height * 0.01),
+          _sheetButton(context),
+          SizedBox(height: size.height * 0.01),
           SizedBox(height: size.height * 0.05),
           _descriptionText(context, this.widget.loginPayload!.pageTitle),
           _video(this.widget.loginPayload!.welcomeVideo["url"],
@@ -144,23 +153,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _sheetButton(BuildContext context) {
-    double buttonWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: buttonWidth,
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: ColorsApp.backgroundBottomBar,
-          elevation: 5,
-        ),
-
-        ///Navigates to main screen
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      width: double.infinity,
+      child: TextButton(
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(TeamScreen.route);
+          Navigator.of(context).pushNamed(TeamScreen.route);
         },
-        child: Text(
-          'Ficha de Equipo',
-          style: korolevFont.headline6?.apply(),
+        style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Equipo 2222',
+                style: Theme.of(context).textTheme.headline6?.apply(
+                    decoration: TextDecoration.underline, fontSizeFactor: 0.7),
+              )
+            ],
+          ),
         ),
       ),
     );
