@@ -42,6 +42,7 @@ class App2222 extends StatelessWidget {
 
         initialRoute: SplashScreen.route,
 
+
         /// aquí van las páginas existentes, son las rutas a las páginas (pantallas)
         onGenerateRoute: (settings) => buildMaterialPageRoute(settings),
       ),

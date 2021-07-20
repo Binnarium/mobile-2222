@@ -20,11 +20,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
 
     ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
-    this.widget.loginPayload = await loader.load();
+    loader
+        .load()
+        .then((value) => this.setState(() => this.widget.loginPayload = value));
   }
 
   ///página de login donde pide usuario y contraseña
@@ -73,37 +75,32 @@ class _LoginScreenState extends State<LoginScreen> {
 
           /// data is available
           /// logo de 2222
-          _logo(size),
-          SizedBox(height: size.height * 0.05),
+          if (this.widget.loginPayload != null) ...[
+            _logo(size),
+            SizedBox(height: size.height * 0.05),
 
-          ///texto inicial
-          Text(
-            'LabMóvil 2222'.toUpperCase(),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .apply(fontSizeFactor: 1.3),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: size.height * 0.05),
-          _descriptionText(context, this.widget.loginPayload!.pageTitle),
-          _video(this.widget.loginPayload!.welcomeVideo["url"],
-              ColorsApp.backgroundRed),
-          _profundityText(context, this.widget.loginPayload!.profundityText),
-          SizedBox(height: size.height * 0.01),
-          _sheetButton(context),
-          SizedBox(height: size.height * 0.01),
-          SizedBox(height: size.height * 0.05),
-          _descriptionText(context, this.widget.loginPayload!.pageTitle),
-          _video(this.widget.loginPayload!.welcomeVideo["url"],
-              ColorsApp.backgroundRed),
-          _profundityText(context, this.widget.loginPayload!.profundityText),
-          SizedBox(height: size.height * 0.05),
-          _sheetButton(context),
-          SizedBox(height: size.height * 0.05),
+            ///texto inicial
+            Text(
+              'LabMóvil 2222'.toUpperCase(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .apply(fontSizeFactor: 1.3),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: size.height * 0.05),
+            _descriptionText(context, this.widget.loginPayload!.pageTitle),
+            _video(this.widget.loginPayload!.welcomeVideo["url"],
+                ColorsApp.backgroundRed),
+            _profundityText(context, this.widget.loginPayload!.profundityText),
+            SizedBox(height: size.height * 0.01),
+            _sheetButton(context),
+            SizedBox(height: size.height * 0.01),
+            SizedBox(height: size.height * 0.05),
 
-          /// formulario (falta aplicar backend)
-          _loginForm(context),
+            /// formulario (falta aplicar backend)
+            _loginForm(context),
+          ],
         ],
       ),
     );
