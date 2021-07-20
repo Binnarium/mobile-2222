@@ -1,15 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
+import 'package:lab_movil_2222/services/i-load-information.service.dart';
+import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String route = '/login';
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+
+  LoginDto? loginPayload;
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
+    loader
+        .load()
+        .then((value) => this.setState(() => this.widget.loginPayload = value));
+  }
 
   ///página de login donde pide usuario y contraseña
   @override
@@ -42,52 +60,47 @@ class LoginScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          FutureBuilder(
-            future: _readLoginContent(),
-            builder: (BuildContext context, AsyncSnapshot<LoginDto> loginInfo) {
-              if (loginInfo.hasError) {
-                return Text(loginInfo.error.toString());
-              }
+          // if (this.widget.error) {
+          //   Text(loginInfo.error.toString());
+          // }
 
-              if (loginInfo.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                      ColorsApp.backgroundRed,
-                    ),
-                  ),
-                );
-              }
-              return Column(
-                children: [
-                  ///logo de 2222
-                  _logo(size),
-                  SizedBox(height: size.height * 0.05),
+          if (this.widget.loginPayload == null)
+            Center(
+              child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(
+                  ColorsApp.backgroundRed,
+                ),
+              ),
+            ),
 
-                  ///texto inicial
-                  Text(
-                    'LabMóvil 2222'.toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .apply(fontSizeFactor: 1.3),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: size.height * 0.05),
-                  _descriptionText(context, loginInfo.data!.pageTitle),
-                  _video(loginInfo.data!.welcomeVideo["url"],
-                      ColorsApp.backgroundRed),
-                  _profundityText(context, loginInfo.data!.profundityText),
-                  SizedBox(height: size.height * 0.01),
-                  _sheetButton(context),
-                  SizedBox(height: size.height * 0.01),
-                ],
-              );
-            },
-          ),
+          /// data is available
+          /// logo de 2222
+          if (this.widget.loginPayload != null) ...[
+            _logo(size),
+            SizedBox(height: size.height * 0.05),
 
-          /// formulario (falta aplicar backend)
-          _loginForm(context),
+            ///texto inicial
+            Text(
+              'LabMóvil 2222'.toUpperCase(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .apply(fontSizeFactor: 1.3),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: size.height * 0.05),
+            _descriptionText(context, this.widget.loginPayload!.pageTitle),
+            _video(this.widget.loginPayload!.welcomeVideo["url"],
+                ColorsApp.backgroundRed),
+            _profundityText(context, this.widget.loginPayload!.profundityText),
+            SizedBox(height: size.height * 0.01),
+            _sheetButton(context),
+            SizedBox(height: size.height * 0.01),
+            SizedBox(height: size.height * 0.05),
+
+            /// formulario (falta aplicar backend)
+            _loginForm(context),
+          ],
         ],
       ),
     );
@@ -143,15 +156,11 @@ class LoginScreen extends StatelessWidget {
       width: double.infinity,
       child: TextButton(
         onPressed: () {
-           Navigator.of(context).pushNamed(TeamScreen.route);
+          Navigator.of(context).pushNamed(TeamScreen.route);
         },
         style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
-        
         child: RichText(
           text: TextSpan(
-            
-            
-                
             children: [
               TextSpan(
                 text: 'Equipo 2222',
@@ -164,7 +173,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
 
   ///Vídeo que actualmente está como NetworkImage
   _video(String url, Color color) {
@@ -310,17 +318,5 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<LoginDto> _readLoginContent() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc('welcome')
-        .get();
-    if (!snap.exists) new ErrorDescription('Document welcome does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-
-    final result = LoginDto.fromJson(payload);
-    return result;
   }
 }
