@@ -32,9 +32,9 @@ class _TeamScreenState extends State<TeamScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(        
+      appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.transparent,        
+        backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: Stack(
@@ -103,7 +103,6 @@ class _TeamScreenState extends State<TeamScreen> {
             SizedBox(
               height: 10,
             ),
-            
           ],
         ],
       ),
@@ -124,15 +123,13 @@ class _TeamScreenState extends State<TeamScreen> {
     );
   }
 
-  
   _teamSheet(BuildContext context, String teamText) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         teamText,
-        style:
-            Theme.of(context).textTheme.bodyText2?.apply(fontSizeFactor: 1.1),
+        style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
         textAlign: TextAlign.justify,
       ),
     );

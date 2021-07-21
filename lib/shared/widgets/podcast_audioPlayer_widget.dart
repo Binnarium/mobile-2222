@@ -61,7 +61,9 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
     if (this.widget.audioUrl != null) {
       return _podcastContainer(size);
     }
-    return (Text("No podcast Link available"));
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: (Text("No podcast Link available")));
   }
 
   _podcastContainer(Size size) {
