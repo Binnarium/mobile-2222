@@ -208,12 +208,12 @@ class _ControlsOverlay extends StatefulWidget {
   const _ControlsOverlay({Key? key, required this.controller})
       : super(key: key);
 
-  static const _examplePlaybackRates = [
-    0.5,
-    1.0,
-    1.5,
-    2.0,
-  ];
+  // static const _examplePlaybackRates = [
+  //   0.5,
+  //   1.0,
+  //   1.5,
+  //   2.0,
+  // ];
 
   final VideoPlayerController controller;
 
