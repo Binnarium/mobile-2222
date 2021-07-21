@@ -3,11 +3,11 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OnlineResourcesGridItem extends StatelessWidget {
-  final String name;
+  final String? name;
   final String kind;
-  final String description;
+  final String? description;
   final Size size;
-  final String redirect;
+  final String? redirect;
   final String? id;
 
   final Color color;
@@ -33,7 +33,9 @@ class OnlineResourcesGridItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
-          launch(redirect);
+          if (redirect != null) {
+            launch(redirect!);
+          }
         },
         child: Container(
           // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
@@ -55,13 +57,13 @@ class OnlineResourcesGridItem extends StatelessWidget {
                       filterQuality: FilterQuality.high,
                     ),
               Text(
-                name,
+                (name != null) ? name! : "No name Available",
                 style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
                 // overflow: TextOverflow.ellipsis,
                 // maxLines: 2,
               ),
               Text(
-                description,
+                (description == null) ? "" : description!,
                 style: korolevFont.bodyText2,
                 // overflow: TextOverflow.ellipsis,
                 // maxLines: 9,

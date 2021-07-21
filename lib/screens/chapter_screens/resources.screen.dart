@@ -182,6 +182,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     year: item.publishedDate!,
                     size: size,
                     review: item.about,
+                    hasLineBehind:
+                        (index == (readings.data!.length - 1)) ? false : true,
                     imageURL: item.coverUrl,
                   );
                 });
@@ -244,7 +246,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     size: size,
                     name: item.name!,
                     kind: item.kind!,
-                    description: item.description!,
+                    description: item.description,
                     redirect: item.redirect!,
                   );
                 }

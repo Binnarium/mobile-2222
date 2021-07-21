@@ -90,25 +90,42 @@ class IdeaContainerWidget extends StatelessWidget {
   //donde se crea el container que tiene el texto como child
   _textIdea(Size size, double? width, double? height, String text) {
     Map<String, EdgeInsets> margins = {
-      "BottomLeft": EdgeInsets.only(
-        left: (size.height > 820 && size.width >= 375) ? 20 : 15,
-        right: 8,
-        top: (size.height > 820) ? 0 : 10,
-      ),
       "TopRight": EdgeInsets.only(
-        top: (size.height > 800) ? 0 : 10,
-        left: 10,
-        right: 20,
-        bottom: 10,
-      ),
-      "TopLeft": EdgeInsets.only(
-        left: 15,
-        right: 10,
-        bottom: 15,
+        top: (size.height > 800) ? 20 : 10,
+        left: (size.height > 800) ? 15 : 10,
+        right: (size.height > 800) ? 20 : 20,
+        bottom: (size.height > 800) ? 30 : 10,
       ),
       "CenterLeft": (size.height > 800 && size.width >= 375)
           ? EdgeInsets.only(left: 20, right: 10)
           : EdgeInsets.only(left: 15, right: 10),
+      "BottomRight": EdgeInsets.only(
+        left: (size.height > 820 && size.width >= 375)
+            ? 10
+            : (size.width >= 370)
+                ? 5
+                : 10,
+        right: (size.height > 820 && size.width >= 375)
+            ? 25
+            : (size.width >= 370)
+                ? 10
+                : 20,
+        top: (size.height > 820 && size.width >= 375)
+            ? 15
+            : (size.width >= 370)
+                ? 30
+                : 15,
+      ),
+      "TopLeft": EdgeInsets.only(
+        left: (size.height > 820) ? 15 : 22,
+        right: (size.height > 820) ? 10 : 15,
+        bottom: 15,
+      ),
+      "BottomLeft": EdgeInsets.only(
+        left: (size.height > 820 && size.width >= 375) ? 20 : 25,
+        right: (size.height > 820 && size.width >= 375) ? 0 : 10,
+        top: (size.height > 820) ? 0 : 15,
+      ),
     };
 
     return Container(
@@ -125,10 +142,12 @@ class IdeaContainerWidget extends StatelessWidget {
 
         style: korolevFont.bodyText1?.apply(
           color: Colors.black,
-          fontSizeFactor: (size.height > 600)
-              ? (size.height > 800 || size.width >= 380)
-                  ? 0.85
-                  : 0.8
+          fontSizeFactor: (size.height > 560)
+              ? (size.height > 800 && size.width >= 380)
+                  ? 0.87
+                  : (size.width >= 360 && size.height >= 560)
+                      ? 0.8
+                      : 0.7
               : 0.6,
         ),
 

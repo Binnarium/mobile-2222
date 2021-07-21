@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-import 'cities.screen.dart';
+
 
 class HomeScreen extends StatelessWidget {
   static const String route = '/home';

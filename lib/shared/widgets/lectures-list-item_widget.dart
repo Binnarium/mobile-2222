@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,9 +7,10 @@ class LecturesListItem extends StatelessWidget {
   final String title;
   final String author;
   final String? editorial;
-  final Timestamp year;
+  final int? year;
   final String? review;
   final Size size;
+  final bool hasLineBehind;
 
   const LecturesListItem({
     Key? key,
@@ -21,6 +21,7 @@ class LecturesListItem extends StatelessWidget {
     required this.year,
     this.review,
     required this.size,
+    required this.hasLineBehind,
   }) : super(key: key);
 
   @override
@@ -92,12 +93,12 @@ class LecturesListItem extends StatelessWidget {
                                 ' | ' +
                                 editorial! +
                                 ' | ' +
-                                year.toDate().year.toString(),
+                                year.toString(),
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           )
                         : Text(
-                            author + ' | ' + year.toDate().year.toString(),
+                            author + ' | ' + year.toString(),
                             style: korolevFont.headline6
                                 ?.apply(fontSizeFactor: fontSize - 0.2),
                           ),
@@ -117,11 +118,13 @@ class LecturesListItem extends StatelessWidget {
                     Container(
                       height: 10,
                     ),
-                    Container(
-                      width: size.width * 0.2,
-                      height: 1,
-                      color: Colors.white,
-                    ),
+                    (hasLineBehind)
+                        ? Container(
+                            width: size.width * 0.2,
+                            height: 1,
+                            color: Colors.white,
+                          )
+                        : Container(),
                   ],
                 ),
               ),
