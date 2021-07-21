@@ -53,7 +53,6 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
               ),
               //decoración adicional del background
               _backgroundDecoration(size),
-              // _ideas(size),
             ],
           ),
         ),
@@ -66,19 +65,17 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   }
 
   _backgroundDecoration(Size size) {
-    return Container(
-      child: ListView(children: [
-        SizedBox(
-          height: 10,
-        ),
-        ChapterHeadWidget(
-          phaseName: this.widget.chapterSettings.phaseName,
-          chapterName: this.widget.chapterSettings.cityName,
-          chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
-        ),
-        _ghostImage(size),
-      ]),
-    );
+    return ListView(children: [
+      SizedBox(
+        height: 10,
+      ),
+      ChapterHeadWidget(
+        phaseName: this.widget.chapterSettings.phaseName,
+        chapterName: this.widget.chapterSettings.cityName,
+        chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+      ),
+      _ghostImage(size),
+    ]);
   }
 
   _ghostImage(Size size) {
@@ -98,17 +95,19 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
             ),
           );
         }
-        return Container(
-          // decoration:
-          // BoxDecoration(border: Border.all(color: Colors.green)),
+        return Align(
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Image(
-            alignment: Alignment.center,
-            // width: size.width * 0.8,
-            height: size.height * 0.75,
-            image: NetworkImage(
-              url.data.toString(),
+          child: Container(
+            // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+            margin: EdgeInsets.symmetric(
+                vertical: size.height * 0.1, horizontal: size.width * 0.1),
+            child: AspectRatio(
+              aspectRatio: 9 / 13,
+              child: Image(
+                image: NetworkImage(
+                  url.data.toString(),
+                ),
+              ),
             ),
           ),
         );
