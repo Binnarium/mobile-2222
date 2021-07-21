@@ -31,6 +31,11 @@ class _TeamScreenState extends State<TeamScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(        
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,        
+      ),
       body: Center(
         child: Stack(
           children: [
@@ -98,7 +103,7 @@ class _TeamScreenState extends State<TeamScreen> {
             SizedBox(
               height: 10,
             ),
-            _loginButton(context),
+            
           ],
         ],
       ),
@@ -119,30 +124,7 @@ class _TeamScreenState extends State<TeamScreen> {
     );
   }
 
-  _loginButton(BuildContext context) {
-    double buttonWidth = MediaQuery.of(context).size.width;
-    return Container(
-      width: buttonWidth,
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: ColorsApp.backgroundBottomBar,
-          elevation: 5,
-        ),
-
-        ///Navigates to main screen
-        onPressed: () {
-          // Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
-          Navigator.of(context).pop();
-        },
-        child: Text(
-          'Home Screen',
-          style: korolevFont.headline6?.apply(),
-        ),
-      ),
-    );
-  }
-
+  
   _teamSheet(BuildContext context, String teamText) {
     return Container(
       width: double.infinity,
