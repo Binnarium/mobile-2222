@@ -200,18 +200,18 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   Align _createBubble(
       int i, String idea, Size size, double width, double height) {
     Map<int, Alignment> aligns = {
-      0: Alignment(-0.8, -0.7),
-      1: (size.width > 400) ? Alignment(0.9, -0.3) : Alignment(0.9, -0.2),
-      2: (size.height > 800) ? Alignment(0.9, 0.8) : Alignment(0.9, 0.7),
-      3: Alignment(-1, 0.8),
-      4: Alignment(1, 0.8),
+      0: Alignment(-0.8, -0.5),
+      1: (size.width > 400) ? Alignment(0.9, -0.3) : Alignment(0.9, 0),
+      2: (size.height > 800) ? Alignment(-0.9, 0.3) : Alignment(-0.9, 0.45),
+      3: (size.height > 800) ? Alignment(0.9, -0.9) : Alignment(0.9, -0.95),
+      4: (size.height > 800) ? Alignment(0.9, 0.9) : Alignment(0.9, 0.9),
     };
     Map<int, String> orientations = {
       0: "TopRight",
       1: "CenterLeft",
-      2: "BottomLeft",
-      3: "TopRight",
-      4: "TopLeft",
+      2: "BottomRight",
+      3: "TopLeft",
+      4: "BottomLeft",
     };
     return Align(
       alignment: aligns[i]!,

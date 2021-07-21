@@ -91,9 +91,9 @@ class IdeaContainerWidget extends StatelessWidget {
   _textIdea(Size size, double? width, double? height, String text) {
     Map<String, EdgeInsets> margins = {
       "BottomLeft": EdgeInsets.only(
-        left: (size.height > 820 && size.width >= 375) ? 20 : 15,
-        right: 8,
-        top: (size.height > 820) ? 0 : 10,
+        left: (size.height > 820 && size.width >= 375) ? 20 : 25,
+        right: (size.height > 820 && size.width >= 375) ? 0 : 10,
+        top: (size.height > 820) ? 0 : 15,
       ),
       "TopRight": EdgeInsets.only(
         top: (size.height > 800) ? 0 : 10,
@@ -102,17 +102,22 @@ class IdeaContainerWidget extends StatelessWidget {
         bottom: 10,
       ),
       "TopLeft": EdgeInsets.only(
-        left: 15,
-        right: 10,
+        left: (size.height > 820) ? 15 : 22,
+        right: (size.height > 820) ? 10 : 15,
         bottom: 15,
       ),
       "CenterLeft": (size.height > 800 && size.width >= 375)
           ? EdgeInsets.only(left: 20, right: 10)
           : EdgeInsets.only(left: 15, right: 10),
+      "BottomRight": EdgeInsets.only(
+        left: (size.height > 820 && size.width >= 375) ? 20 : 10,
+        right: (size.height > 820 && size.width >= 375) ? 0 : 20,
+        top: (size.height > 820) ? 0 : 15,
+      ),
     };
 
     return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       //se emplea la configuración por defecto
       margin: margins[orientation],
       alignment: Alignment.center,
