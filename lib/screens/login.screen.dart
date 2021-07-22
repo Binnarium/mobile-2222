@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
+import 'package:lab_movil_2222/services/Video_settings.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -82,16 +82,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ///texto inicial
             Text(
               'LabMóvil 2222'.toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6!
-                  .apply(fontSizeFactor: 1.3),
+              style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.05),
             _descriptionText(context, this.widget.loginPayload!.pageTitle),
             _video(this.widget.loginPayload!.welcomeVideo["url"],
-                ColorsApp.backgroundRed),
+                ColorsApp.backgroundRed, size),
             _profundityText(context, this.widget.loginPayload!.profundityText),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context),
@@ -129,8 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         description,
-        style:
-            Theme.of(context).textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
+        style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
         textAlign: TextAlign.center,
       ),
     );
@@ -142,8 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         depthText,
-        style:
-            Theme.of(context).textTheme.bodyText2?.apply(fontSizeFactor: 1.1),
+        style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
         textAlign: TextAlign.justify,
       ),
     );
@@ -164,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               TextSpan(
                 text: 'Equipo 2222',
-                style: Theme.of(context).textTheme.headline6?.apply(
+                style: korolevFont.headline6?.apply(
                     decoration: TextDecoration.underline, fontSizeFactor: 0.7),
               )
             ],
@@ -175,10 +170,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   ///Vídeo que actualmente está como NetworkImage
-  _video(String url, Color color) {
-    return VideoPlayerSegment(
-      videoUrl: url,
-      color: color,
+  _video(String url, Color color, Size size) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: SizedBox(
+        width: size.width * 0.8,
+        height: size.height * 0.4,
+        child: VideoDisplay(
+            color: ColorsApp.backgroundRed,
+            videoUrl: this.widget.loginPayload!.welcomeVideo["url"]),
+      ),
     );
   }
 
@@ -189,10 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Text(
             'Comienza tu aventura',
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .apply(fontSizeFactor: 1.3),
+            style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
             textAlign: TextAlign.center,
           ),
           SizedBox(
@@ -225,12 +223,11 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RichText(
         text: TextSpan(
           text: '¿No tienes cuenta? Regístrate ',
-          style:
-              Theme.of(context).textTheme.headline6?.apply(fontSizeFactor: 0.7),
+          style: korolevFont.headline6?.apply(fontSizeFactor: 0.7),
           children: [
             TextSpan(
               text: 'aquí',
-              style: Theme.of(context).textTheme.headline6?.apply(
+              style: korolevFont.headline6?.apply(
                   decoration: TextDecoration.underline, fontSizeFactor: 0.7),
             )
           ],
@@ -279,10 +276,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       child: TextField(
         cursorColor: Colors.black54,
-        style: Theme.of(context).textTheme.headline5?.apply(
-              color: Colors.black54,
-              fontSizeFactor: 0.8,
-            ),
+        style: korolevFont.headline5?.apply(
+          color: Colors.black54,
+          fontSizeFactor: 0.8,
+        ),
         textAlign: TextAlign.center,
         obscureText: true,
         decoration: InputDecoration(

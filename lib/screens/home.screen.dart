@@ -2,16 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
+import 'package:lab_movil_2222/services/i-load-information.service.dart';
+import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String route = '/home';
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+
+  LoginDto? loginPayload;
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
+    loader
+        .load()
+        .then((value) => this.setState(() => this.widget.loginPayload = value));
+  }
 
   ///página de login donde pide usuario y contraseña
   @override
@@ -21,6 +37,12 @@ class HomeScreen extends StatelessWidget {
     ///safeArea para dispositivos con pantalla notch
     return SafeArea(
       child: Scaffold(
+        // extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 1.0,
+          backgroundColor: ColorsApp.backgroundRed,
+        ),
+
         ///Stack para apilar el background y luego el cuerpo de la pantalla
         body: Stack(
           children: [
@@ -44,53 +66,43 @@ class HomeScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          FutureBuilder(
-            future: _readLoginContent(),
-            builder: (BuildContext context, AsyncSnapshot<LoginDto> loginInfo) {
-              if (loginInfo.hasError) {
-                return Text(loginInfo.error.toString());
-              }
+          // if (this.widget.error) {
+          //   Text(loginInfo.error.toString());
+          // }
 
-              if (loginInfo.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                      ColorsApp.backgroundRed,
-                    ),
-                  ),
-                );
-              }
-              return Column(
-                children: [
-                  ///logo de 2222
-                  _logo(size),
-                  SizedBox(height: size.height * 0.05),
+          if (this.widget.loginPayload == null)
+            Center(
+              child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(
+                  ColorsApp.backgroundRed,
+                ),
+              ),
+            ),
 
-                  ///texto inicial
-                  Text(
-                    'LabMóvil 2222'.toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .apply(fontSizeFactor: 1.3),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: size.height * 0.05),
-                  _descriptionText(context, loginInfo.data!.pageTitle),
-                  _video(loginInfo.data!.welcomeVideo["url"],
-                      ColorsApp.backgroundRed),
-                  _profundityText(context, loginInfo.data!.profundityText),
-                  SizedBox(height: size.height * 0.01),
-                  _sheetButton(context),
-                  SizedBox(height: size.height * 0.01),
-                  _loginButton(context),
-                  SizedBox(height: size.height * 0.02),
-                ],
-              );
-            },
-          ),
+          /// data is available
+          /// logo de 2222
+          if (this.widget.loginPayload != null) ...[
+            _logo(size),
+            SizedBox(height: size.height * 0.05),
 
-          /// formulario (falta aplicar backend)
+            ///texto inicial
+            Text(
+              'LabMóvil 2222'.toUpperCase(),
+              style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: size.height * 0.05),
+            _descriptionText(context, this.widget.loginPayload!.pageTitle),
+            _video(this.widget.loginPayload!.welcomeVideo["url"],
+                ColorsApp.backgroundRed),
+            _profundityText(context, this.widget.loginPayload!.profundityText),
+            SizedBox(height: size.height * 0.01),
+            _sheetButton(context),
+            SizedBox(height: size.height * 0.01),
+            SizedBox(height: size.height * 0.05),
+
+            /// formulario (falta aplicar backend)
+          ],
         ],
       ),
     );
@@ -119,8 +131,7 @@ class HomeScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         description,
-        style:
-            Theme.of(context).textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
+        style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
         textAlign: TextAlign.center,
       ),
     );
@@ -132,8 +143,7 @@ class HomeScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         depthText,
-        style:
-            Theme.of(context).textTheme.bodyText2?.apply(fontSizeFactor: 1.1),
+        style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
         textAlign: TextAlign.justify,
       ),
     );
@@ -154,7 +164,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               TextSpan(
                 text: 'Equipo 2222',
-                style: Theme.of(context).textTheme.headline6?.apply(
+                style: korolevFont.headline6?.apply(
                     decoration: TextDecoration.underline, fontSizeFactor: 0.7),
               )
             ],
@@ -169,29 +179,6 @@ class HomeScreen extends StatelessWidget {
     return VideoPlayerSegment(
       videoUrl: url,
       color: color,
-    );
-  }
-   _loginButton(BuildContext context) {
-    double buttonWidth = MediaQuery.of(context).size.width;
-    return Container(
-      width: buttonWidth,
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: ColorsApp.backgroundBottomBar,
-          elevation: 5,
-        ),
-
-        ///Navigates to main screen
-        onPressed: () {
-          // Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
-          Navigator.of(context).pop();
-        },
-        child: Text(
-          'Cities Screen',
-          style: korolevFont.headline6?.apply(),
-        ),
-      ),
     );
   }
 

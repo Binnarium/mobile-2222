@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/services/i-load-content.service.dart';
+import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
@@ -22,6 +24,19 @@ class ContentScreen extends StatefulWidget {
 }
 
 class _ContentScreenState extends State<ContentScreen> {
+  List<ContentDto>? contents;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    ILoadContentService<List<dynamic>> loader =
+        LoadContentsScreenInformationService();
+    loader.loadWithSettings(this.widget.chapterSettings).then(
+        (value) => this.setState(() => contents = value as List<ContentDto>));
+  }
+
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
@@ -94,53 +109,44 @@ class _ContentScreenState extends State<ContentScreen> {
 
   /// method that returns List<Widget> from firestore depending on content (video, podcast)
   _pageContent(Size size) {
-    return FutureBuilder(
-        future: _readContents(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<ContentDto>> contents) {
-          if (contents.hasError) return Text(contents.error.toString());
+    if (contents == null) {
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(
+            Color(this.widget.chapterSettings.primaryColor),
+          ),
+        ),
+      );
+    }
 
-          if (contents.connectionState == ConnectionState.waiting)
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  Colors.white,
-                ),
-              ),
-            );
-
-          final List<ContentDto> contentTemp =
-              contents.data as List<ContentDto>;
-
-          final List<Widget> contentWidgets = contentTemp.map<Widget>((c) {
-            if (c is VideoDto)
-              return Column(
-                children: [
-                  _titleContainer(size, c.author, c.title, " - vídeo"),
-                  VideoPlayerSegment(
-                    videoUrl: c.url!,
-                    description: c.description,
-                    color: Color(widget.chapterSettings.primaryColor),
-                  ),
-                ],
-              );
-            if (c is PodcastDto)
-              return Column(
-                children: [
-                  _titleContainer(size, c.author, c.title, " - podcast"),
-                  PodcastAudioPlayer(
-                    audioUrl: c.url,
-                    description: c.description,
-                    color: Color(widget.chapterSettings.primaryColor),
-                  ),
-                ],
-              );
-            throw ErrorDescription('Kind of content not found');
-          }).toList();
-          return Column(
-            children: contentWidgets,
-          );
-        });
+    final List<Widget> contentWidgets = contents!.map<Widget>((c) {
+      if (c is VideoDto)
+        return Column(
+          children: [
+            _titleContainer(size, c.author, c.title, " - vídeo"),
+            VideoPlayerSegment(
+              videoUrl: c.url!,
+              description: c.description,
+              color: Color(widget.chapterSettings.primaryColor),
+            ),
+          ],
+        );
+      if (c is PodcastDto)
+        return Column(
+          children: [
+            _titleContainer(size, c.author, c.title, " - podcast"),
+            PodcastAudioPlayer(
+              audioUrl: c.url,
+              description: c.description,
+              color: Color(widget.chapterSettings.primaryColor),
+            ),
+          ],
+        );
+      throw ErrorDescription('Kind of content not found');
+    }).toList();
+    return Column(
+      children: contentWidgets,
+    );
   }
 
   _titleContainer(Size size, String? author, String? title, String kind) {
@@ -180,21 +186,5 @@ class _ContentScreenState extends State<ContentScreen> {
         ),
       ),
     );
-  }
-
-  Future<List<ContentDto>> _readContents() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('content')
-        .get();
-    if (!snap.exists) new ErrorDescription('Document history does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final List<dynamic> data = payload['content'];
-
-    // print('contents temp : $data'.toString());
-    final contents = data.map((e) => ContentDto.fromJson(e)).toList();
-    return contents;
   }
 }
