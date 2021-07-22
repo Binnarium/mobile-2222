@@ -8,6 +8,7 @@ import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = '/home';
@@ -87,10 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ///texto inicial
             Text(
               'LabMóvil 2222'.toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6!
-                  .apply(fontSizeFactor: 1.3),
+              style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.05),
@@ -133,8 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         description,
-        style:
-            Theme.of(context).textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
+        style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
         textAlign: TextAlign.center,
       ),
     );
@@ -146,8 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         depthText,
-        style:
-            Theme.of(context).textTheme.bodyText2?.apply(fontSizeFactor: 1.1),
+        style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
         textAlign: TextAlign.justify,
       ),
     );
@@ -168,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               TextSpan(
                 text: 'Equipo 2222',
-                style: Theme.of(context).textTheme.headline6?.apply(
+                style: korolevFont.headline6?.apply(
                     decoration: TextDecoration.underline, fontSizeFactor: 0.7),
               )
             ],
