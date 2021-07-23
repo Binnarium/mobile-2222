@@ -62,15 +62,17 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
           /// calls the video player
           // _videoContainer(size, url),
 
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: SizedBox(
-              width: size.width * 0.8,
-              height: size.height * 0.4,
-              child: VideoDisplay(
-                  color: this.widget.color, videoUrl: this.widget.videoUrl!),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.all(10),
+          //   child: SizedBox(
+          //     width: size.width * 0.8,
+          //     height: size.height * 0.4,
+          //     child: VideoDisplay(
+          //         color: this.widget.color, videoUrl: this.widget.videoUrl!),
+          //   ),
+          // ),
+          VideoDisplay(
+              color: this.widget.color, videoUrl: this.widget.videoUrl!),
 
           // SizedBox(height: 10),
           // _videoButtons(_controller),
