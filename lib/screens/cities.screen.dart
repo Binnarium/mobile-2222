@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart'
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 
 import 'home.screen.dart';
 
@@ -28,7 +29,6 @@ class _CitiesScreenState extends State<CitiesScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                ///TODO: PONER LA PANTALLA DE INFORMACIÓN
                 Navigator.pushNamed(context, HomeScreen.route);
               },
               icon: Icon(Icons.help_outline_rounded))
@@ -66,7 +66,12 @@ class _CitiesScreenState extends State<CitiesScreen> {
             print(snapshot.error);
             return Center(child: Text('Ocurrió un error'));
           }
-          if (snapshot.data == null) return Center(child: Text('Cargando...'));
+          if (snapshot.data == null)
+            return Center(
+                child: Text(
+              'Cargando...',
+              style: korolevFont.bodyText1,
+            ));
 
           final List<FirebaseChapterSettings> data =
               snapshot.data as List<FirebaseChapterSettings>;

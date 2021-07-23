@@ -67,43 +67,36 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   }
 
   _podcastContainer(Size size) {
-    return Column(
-      children: [
-        SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _textContent(this.widget.description, size),
-            // SizedBox(height: 30),
-
-            Container(
-              width: size.width * 0.4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image(
-                    image: AssetImage('assets/icons/podcast_icon.png'),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _podcastButtons(_player, size),
-                ],
-              ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 30),
+      child: Column(
+        children: [
+          _textContent(this.widget.description, size),
+          SizedBox(height: 30),
+          Container(
+            // width: size.width * 0.4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage('assets/icons/podcast_icon.png'),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                _podcastButtons(_player, size),
+              ],
             ),
-          ],
-        ),
-        SizedBox(height: 30),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
   _textContent(String? description, Size size) {
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      width: size.width * 0.5,
+      // width: size.width * 0.5,
       child: Text(
         (description == null) ? 'No description Available' : description,
         style: korolevFont.bodyText1?.apply(),
@@ -113,7 +106,8 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
 
   _podcastButtons(AudioPlayer controller, Size size) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildVideoButton(
             Icon(
@@ -121,12 +115,18 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
             ),
             _rewind5Seconds,
             size),
+        SizedBox(
+          width: 15,
+        ),
         _buildVideoButton(
             (_player.playerState.playing)
                 ? Icon(Icons.pause_rounded)
                 : Icon(Icons.play_arrow_rounded),
             _playOrPause,
             size),
+        SizedBox(
+          width: 15,
+        ),
         _buildVideoButton(
             Icon(Icons.forward_5_rounded), _forward5Seconds, size),
       ],
@@ -135,17 +135,18 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
 
   Widget _buildVideoButton(Widget child, Function() onPressed, Size size) =>
       Container(
-        child: Container(
-          width: size.width * 0.1,
-          child: ElevatedButton(
-            onPressed: onPressed,
-            child: child,
-            style: ElevatedButton.styleFrom(
-              onPrimary: this.widget.color,
-              primary: Colors.white,
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(0),
-            ),
+        // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+        width: size.width * 0.1,
+        height: size.height * 0.07,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: child,
+          style: ElevatedButton.styleFrom(
+            onPrimary: this.widget.color,
+            primary: Colors.white,
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(0),
+            shape: CircleBorder(),
           ),
         ),
       );
