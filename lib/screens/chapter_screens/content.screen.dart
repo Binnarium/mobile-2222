@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/services/i-load-content.service.dart';
@@ -28,13 +27,17 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     ILoadContentService<List<dynamic>> loader =
         LoadContentsScreenInformationService();
     loader.loadWithSettings(this.widget.chapterSettings).then(
         (value) => this.setState(() => contents = value as List<ContentDto>));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -124,7 +127,7 @@ class _ContentScreenState extends State<ContentScreen> {
         return Column(
           children: [
             _titleContainer(size, c.author, c.title, " - vídeo"),
-            VideoPlayerSegment(
+            new VideoPlayerSegment(
               videoUrl: c.url!,
               description: c.description,
               color: Color(widget.chapterSettings.primaryColor),

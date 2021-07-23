@@ -27,19 +27,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
     chewieController = ChewieController(
       videoPlayerController: this.widget.videoPlayerController,
       looping: this.widget.isLoop,
-      aspectRatio: 16 / 9,
       autoInitialize: true,
+      aspectRatio: 16 / 9,
       allowedScreenSleep: false,
       deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-      placeholder: Container(
-        color: Colors.black87,
-        child: Container(
-          child: Center(
-              child: CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(this.widget.color),
-          )),
-        ),
-      ),
       materialProgressColors: ChewieProgressColors(
         playedColor: this.widget.color,
         handleColor: this.widget.color,
@@ -58,10 +49,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Chewie(controller: chewieController),
-    );
+    return new ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: AspectRatio(
+            aspectRatio: 16 / 9, child: Chewie(controller: chewieController)));
   }
 }
 
@@ -78,7 +69,7 @@ class VideoDisplay extends StatefulWidget {
 class _VideoDisplayState extends State<VideoDisplay> {
   @override
   Widget build(BuildContext context) {
-    return VideoPlayer(
+    return new VideoPlayer(
       isLoop: false,
       videoPlayerController:
           VideoPlayerController.network(this.widget.videoUrl),

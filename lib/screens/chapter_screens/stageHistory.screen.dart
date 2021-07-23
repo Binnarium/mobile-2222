@@ -71,13 +71,11 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   _routeCurve() {
     return Container(
       alignment: Alignment.bottomCenter,
-      width: double.infinity,
-      height: double.infinity,
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/white_route_curve_background.png',
         ),
-        color: Color.fromRGBO(255, 255, 255, 100),
+        color: Colors.white.withOpacity(0.25),
       ),
     );
   }
@@ -90,8 +88,6 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
 
     return Container(
       alignment: Alignment.topLeft,
-      width: double.infinity,
-      height: double.infinity,
       child: ListView(
         children: <Widget>[
           SizedBox(
@@ -111,12 +107,9 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   }
 
   Widget _titleHistory(Size size, TitleHistoryDto history) {
-    double bodyMarginLeft = size.width * 0.05;
     return Container(
       //decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(
-          left: bodyMarginLeft, right: bodyMarginLeft, bottom: bodyMarginLeft),
 
       child: history.title == null
           ? Text(
@@ -133,12 +126,8 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   }
 
   Widget _textHistory(Size size, TextHistoryDto history) {
-    double bodyMarginLeft = size.width * 0.05;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(
-          left: bodyMarginLeft, right: bodyMarginLeft, bottom: bodyMarginLeft),
       child: history.text == null
           ? Text('No se ha cargado texto')
           : Text(
@@ -151,28 +140,18 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
 
   Widget _buildHistoryImage(Size size, ImageHistoryDto history) {
     double marginRight = size.width * 0.05;
-    // double widthImagen = size.width * 0.20;
-    // double heightImagen = size.width * 0.20;
-
-    // if (size.width > 550) {
-    //   widthImagen = size.width * 0.1;
-    //   heightImagen = size.height * 0.2;
-    // } else {
-    //   widthImagen = size.width * 0.17;
-    //   heightImagen = size.height * 0.1;
-    // }
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(
-          right: marginRight, left: marginRight, bottom: marginRight),
+      padding: EdgeInsets.symmetric(vertical: marginRight),
       child: history.url == null
           ? Container(
               alignment: Alignment.center,
               height: 150,
               width: 150,
-              color: Colors.black,
+              color: Colors.black45,
               child: Text(
-                'No ha imagen subida',
+                'No image Available',
+                style: korolevFont.bodyText2,
                 textAlign: TextAlign.center,
               ),
             )
@@ -207,18 +186,15 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   }
 
   _contentsBody(Size size) {
-    double bodyMarginLeft = size.width * 0.05;
-
     ///main container
     return Container(
 
         ///general left padding 25
         width: double.infinity,
-        margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
         alignment: Alignment.centerLeft,
 
         ///To resize the parent container of the list of books
-        //height: (list.length) * bodyContainerHeight * 0.125,
         child: FutureBuilder(
             future: _readContents(),
             builder: (BuildContext context,

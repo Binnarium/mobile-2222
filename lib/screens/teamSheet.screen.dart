@@ -55,15 +55,9 @@ class _TeamScreenState extends State<TeamScreen> {
 
   ///body of the screen
   _resourcesContent(Size size, BuildContext context) {
-    double bodyMarginWidth = size.width * 0.03;
-
-    double bodyMarginLeft = size.width * 0.10;
-
     ///sizing the container to the mobile
     return Container(
-      margin: EdgeInsets.only(
-        right: bodyMarginWidth,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
       ///Listview of the whole screen
       child: ListView(
@@ -87,19 +81,17 @@ class _TeamScreenState extends State<TeamScreen> {
                 // decoration: BoxDecoration(
                 //   border: Border.all(color: Colors.white)
                 // ),
-                margin: EdgeInsets.only(
-                    left: bodyMarginLeft, right: bodyMarginLeft),
                 child: Text(
-                  'Equipo 2222'.toUpperCase(),
-                  style: korolevFont.headline3?.apply(fontSizeFactor: 0.96),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                  textAlign: TextAlign.center,
-                )),
+              'Equipo 2222'.toUpperCase(),
+              style: korolevFont.headline3?.apply(fontSizeFactor: 0.96),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+              textAlign: TextAlign.center,
+            )),
             SizedBox(
               height: 20,
             ),
-            _teamSheet(context, this.widget.loginPayload!.teamText),
+            _teamSheet(context, this.widget.loginPayload!.teamText, size),
             SizedBox(
               height: 10,
             ),
@@ -112,25 +104,20 @@ class _TeamScreenState extends State<TeamScreen> {
   _routeCurve() {
     return Container(
       alignment: Alignment.bottomCenter,
-      width: double.infinity,
-      height: double.infinity,
       child: Image(
         image: AssetImage(
           'assets/backgrounds/decorations/white_route_curve_background.png',
         ),
-        color: Color.fromRGBO(255, 255, 255, 100),
+        color: Colors.white.withOpacity(0.25),
       ),
     );
   }
 
-  _teamSheet(BuildContext context, String teamText) {
+  _teamSheet(BuildContext context, String teamText, Size size) {
     return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
         teamText,
         style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-        textAlign: TextAlign.justify,
       ),
     );
   }

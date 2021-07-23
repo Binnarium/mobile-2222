@@ -119,11 +119,10 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   _objetBody(Size size) {
-    double bodyMarginLeft = size.width * 0.05;
     return Container(
         // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
 
-        margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
         child: FutureBuilder(
           future: _readObjective(),
           builder: (BuildContext context, AsyncSnapshot<String> objective) {
@@ -150,13 +149,11 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   _ideasBody(Size size) {
-    double bodyMarginLeft = size.width * 0.05;
-
     ///main container
     return Container(
       ///general left padding 25
       width: double.infinity,
-      margin: EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
       ///To resize the parent container of the list of books
       //height: (list.length) * bodyContainerHeight * 0.125,
@@ -191,11 +188,9 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   _compeBody(Size size) {
-    double bodyMarginWidth = size.width * 0.05;
-
     ///main container
     return Container(
-      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
       ///To resize the parent container of the online resources grid
       ///Creates a grid with the necesary online resources

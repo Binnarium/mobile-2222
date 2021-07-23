@@ -123,8 +123,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
               );
             }
             return Container(
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
               child: Text(
                 readings.data.toString(),
                 style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
