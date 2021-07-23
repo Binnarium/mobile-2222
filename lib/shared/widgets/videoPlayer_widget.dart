@@ -27,7 +27,9 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
 
   _videoContent(Size size, String? description, String url) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 30),
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.1,
+          vertical: (description != null) ? 30 : 0),
       child: Column(
         children: [
           _textContent(size, description),

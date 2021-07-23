@@ -91,12 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.05),
-            _descriptionText(context, this.widget.loginPayload!.pageTitle),
+            _descriptionText(
+                context, this.widget.loginPayload!.pageTitle, size),
             _video(this.widget.loginPayload!.welcomeVideo["url"],
                 ColorsApp.backgroundRed),
-            _profundityText(context, this.widget.loginPayload!.profundityText),
+            _profundityText(
+                context, this.widget.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
-            _sheetButton(context),
+            _sheetButton(context, size),
             SizedBox(height: size.height * 0.01),
             SizedBox(height: size.height * 0.05),
 
@@ -124,10 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   ///Párrafo de descripción
-  _descriptionText(BuildContext context, String description) {
+  _descriptionText(BuildContext context, String description, Size size) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       child: Text(
         description,
         style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
@@ -136,38 +138,31 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _profundityText(BuildContext context, String depthText) {
+  _profundityText(BuildContext context, String depthText, Size size) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       child: Text(
         depthText,
         style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-        textAlign: TextAlign.justify,
       ),
     );
   }
 
-  _sheetButton(BuildContext context) {
+  _sheetButton(BuildContext context, Size size) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       width: double.infinity,
       child: TextButton(
         onPressed: () {
           Navigator.of(context).pushNamed(TeamScreen.route);
         },
         style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
-        child: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'Equipo 2222',
-                style: korolevFont.headline6?.apply(
-                    decoration: TextDecoration.underline, fontSizeFactor: 0.7),
-              )
-            ],
-          ),
+        child: Text(
+          'Equipo 2222',
+          style: korolevFont.headline6?.apply(
+              decoration: TextDecoration.underline, fontSizeFactor: 0.7),
         ),
       ),
     );

@@ -139,12 +139,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   /// books body method
   _booksBody(Size size) {
-    double bodyMarginWidth = size.width * 0.05;
-
     /// main container
     return Container(
-      /// general left padding 25
-      margin: EdgeInsets.only(left: 25, right: bodyMarginWidth),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
       ///To resize the parent container of the list of books
 
@@ -193,11 +190,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   ///Method of the online resources
   _onlineResourcesBody(List list, Size size) {
-    double bodyMarginWidth = size.width * 0.05;
-
     ///main container
     return Padding(
-      padding: EdgeInsets.only(left: 25, right: bodyMarginWidth),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
       ///To resize the parent container of the online resources grid
 

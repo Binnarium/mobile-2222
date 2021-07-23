@@ -145,7 +145,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
         'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.';
 
     return Container(
-      margin: EdgeInsets.only(left: bodyMarginWidth, right: bodyMarginWidth),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       child: Text(
         texto,
         style: korolevFont.bodyText2,
