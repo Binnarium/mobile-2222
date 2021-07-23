@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/services/Video_settings.dart';
 import 'package:lab_movil_2222/services/i-load-content.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
@@ -28,7 +27,6 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     ILoadContentService<List<dynamic>> loader =

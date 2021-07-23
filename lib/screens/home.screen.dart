@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
@@ -180,17 +179,5 @@ class _HomeScreenState extends State<HomeScreen> {
       videoUrl: url,
       color: color,
     );
-  }
-
-  Future<LoginDto> _readLoginContent() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc('welcome')
-        .get();
-    if (!snap.exists) new ErrorDescription('Document welcome does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-
-    final result = LoginDto.fromJson(payload);
-    return result;
   }
 }
