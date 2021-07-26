@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// add a background to the app, supported backgrounds incudes a color and a image
+/// TODO: fix class not being used, merge with chapter_background_widget
 class CustomBackground extends StatelessWidget {
   const CustomBackground({
     Key? key,

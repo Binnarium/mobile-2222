@@ -3,14 +3,14 @@ import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 
 class LoadArgumentScreenInformationService extends ILoadInformationWithOptions<
-    List<dynamic>, FirebaseChapterSettings> {
+    List<String>, FirebaseChapterSettings> {
   const LoadArgumentScreenInformationService({
     required final FirebaseChapterSettings chapterSettings,
   }) : super(options: chapterSettings);
 
   @override
-  Future<List> load() async {
-    List<dynamic> ideasTemp = [];
+  Future<List<String>> load() async {
+    List<String> ideasTemp = [];
     final data = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.options.id)
@@ -19,7 +19,9 @@ class LoadArgumentScreenInformationService extends ILoadInformationWithOptions<
         .get();
 
     if (data.exists) {
-      ideasTemp = data.get('questions');
+      ideasTemp = (data.get('questions') as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
     }
 
     return ideasTemp;
