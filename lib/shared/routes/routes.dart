@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
+import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
@@ -42,6 +43,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case CitiesScreen.route:
           return CitiesScreen();
+
+        case CitiesMapScreen.route:
+          return CitiesMapScreen();
 
         case StatisticsScreen.route:
           return StatisticsScreen();
