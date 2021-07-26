@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/services/i-load-content.service.dart';
+import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ContentScreen extends StatefulWidget {
@@ -29,9 +29,11 @@ class _ContentScreenState extends State<ContentScreen> {
   void initState() {
     super.initState();
 
-    ILoadContentService<List<dynamic>> loader =
-        LoadContentsScreenInformationService();
-    loader.loadWithSettings(this.widget.chapterSettings).then(
+    ILoadInformationWithOptions<List<dynamic>, FirebaseChapterSettings> loader =
+        LoadContentsScreenInformationService(
+      chapterSettings: this.widget.chapterSettings,
+    );
+    loader.load().then(
         (value) => this.setState(() => contents = value as List<ContentDto>));
   }
 

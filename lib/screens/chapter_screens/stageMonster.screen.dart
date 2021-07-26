@@ -1,7 +1,7 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
-
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -65,17 +65,24 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   }
 
   _backgroundDecoration(Size size) {
-    return ListView(children: [
-      SizedBox(
-        height: 10,
-      ),
-      ChapterHeadWidget(
-        phaseName: this.widget.chapterSettings.phaseName,
-        chapterName: this.widget.chapterSettings.cityName,
-        chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
-      ),
-      _ghostImage(size),
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        ChapterHeadWidget(
+          phaseName: this.widget.chapterSettings.phaseName,
+          chapterName: this.widget.chapterSettings.cityName,
+          chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+        ),
+        Expanded(
+          child: Center(
+            child: _ghostImage(size),
+          ),
+        )
+      ],
+    );
   }
 
   _ghostImage(Size size) {
@@ -101,9 +108,11 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
             // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
             margin: EdgeInsets.symmetric(
                 vertical: size.height * 0.1, horizontal: size.width * 0.1),
-            child: AspectRatio(
-              aspectRatio: 9 / 13,
+            child: Container(
+              width: size.width * 0.8,
+              height: size.height * 0.7,
               child: Image(
+                fit: BoxFit.contain,
                 image: NetworkImage(
                   url.data.toString(),
                 ),

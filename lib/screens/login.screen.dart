@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
-import 'package:lab_movil_2222/services/Video_settings.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
@@ -139,10 +139,21 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-      child: Text(
-        depthText,
-        style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-      ),
+      // child: Text(
+      //   depthText,
+      //   style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+      // ),
+      child : MarkdownBody(
+        data: depthText,
+        styleSheet: MarkdownStyleSheet(
+          p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          h2: korolevFont.headline6,          
+          listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          
+        ),
+       
+        
+      )
     );
   }
 

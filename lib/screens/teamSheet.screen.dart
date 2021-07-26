@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
@@ -75,19 +76,19 @@ class _TeamScreenState extends State<TeamScreen> {
           /// logo de 2222
           if (this.widget.loginPayload != null) ...[
             SizedBox(
-              height: 50,
+              height: 20,
             ),
-            Container(
-                // decoration: BoxDecoration(
-                //   border: Border.all(color: Colors.white)
-                // ),
-                child: Text(
-              'Equipo 2222'.toUpperCase(),
-              style: korolevFont.headline3?.apply(fontSizeFactor: 0.96),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 4,
-              textAlign: TextAlign.center,
-            )),
+            // Container(
+            //     // decoration: BoxDecoration(
+            //     //   border: Border.all(color: Colors.white)
+            //     // ),
+            //     child: Text(
+            //   'Equipo 2222'.toUpperCase(),
+            //   style: korolevFont.headline3?.apply(fontSizeFactor: 0.96),
+            //   overflow: TextOverflow.ellipsis,
+            //   maxLines: 4,
+            //   textAlign: TextAlign.center,
+            // )),
             SizedBox(
               height: 20,
             ),
@@ -115,10 +116,17 @@ class _TeamScreenState extends State<TeamScreen> {
 
   _teamSheet(BuildContext context, String teamText, Size size) {
     return Container(
-      child: Text(
-        teamText,
-        style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-      ),
+      child: MarkdownBody(
+        data: teamText,
+        styleSheet: MarkdownStyleSheet(
+          p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          h1: korolevFont.headline4,
+          h2: korolevFont.headline5,          
+          listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          
+        ),
+      )
+       
     );
   }
 }

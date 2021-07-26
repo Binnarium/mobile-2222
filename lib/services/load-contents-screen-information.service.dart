@@ -1,17 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:lab_movil_2222/services/i-load-content.service.dart';
+import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
 
-class LoadContentsScreenInformationService
-    extends ILoadContentService<List<ContentDto>> {
+class LoadContentsScreenInformationService extends ILoadInformationWithOptions<
+    List<ContentDto>, FirebaseChapterSettings> {
+  const LoadContentsScreenInformationService({
+    required final FirebaseChapterSettings chapterSettings,
+  }) : super(options: chapterSettings);
+
   @override
-  Future<List<ContentDto>> loadWithSettings(
-      FirebaseChapterSettings chapterSettings) async {
+  Future<List<ContentDto>> load() async {
     final snap = await FirebaseFirestore.instance
         .collection('cities')
-        .doc(chapterSettings.id)
+        .doc(this.options.id)
         .collection('pages')
         .doc('content')
         .get();
