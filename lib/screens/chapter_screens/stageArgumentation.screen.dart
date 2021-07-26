@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/services/i-load-content.service.dart';
+import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -25,11 +25,10 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   @override
   void initState() {
     super.initState();
-    ILoadContentService<List<dynamic>> loader =
-        LoadArgumentScreenInformationService();
-    loader
-        .loadWithSettings(this.widget.chapterSettings)
-        .then((value) => this.setState(() => questions = value));
+    ILoadInformationWithOptions<List<dynamic>, FirebaseChapterSettings> loader =
+        LoadArgumentScreenInformationService(
+            chapterSettings: this.widget.chapterSettings);
+    loader.load().then((value) => this.setState(() => questions = value));
   }
 
   @override
