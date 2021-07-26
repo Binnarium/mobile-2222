@@ -6,7 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:lab_movil_2222/main.dart';
+import 'package:lab_movil_2222/app-2222.dart';
 
 void main() {
   test('Should create an app', () {
