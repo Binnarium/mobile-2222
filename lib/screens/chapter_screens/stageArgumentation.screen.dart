@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/services/i-load-content.service.dart';
+import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 
 class StageArgumentationScreen extends StatefulWidget {
   static const String route = '/argumentation';
+
   final FirebaseChapterSettings chapterSettings;
 
-  const StageArgumentationScreen({Key? key, required this.chapterSettings})
-      : super(key: key);
+  const StageArgumentationScreen({
+    Key? key,
+    required this.chapterSettings,
+  }) : super(key: key);
 
   @override
   _StageArgumentationScreenState createState() =>
@@ -21,15 +25,16 @@ class StageArgumentationScreen extends StatefulWidget {
 }
 
 class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
-  List<dynamic>? questions;
+  List<String>? questions;
+
   @override
   void initState() {
     super.initState();
-    ILoadContentService<List<dynamic>> loader =
-        LoadArgumentScreenInformationService();
-    loader
-        .loadWithSettings(this.widget.chapterSettings)
-        .then((value) => this.setState(() => questions = value));
+    ILoadInformationWithOptions<List<String>, FirebaseChapterSettings> loader =
+        LoadArgumentScreenInformationService(
+      chapterSettings: this.widget.chapterSettings,
+    );
+    loader.load().then((value) => this.setState(() => questions = value));
   }
 
   @override
@@ -46,29 +51,28 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
     };
 
     Size size = MediaQuery.of(context).size;
+
     print(size);
     return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          onPanUpdate: (details) {
-            /// left
-            if (details.delta.dx > 5) prevPage();
+      body: GestureDetector(
+        onPanUpdate: (panning) {
+          /// left
+          if (panning.delta.dx > 5) prevPage();
 
-            /// right
-            if (details.delta.dx < -5) nextPage();
-          },
-          child: Stack(
-            children: [
-              //widget custom que crea el background con el logo de la izq
-              ChapterBackgroundWidget(
-                backgroundColor: Color(widget.chapterSettings.primaryColor),
-                reliefPosition: 'top-right',
-              ),
-              //decoración adicional del background
-              _backgroundDecoration(size),
-              // _ideas(size),
-            ],
-          ),
+          /// right
+          if (panning.delta.dx < -5) nextPage();
+        },
+        child: Stack(
+          children: [
+            //widget custom que crea el background con el logo de la izq
+            ChapterBackgroundWidget(
+              backgroundColor: Color(widget.chapterSettings.primaryColor),
+              reliefPosition: 'top-right',
+            ),
+            //decoración adicional del background
+            _backgroundDecoration(size),
+            // _ideas(size),
+          ],
         ),
       ),
       bottomNavigationBar: CustomNavigationBar(
@@ -79,8 +83,8 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   }
 
   _backgroundDecoration(Size size) {
-    return Container(
-      child: ListView(children: [
+    return ListView(
+      children: [
         SizedBox(
           height: 10,
         ),
@@ -89,78 +93,136 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
           chapterName: this.widget.chapterSettings.cityName,
           chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
         ),
-        Container(
-          height: size.height * 0.825,
-          // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-          // padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
-            child: Stack(children: [
-              _ideas(size),
-            ]),
+        if (this.questions != null)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: CustomBubbleList(
+              ideas: this.questions!,
+            ),
+          )
+        else
+          Center(
+            child: CircularProgressIndicator(
+              color: ColorsApp.white,
+            ),
           ),
-        ),
-      ]),
+      ],
     );
   }
+}
 
-  _ideas(Size size) {
-    double widthFactor = (size.height > 800)
-        ? 0.5
-        : (size.height > 700)
-            ? 0.45
-            : 0.5;
-    double heightFactor = (size.height > 800)
-        ? 0.2
-        : (size.height > 700)
-            ? 0.2
-            : 0.25;
+class CustomBubbleList extends StatelessWidget {
+  const CustomBubbleList({
+    Key? key,
+    required this.ideas,
+  }) : super(key: key);
 
-    if (questions == null) {
-      return Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(
-            Color(this.widget.chapterSettings.primaryColor),
+  final List<String> ideas;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> colItems = [];
+
+    /// List created
+    ///
+    /// 0,            one item row
+    /// 1, 2,         two items row
+    /// 3,            one item row
+    /// 4,            and so on...
+    for (int i = 0; i < this.ideas.length; i++) {
+      // single item row
+      if (i % 3 == 0) {
+        String current = this.ideas[i];
+        colItems.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 250),
+              child: IdeaContainerWidget(
+                text: current,
+                orientation: i,
+              ),
+            ),
+          ),
+        );
+        continue;
+      }
+      if (i % 3 == 1) {
+        String current = this.ideas[i];
+        colItems.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Row(
+              children: [
+                Container(
+                  constraints: BoxConstraints(maxWidth: 250),
+                  child: IdeaContainerWidget(
+                    text: current,
+                    orientation: i,
+                  ),
+                ),
+                Flexible(child: Container())
+              ],
+            ),
+          ),
+        );
+        continue;
+      }
+      String current = this.ideas[i];
+      colItems.add(
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Row(
+            children: [
+              Flexible(child: Container()),
+              Container(
+                constraints: BoxConstraints(maxWidth: 250),
+                child: IdeaContainerWidget(
+                  text: current,
+                  orientation: i,
+                ),
+              ),
+            ],
           ),
         ),
       );
-    }
-    List<Align> bubbles = [];
-    for (var i = 0; i < questions!.length; i++) {
-      if (questions!.elementAt(i) != null) {
-        Align bubble = _createBubble(
-            i, questions!.elementAt(i), size, widthFactor, heightFactor);
-        bubbles.add(bubble);
-      }
-    }
-    return Stack(
-      children: bubbles,
-    );
-  }
+      //   /// multi line item
+      //   String item1 = this.ideas[i];
+      //   String? item2 = (i + 1 < this.ideas.length) ? this.ideas[i + 1] : null;
+      //   colItems.add(
+      //     Row(
+      //       children: [
+      //         Expanded(
+      //           child: Padding(
+      //             padding: const EdgeInsets.only(bottom: 16),
+      //             child: IdeaContainerWidget(
+      //               text: item1,
+      //               orientation: i,
+      //             ),
+      //           ),
+      //         ),
 
-  Align _createBubble(
-      int i, String idea, Size size, double width, double height) {
-    Map<int, Alignment> aligns = {
-      0: Alignment(-0.8, -0.5),
-      1: (size.height > 800) ? Alignment(0.9, -0.1) : Alignment(0.9, 0),
-      2: (size.height > 800) ? Alignment(-0.9, 0.3) : Alignment(-0.9, 0.45),
-      3: (size.height > 800) ? Alignment(0.9, -0.9) : Alignment(0.9, -0.95),
-      4: (size.height > 800) ? Alignment(0.9, 0.7) : Alignment(0.9, 0.9),
-    };
-    Map<int, String> orientations = {
-      0: "TopRight",
-      1: "CenterLeft",
-      2: "BottomRight",
-      3: "TopLeft",
-      4: "BottomLeft",
-    };
-    return Align(
-      alignment: aligns[i]!,
-      child: IdeaContainerWidget(
-        text: idea,
-        width: size.width * width,
-        height: size.height * height,
-        orientation: orientations[i],
-      ),
+      //         /// separator
+      //         Container(width: 16),
+      //         (item2 != null)
+      //             ? Expanded(
+      //                 child: Padding(
+      //                 padding: const EdgeInsets.only(top: 16),
+      //                 child: IdeaContainerWidget(
+      //                   text: item2,
+      //                   orientation: i + 1,
+      //                 ),
+      //                 ))
+      //             : Expanded(child: Container()),
+      //       ],
+      //     ),
+      //   );
+      //   i += 2;
+      // }
+    }
+
+    return Column(
+      children: colItems,
     );
   }
 }

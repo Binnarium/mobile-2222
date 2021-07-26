@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
-import 'package:lab_movil_2222/services/Video_settings.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
@@ -161,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
   _sheetButton(BuildContext context, Size size) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       width: double.infinity,
       child: TextButton(
         onPressed: () {

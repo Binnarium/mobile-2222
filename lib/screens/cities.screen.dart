@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -33,6 +34,11 @@ class _CitiesScreenState extends State<CitiesScreen> {
               },
               icon: Icon(Icons.help_outline_rounded))
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.of(context).pushReplacementNamed(CitiesMapScreen.route),
+        child: Icon(Icons.local_activity),
       ),
       body: _citiesView(context),
       bottomNavigationBar: CustomNavigationBar(),
