@@ -17,6 +17,9 @@ class PodcastAudioPlayer extends StatefulWidget {
 
 class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   final AudioPlayer _player = AudioPlayer();
+  Duration _duration = new Duration();
+  Duration _position = new Duration();
+  Icon _playIcon = Icon(Icons.play_arrow_rounded);
 
   @override
   void initState() {
@@ -45,6 +48,16 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
       }
     }
     // Try to load audio from a source and catch any errors.
+    _player.positionStream.listen((event) {
+      setState(() {
+        _position = event;
+      });
+    });
+    _player.durationStream.listen((event) {
+      setState(() {
+        _duration = event!;
+      });
+    });
   }
 
   @override
@@ -52,6 +65,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
     // Release decoders and buffers back to the operating system making them
     // available for other apps to use.
     _player.dispose();
+
     super.dispose();
   }
 
@@ -69,26 +83,67 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   _podcastContainer(Size size) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 30),
-      child: Column(
-        children: [
-          _textContent(this.widget.description, size),
-          SizedBox(height: 30),
-          Container(
-            // width: size.width * 0.4,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(
-                  image: AssetImage('assets/icons/podcast_icon.png'),
+      child: Container(
+        width: size.width * 0.8,
+        child: Column(
+          children: [
+            _textContent(this.widget.description, size),
+            SizedBox(height: 30),
+            Container(
+              child: Container(
+                width: size.width * 0.8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/icons/podcast_icon.png'),
+                    ),
+                    SizedBox(
+                      width: (size.width < 325) ? 0 : size.width * 0.05,
+                    ),
+                    Container(
+                      width: (size.width < 325)
+                          ? size.width * 0.45
+                          : size.width * 0.55,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            height: 20,
+                            padding: EdgeInsets.only(bottom: 5),
+                            child: _slider(),
+                          ),
+                          Container(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _position.toString().split(".")[0],
+                                  style: korolevFont.bodyText2,
+                                ),
+                                Text(
+                                  _duration.toString().split(".")[0],
+                                  style: korolevFont.bodyText2,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          _podcastButtons(_player, size),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 30,
-                ),
-                _podcastButtons(_player, size),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -106,8 +161,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
 
   _podcastButtons(AudioPlayer controller, Size size) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildVideoButton(
             Icon(
@@ -115,18 +169,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
             ),
             _rewind5Seconds,
             size),
-        SizedBox(
-          width: 15,
-        ),
-        _buildVideoButton(
-            (_player.playerState.playing)
-                ? Icon(Icons.pause_rounded)
-                : Icon(Icons.play_arrow_rounded),
-            _playOrPause,
-            size),
-        SizedBox(
-          width: 15,
-        ),
+        _buildVideoButton(_playIcon, _playOrPause, size),
         _buildVideoButton(
             Icon(Icons.forward_5_rounded), _forward5Seconds, size),
       ],
@@ -167,18 +210,20 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   Future _playOrPause() async {
     if (_player.playing) {
       if (_player.position >= _player.duration!) {
-        print("reiniciar audio");
         setState(() {
           _player.seek(Duration.zero);
+          _playIcon = Icon(Icons.pause_rounded);
           _player.play();
         });
       } else {
         setState(() {
+          _playIcon = Icon(Icons.play_arrow_rounded);
           _player.pause();
         });
       }
     } else {
       setState(() {
+        _playIcon = Icon(Icons.pause_rounded);
         _player.play();
       });
     }
@@ -191,5 +236,46 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
     final newPosition = builder(currentPosition);
 
     await _player.seek(newPosition);
+  }
+
+  _slider() {
+    return SliderTheme(
+        data: SliderThemeData(
+          trackShape: CustomTrackShape(),
+        ),
+        child: Slider(
+            activeColor: Colors.white,
+            inactiveColor: Colors.grey,
+            min: 0.0,
+            max: _duration.inSeconds.toDouble(),
+            value: _position.inSeconds.toDouble(),
+            onChanged: (double value) {
+              setState(() {
+                _changeToSecond(value.toInt());
+                value = value;
+              });
+            }));
+  }
+
+  void _changeToSecond(int second) {
+    Duration newDuration = Duration(seconds: second);
+    _player.seek(newDuration);
+  }
+}
+
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight!;
+    final double trackLeft = offset.dx;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
