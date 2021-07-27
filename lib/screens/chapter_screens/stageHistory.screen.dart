@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/History.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -10,7 +10,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageHistoryScreen extends StatefulWidget {
   static const String route = '/history';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const StageHistoryScreen({
     Key? key,
@@ -53,7 +53,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: Color(this.widget.chapterSettings.primaryColor),
+              backgroundColor: this.widget.chapterSettings.color,
               reliefPosition: 'bottom-right',
             ),
             _routeCurve(),
@@ -94,9 +94,8 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
             height: 10,
           ),
           ChapterHeadWidget(
-            phaseName: this.widget.chapterSettings.phaseName,
-            chapterName: this.widget.chapterSettings.cityName,
-            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+            showStageLogo: true,
+            city: this.widget.chapterSettings,
           ),
           SizedBox(height: spacedBodyContainers),
           // _imageOne(size),

@@ -15,11 +15,13 @@ class LoginScreen extends StatefulWidget {
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
-
-  LoginDto? loginPayload;
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  
+  LoginDto? loginPayload;
+  
   @override
   void initState() {
     super.initState();
@@ -27,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
     loader
         .load()
-        .then((value) => this.setState(() => this.widget.loginPayload = value));
+        .then((value) => this.setState(() => this.loginPayload = value));
   }
 
   ///página de login donde pide usuario y contraseña
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           //   Text(loginInfo.error.toString());
           // }
 
-          if (this.widget.loginPayload == null)
+          if (this.loginPayload == null)
             Center(
               child: CircularProgressIndicator(
                 valueColor: new AlwaysStoppedAnimation<Color>(
@@ -76,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           /// data is available
           /// logo de 2222
-          if (this.widget.loginPayload != null) ...[
+          if (this.loginPayload != null) ...[
             _logo(size),
             SizedBox(height: size.height * 0.05),
 
@@ -88,14 +90,18 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: size.height * 0.05),
             _descriptionText(
-                context, this.widget.loginPayload!.pageTitle, size),
-            _video(this.widget.loginPayload!.welcomeVideo["url"],
+                context, this.loginPayload!.pageTitle, size),
+            _video(this.loginPayload!.welcomeVideo["url"],
                 ColorsApp.backgroundRed, size),
             _profundityText(
-                context, this.widget.loginPayload!.profundityText, size),
+                context, this.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
             SizedBox(height: size.height * 0.01),
+
+            _workloadText(
+                context, this.widget.loginPayload!.workloadText, size),
+
             SizedBox(height: size.height * 0.05),
 
             /// formulario (falta aplicar backend)
@@ -137,24 +143,43 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _profundityText(BuildContext context, String depthText, Size size) {
     return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-      // child: Text(
-      //   depthText,
-      //   style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-      // ),
-      child : MarkdownBody(
-        data: depthText,
-        styleSheet: MarkdownStyleSheet(
-          p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          h2: korolevFont.headline6,          
-          listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+        child: MarkdownBody(
+          data: depthText,
+          styleSheet: MarkdownStyleSheet(
+            p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+            h2: korolevFont.headline6,
+            listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          ),
+        ));
+  }
+
+  _workloadText(BuildContext context, String workloadText, Size size) {
+    return Container(
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 40),
+        padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.1, vertical: size.width * 0.1),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(7.0) //
+              ),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              offset: Offset(0.0, 0.7), //(x,y)
+              blurRadius: 1.0,
+            ),
+          ],
         ),
-       
-        
-      )
-    );
+        child: MarkdownBody(
+          data: workloadText,
+          styleSheet: MarkdownStyleSheet(
+            h2: korolevFont.headline6,
+            listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          ),
+        ));
   }
 
   _sheetButton(BuildContext context, Size size) {
@@ -186,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
   _video(String url, Color color, Size size) {
     return VideoPlayerSegment(
       color: color,
-      videoUrl: this.widget.loginPayload!.welcomeVideo["url"],
+      videoUrl: this.loginPayload!.welcomeVideo["url"],
     );
   }
 

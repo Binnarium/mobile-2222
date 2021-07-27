@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/shared/models/Competence.model.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
   static const String route = '/objectives';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const StageObjetivesScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -59,7 +59,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: Color(this.widget.chapterSettings.primaryColor),
+              backgroundColor: this.widget.chapterSettings.color,
               reliefPosition: 'top-left',
             ),
             _stageBody(size),
@@ -91,9 +91,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             height: 10,
           ),
           ChapterHeadWidget(
-            phaseName: this.widget.chapterSettings.phaseName,
-            chapterName: this.widget.chapterSettings.cityName,
-            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+            showStageLogo: true,
+            city: this.widget.chapterSettings,
           ),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
@@ -134,7 +133,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    Color(this.widget.chapterSettings.primaryColor),
+                    this.widget.chapterSettings.color,
                   ),
                 ),
               );
@@ -169,7 +168,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    Color(this.widget.chapterSettings.primaryColor),
+                    this.widget.chapterSettings.color,
                   ),
                 ),
               );
@@ -206,7 +205,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    Color(this.widget.chapterSettings.primaryColor),
+                    this.widget.chapterSettings.color,
                   ),
                 ),
               );

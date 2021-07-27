@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
-import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
+import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -15,7 +15,7 @@ import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const ResourcesScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -34,7 +34,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage =
-        (this.widget.chapterSettings.enabledPages!["activities"])
+        (this.widget.chapterSettings.enabledPages.activities)
             ? () {
                 Navigator.pushNamed(
                   context,
@@ -68,7 +68,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(widget.chapterSettings.primaryColor),
+                backgroundColor: widget.chapterSettings.color,
               ),
 
               ///body of the screen
@@ -95,9 +95,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             height: 10,
           ),
           ChapterHeadWidget(
-            phaseName: this.widget.chapterSettings.phaseName,
-            chapterName: this.widget.chapterSettings.cityName,
-            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+            showAppLogo: true,
+            city: this.widget.chapterSettings,
           ),
           SizedBox(
             height: 20,
@@ -157,7 +156,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    Color(widget.chapterSettings.primaryColor),
+                    widget.chapterSettings.color,
                   ),
                 ),
               );
@@ -238,7 +237,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 ///calls the custom widget with the item parameters
                 if (item is OnlineResourceDto) {
                   return OnlineResourcesGridItem(
-                    color: Color(widget.chapterSettings.primaryColor),
+                    color: widget.chapterSettings.color,
                     size: size,
                     name: item.name!,
                     kind: item.kind!,
@@ -263,8 +262,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
     if (!snap.exists)
       new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final List<dynamic> data = payload['readings'];
+    final Map<String, dynamic> payload = snap.data() ?? {};
+    final List<dynamic> data = payload['readings'] ?? [];
 
     final readingsResources = data.map((e) => LecturesDto.fromJson(e)).toList();
 
@@ -281,8 +280,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
     if (!snap.exists)
       new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final List<dynamic> data = payload['externalLinks'];
+    final Map<String, dynamic> payload = snap.data() ?? {};
+    final List<dynamic> data = payload['externalLinks'] ?? [];
 
     final onlineResources = data.map((e) => ResourcesDto.fromJson(e)).toList();
     return onlineResources;

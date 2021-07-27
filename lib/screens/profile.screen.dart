@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -50,12 +49,13 @@ class ProfileScreen extends StatelessWidget {
       ///Listview of the whole screen
       child: ListView(
         children: [
-          ChapterHeadWidget(
-            phaseName: 'etapa 4',
-            chapterName: 'aztlán',
-            chapterImgURL:
-                'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
-          ),
+          // TODO: fix this screen
+          // ChapterHeadWidget(
+          //   phaseName: 'etapa 4',
+          //   chapterName: 'aztlán',
+          //   city:
+          //       'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
+          // ),
           SizedBox(
             height: 30,
           ),

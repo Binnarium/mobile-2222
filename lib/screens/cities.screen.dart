@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/screens/cities-map.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -79,54 +79,82 @@ class _CitiesScreenState extends State<CitiesScreen> {
               style: korolevFont.bodyText1,
             ));
 
-          final List<FirebaseChapterSettings> data =
-              snapshot.data as List<FirebaseChapterSettings>;
+          final List<CityDto> data = snapshot.data as List<CityDto>;
           // return builded component
-          return ListView.separated(
-            itemCount: data.length,
-            separatorBuilder: (context, index) => Container(height: 12),
-            itemBuilder: (context, i) => ElevatedButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 12, horizontal: 20)),
-                backgroundColor:
-                    MaterialStateProperty.all(Color(data[i].primaryColor)),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  StageIntroductionScreen.route,
-                  arguments: StageIntroductionScreen(
-                    chapterSettings: data[i],
-                  ),
-                );
-              },
-              child: Row(
-                children: [
-                  Image.network(data[i].chapterImageUrl, width: 30),
-                  Container(width: 10),
-                  Text("${(i + 1)}. ${(data[i].cityName)}"),
-                ],
+          return GridView.builder(
+            padding: EdgeInsets.all(24),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 12 / 9,
+            ),
+            itemBuilder: (context, i) => Material(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              clipBehavior: Clip.hardEdge,
+              color: data[i].color,
+              child: InkWell(
+                splashColor: data[i].color.withAlpha(150),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    StageIntroductionScreen.route,
+                    arguments: StageIntroductionScreen(
+                      chapterSettings: data[i],
+                    ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Positioned(
+                      child: Opacity(
+                        opacity: 0.8,
+                        child: Hero(
+                          tag: data[i].icon.path,
+                          child: Image.network(
+                            data[i].icon.url,
+                            width: 120,
+                            height: 120,
+                          ),
+                        ),
+                      ),
+                      top: -30,
+                      right: -40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${(i + 1)}. ${(data[i].name)}",
+                            style: korolevFont.headline6,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            itemCount: data.length,
           );
         },
       ),
     );
   }
 
-  Future<List<FirebaseChapterSettings>> _readChapterConfigurations() async {
+  Future<List<CityDto>> _readChapterConfigurations() async {
     ///  reading chapter configurations
 
-    List<FirebaseChapterSettings> settingsTemp = [];
+    List<CityDto> settingsTemp = [];
 
     final snap = await FirebaseFirestore.instance
         .collection('cities')
         .orderBy("stage")
         .get();
-    final settings = snap.docs
-        .map((e) => FirebaseChapterSettings.fromJson(e.data()))
-        .toList();
+
+    final settings = snap.docs.map((e) => CityDto.fromMap(e.data())).toList();
     settingsTemp = settings;
     return settingsTemp;
   }

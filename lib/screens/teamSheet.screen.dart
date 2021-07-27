@@ -78,17 +78,7 @@ class _TeamScreenState extends State<TeamScreen> {
             SizedBox(
               height: 20,
             ),
-            // Container(
-            //     // decoration: BoxDecoration(
-            //     //   border: Border.all(color: Colors.white)
-            //     // ),
-            //     child: Text(
-            //   'Equipo 2222'.toUpperCase(),
-            //   style: korolevFont.headline3?.apply(fontSizeFactor: 0.96),
-            //   overflow: TextOverflow.ellipsis,
-            //   maxLines: 4,
-            //   textAlign: TextAlign.center,
-            // )),
+            
             SizedBox(
               height: 20,
             ),

@@ -8,7 +8,7 @@ class ActivitiesWidget extends StatelessWidget {
     Key? key,
     required this.chapterSettings,
   }) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -105,3 +105,4 @@ class ActivitiesWidget extends StatelessWidget {
     );
   }
 }
+
