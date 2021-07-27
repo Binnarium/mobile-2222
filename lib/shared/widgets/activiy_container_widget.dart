@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivitiesWidget extends StatelessWidget {
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
   const ActivitiesWidget({
     Key? key,
     required this.chapterSettings,
@@ -13,24 +13,24 @@ class ActivitiesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List<Widget> activities = [];
-    if (this.chapterSettings.enabledPages?["clubhouse"] != null &&
-        this.chapterSettings.enabledPages?["clubhouse"]) {
+    if (this.chapterSettings.enabledPages.clubhouse != null &&
+        this.chapterSettings.enabledPages.clubhouse) {
       activities.add(_activity(size, "Eventos Clubhouse",
           "assets/icons/clubhouse_activity_icon.png"));
       activities.add(SizedBox(
         height: 20,
       ));
     }
-    if (this.chapterSettings.enabledPages?["questionary"] != null &&
-        this.chapterSettings.enabledPages?["questionary"]) {
+    if (this.chapterSettings.enabledPages.questionary != null &&
+        this.chapterSettings.enabledPages.questionary) {
       activities.add(_activity(size, "Cuestionario",
           "assets/icons/multiple_choice_activity_icon.png"));
       activities.add(SizedBox(
         height: 20,
       ));
     }
-    if (this.chapterSettings.enabledPages?["project"] != null &&
-        this.chapterSettings.enabledPages?["project"]) {
+    if (this.chapterSettings.enabledPages.project != null &&
+        this.chapterSettings.enabledPages.project) {
       activities.add(_activity(
           size, "Proyecto Docente", "assets/icons/project_activity_icon.png"));
       activities.add(SizedBox(
@@ -77,7 +77,7 @@ class ActivitiesWidget extends StatelessWidget {
                       child: Text(
                         name.toUpperCase(),
                         style: korolevFont.headline6!.copyWith(
-                            color: Color(this.chapterSettings.primaryColor)),
+                            color: this.chapterSettings.color),
                       ),
                     ),
                     Padding(
