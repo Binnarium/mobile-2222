@@ -5,11 +5,13 @@ class ChapterBannerWidget extends StatelessWidget {
   final String phaseName;
   final String chapterName;
   final String chapterImgURL;
+  final String imagePath;
 
   const ChapterBannerWidget({
     required this.phaseName,
     required this.chapterName,
     required this.chapterImgURL,
+    required this.imagePath,
   });
 
   @override
@@ -56,12 +58,14 @@ class ChapterBannerWidget extends StatelessWidget {
   _logoContainer(double parentWidth, double parentHeight) {
     double containerWidth = parentWidth * 0.33;
     print('parentwidth: $parentWidth');
-    return Image(
-      /// condition when screen is on landscape
-      width: (parentWidth > 350) ? containerWidth * 0.5 : containerWidth,
-      fit: BoxFit.contain,
-      image: NetworkImage(
+    return Hero(
+      tag: this.imagePath,
+      child: Image.network(
         this.chapterImgURL,
+
+        /// condition when screen is on landscape
+        width: (parentWidth > 350) ? containerWidth * 0.5 : containerWidth,
+        fit: BoxFit.contain,
       ),
     );
   }

@@ -32,6 +32,7 @@ class ChapterHeadWidget extends StatelessWidget {
             phaseName: this.city.phaseName,
             chapterName: this.city.name,
             chapterImgURL: this.city.icon.url,
+            imagePath: this.city.icon.path,
           ),
       ],
     );

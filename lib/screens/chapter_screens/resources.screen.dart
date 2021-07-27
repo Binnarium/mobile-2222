@@ -261,8 +261,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
     if (!snap.exists)
       new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final List<dynamic> data = payload['readings'];
+    final Map<String, dynamic> payload = snap.data() ?? {};
+    final List<dynamic> data = payload['readings'] ?? [];
 
     final readingsResources = data.map((e) => LecturesDto.fromJson(e)).toList();
 
@@ -279,8 +279,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
     if (!snap.exists)
       new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final List<dynamic> data = payload['externalLinks'];
+    final Map<String, dynamic> payload = snap.data() ?? {};
+    final List<dynamic> data = payload['externalLinks'] ?? [];
 
     final onlineResources = data.map((e) => ResourcesDto.fromJson(e)).toList();
     return onlineResources;

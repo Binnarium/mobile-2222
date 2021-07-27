@@ -143,11 +143,12 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
       //largo y ancho del logo dentro
       width: double.infinity,
       height: size.height * 0.35,
-      child: Image(
-        image: NetworkImage(
+      child: Hero(
+        tag: this.widget.chapterSettings.icon.path,
+        child: Image.network(
           this.widget.chapterSettings.chapterImageUrl,
+          filterQuality: FilterQuality.high,
         ),
-        filterQuality: FilterQuality.high,
       ),
       padding: EdgeInsets.only(
         top: size.height * 0.04,
