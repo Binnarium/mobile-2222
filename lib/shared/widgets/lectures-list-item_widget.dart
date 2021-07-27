@@ -9,6 +9,7 @@ class LecturesListItem extends StatelessWidget {
   final String? editorial;
   final int? year;
   final String? review;
+  final String? link;
   final Size size;
   final bool hasLineBehind;
 
@@ -22,6 +23,7 @@ class LecturesListItem extends StatelessWidget {
     this.review,
     required this.size,
     required this.hasLineBehind,
+    this.link,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,11 @@ class LecturesListItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
-          launch("https://www.google.com/search?q=${this.title}");
+          if (this.link != null) {
+            launch(this.link!);
+          } else {
+            launch("https://www.google.com/search?q=${this.title}");
+          }
         },
 
         ///Container of the resource
