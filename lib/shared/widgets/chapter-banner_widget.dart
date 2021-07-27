@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterBannerWidget extends StatelessWidget {
-  final String phase;
+  final String phaseName;
   final String chapterName;
   final String chapterImgURL;
-  const ChapterBannerWidget(
-      {required this.phase,
-      required this.chapterName,
-      required this.chapterImgURL});
+
+  const ChapterBannerWidget({
+    required this.phaseName,
+    required this.chapterName,
+    required this.chapterImgURL,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class ChapterBannerWidget extends StatelessWidget {
 
   _numberStage() {
     return Container(
-      child: Text(phase.toUpperCase(),
+      child: Text(this.phaseName.toUpperCase(),
           style: korolevFont.headline5?.apply(fontSizeFactor: 0.7),
           textAlign: TextAlign.left),
     );

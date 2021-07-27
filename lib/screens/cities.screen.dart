@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/screens/cities-map.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -79,8 +79,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
               style: korolevFont.bodyText1,
             ));
 
-          final List<FirebaseChapterSettings> data =
-              snapshot.data as List<FirebaseChapterSettings>;
+          final List<CityDto> data = snapshot.data as List<CityDto>;
           // return builded component
           return ListView.separated(
             itemCount: data.length,
@@ -90,7 +89,8 @@ class _CitiesScreenState extends State<CitiesScreen> {
                 padding: MaterialStateProperty.all(
                     EdgeInsets.symmetric(vertical: 12, horizontal: 20)),
                 backgroundColor:
-                    MaterialStateProperty.all(Color(data[i].primaryColor)),
+                    MaterialStateProperty.all(
+                    Color(data[i].configuration.colorHex)),
               ),
               onPressed: () {
                 Navigator.pushNamed(
@@ -103,9 +103,9 @@ class _CitiesScreenState extends State<CitiesScreen> {
               },
               child: Row(
                 children: [
-                  Image.network(data[i].chapterImageUrl, width: 30),
+                  Image.network(data[i].icon.url, width: 30),
                   Container(width: 10),
-                  Text("${(i + 1)}. ${(data[i].cityName)}"),
+                  Text("${(i + 1)}. ${(data[i].name)}"),
                 ],
               ),
             ),
@@ -115,18 +115,17 @@ class _CitiesScreenState extends State<CitiesScreen> {
     );
   }
 
-  Future<List<FirebaseChapterSettings>> _readChapterConfigurations() async {
+  Future<List<CityDto>> _readChapterConfigurations() async {
     ///  reading chapter configurations
 
-    List<FirebaseChapterSettings> settingsTemp = [];
+    List<CityDto> settingsTemp = [];
 
     final snap = await FirebaseFirestore.instance
         .collection('cities')
         .orderBy("stage")
         .get();
-    final settings = snap.docs
-        .map((e) => FirebaseChapterSettings.fromJson(e.data()))
-        .toList();
+
+    final settings = snap.docs.map((e) => CityDto.fromMap(e.data())).toList();
     settingsTemp = settings;
     return settingsTemp;
   }

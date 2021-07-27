@@ -1,22 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 
-class LoadCitiesSettingService
-    extends ILoadInformationService<List<FirebaseChapterSettings>> {
+class LoadCitiesSettingService extends ILoadInformationService<List<CityDto>> {
   @override
-  Future<List<FirebaseChapterSettings>> load() async {
+  Future<List<CityDto>> load() async {
     ///  reading chapter configurations
-    List<FirebaseChapterSettings> settingsTemp = [];
 
     final snap = await FirebaseFirestore.instance
         .collection('cities')
         .orderBy("stage")
         .get();
-    final settings = snap.docs
-        .map((e) => FirebaseChapterSettings.fromJson(e.data()))
-        .toList();
-    settingsTemp = settings;
-    return settingsTemp;
+
+    return snap.docs.map((e) => CityDto.fromMap(e.data())).toList();
   }
 }
