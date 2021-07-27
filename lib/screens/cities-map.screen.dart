@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/services/CitiesPositions_settings.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -46,8 +46,7 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
               style: korolevFont.bodyText1,
             ));
 
-          final List<FirebaseChapterSettings> data =
-              snapshot.data as List<FirebaseChapterSettings>;
+          final List<CityDto> data = snapshot.data as List<CityDto>;
           return Stack(
             children: [
               Center(
@@ -77,7 +76,7 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
   }
 
   List<Positioned> _citiesButtons(
-      List<FirebaseChapterSettings> data, Size size) {
+      List<CityDto> data, Size size) {
     List<CityButton> buttons = [];
 
     for (var i = 0; i < data.length; i++) {
@@ -93,17 +92,17 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
     return positionedButtons;
   }
 
-  Future<List<FirebaseChapterSettings>> _readChapterConfigurations() async {
+  Future<List<CityDto>> _readChapterConfigurations() async {
     ///  reading chapter configurations
 
-    List<FirebaseChapterSettings> settingsTemp = [];
+    List<CityDto> settingsTemp = [];
 
     final snap = await FirebaseFirestore.instance
         .collection('cities')
         .orderBy("stage")
         .get();
     final settings = snap.docs
-        .map((e) => FirebaseChapterSettings.fromJson(e.data()))
+        .map((e) => CityDto.fromMap(e.data()))
         .toList();
     settingsTemp = settings;
     return settingsTemp;
@@ -111,7 +110,7 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
 }
 
 class CityButton extends StatelessWidget {
-  final FirebaseChapterSettings settings;
+  final CityDto settings;
   const CityButton({Key? key, required this.settings}) : super(key: key);
 
   @override
@@ -119,7 +118,7 @@ class CityButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return ElevatedButton(
       onPressed: () {
-        print("Presionado: ${this.settings.cityName}");
+        print("Presionado: ${this.settings.name}");
         Navigator.pushNamed(
           context,
           StageIntroductionScreen.route,
