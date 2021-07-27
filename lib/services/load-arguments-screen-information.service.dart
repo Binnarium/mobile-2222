@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 
-class LoadArgumentScreenInformationService extends ILoadInformationWithOptions<
-    List<String>, FirebaseChapterSettings> {
+class LoadArgumentScreenInformationService
+    extends ILoadInformationWithOptions<List<String>, CityDto> {
   const LoadArgumentScreenInformationService({
-    required final FirebaseChapterSettings chapterSettings,
+    required final CityDto chapterSettings,
   }) : super(options: chapterSettings);
 
   @override
   Future<List<String>> load() async {
-    List<String> ideasTemp = [];
     final data = await FirebaseFirestore.instance
         .collection('cities')
         .doc(this.options.id)
@@ -19,11 +18,11 @@ class LoadArgumentScreenInformationService extends ILoadInformationWithOptions<
         .get();
 
     if (data.exists) {
-      ideasTemp = (data.get('questions') as List<dynamic>)
+      return (data.get('questions') as List<dynamic>)
           .map((e) => e.toString())
           .toList();
     }
 
-    return ideasTemp;
+    return [];
   }
 }

@@ -2,14 +2,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 
 class StageMonsterScreen extends StatefulWidget {
   static const String route = '/monster';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const StageMonsterScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -48,7 +48,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
             children: [
               //widget custom que crea el background con el logo de la izq
               ChapterBackgroundWidget(
-                backgroundColor: Color(widget.chapterSettings.primaryColor),
+                backgroundColor: widget.chapterSettings.color,
                 reliefPosition: 'top-right',
               ),
               //decoración adicional del background
@@ -72,9 +72,9 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
           height: 10,
         ),
         ChapterHeadWidget(
-          phaseName: this.widget.chapterSettings.phaseName,
-          chapterName: this.widget.chapterSettings.cityName,
-          chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+          showAppLogo: true,
+          showStageLogo: true,
+          city: this.widget.chapterSettings,
         ),
         Expanded(
           child: Center(

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const StageIntroductionScreen({
     Key? key,
@@ -58,7 +58,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
           children: [
             /// first layer is the background with road-map
             ChapterBackgroundWidget(
-              backgroundColor: Color(widget.chapterSettings.primaryColor),
+              backgroundColor: widget.chapterSettings.color,
               reliefPosition: 'bottom-right',
             ),
 
@@ -89,7 +89,8 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
       /// city logo
       children: [
         ChapterHeadWidget(
-          phaseName: 'introduction',
+          showAppLogo: true,
+          city: widget.chapterSettings,
         ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
@@ -99,7 +100,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
                 ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1)),
         SizedBox(height: 10),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(this.widget.chapterSettings.cityName.toUpperCase(),
+        Text(this.widget.chapterSettings.name.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline1
                 ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5)),
@@ -117,7 +118,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    Color(this.widget.chapterSettings.primaryColor),
+                    this.widget.chapterSettings.color,
                   ),
                 ),
               );
@@ -142,11 +143,12 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
       //largo y ancho del logo dentro
       width: double.infinity,
       height: size.height * 0.35,
-      child: Image(
-        image: NetworkImage(
+      child: Hero(
+        tag: this.widget.chapterSettings.icon.path,
+        child: Image.network(
           this.widget.chapterSettings.chapterImageUrl,
+          filterQuality: FilterQuality.high,
         ),
-        filterQuality: FilterQuality.high,
       ),
       padding: EdgeInsets.only(
         top: size.height * 0.04,

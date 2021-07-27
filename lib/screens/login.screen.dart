@@ -15,11 +15,13 @@ class LoginScreen extends StatefulWidget {
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
-
-  LoginDto? loginPayload;
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  
+  LoginDto? loginPayload;
+  
   @override
   void initState() {
     super.initState();
@@ -27,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
     loader
         .load()
-        .then((value) => this.setState(() => this.widget.loginPayload = value));
+        .then((value) => this.setState(() => this.loginPayload = value));
   }
 
   ///página de login donde pide usuario y contraseña
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           //   Text(loginInfo.error.toString());
           // }
 
-          if (this.widget.loginPayload == null)
+          if (this.loginPayload == null)
             Center(
               child: CircularProgressIndicator(
                 valueColor: new AlwaysStoppedAnimation<Color>(
@@ -76,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           /// data is available
           /// logo de 2222
-          if (this.widget.loginPayload != null) ...[
+          if (this.loginPayload != null) ...[
             _logo(size),
             SizedBox(height: size.height * 0.05),
 
@@ -88,11 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: size.height * 0.05),
             _descriptionText(
-                context, this.widget.loginPayload!.pageTitle, size),
-            _video(this.widget.loginPayload!.welcomeVideo["url"],
+                context, this.loginPayload!.pageTitle, size),
+            _video(this.loginPayload!.welcomeVideo["url"],
                 ColorsApp.backgroundRed, size),
             _profundityText(
-                context, this.widget.loginPayload!.profundityText, size),
+                context, this.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
             SizedBox(height: size.height * 0.01),
@@ -209,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
   _video(String url, Color color, Size size) {
     return VideoPlayerSegment(
       color: color,
-      videoUrl: this.widget.loginPayload!.welcomeVideo["url"],
+      videoUrl: this.loginPayload!.welcomeVideo["url"],
     );
   }
 

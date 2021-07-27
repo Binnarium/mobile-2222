@@ -13,6 +13,7 @@ class LoginDto {
       required this.workloadText
       });
 
+
   static LoginDto fromJson(Map<String, dynamic> payload) {
     String? pageTitle = payload['pageTitle'];
     String? profundityText = payload['profundityText'];
