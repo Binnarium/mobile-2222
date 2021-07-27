@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
 import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -13,7 +13,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ContentScreen extends StatefulWidget {
   static const String route = '/video';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const ContentScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -29,7 +29,7 @@ class _ContentScreenState extends State<ContentScreen> {
   void initState() {
     super.initState();
 
-    ILoadInformationWithOptions<List<dynamic>, FirebaseChapterSettings> loader =
+    ILoadInformationWithOptions<List<dynamic>, CityDto> loader =
         LoadContentsScreenInformationService(
       chapterSettings: this.widget.chapterSettings,
     );
@@ -70,7 +70,7 @@ class _ContentScreenState extends State<ContentScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(widget.chapterSettings.primaryColor),
+                backgroundColor: widget.chapterSettings.color,
                 reliefPosition: 'top-left',
               ),
 
@@ -99,9 +99,8 @@ class _ContentScreenState extends State<ContentScreen> {
 
           ///calls the head of the chapter (logo leaf, banner)
           ChapterHeadWidget(
-            chapterName: this.widget.chapterSettings.cityName,
-            phaseName: this.widget.chapterSettings.phaseName,
-            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+            showStageLogo: true,
+            city: this.widget.chapterSettings,
           ),
           SizedBox(height: 20),
 
@@ -118,7 +117,7 @@ class _ContentScreenState extends State<ContentScreen> {
       return Center(
         child: CircularProgressIndicator(
           valueColor: new AlwaysStoppedAnimation<Color>(
-            Color(this.widget.chapterSettings.primaryColor),
+            this.widget.chapterSettings.color,
           ),
         ),
       );
@@ -132,7 +131,7 @@ class _ContentScreenState extends State<ContentScreen> {
             new VideoPlayerSegment(
               videoUrl: c.url!,
               description: c.description,
-              color: Color(widget.chapterSettings.primaryColor),
+              color: widget.chapterSettings.color,
             ),
           ],
         );
@@ -143,7 +142,7 @@ class _ContentScreenState extends State<ContentScreen> {
             PodcastAudioPlayer(
               audioUrl: c.url,
               description: c.description,
-              color: Color(widget.chapterSettings.primaryColor),
+              color: widget.chapterSettings.color,
             ),
           ],
         );
@@ -184,7 +183,7 @@ class _ContentScreenState extends State<ContentScreen> {
             Text(
               (title == null) ? 'No title Available' : title.toUpperCase(),
               style: korolevFont.headline6?.apply(
-                color: Color(widget.chapterSettings.primaryColor),
+                color: widget.chapterSettings.color,
               ),
             ),
           ],

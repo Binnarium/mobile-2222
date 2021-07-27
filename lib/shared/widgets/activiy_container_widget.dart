@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivityContainerWidget extends StatelessWidget {
   final double width;
   final double height;
-  final String primaryColor;
-  final Map<String, dynamic> enabledActivities;
+  final Color primaryColor;
+  final CityEnabledPagesDto enabledActivities;
 
   const ActivityContainerWidget(
       {Key? key,
@@ -120,7 +121,7 @@ class ActivityContainerWidget extends StatelessWidget {
           Text(
             activityName.toUpperCase(),
             style: korolevFont.headline6?.apply(
-              color: Color(int.parse(this.primaryColor)),
+              color: this.primaryColor,
               fontSizeFactor: 0.8,
             ),
             textAlign: TextAlign.center,
@@ -155,7 +156,7 @@ class _ActivityItem {
       required this.iconPath});
 }
 
-List<dynamic> _showActivities(Map<String, dynamic> activitiesToPaint) {
+List<dynamic> _showActivities(CityEnabledPagesDto activitiesToPaint) {
   Map<int, Map<String, dynamic>> activitiesSettings = {
     0: {
       "rotation": Matrix4.identity()
@@ -199,10 +200,9 @@ List<dynamic> _showActivities(Map<String, dynamic> activitiesToPaint) {
   List<dynamic> activities = [];
   Map<String, dynamic> enabledActivitiesTemp = new Map();
   enabledActivitiesTemp = {
-    "questionary": activitiesToPaint["questionary"],
-    "clubhouse": activitiesToPaint["clubhouse"],
-    "readings": activitiesToPaint["readings"],
-    "project": activitiesToPaint["project"],
+    "questionary": activitiesToPaint.questionary,
+    "clubhouse": activitiesToPaint.clubhouse,
+    "project": activitiesToPaint.project,
   };
 
   int index = 0;

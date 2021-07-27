@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/activiy_container_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivitiesScreen extends StatelessWidget {
   static const String route = '/activities';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const ActivitiesScreen({
     Key? key,
@@ -45,7 +45,7 @@ class ActivitiesScreen extends StatelessWidget {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(chapterSettings.primaryColor),
+                backgroundColor: Color(chapterSettings.configuration.colorHex),
                 reliefPosition: 'bottom-right',
               ),
 
@@ -73,9 +73,8 @@ class ActivitiesScreen extends StatelessWidget {
             height: 10,
           ),
           ChapterHeadWidget(
-            phaseName: this.chapterSettings.phaseName,
-            chapterName: this.chapterSettings.cityName,
-            chapterImgURL: this.chapterSettings.chapterImageUrl,
+            showStageLogo: true,
+            city: this.chapterSettings,
           ),
           SizedBox(
             height: 20,
@@ -117,7 +116,7 @@ class ActivitiesScreen extends StatelessWidget {
         children: [
           ///background chapter image
           Image(
-            image: NetworkImage(this.chapterSettings.chapterImageUrl),
+            image: NetworkImage(this.chapterSettings.icon.url),
             width: containerWidth * 0.5,
             height: containerHeight * 0.5,
           ),
@@ -132,10 +131,10 @@ class ActivitiesScreen extends StatelessWidget {
           ),
 
           ActivityContainerWidget(
-            enabledActivities: this.chapterSettings.enabledPages!,
+            enabledActivities: this.chapterSettings.enabledPages,
             width: containerWidth,
             height: containerHeight,
-            primaryColor: this.chapterSettings.primaryColor.toString(),
+            primaryColor: this.chapterSettings.color,
           )
         ],
       ),

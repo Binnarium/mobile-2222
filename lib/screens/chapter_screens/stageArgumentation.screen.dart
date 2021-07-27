@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -12,7 +12,7 @@ import 'package:lab_movil_2222/themes/colors.dart';
 class StageArgumentationScreen extends StatefulWidget {
   static const String route = '/argumentation';
 
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const StageArgumentationScreen({
     Key? key,
@@ -30,7 +30,7 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   @override
   void initState() {
     super.initState();
-    ILoadInformationWithOptions<List<String>, FirebaseChapterSettings> loader =
+    ILoadInformationWithOptions<List<String>, CityDto> loader =
         LoadArgumentScreenInformationService(
       chapterSettings: this.widget.chapterSettings,
     );
@@ -66,7 +66,7 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
           children: [
             //widget custom que crea el background con el logo de la izq
             ChapterBackgroundWidget(
-              backgroundColor: Color(widget.chapterSettings.primaryColor),
+              backgroundColor: widget.chapterSettings.color,
               reliefPosition: 'top-right',
             ),
             //decoración adicional del background
@@ -89,9 +89,8 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
           height: 10,
         ),
         ChapterHeadWidget(
-          phaseName: this.widget.chapterSettings.phaseName,
-          chapterName: this.widget.chapterSettings.cityName,
-          chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+          showStageLogo: true,
+          city: this.widget.chapterSettings,
         ),
         if (this.questions != null)
           Padding(

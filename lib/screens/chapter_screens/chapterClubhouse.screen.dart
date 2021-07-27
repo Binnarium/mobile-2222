@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
-import 'package:lab_movil_2222/shared/models/FirebaseChapterSettings.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -12,7 +12,7 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
-  final FirebaseChapterSettings chapterSettings;
+  final CityDto chapterSettings;
 
   const ChapterClubhouseScreen({Key? key, required this.chapterSettings})
       : super(key: key);
@@ -22,11 +22,11 @@ class ChapterClubhouseScreen extends StatefulWidget {
 }
 
 class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
-  late List<FirebaseChapterSettings> chapters;
+  late List<CityDto> chapters;
   @override
   void initState() {
     super.initState();
-    ILoadInformationService<List<FirebaseChapterSettings>> loader =
+    ILoadInformationService<List<CityDto>> loader =
         LoadCitiesSettingService();
     loader.load().then((value) => this.setState(() => this.chapters = value));
   }
@@ -41,7 +41,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
               context,
               StageIntroductionScreen.route,
               arguments: StageIntroductionScreen(
-                chapterSettings: chapters[this.widget.chapterSettings.stage!],
+                chapterSettings: chapters[this.widget.chapterSettings.stage],
               ),
             );
 
@@ -63,7 +63,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: Color(widget.chapterSettings.primaryColor),
+                backgroundColor: widget.chapterSettings.color,
                 reliefPosition: 'bottom-right',
               ),
 
@@ -91,9 +91,8 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
             height: 10,
           ),
           ChapterHeadWidget(
-            phaseName: this.widget.chapterSettings.phaseName,
-            chapterName: this.widget.chapterSettings.cityName,
-            chapterImgURL: this.widget.chapterSettings.chapterImageUrl,
+            showStageLogo: true,
+            city: this.widget.chapterSettings,
           ),
           SizedBox(
             height: 50,
