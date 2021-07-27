@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: size.height * 0.01),
 
             _workloadText(
-                context, this.widget.loginPayload!.workloadText, size),
+                context, this.loginPayload!.workloadText, size),
 
             SizedBox(height: size.height * 0.05),
 
