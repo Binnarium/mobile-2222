@@ -3,12 +3,14 @@ class LecturesDto {
   final String? author;
   final String? coverUrl;
   final String? name;
+  final String? link;
   final int? publishedDate;
   LecturesDto._({
     this.about,
     this.author,
     this.coverUrl,
     this.name,
+    this.link,
     this.publishedDate,
   });
 
@@ -18,6 +20,7 @@ class LecturesDto {
       author: payload['author'],
       coverUrl: payload['cover']['url'],
       name: payload['name'],
+      link: payload['link'],
       publishedDate: payload['publishedYear'],
     );
   }

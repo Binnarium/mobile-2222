@@ -177,6 +177,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     author: item.author!,
                     year: item.publishedDate!,
                     size: size,
+                    link: item.link,
                     review: item.about,
                     hasLineBehind:
                         (index == (readings.data!.length - 1)) ? false : true,
