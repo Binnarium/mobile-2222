@@ -90,54 +90,13 @@ class ActivitiesScreen extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          _activitiesCircle(size),
+          // _activitiesCircle(size),
+          _activitiesBody(size),
         ],
       ),
     );
   }
-
-  _activitiesCircle(Size size) {
-    ///margin of the container
-    double bodymarginWidth = size.width * 0.03;
-
-    ///0.06 counting the padding
-    double containerWidth = size.width - bodymarginWidth * 2;
-
-    ///0.12 is the height of the banner
-    double containerHeight = size.height - size.height * 0.4;
-    return Container(
-      margin: EdgeInsets.only(
-          left: bodymarginWidth,
-          right: bodymarginWidth,
-          bottom: bodymarginWidth * 2),
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          ///background chapter image
-          Image(
-            image: NetworkImage(this.chapterSettings.icon.url),
-            width: containerWidth * 0.5,
-            height: containerHeight * 0.5,
-          ),
-          Image(
-            image: AssetImage(
-                "assets/backgrounds/decorations/white_route_circle_curve_background.png"),
-            width: (size.height > 700)
-                ? containerWidth * 0.9
-                : containerWidth * 0.85,
-            height: containerHeight * 0.85,
-            color: Color.fromRGBO(255, 255, 255, 0.5),
-          ),
-
-          ActivityContainerWidget(
-            enabledActivities: this.chapterSettings.enabledPages,
-            width: containerWidth,
-            height: containerHeight,
-            primaryColor: this.chapterSettings.color,
-          )
-        ],
-      ),
-    );
+  _activitiesBody(Size size) {
+    return ActivitiesWidget(chapterSettings: chapterSettings);
   }
 }
