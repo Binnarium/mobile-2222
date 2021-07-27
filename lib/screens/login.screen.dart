@@ -98,6 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
             SizedBox(height: size.height * 0.01),
+
+            _workloadText(
+                context, this.loginPayload!.workloadText, size),
+
             SizedBox(height: size.height * 0.05),
 
             /// formulario (falta aplicar backend)
@@ -139,24 +143,43 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _profundityText(BuildContext context, String depthText, Size size) {
     return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-      // child: Text(
-      //   depthText,
-      //   style: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-      // ),
-      child : MarkdownBody(
-        data: depthText,
-        styleSheet: MarkdownStyleSheet(
-          p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          h2: korolevFont.headline6,          
-          listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+        child: MarkdownBody(
+          data: depthText,
+          styleSheet: MarkdownStyleSheet(
+            p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+            h2: korolevFont.headline6,
+            listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          ),
+        ));
+  }
+
+  _workloadText(BuildContext context, String workloadText, Size size) {
+    return Container(
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 40),
+        padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.1, vertical: size.width * 0.1),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(7.0) //
+              ),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              offset: Offset(0.0, 0.7), //(x,y)
+              blurRadius: 1.0,
+            ),
+          ],
         ),
-       
-        
-      )
-    );
+        child: MarkdownBody(
+          data: workloadText,
+          styleSheet: MarkdownStyleSheet(
+            h2: korolevFont.headline6,
+            listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+          ),
+        ));
   }
 
   _sheetButton(BuildContext context, Size size) {
