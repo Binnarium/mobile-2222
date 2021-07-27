@@ -131,9 +131,10 @@ class CityButton extends StatelessWidget {
       child: Container(),
       style: ElevatedButton.styleFrom(
         shape: CircleBorder(),
-        padding: (size.width < 350) ? EdgeInsets.all(35) : EdgeInsets.all(45),
-        onPrimary: Colors.white,
+        padding: (size.width <= 360) ? EdgeInsets.all(35) : EdgeInsets.all(45),
+        // onPrimary: Colors.white,
         primary: Colors.transparent,
+        shadowColor: Colors.transparent,
         elevation: 0,
       ),
     );
