@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:lab_movil_2222/screens/cities.screen.dart';
+import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
@@ -18,10 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  
   LoginDto? loginPayload;
-  
+
   @override
   void initState() {
     super.initState();
@@ -89,18 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.05),
-            _descriptionText(
-                context, this.loginPayload!.pageTitle, size),
+            _descriptionText(context, this.loginPayload!.pageTitle, size),
             _video(this.loginPayload!.welcomeVideo["url"],
                 ColorsApp.backgroundRed, size),
-            _profundityText(
-                context, this.loginPayload!.profundityText, size),
+            _profundityText(context, this.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
             SizedBox(height: size.height * 0.01),
 
-            _workloadText(
-                context, this.loginPayload!.workloadText, size),
+            _workloadText(context, this.loginPayload!.workloadText, size),
 
             SizedBox(height: size.height * 0.05),
 
@@ -339,7 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         ///Navigates to main screen
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(CitiesScreen.route);
+          Navigator.of(context).pushReplacementNamed(CitiesMapScreen.route);
         },
         child: Text(
           'Ingresar',
