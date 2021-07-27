@@ -7,7 +7,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lab_movil_2222/main.dart';
 
-
 void main() {
   test('Should create an app', () {
     final app = App2222();
