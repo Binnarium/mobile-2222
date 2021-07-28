@@ -18,10 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  
   LoginDto? loginPayload;
-  
+
   @override
   void initState() {
     super.initState();
@@ -89,18 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.05),
-            _descriptionText(
-                context, this.loginPayload!.pageTitle, size),
+            _descriptionText(context, this.loginPayload!.pageTitle, size),
             _video(this.loginPayload!.welcomeVideo["url"],
                 ColorsApp.backgroundRed, size),
-            _profundityText(
-                context, this.loginPayload!.profundityText, size),
+            _profundityText(context, this.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
             SizedBox(height: size.height * 0.01),
 
-            _workloadText(
-                context, this.loginPayload!.workloadText, size),
+            _workloadText(context, this.loginPayload!.workloadText, size),
 
             SizedBox(height: size.height * 0.05),
 
@@ -157,29 +152,118 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _workloadText(BuildContext context, String workloadText, Size size) {
     return Container(
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 40),
-        padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.1, vertical: size.width * 0.1),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(7.0) //
-              ),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              offset: Offset(0.0, 0.7), //(x,y)
-              blurRadius: 1.0,
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(7.0) //
             ),
-          ],
-        ),
-        child: MarkdownBody(
-          data: workloadText,
-          styleSheet: MarkdownStyleSheet(
-            h2: korolevFont.headline6,
-            listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            offset: Offset(0.0, 0.7), //(x,y)
+            blurRadius: 1.0,
           ),
-        ));
+        ],
+      ),
+      // child: MarkdownBody(
+      //   data: workloadText,
+      //   styleSheet: MarkdownStyleSheet(
+      //     h2: korolevFont.headline6,
+      //     listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
+      //   ),
+      // )
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            child: Text(
+              "Carga horaria estimada para cada docente por ciudad:",
+              style: korolevFont.headline5?.copyWith(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "10 horas",
+            style: korolevFont.headline6?.apply(
+              fontSizeFactor: 0.9,
+              color: ColorsApp.backgroundRed,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Text(
+              "Se trata de 4 horas para el consumo asíncrono de contenidos y 6 horas para el tiempo de producción y gamifiación",
+              style: korolevFont.headline5?.apply(
+                fontSizeFactor: 0.6,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            child: Text(
+              "Tiempo total del viaje 2222",
+              style: korolevFont.headline5?.copyWith(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "120 horas",
+            style: korolevFont.headline6?.apply(
+              fontSizeFactor: 0.9,
+              color: ColorsApp.backgroundRed,
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Text(
+              "para una duración máxima de 45 días",
+              style: korolevFont.headline5?.apply(
+                fontSizeFactor: 0.6,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "A disfrutar...",
+            style: korolevFont.headline6?.apply(
+              fontSizeFactor: 0.9,
+              color: ColorsApp.backgroundRed,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   _sheetButton(BuildContext context, Size size) {
