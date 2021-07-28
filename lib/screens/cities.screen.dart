@@ -32,7 +32,7 @@ class _CitiesScreenState extends State<CitiesScreen> {
               onPressed: () {
                 Navigator.pushNamed(context, HomeScreen.route);
               },
-              icon: Icon(Icons.help_outline_rounded))
+              icon: Icon(Icons.home))
         ],
       ),
       floatingActionButton: FloatingActionButton(

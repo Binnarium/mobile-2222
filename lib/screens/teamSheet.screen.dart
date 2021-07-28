@@ -110,8 +110,9 @@ class _TeamScreenState extends State<TeamScreen> {
         data: teamText,
         styleSheet: MarkdownStyleSheet(
           p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          h1: korolevFont.headline4,
-          h2: korolevFont.headline5,          
+          // h1: korolevFont.headline4,
+          h2: korolevFont.headline4,   
+          h3: korolevFont.headline6,       
           listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
           
         ),
