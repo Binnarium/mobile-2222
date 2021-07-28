@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/cities.screen.dart';
+import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
@@ -47,7 +47,7 @@ class CustomNavigationBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () =>
-                Navigator.pushReplacementNamed(context, CitiesScreen.route),
+                Navigator.pushReplacementNamed(context, CitiesMapScreen.route),
             child: Container(
               child: ImageIcon(
                 AssetImage('assets/icons/boat_icon.png'),
