@@ -100,6 +100,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
           SizedBox(height: spacedBodyContainers),
           // _imageOne(size),
           _contentsBody(size),
+          SizedBox(height: spacedBodyContainers),
         ],
       ),
     );

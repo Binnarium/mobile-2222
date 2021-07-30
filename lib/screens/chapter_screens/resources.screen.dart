@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
+import 'package:lab_movil_2222/services/load-resources-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
@@ -25,9 +28,31 @@ class ResourcesScreen extends StatefulWidget {
 }
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
+  List<ResourcesDto>? onlineResources;
+  List<LecturesDto>? readings;
+
   @override
   void initState() {
     super.initState();
+
+    ILoadInformationWithOptions<List<dynamic>, CityDto> resourcesLoader =
+        LoadOnlineResourcesScreenInformationService(
+      chapterSettings: this.widget.chapterSettings,
+    );
+    resourcesLoader.load().then((value) =>
+        this.setState(() => onlineResources = value as List<ResourcesDto>));
+
+    ILoadInformationWithOptions<List<dynamic>, CityDto> readingsLoader =
+        LoadReadingsResourcesScreenInformationService(
+      chapterSettings: this.widget.chapterSettings,
+    );
+    readingsLoader.load().then(
+        (value) => this.setState(() => readings = value as List<LecturesDto>));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -121,13 +146,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
 
           ///calling the body of online resources, expected a json
-          _onlineResourcesBody([
-            2,
-            3,
-            2,
-            1,
-            2,
-          ], size),
+          _onlineResourcesBody(size),
           SizedBox(
             height: 20,
           ),
@@ -138,152 +157,96 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   /// books body method
   _booksBody(Size size) {
-    /// main container
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+    if (this.readings == null)
+      Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(
+            Colors.white,
+          ),
+        ),
+      );
+    else {
+      /// main container
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
-      ///To resize the parent container of the list of books
+        ///To resize the parent container of the list of books
 
-      child: FutureBuilder(
-          future: _readBooks(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<LecturesDto>> readings) {
-            if (readings.hasError) {
-              return Text(readings.error.toString());
-            }
+        child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: readings!.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final item = readings!.elementAt(index);
 
-            if (readings.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    widget.chapterSettings.color,
-                  ),
-                ),
+              ///calls the custom widget with the item parameters
+
+              return LecturesListItem(
+                title: item.name!,
+                author: item.author!,
+                year: item.publishedDate!,
+                size: size,
+                link: item.link,
+                review: item.about,
+                hasLineBehind: (index == (readings!.length - 1)) ? false : true,
+                imageURL: item.coverUrl,
               );
-            }
-            final List<LecturesDto> readingsTemp =
-                readings.data as List<LecturesDto>;
-            return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: readings.data?.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final item = readingsTemp.elementAt(index);
-
-                  ///calls the custom widget with the item parameters
-
-                  return LecturesListItem(
-                    title: item.name!,
-                    author: item.author!,
-                    year: item.publishedDate!,
-                    size: size,
-                    link: item.link,
-                    review: item.about,
-                    hasLineBehind:
-                        (index == (readings.data!.length - 1)) ? false : true,
-                    imageURL: item.coverUrl,
-                  );
-                });
-          }),
-    );
+            }),
+      );
+    }
   }
 
   ///Method of the online resources
-  _onlineResourcesBody(List list, Size size) {
-    ///main container
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+  _onlineResourcesBody(Size size) {
+    if (this.readings == null)
+      Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(
+            Colors.white,
+          ),
+        ),
+      );
+    else {
+      ///main container
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
-      ///To resize the parent container of the online resources grid
+        ///To resize the parent container of the online resources grid
 
-      ///Creates a grid with the necesary online resources
-      child: FutureBuilder(
-          future: _readOnlineResources(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<ResourcesDto>> resources) {
-            if (resources.hasError) {
-              return Text(resources.error.toString());
-            }
+        ///Creates a grid with the necesary online resources
+        child: StaggeredGridView.countBuilder(
+          ///general spacing per resource
+          crossAxisCount: 2,
 
-            if (resources.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    Colors.white,
-                  ),
-                ),
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15,
+          staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+          itemCount: onlineResources!.length,
+
+          /// property that sizes the container automaticly according
+          /// the items
+          shrinkWrap: true,
+
+          ///to avoid the scroll
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            final item = onlineResources!.elementAt(index);
+
+            ///calls the custom widget with the item parameters
+            if (item is OnlineResourceDto) {
+              return OnlineResourcesGridItem(
+                color: widget.chapterSettings.color,
+                size: size,
+                name: item.name!,
+                kind: item.kind!,
+                description: item.description,
+                redirect: item.redirect!,
               );
             }
-            final List<ResourcesDto> resourcesTemp =
-                resources.data as List<ResourcesDto>;
-            return StaggeredGridView.countBuilder(
-              ///general spacing per resource
-              crossAxisCount: 2,
-
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
-              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-              itemCount: resourcesTemp.length,
-
-              /// property that sizes the container automaticly according
-              /// the items
-              shrinkWrap: true,
-
-              ///to avoid the scroll
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final item = resourcesTemp.elementAt(index);
-
-                ///calls the custom widget with the item parameters
-                if (item is OnlineResourceDto) {
-                  return OnlineResourcesGridItem(
-                    color: widget.chapterSettings.color,
-                    size: size,
-                    name: item.name!,
-                    kind: item.kind!,
-                    description: item.description,
-                    redirect: item.redirect!,
-                  );
-                }
-                return Text('Kind of content not found');
-              },
-            );
-          }),
-    );
-  }
-
-  Future<List<LecturesDto>> _readBooks() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('resources')
-        .get();
-
-    if (!snap.exists)
-      new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() ?? {};
-    final List<dynamic> data = payload['readings'] ?? [];
-
-    final readingsResources = data.map((e) => LecturesDto.fromJson(e)).toList();
-
-    return readingsResources;
-  }
-
-  Future<List<ResourcesDto>> _readOnlineResources() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('resources')
-        .get();
-
-    if (!snap.exists)
-      new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() ?? {};
-    final List<dynamic> data = payload['externalLinks'] ?? [];
-
-    final onlineResources = data.map((e) => ResourcesDto.fromJson(e)).toList();
-    return onlineResources;
+            return Text('Kind of content not found');
+          },
+        ),
+      );
+    }
   }
 }
