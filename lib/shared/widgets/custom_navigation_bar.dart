@@ -3,6 +3,7 @@ import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
+import 'package:lab_movil_2222/screens/project.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -91,7 +92,7 @@ class CustomNavigationBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, StatisticsScreen.route),
+            onTap: () => Navigator.pushNamed(context, ProjectScreen.route),//ORIGINAL StatisticsScreen.route
             child: Container(
               child: ImageIcon(
                 AssetImage('assets/icons/stats_icon.png'),

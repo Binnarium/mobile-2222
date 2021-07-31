@@ -106,13 +106,18 @@ class _TeamScreenState extends State<TeamScreen> {
 
   _teamSheet(BuildContext context, String teamText, Size size) {
     return Container(
+      
       child: MarkdownBody(
+        
         data: teamText,
         styleSheet: MarkdownStyleSheet(
           p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          // h1: korolevFont.headline4,
+          h2Align: WrapAlignment.center,
+          
           h2: korolevFont.headline4,   
+          h3Align: WrapAlignment.center,
           h3: korolevFont.headline6,       
+          orderedListAlign: WrapAlignment.center,
           listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
           
         ),
