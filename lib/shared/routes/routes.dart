@@ -15,6 +15,7 @@ import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
+import 'package:lab_movil_2222/screens/project.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
@@ -49,6 +50,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case StatisticsScreen.route:
           return StatisticsScreen();
+          
+        case ProjectScreen.route:
+          return ProjectScreen();
 
         case GoalsScreen.route:
           return GoalsScreen();
@@ -94,7 +98,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ResourcesScreen.route:
           final args = settings.arguments as ResourcesScreen;
           return ResourcesScreen(
-            chapterSettings: args.chapterSettings,
+            cityDto: args.cityDto,
           );
 
         case ActivitiesScreen.route:

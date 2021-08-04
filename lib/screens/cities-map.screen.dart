@@ -1,13 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/cities.screen.dart';
-import 'package:lab_movil_2222/services/CitiesPositions_settings.dart';
+import 'package:lab_movil_2222/services/i-load-information.service.dart';
+import 'package:lab_movil_2222/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/shared/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 import 'chapter_screens/stageIntroduction.screen.dart';
+import 'home.screen.dart';
 
 class CitiesMapScreen extends StatefulWidget {
   static const String route = '/cities-map';
@@ -17,124 +19,148 @@ class CitiesMapScreen extends StatefulWidget {
 }
 
 class _CitiesMapScreenState extends State<CitiesMapScreen> {
+  List<CityWithMapPositionDto>? cities;
+
+  final ILoadInformationService<List<CityWithMapPositionDto>> allCitiesLoader =
+      LoadCitiesWithMapPositionService();
+
+  final ScrollController scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+
+    this.allCitiesLoader.load().then((cities) {
+      this.setState(() {
+        this.cities = cities;
+      });
+
+      /// once all cities have loaded make map scroll automatically
+      Timer(
+        Duration(seconds: 1),
+        () => this.scrollController.animateTo(
+              this.scrollController.position.maxScrollExtent,
+              curve: Curves.easeIn,
+              duration: const Duration(milliseconds: 500),
+            ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.of(context).pushReplacementNamed(CitiesScreen.route),
-        child: Icon(Icons.local_activity),
+      bottomNavigationBar: CustomNavigationBar(
+        homeAction: () => Navigator.pushNamed(
+          context,
+          HomeScreen.route,
+        ),
       ),
-      body: _citiesView(context),
-      bottomNavigationBar: CustomNavigationBar(),
-    );
-  }
+      body: (this.cities == null)
 
-  _citiesView(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return FutureBuilder(
-        future: _readChapterConfigurations(),
-        builder: (context, snapshot) {
-          if (snapshot.error != null) {
-            print(snapshot.error);
-            return Center(child: Text('Ocurrió un error'));
-          }
-          if (snapshot.data == null)
-            return Center(
-                child: Text(
-              'Cargando...',
-              style: korolevFont.bodyText1,
-            ));
+          /// if cities data is still loading, replace everything this a loading text
+          ? Center(
+              child: Text(
+                'Cargando...',
+                style: korolevFont.bodyText1,
+              ),
+            )
 
-          final List<CityDto> data = snapshot.data as List<CityDto>;
-          return Stack(
-            children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            'assets/images/map_wip.png',
-                            fit: BoxFit.fill,
-                            width: double.infinity,
-                            height: double.infinity,
-                          ),
-                          Stack(
-                            children: _citiesButtons(data, size),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+          /// otherwise load coll map with cities
+          : Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: SingleChildScrollView(
+              
+                controller: this.scrollController,
+                child: CitiesScrollMap(
+                  cities: this.cities as List<CityWithMapPositionDto>,
                 ),
               ),
-            ],
-          );
-        });
-  }
-
-  List<Positioned> _citiesButtons(
-      List<CityDto> data, Size size) {
-    List<CityButton> buttons = [];
-
-    for (var i = 0; i < data.length; i++) {
-      buttons.add(new CityButton(settings: data[i]));
-    }
-
-    Map<int, Positioned> citiesButtonsPositions =
-        getCitiesPositions(size, buttons);
-    List<Positioned> positionedButtons = [];
-    citiesButtonsPositions.forEach((key, value) {
-      positionedButtons.add(value);
-    });
-    return positionedButtons;
-  }
-
-  Future<List<CityDto>> _readChapterConfigurations() async {
-    ///  reading chapter configurations
-
-    List<CityDto> settingsTemp = [];
-
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .orderBy("stage")
-        .get();
-    final settings = snap.docs
-        .map((e) => CityDto.fromMap(e.data()))
-        .toList();
-    settingsTemp = settings;
-    return settingsTemp;
+            ),
+    );
   }
 }
 
-class CityButton extends StatelessWidget {
-  final CityDto settings;
-  const CityButton({Key? key, required this.settings}) : super(key: key);
+class CitiesScrollMap extends StatelessWidget {
+  CitiesScrollMap({
+    Key? key,
+    required this.cities,
+  }) : super(key: key);
+
+  final List<CityWithMapPositionDto> cities;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return ElevatedButton(
-      onPressed: () {
-        print("Presionado: ${this.settings.name}");
-        Navigator.pushNamed(
-          context,
-          StageIntroductionScreen.route,
-          arguments: StageIntroductionScreen(
-            chapterSettings: settings,
+    return Stack(
+      children: [
+        /// map image
+        Image.asset(
+          'assets/images/map_wip.png',
+          fit: BoxFit.fill,
+          width: double.infinity,
+        ),
+
+        /// overlay of items on top of map
+        Positioned.fill(child: LayoutBuilder(builder: (context, constraints) {
+          final double vw = constraints.biggest.width / 100;
+          final double vh = constraints.biggest.height / 100;
+
+          return Stack(
+            children: [
+              /// draw all cities with positions
+              for (CityWithMapPositionDto cityPos in this.cities)
+                MapCityButton(
+                  city: cityPos.city,
+                  size: cityPos.size * vw,
+                  x: cityPos.left * vw,
+                  y: cityPos.top * vh,
+                )
+            ],
+          );
+        })),
+      ],
+    );
+  }
+}
+
+class MapCityButton extends StatelessWidget {
+  final CityDto city;
+  final double positionX;
+  final double positionY;
+  final double size;
+
+  const MapCityButton({
+    Key? key,
+    required this.city,
+    required this.size,
+    required double x,
+    required double y,
+  })  : this.positionX = x,
+        this.positionY = y,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: this.positionY,
+      left: this.positionX,
+      child: Material(
+        borderRadius: BorderRadius.all(Radius.circular(this.size)),
+        color: Colors.transparent,
+        clipBehavior: Clip.hardEdge,
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(
+            context,
+            StageIntroductionScreen.route,
+            arguments: StageIntroductionScreen(
+              chapterSettings: city,
+            ),
           ),
-        );
-      },
-      child: Container(),
-      style: ElevatedButton.styleFrom(
-        shape: CircleBorder(),
-        padding: (size.width <= 360) ? EdgeInsets.all(35) : EdgeInsets.all(45),
-        // onPrimary: Colors.white,
-        primary: Colors.transparent,
-        shadowColor: Colors.transparent,
-        elevation: 0,
+          child: Container(
+            width: this.size,
+            height: this.size,
+          ),
+        ),
       ),
     );
   }

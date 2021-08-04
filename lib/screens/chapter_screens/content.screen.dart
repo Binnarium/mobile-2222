@@ -50,7 +50,7 @@ class _ContentScreenState extends State<ContentScreen> {
         context,
         ResourcesScreen.route,
         arguments: ResourcesScreen(
-          chapterSettings: this.widget.chapterSettings,
+          cityDto: this.widget.chapterSettings,
         ),
       );
     };

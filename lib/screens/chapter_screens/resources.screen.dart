@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/services/load-resources-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
@@ -15,44 +16,68 @@ import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
-  final CityDto chapterSettings;
+  final CityDto cityDto;
 
-  const ResourcesScreen({Key? key, required this.chapterSettings})
-      : super(key: key);
+  const ResourcesScreen({
+    Key? key,
+    required this.cityDto,
+  }) : super(key: key);
 
   @override
   _ResourcesScreenState createState() => _ResourcesScreenState();
 }
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
+  List<ResourcesDto>? onlineResources;
+  List<LecturesDto>? readings;
+
   @override
   void initState() {
     super.initState();
+
+    ILoadInformationWithOptions<List<dynamic>, CityDto> resourcesLoader =
+        LoadOnlineResourcesScreenInformationService(
+      chapterSettings: this.widget.cityDto,
+    );
+
+    resourcesLoader.load().then((value) =>
+        this.setState(() => onlineResources = value as List<ResourcesDto>));
+
+    ILoadInformationWithOptions<List<dynamic>, CityDto> readingsLoader =
+        LoadReadingsResourcesScreenInformationService(
+      chapterSettings: this.widget.cityDto,
+    );
+    readingsLoader.load().then(
+        (value) => this.setState(() => readings = value as List<LecturesDto>));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage =
-        (this.widget.chapterSettings.enabledPages.activities)
-            ? () {
-                Navigator.pushNamed(
-                  context,
-                  ActivitiesScreen.route,
-                  arguments: ActivitiesScreen(
-                    chapterSettings: this.widget.chapterSettings,
-                  ),
-                );
-              }
-            : () {
-                Navigator.pushNamed(
-                  context,
-                  ChapterClubhouseScreen.route,
-                  arguments: ChapterClubhouseScreen(
-                    chapterSettings: this.widget.chapterSettings,
-                  ),
-                );
-              };
+    VoidCallback nextPage = (this.widget.cityDto.enabledPages.activities)
+        ? () {
+            Navigator.pushNamed(
+              context,
+              ActivitiesScreen.route,
+              arguments: ActivitiesScreen(
+                chapterSettings: this.widget.cityDto,
+              ),
+            );
+          }
+        : () {
+            Navigator.pushNamed(
+              context,
+              ChapterClubhouseScreen.route,
+              arguments: ChapterClubhouseScreen(
+                chapterSettings: this.widget.cityDto,
+              ),
+            );
+          };
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
@@ -68,7 +93,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: widget.chapterSettings.color,
+                backgroundColor: widget.cityDto.color,
               ),
 
               ///body of the screen
@@ -95,8 +120,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             height: 10,
           ),
           ChapterHeadWidget(
-            showAppLogo: true,
-            city: this.widget.chapterSettings,
+            showStageLogo: true,
+            city: this.widget.cityDto,
           ),
           SizedBox(
             height: 20,
@@ -121,13 +146,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
 
           ///calling the body of online resources, expected a json
-          _onlineResourcesBody([
-            2,
-            3,
-            2,
-            1,
-            2,
-          ], size),
+          _onlineResourcesBody(size),
           SizedBox(
             height: 20,
           ),
@@ -138,58 +157,55 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   /// books body method
   _booksBody(Size size) {
+    if (this.readings == null)
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(
+            Colors.white,
+          ),
+        ),
+      );
+
     /// main container
     return Container(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
 
       ///To resize the parent container of the list of books
 
-      child: FutureBuilder(
-          future: _readBooks(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<LecturesDto>> readings) {
-            if (readings.hasError) {
-              return Text(readings.error.toString());
-            }
+      child: ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: readings!.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final item = readings!.elementAt(index);
 
-            if (readings.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    widget.chapterSettings.color,
-                  ),
-                ),
-              );
-            }
-            final List<LecturesDto> readingsTemp =
-                readings.data as List<LecturesDto>;
-            return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: readings.data?.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final item = readingsTemp.elementAt(index);
+            ///calls the custom widget with the item parameters
 
-                  ///calls the custom widget with the item parameters
-
-                  return LecturesListItem(
-                    title: item.name!,
-                    author: item.author!,
-                    year: item.publishedDate!,
-                    size: size,
-                    link: item.link,
-                    review: item.about,
-                    hasLineBehind:
-                        (index == (readings.data!.length - 1)) ? false : true,
-                    imageURL: item.coverUrl,
-                  );
-                });
+            return LecturesListItem(
+              title: item.name!,
+              author: item.author!,
+              year: item.publishedDate!,
+              size: size,
+              link: item.link,
+              review: item.about,
+              hasLineBehind: (index == (readings!.length - 1)) ? false : true,
+              imageURL: item.coverUrl,
+            );
           }),
     );
   }
 
   ///Method of the online resources
-  _onlineResourcesBody(List list, Size size) {
+  _onlineResourcesBody(Size size) {
+    if (this.readings == null)
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(
+            Colors.white,
+          ),
+        ),
+      );
+
     ///main container
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
@@ -197,93 +213,40 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       ///To resize the parent container of the online resources grid
 
       ///Creates a grid with the necesary online resources
-      child: FutureBuilder(
-          future: _readOnlineResources(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<ResourcesDto>> resources) {
-            if (resources.hasError) {
-              return Text(resources.error.toString());
-            }
+      child: StaggeredGridView.countBuilder(
+        ///general spacing per resource
+        crossAxisCount: 2,
 
-            if (resources.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    Colors.white,
-                  ),
-                ),
-              );
-            }
-            final List<ResourcesDto> resourcesTemp =
-                resources.data as List<ResourcesDto>;
-            return StaggeredGridView.countBuilder(
-              ///general spacing per resource
-              crossAxisCount: 2,
+        crossAxisSpacing: 15,
+        mainAxisSpacing: 15,
+        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+        itemCount: onlineResources!.length,
 
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
-              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-              itemCount: resourcesTemp.length,
+        /// property that sizes the container automaticly according
+        /// the items
+        shrinkWrap: true,
 
-              /// property that sizes the container automaticly according
-              /// the items
-              shrinkWrap: true,
+        ///to avoid the scroll
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          final item = onlineResources!.elementAt(index);
+          print(item);
+          print(item.kind);
 
-              ///to avoid the scroll
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final item = resourcesTemp.elementAt(index);
-
-                ///calls the custom widget with the item parameters
-                if (item is OnlineResourceDto) {
-                  return OnlineResourcesGridItem(
-                    color: widget.chapterSettings.color,
-                    size: size,
-                    name: item.name!,
-                    kind: item.kind!,
-                    description: item.description,
-                    redirect: item.redirect!,
-                  );
-                }
-                return Text('Kind of content not found');
-              },
+          ///calls the custom widget with the item parameters
+          if (item is OnlineResourceDto) {
+            return OnlineResourcesGridItem(
+              color: widget.cityDto.color,
+              size: size,
+              name: item.name!,
+              kind: item.kind!,
+              description: item.description,
+              redirect: item.redirect,
             );
-          }),
+          }
+          return Text('Kind of content not found');
+        },
+      ),
     );
-  }
-
-  Future<List<LecturesDto>> _readBooks() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('resources')
-        .get();
-
-    if (!snap.exists)
-      new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() ?? {};
-    final List<dynamic> data = payload['readings'] ?? [];
-
-    final readingsResources = data.map((e) => LecturesDto.fromJson(e)).toList();
-
-    return readingsResources;
-  }
-
-  Future<List<ResourcesDto>> _readOnlineResources() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('resources')
-        .get();
-
-    if (!snap.exists)
-      new ErrorDescription('Document resources does not exists');
-    final Map<String, dynamic> payload = snap.data() ?? {};
-    final List<dynamic> data = payload['externalLinks'] ?? [];
-
-    final onlineResources = data.map((e) => ResourcesDto.fromJson(e)).toList();
-    return onlineResources;
   }
 }
