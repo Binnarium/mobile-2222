@@ -5,12 +5,14 @@ class CityWithMapPositionDto {
   final int top;
   final int left;
   final int size;
+  final bool textOnTop;
 
   CityWithMapPositionDto({
     required this.city,
     required this.top,
     required this.left,
     required this.size,
+     this.textOnTop = false,
   })  : assert(top >= 0, 'top needs to be greater than 0'),
         assert(top <= 100, 'top needs to be less than 0'),
         assert(left >= 0, 'left needs to be greater than 0'),

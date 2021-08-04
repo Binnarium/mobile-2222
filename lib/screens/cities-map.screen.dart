@@ -30,18 +30,20 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
     super.initState();
 
     this.allCitiesLoader.load().then((cities) {
-      this.setState(() {
-        this.cities = cities;
-      });
+      this.setState(() => this.cities = cities);
 
       /// once all cities have loaded make map scroll automatically
       Timer(
         Duration(seconds: 1),
-        () => this.scrollController.animateTo(
-              this.scrollController.position.maxScrollExtent,
-              curve: Curves.easeIn,
-              duration: const Duration(milliseconds: 500),
-            ),
+        () {
+          try {
+            this.scrollController.animateTo(
+                  this.scrollController.position.maxScrollExtent,
+                  curve: Curves.ease,
+                  duration: const Duration(milliseconds: 500),
+                );
+          } catch (e) {}
+        },
       );
     });
   }
@@ -70,10 +72,10 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
               width: double.infinity,
               height: double.infinity,
               child: SingleChildScrollView(
-              
                 controller: this.scrollController,
                 child: CitiesScrollMap(
-                  cities: this.cities as List<CityWithMapPositionDto>,
+                  citiesWithPositions:
+                      this.cities as List<CityWithMapPositionDto>,
                 ),
               ),
             ),
@@ -81,43 +83,64 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
   }
 }
 
+const bool SHOW_MAP_WITH_ICONS = false;
+
 class CitiesScrollMap extends StatelessWidget {
   CitiesScrollMap({
     Key? key,
-    required this.cities,
+    required this.citiesWithPositions,
   }) : super(key: key);
 
-  final List<CityWithMapPositionDto> cities;
+  /// items to be displayed on top of map
+  final List<CityWithMapPositionDto> citiesWithPositions;
+
+  /// default map image used by the app
+  final ImageProvider mapImage = SHOW_MAP_WITH_ICONS
+      ? AssetImage('assets/images/map-with-icons.png')
+      : AssetImage('assets/images/map-with-no-icons.png');
 
   @override
   Widget build(BuildContext context) {
+    /// used stack to place map behind items, and place a container of items on top
+    /// of the map
     return Stack(
       children: [
-        /// map image
-        Image.asset(
-          'assets/images/map_wip.png',
+        /// map image in this context is used as a background
+        Image(
+          image: this.mapImage,
           fit: BoxFit.fill,
           width: double.infinity,
         ),
 
         /// overlay of items on top of map
-        Positioned.fill(child: LayoutBuilder(builder: (context, constraints) {
-          final double vw = constraints.biggest.width / 100;
-          final double vh = constraints.biggest.height / 100;
+        /// use a positioned fill to make it take all space available, then
+        /// use a layout builder to access map image size, and position items
+        /// relative to the map, without distortion
+        Positioned.fill(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              /// obtain referential space units to place items
+              /// when the width changes make the items on top space at the same pace
+              final double vw = constraints.biggest.width / 100;
+              final double vh = constraints.biggest.height / 100;
 
-          return Stack(
-            children: [
-              /// draw all cities with positions
-              for (CityWithMapPositionDto cityPos in this.cities)
-                MapCityButton(
-                  city: cityPos.city,
-                  size: cityPos.size * vw,
-                  x: cityPos.left * vw,
-                  y: cityPos.top * vh,
-                )
-            ],
-          );
-        })),
+              return Stack(
+                children: [
+                  /// draw all cities with positions
+                  for (CityWithMapPositionDto cityPos
+                      in this.citiesWithPositions)
+                    MapCityButton(
+                      city: cityPos.city,
+                      size: cityPos.size * vw,
+                      x: cityPos.left * vw,
+                      y: cityPos.top * vh,
+                      textOnTop: cityPos.textOnTop,
+                    ),
+                ],
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -128,11 +151,13 @@ class MapCityButton extends StatelessWidget {
   final double positionX;
   final double positionY;
   final double size;
+  final bool textOnTop;
 
   const MapCityButton({
     Key? key,
     required this.city,
     required this.size,
+    required this.textOnTop,
     required double x,
     required double y,
   })  : this.positionX = x,
@@ -144,23 +169,54 @@ class MapCityButton extends StatelessWidget {
     return Positioned(
       top: this.positionY,
       left: this.positionX,
-      child: Material(
-        borderRadius: BorderRadius.all(Radius.circular(this.size)),
-        color: Colors.transparent,
-        clipBehavior: Clip.hardEdge,
-        child: InkWell(
-          onTap: () => Navigator.pushNamed(
-            context,
-            StageIntroductionScreen.route,
-            arguments: StageIntroductionScreen(
-              chapterSettings: city,
+      child: Column(
+        /// make text go on top of image by placing it on top of image container
+        verticalDirection:
+            this.textOnTop ? VerticalDirection.up : VerticalDirection.down,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Material(
+            borderRadius: BorderRadius.all(Radius.circular(this.size)),
+            color: this.city.color,
+            clipBehavior: Clip.hardEdge,
+            child: InkWell(
+              onTap: () => Navigator.pushNamed(
+                context,
+                StageIntroductionScreen.route,
+                arguments: StageIntroductionScreen(
+                  chapterSettings: city,
+                ),
+              ),
+              child: Container(
+                color: Colors.black,
+                child: Image(
+                  image: this.city.iconImage,
+                  width: this.size,
+                  height: this.size,
+                ),
+              ),
             ),
           ),
-          child: Container(
+
+          /// spacer between items
+          Container(height: 8),
+
+          /// city name with the city number
+          SizedBox(
             width: this.size,
-            height: this.size,
-          ),
-        ),
+            child: Center(
+              child: Text(
+                '${this.city.stage} ${this.city.name.toUpperCase()}',
+                style: korolevFont.headline5,
+                overflow: TextOverflow.visible,
+                softWrap: false,
+                maxLines: 1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

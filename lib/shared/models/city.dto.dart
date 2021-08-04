@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/models/image.dto.dart';
 
 class CityConfigurationDto {
@@ -53,6 +54,8 @@ class CityDto {
 
   @Deprecated('use icon.url instead')
   String get chapterImageUrl => this.icon.url;
+
+  ImageProvider get iconImage => NetworkImage(this.icon.url);
 
   get phaseName => 'Etapa ${this.stage}';
 }

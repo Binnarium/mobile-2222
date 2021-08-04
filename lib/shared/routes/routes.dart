@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/cities-map.screen.dart';
-import 'package:lab_movil_2222/screens/cities.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
@@ -41,9 +40,6 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case StatisticsScreen.route:
           return StatisticsScreen();
-
-        case CitiesScreen.route:
-          return CitiesScreen();
 
         case CitiesMapScreen.route:
           return CitiesMapScreen();
@@ -114,7 +110,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           );
 
         default:
-          return CitiesScreen();
+          return CitiesMapScreen();
       }
     },
   );
