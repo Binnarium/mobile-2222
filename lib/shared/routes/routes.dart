@@ -98,7 +98,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ResourcesScreen.route:
           final args = settings.arguments as ResourcesScreen;
           return ResourcesScreen(
-            chapterSettings: args.chapterSettings,
+            cityDto: args.cityDto,
           );
 
         case ActivitiesScreen.route:
