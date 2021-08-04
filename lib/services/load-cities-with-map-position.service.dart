@@ -34,7 +34,7 @@ class LoadCitiesWithMapPositionService
             top = 65;
             left = 80;
           } else if (index == 4) {
-            top = 57;
+            top = 58;
             left = 45;
             textOnTop = true;
           } else if (index == 5) {

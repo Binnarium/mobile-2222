@@ -169,54 +169,65 @@ class MapCityButton extends StatelessWidget {
     return Positioned(
       top: this.positionY,
       left: this.positionX,
-      child: Column(
-        /// make text go on top of image by placing it on top of image container
-        verticalDirection:
-            this.textOnTop ? VerticalDirection.up : VerticalDirection.down,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Material(
-            borderRadius: BorderRadius.all(Radius.circular(this.size)),
-            color: this.city.color,
-            clipBehavior: Clip.hardEdge,
-            child: InkWell(
-              onTap: () => Navigator.pushNamed(
-                context,
-                StageIntroductionScreen.route,
-                arguments: StageIntroductionScreen(
-                  chapterSettings: city,
-                ),
-              ),
-              child: Container(
-                color: Colors.black,
+      child: Container(
+        width: this.size,
+        height: this.size,
+        child: Stack(
+          clipBehavior: Clip.none,
+
+          /// make text go on top of image by placing it on top of image container
+          children: [
+            /// position the image first so the inkwell effect stay on top
+            Positioned.fill(
+              child: ClipRRect(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.all(Radius.circular(this.size)),
                 child: Image(
                   image: this.city.iconImage,
-                  width: this.size,
-                  height: this.size,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
             ),
-          ),
 
-          /// spacer between items
-          Container(height: 8),
-
-          /// city name with the city number
-          SizedBox(
-            width: this.size,
-            child: Center(
-              child: Text(
-                '${this.city.stage} ${this.city.name.toUpperCase()}',
-                style: korolevFont.headline5,
-                overflow: TextOverflow.visible,
-                softWrap: false,
-                maxLines: 1,
-                textAlign: TextAlign.center,
+            /// inkwell with on press gesture detector, with a clip on top so it stays
+            /// in a circular shape
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(Radius.circular(this.size)),
+                clipBehavior: Clip.hardEdge,
+                child: InkWell(
+                  splashColor: this.city.color.withOpacity(0.5),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    StageIntroductionScreen.route,
+                    arguments: StageIntroductionScreen(
+                      chapterSettings: city,
+                    ),
+                  ),
+                  child: Container(),
+                ),
               ),
             ),
-          )
-        ],
+
+            /// city name with the city number, to position the item bellow or
+            /// on top of the main image, we use the size of the container, plus 8 units
+            /// for spacing
+            Positioned(
+              top: !this.textOnTop ? this.size + 8 : null,
+              bottom: this.textOnTop ? this.size + 8 : null,
+              left: -this.size,
+              right: -this.size,
+              child: Center(
+                child: Text(
+                  '${this.city.stage} ${this.city.name.toUpperCase()}',
+                  style: korolevFont.headline5,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
