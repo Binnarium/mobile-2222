@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 
-Map<int, Positioned> getCitiesPositions(Size size, List<CityButton> buttons) {
+Map<int, Positioned> getCitiesPositions(Size size, List<MapCityButton> buttons) {
   Map<int, Positioned> citiesButtonsPositions;
   if (size.width < 350) {
     return citiesButtonsPositions = {
