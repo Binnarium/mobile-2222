@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 import 'chapter_screens/stageIntroduction.screen.dart';
+import 'home.screen.dart';
 
 class CitiesMapScreen extends StatefulWidget {
   static const String route = '/cities-map';
@@ -48,7 +49,12 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(
+        homeAction: () => Navigator.pushNamed(
+          context,
+          HomeScreen.route,
+        ),
+      ),
       body: (this.cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
