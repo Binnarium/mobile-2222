@@ -4,7 +4,6 @@ import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/project.screen.dart';
-import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 enum NavigationBarPages {
@@ -20,12 +19,14 @@ class CustomNavigationBar extends StatelessWidget {
     this.activePage = NavigationBarPages.page1,
     this.nextPage,
     this.prevPage,
+    this.homeAction,
   });
 
   final NavigationBarPages activePage;
 
   final VoidCallback? nextPage;
   final VoidCallback? prevPage;
+  final VoidCallback? homeAction;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,8 @@ class CustomNavigationBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, ProjectScreen.route),//ORIGINAL StatisticsScreen.route
+            onTap: () => Navigator.pushNamed(
+                context, ProjectScreen.route), //ORIGINAL StatisticsScreen.route
             child: Container(
               child: ImageIcon(
                 AssetImage('assets/icons/stats_icon.png'),
@@ -102,6 +104,19 @@ class CustomNavigationBar extends StatelessWidget {
               ),
             ),
           ),
+          if (homeAction != null)
+            GestureDetector(
+              onTap: () => (this.homeAction
+                  as Function)(), //ORIGINAL StatisticsScreen.route
+              child: Container(
+                child: Icon(
+                  Icons.info,
+                  color: this.activePage == NavigationBarPages.page5
+                      ? Colors.white
+                      : Colors.grey,
+                ),
+              ),
+            ),
           GestureDetector(
             onTap: this.nextPage,
             child: Container(
