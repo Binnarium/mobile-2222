@@ -92,7 +92,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   _projectSheet(BuildContext context, Size size, Color color) {
     return Container(
         
-        child: Column(
+        child: ListView(
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
