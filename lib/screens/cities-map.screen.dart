@@ -63,11 +63,10 @@ class _CitiesMapScreenState extends State<CitiesMapScreen> {
           ? Center(
               child: Text(
                 'Cargando...',
-                style: korolevFont.bodyText1,
               ),
             )
 
-          /// otherwise load coll map with cities
+          /// otherwise load the map with cities
           : Container(
               width: double.infinity,
               height: double.infinity,
@@ -166,6 +165,9 @@ class MapCityButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size fontFactor = MediaQuery.of(context).size;
+    final bool smallFont = fontFactor.width < 750;
+
     return Positioned(
       top: this.positionY,
       left: this.positionX,
@@ -183,7 +185,7 @@ class MapCityButton extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 borderRadius: BorderRadius.all(Radius.circular(this.size)),
                 child: Image(
-                  image: this.city.iconImage,
+                  image: this.city.iconMapImage,
                   width: double.infinity,
                   height: double.infinity,
                 ),
@@ -215,14 +217,15 @@ class MapCityButton extends StatelessWidget {
             /// on top of the main image, we use the size of the container, plus 8 units
             /// for spacing
             Positioned(
-              top: !this.textOnTop ? this.size + 8 : null,
-              bottom: this.textOnTop ? this.size + 8 : null,
+              top: !this.textOnTop ? this.size + (smallFont ? 4 : 8) : null,
+              bottom: this.textOnTop ? this.size + (smallFont ? 4 : 8) : null,
               left: -this.size,
               right: -this.size,
               child: Center(
                 child: Text(
                   '${this.city.stage} ${this.city.name.toUpperCase()}',
-                  style: korolevFont.headline5,
+                  style:
+                      smallFont ? korolevFont.bodyText2 : korolevFont.headline5,
                 ),
               ),
             )

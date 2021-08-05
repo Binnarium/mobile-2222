@@ -25,7 +25,7 @@ class LoadCitiesWithMapPositionService
             top = 80;
             left = 30;
           } else if (index == 1) {
-            top = 69;
+            top = 68;
             left = 15;
           } else if (index == 2) {
             top = 75;
