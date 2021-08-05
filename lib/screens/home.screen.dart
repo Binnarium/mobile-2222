@@ -207,7 +207,7 @@ class MapCityButton extends StatelessWidget {
                     context,
                     StageIntroductionScreen.route,
                     arguments: StageIntroductionScreen(
-                      chapterSettings: city,
+                      city: city,
                     ),
                   ),
                   child: Container(),

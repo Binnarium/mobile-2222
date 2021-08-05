@@ -9,11 +9,11 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
-  final CityDto chapterSettings;
+  final CityDto city;
 
   const StageIntroductionScreen({
     Key? key,
-    required this.chapterSettings,
+    required this.city,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
           context,
           StageHistoryScreen.route,
           arguments: StageHistoryScreen(
-            chapterSettings: this.widget.chapterSettings,
+            chapterSettings: this.widget.city,
           ),
         );
 
@@ -58,7 +58,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
           children: [
             /// first layer is the background with road-map
             ChapterBackgroundWidget(
-              backgroundColor: widget.chapterSettings.color,
+              backgroundColor: widget.city.color,
               reliefPosition: 'bottom-right',
             ),
 
@@ -90,20 +90,25 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
       children: [
         ChapterHeadWidget(
           showAppLogo: true,
-          city: widget.chapterSettings,
+          city: widget.city,
         ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(this.widget.chapterSettings.phaseName.toUpperCase(),
+        Text(this.widget.city.phaseName.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline3
                 ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1)),
         SizedBox(height: 10),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(this.widget.chapterSettings.name.toUpperCase(),
+        Hero(
+          tag: 'name-${this.widget.city.id}',
+          child: Text(
+            this.widget.city.name.toUpperCase(),
             textAlign: TextAlign.center,
             style: korolevFont.headline1
-                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5)),
+                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5),
+          ),
+        ),
         SizedBox(height: size.height * 0.05),
         _logoContainer(size),
         SizedBox(height: size.height * 0.07),
@@ -118,7 +123,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
               return Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
-                    this.widget.chapterSettings.color,
+                    this.widget.city.color,
                   ),
                 ),
               );
@@ -144,9 +149,9 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
       width: double.infinity,
       height: size.height * 0.35,
       child: Hero(
-        tag: this.widget.chapterSettings.icon.path,
+        tag: this.widget.city.icon.path,
         child: Image.network(
-          this.widget.chapterSettings.chapterImageUrl,
+          this.widget.city.chapterImageUrl,
           filterQuality: FilterQuality.high,
         ),
       ),
@@ -160,7 +165,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
     String description = "";
     await FirebaseFirestore.instance
         .collection('cities')
-        .doc(this.widget.chapterSettings.id)
+        .doc(this.widget.city.id)
         .collection('pages')
         .doc('introduction')
         .get()

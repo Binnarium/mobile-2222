@@ -41,7 +41,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
               context,
               StageIntroductionScreen.route,
               arguments: StageIntroductionScreen(
-                chapterSettings: chapters[this.widget.chapterSettings.stage],
+                city: chapters[this.widget.chapterSettings.stage],
               ),
             );
 

@@ -59,7 +59,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case StageIntroductionScreen.route:
           final args = settings.arguments as StageIntroductionScreen;
           return StageIntroductionScreen(
-            chapterSettings: args.chapterSettings,
+            city: args.city,
           );
 
         case StageHistoryScreen.route:
@@ -71,7 +71,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case StageMonsterScreen.route:
           final args = settings.arguments as StageMonsterScreen;
           return StageMonsterScreen(
-            chapterSettings: args.chapterSettings,
+            city: args.city,
           );
         case StageArgumentationScreen.route:
           final args = settings.arguments as StageArgumentationScreen;

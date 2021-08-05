@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
@@ -9,10 +8,12 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 
 class StageMonsterScreen extends StatefulWidget {
   static const String route = '/monster';
-  final CityDto chapterSettings;
+  final CityDto city;
 
-  const StageMonsterScreen({Key? key, required this.chapterSettings})
-      : super(key: key);
+  const StageMonsterScreen({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
 
   @override
   _StageMonsterScreenState createState() => _StageMonsterScreenState();
@@ -27,7 +28,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
         context,
         StageArgumentationScreen.route,
         arguments: StageArgumentationScreen(
-          chapterSettings: this.widget.chapterSettings,
+          chapterSettings: this.widget.city,
         ),
       );
     };
@@ -48,7 +49,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
             children: [
               //widget custom que crea el background con el logo de la izq
               ChapterBackgroundWidget(
-                backgroundColor: widget.chapterSettings.color,
+                backgroundColor: widget.city.color,
                 reliefPosition: 'top-right',
               ),
               //decoración adicional del background
@@ -74,7 +75,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
         ChapterHeadWidget(
           showAppLogo: true,
           showStageLogo: true,
-          city: this.widget.chapterSettings,
+          city: this.widget.city,
         ),
         Expanded(
           child: Center(
@@ -127,7 +128,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   Future<String> _readIlustrationURL() async {
     final snap = await FirebaseFirestore.instance
         .collection('cities')
-        .doc(this.widget.chapterSettings.id)
+        .doc(this.widget.city.id)
         .collection('pages')
         .doc('argument')
         .get();
