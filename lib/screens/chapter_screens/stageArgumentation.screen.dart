@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -111,11 +113,15 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
 }
 
 class CustomBubbleList extends StatelessWidget {
-  const CustomBubbleList({
+  CustomBubbleList({
     Key? key,
     required this.ideas,
-  }) : super(key: key);
+  })  : this.seed = Random(DateTime.now().hour),
+        super(key: key) {
+    this.ideas.shuffle(this.seed);
+  }
 
+  final Random seed;
   final List<String> ideas;
 
   @override
@@ -124,37 +130,38 @@ class CustomBubbleList extends StatelessWidget {
 
     /// List created
     ///
-    /// 0,            one item row
-    /// 1, 2,         two items row
-    /// 3,            one item row
-    /// 4,            and so on...
+    ///   0           one item row
+    /// 1,  ,         two items row
+    ///  , 2,         one item row
+    /// 3,            and so on...
     for (int i = 0; i < this.ideas.length; i++) {
       // single item row
-      if (i % 3 == 0) {
+      if (i == 0) {
         String current = this.ideas[i];
         colItems.add(
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: Container(
-              constraints: BoxConstraints(maxWidth: 250),
+              constraints: BoxConstraints(maxWidth: 360),
               child: IdeaContainerWidget(
                 text: current,
                 orientation: i,
+                bigStyle: true,
               ),
             ),
           ),
         );
         continue;
       }
-      if (i % 3 == 1) {
+      if (i % 2 == 1) {
         String current = this.ideas[i];
         colItems.add(
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: Row(
               children: [
-                Container(
-                  constraints: BoxConstraints(maxWidth: 250),
+                Flexible(
+                  flex: 2,
                   child: IdeaContainerWidget(
                     text: current,
                     orientation: i,
@@ -174,8 +181,8 @@ class CustomBubbleList extends StatelessWidget {
           child: Row(
             children: [
               Flexible(child: Container()),
-              Container(
-                constraints: BoxConstraints(maxWidth: 250),
+              Flexible(
+                flex: 2,
                 child: IdeaContainerWidget(
                   text: current,
                   orientation: i,
@@ -185,43 +192,10 @@ class CustomBubbleList extends StatelessWidget {
           ),
         ),
       );
-      //   /// multi line item
-      //   String item1 = this.ideas[i];
-      //   String? item2 = (i + 1 < this.ideas.length) ? this.ideas[i + 1] : null;
-      //   colItems.add(
-      //     Row(
-      //       children: [
-      //         Expanded(
-      //           child: Padding(
-      //             padding: const EdgeInsets.only(bottom: 16),
-      //             child: IdeaContainerWidget(
-      //               text: item1,
-      //               orientation: i,
-      //             ),
-      //           ),
-      //         ),
-
-      //         /// separator
-      //         Container(width: 16),
-      //         (item2 != null)
-      //             ? Expanded(
-      //                 child: Padding(
-      //                 padding: const EdgeInsets.only(top: 16),
-      //                 child: IdeaContainerWidget(
-      //                   text: item2,
-      //                   orientation: i + 1,
-      //                 ),
-      //                 ))
-      //             : Expanded(child: Container()),
-      //       ],
-      //     ),
-      //   );
-      //   i += 2;
-      // }
     }
 
     return Column(
-      children: colItems,
+      children: colItems..shuffle(this.seed),
     );
   }
 }

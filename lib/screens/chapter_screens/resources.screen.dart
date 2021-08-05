@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/services/load-resources-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
 import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';

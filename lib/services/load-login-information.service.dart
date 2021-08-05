@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lab_movil_2222/services/i-load-information.service.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
 
 class LoadLoginInformationService extends ILoadInformationService<LoginDto> {

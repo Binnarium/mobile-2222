@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/services/i-load-information.service.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
 
 class LoadCitiesSettingService extends ILoadInformationService<List<CityDto>> {

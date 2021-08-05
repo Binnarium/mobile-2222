@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:lab_movil_2222/services/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/shared/models/VideoPodcast.model.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
 

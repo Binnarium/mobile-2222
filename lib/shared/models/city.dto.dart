@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/models/image.dto.dart';
 
 class CityConfigurationDto {
@@ -27,6 +28,7 @@ class CityDto {
   final String name;
   final int stage;
   final ImageDto icon;
+  final ImageDto iconMap;
   final CityConfigurationDto configuration;
   final CityEnabledPagesDto enabledPages;
 
@@ -37,6 +39,7 @@ class CityDto {
     required this.enabledPages,
     required this.configuration,
     required this.icon,
+    required this.iconMap,
   });
 
   CityDto.fromMap(final Map<String, dynamic> payload)
@@ -47,12 +50,16 @@ class CityDto {
             CityConfigurationDto.fromMap(payload['configuration']),
         this.enabledPages =
             CityEnabledPagesDto.fromMap(payload['enabledPages']),
-        this.icon = ImageDto.fromMap(payload['icon']);
+        this.icon = ImageDto.fromMap(payload['icon']),
+        this.iconMap = ImageDto.fromMap(payload['iconMap']);
 
   Color get color => Color(this.configuration.colorHex);
 
   @Deprecated('use icon.url instead')
   String get chapterImageUrl => this.icon.url;
+
+  ImageProvider get iconImage => NetworkImage(this.icon.url);
+  ImageProvider get iconMapImage => NetworkImage(this.iconMap.url);
 
   get phaseName => 'Etapa ${this.stage}';
 }

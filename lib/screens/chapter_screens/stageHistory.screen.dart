@@ -34,7 +34,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
         context,
         StageMonsterScreen.route,
         arguments: StageMonsterScreen(
-          chapterSettings: this.widget.chapterSettings,
+          city: this.widget.chapterSettings,
         ),
       );
     };
