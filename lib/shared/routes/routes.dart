@@ -47,9 +47,6 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case StatisticsScreen.route:
           return StatisticsScreen();
           
-        case ProjectScreen.route:
-          return ProjectScreen();
-
         case GoalsScreen.route:
           return GoalsScreen();
 
@@ -109,6 +106,11 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             chapterSettings: args.chapterSettings,
           );
 
+        case ProjectScreen.route:
+        final args = settings.arguments as ProjectScreen;
+          return ProjectScreen(
+            chapterSettings: args.chapterSettings,
+          );
         default:
           return CitiesMapScreen();
       }
