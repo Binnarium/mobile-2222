@@ -151,7 +151,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
               child: PodcastAudioPlayer(
                 audioUrl: "",
                 description: "",
-                color: Colors.white,
+                color: this.widget.chapterSettings.color,
               ),
             ),
             SizedBox(
