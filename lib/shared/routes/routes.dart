@@ -8,7 +8,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart'
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/screens/cities-map.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
@@ -17,7 +16,8 @@ import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/project.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
-import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
+import 'package:lab_movil_2222/screens/team.screen.dart';
+import 'package:lab_movil_2222/screens/welcome.screen.dart';
 
 MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
   return MaterialPageRoute(
@@ -26,8 +26,8 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case SplashScreen.route:
           return SplashScreen();
           
-        case HomeScreen.route:
-          return HomeScreen();
+        case WelcomeScreen.route:
+          return WelcomeScreen();
           
         case TeamScreen.route:
           return TeamScreen();
@@ -41,8 +41,8 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case StatisticsScreen.route:
           return StatisticsScreen();
 
-        case CitiesMapScreen.route:
-          return CitiesMapScreen();
+        case HomeScreen.route:
+          return HomeScreen();
 
         case StatisticsScreen.route:
           return StatisticsScreen();
@@ -110,7 +110,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           );
 
         default:
-          return CitiesMapScreen();
+          return HomeScreen();
       }
     },
   );

@@ -1,301 +1,239 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/screens/teamSheet.screen.dart';
-import 'package:lab_movil_2222/services/load-login-information.service.dart';
-import 'package:lab_movil_2222/shared/models/Login.model.dart';
-import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/shared/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/shared/models/city.dto.dart';
+import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
+import 'chapter_screens/stageIntroduction.screen.dart';
+import 'welcome.screen.dart';
+
 class HomeScreen extends StatefulWidget {
-  static const String route = '/home';
+  static const String route = '/';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
-
-  LoginDto? loginPayload;
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  /// all cities positions loader
+  final ILoadInformationService<List<CityWithMapPositionDto>> allCitiesLoader =
+      LoadCitiesWithMapPositionService();
+
+  /// list of cities with their position in the map
+  List<CityWithMapPositionDto>? cities;
+
+  final ScrollController scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
 
-    ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
-    loader
-        .load()
-        .then((value) => this.setState(() => this.widget.loginPayload = value));
+    this.allCitiesLoader.load().then((cities) {
+      this.setState(() => this.cities = cities);
+
+      /// once all cities have loaded make map scroll automatically
+      Timer(
+        Duration(seconds: 1),
+        () {
+          try {
+            this.scrollController.animateTo(
+                  this.scrollController.position.maxScrollExtent,
+                  curve: Curves.ease,
+                  duration: const Duration(milliseconds: 500),
+                );
+          } catch (e) {}
+        },
+      );
+    });
   }
 
-  ///página de login donde pide usuario y contraseña
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    ///safeArea para dispositivos con pantalla notch
-    return SafeArea(
-      child: Scaffold(
-        // extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          elevation: 1.0,
-          backgroundColor: ColorsApp.backgroundRed,
-        ),
-
-        ///Stack para apilar el background y luego el cuerpo de la pantalla
-        body: Stack(
-          children: [
-            ///Container del color rojo
-            CustomBackground(
-              backgroundColor: ColorsApp.backgroundRed,
-            ),
-
-            ///contiene todo el cuerpo de la pantalla, se envía el size y el context
-            ///para poder controlar varios tamaños de dispositivos y controlar
-            ///la fuente
-            _loginBody(size, context),
-          ],
+    return Scaffold(
+      bottomNavigationBar: CustomNavigationBar(
+        homeAction: () => Navigator.pushNamed(
+          context,
+          WelcomeScreen.route,
         ),
       ),
+      body: (this.cities == null)
+
+          /// if cities data is still loading, replace everything this a loading text
+          ? Center(
+              child: Text(
+                'Cargando...',
+              ),
+            )
+
+          /// otherwise load the map with cities
+          : Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: SingleChildScrollView(
+                controller: this.scrollController,
+                child: CitiesScrollMap(
+                  citiesWithPositions:
+                      this.cities as List<CityWithMapPositionDto>,
+                ),
+              ),
+            ),
     );
   }
+}
 
-  ///Cuerpo de la pantalla
-  _loginBody(Size size, BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          // if (this.widget.error) {
-          //   Text(loginInfo.error.toString());
-          // }
+const bool SHOW_MAP_WITH_ICONS = false;
 
-          if (this.widget.loginPayload == null)
-            Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  ColorsApp.backgroundRed,
+class CitiesScrollMap extends StatelessWidget {
+  CitiesScrollMap({
+    Key? key,
+    required this.citiesWithPositions,
+  }) : super(key: key);
+
+  /// items to be displayed on top of map
+  final List<CityWithMapPositionDto> citiesWithPositions;
+
+  /// default map image used by the app
+  final ImageProvider mapImage = SHOW_MAP_WITH_ICONS
+      ? AssetImage('assets/images/map-with-icons.png')
+      : AssetImage('assets/images/map-with-no-icons.png');
+
+  @override
+  Widget build(BuildContext context) {
+    /// used stack to place map behind items, and place a container of items on top
+    /// of the map
+    return Stack(
+      children: [
+        /// map image in this context is used as a background
+        Image(
+          image: this.mapImage,
+          fit: BoxFit.fill,
+          width: double.infinity,
+        ),
+
+        /// overlay of items on top of map
+        /// use a positioned fill to make it take all space available, then
+        /// use a layout builder to access map image size, and position items
+        /// relative to the map, without distortion
+        Positioned.fill(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              /// obtain referential space units to place items
+              /// when the width changes make the items on top space at the same pace
+              final double vw = constraints.biggest.width / 100;
+              final double vh = constraints.biggest.height / 100;
+
+              return Stack(
+                children: [
+                  /// draw all cities with positions
+                  for (CityWithMapPositionDto cityPos
+                      in this.citiesWithPositions)
+                    MapCityButton(
+                      city: cityPos.city,
+                      size: cityPos.size * vw,
+                      x: cityPos.left * vw,
+                      y: cityPos.top * vh,
+                      textOnTop: cityPos.textOnTop,
+                    ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MapCityButton extends StatelessWidget {
+  final CityDto city;
+  final double positionX;
+  final double positionY;
+  final double size;
+  final bool textOnTop;
+
+  const MapCityButton({
+    Key? key,
+    required this.city,
+    required this.size,
+    required this.textOnTop,
+    required double x,
+    required double y,
+  })  : this.positionX = x,
+        this.positionY = y,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Size fontFactor = MediaQuery.of(context).size;
+    final bool smallFont = fontFactor.width < 750;
+
+    return Positioned(
+      top: this.positionY,
+      left: this.positionX,
+      child: Container(
+        width: this.size,
+        height: this.size,
+        child: Stack(
+          clipBehavior: Clip.none,
+
+          /// make text go on top of image by placing it on top of image container
+          children: [
+            /// position the image first so the inkwell effect stay on top
+            Positioned.fill(
+              child: ClipRRect(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.all(Radius.circular(this.size)),
+                child: Image(
+                  image: this.city.iconMapImage,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
             ),
 
-          /// data is available
-          /// logo de 2222
-          if (this.widget.loginPayload != null) ...[
-            _logo(size),
-            SizedBox(height: size.height * 0.05),
-
-            ///texto inicial
-            Text(
-              'LabMóvil 2222'.toUpperCase(),
-              style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
-              textAlign: TextAlign.center,
+            /// inkwell with on press gesture detector, with a clip on top so it stays
+            /// in a circular shape
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(Radius.circular(this.size)),
+                clipBehavior: Clip.hardEdge,
+                child: InkWell(
+                  splashColor: this.city.color.withOpacity(0.5),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    StageIntroductionScreen.route,
+                    arguments: StageIntroductionScreen(
+                      chapterSettings: city,
+                    ),
+                  ),
+                  child: Container(),
+                ),
+              ),
             ),
-            SizedBox(height: size.height * 0.05),
-            _descriptionText(
-                context, this.widget.loginPayload!.pageTitle, size),
-            _video(this.widget.loginPayload!.welcomeVideo["url"],
-                ColorsApp.backgroundRed),
-            _profundityText(
-                context, this.widget.loginPayload!.profundityText, size),
-            SizedBox(height: size.height * 0.01),
-            _sheetButton(context, size),
-            SizedBox(height: size.height * 0.01),
-            _workloadText(context,this.widget.loginPayload!.workloadText,size),
-            SizedBox(height: size.height * 0.05),
 
-            /// formulario (falta aplicar backend)
+            /// city name with the city number, to position the item bellow or
+            /// on top of the main image, we use the size of the container, plus 8 units
+            /// for spacing
+            Positioned(
+              top: !this.textOnTop ? this.size + (smallFont ? 4 : 8) : null,
+              bottom: this.textOnTop ? this.size + (smallFont ? 4 : 8) : null,
+              left: -this.size,
+              right: -this.size,
+              child: Center(
+                child: Text(
+                  '${this.city.stage} ${this.city.name.toUpperCase()}',
+                  style:
+                      smallFont ? korolevFont.bodyText2 : korolevFont.headline5,
+                ),
+              ),
+            )
           ],
-        ],
-      ),
-    );
-  }
-
-  Container _logo(Size size) {
-    return Container(
-      width: double.infinity,
-      height: size.height * 0.2,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/logo_background2.png',
-        ),
-        filterQuality: FilterQuality.high,
-      ),
-      padding: EdgeInsets.only(
-        top: size.height * 0.05,
-      ),
-    );
-  }
-  _workloadText(BuildContext context, String workloadText, Size size) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(7.0) //
-            ),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            offset: Offset(0.0, 0.7), //(x,y)
-            blurRadius: 1.0,
-          ),
-        ],
-      ),
-      // child: MarkdownBody(
-      //   data: workloadText,
-      //   styleSheet: MarkdownStyleSheet(
-      //     h2: korolevFont.headline6,
-      //     listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-      //   ),
-      // )
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-            child: Text(
-              "Carga horaria estimada para cada docente por ciudad:",
-              style: korolevFont.headline5?.copyWith(
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "10 horas",
-            style: korolevFont.headline6?.apply(
-              fontSizeFactor: 0.9,
-              color: ColorsApp.backgroundRed,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-            child: Text(
-              "Se trata de 4 horas para el consumo asíncrono de contenidos y 6 horas para el tiempo de producción y gamifiación",
-              style: korolevFont.headline5?.apply(
-                fontSizeFactor: 0.6,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-            child: Text(
-              "Tiempo total del viaje 2222",
-              style: korolevFont.headline5?.copyWith(
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "120 horas",
-            style: korolevFont.headline6?.apply(
-              fontSizeFactor: 0.9,
-              color: ColorsApp.backgroundRed,
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-            child: Text(
-              "para una duración máxima de 45 días",
-              style: korolevFont.headline5?.apply(
-                fontSizeFactor: 0.6,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "A disfrutar...",
-            style: korolevFont.headline6?.apply(
-              fontSizeFactor: 0.9,
-              color: ColorsApp.backgroundRed,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  ///Párrafo de descripción
-  _descriptionText(BuildContext context, String description, Size size) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-      child: Text(
-        description,
-        style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  _profundityText(BuildContext context, String depthText, Size size) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-     
-      child : MarkdownBody(
-        data: depthText,
-        styleSheet: MarkdownStyleSheet(
-          p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          h2: korolevFont.headline6,          
-          listBullet:  korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
-          
-        ),
-       
-        
-      )
-    );
-  }
-
-  _sheetButton(BuildContext context, Size size) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-      width: double.infinity,
-      child: TextButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(TeamScreen.route);
-        },
-        style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
-        child: Text(
-          'Equipo 2222',
-          style: korolevFont.headline6?.apply(
-              decoration: TextDecoration.underline, fontSizeFactor: 0.7),
         ),
       ),
-    );
-  }
-
-  ///Vídeo que actualmente está como NetworkImage
-  _video(String url, Color color) {
-    return VideoPlayerSegment(
-      videoUrl: url,
-      color: color,
     );
   }
 }
