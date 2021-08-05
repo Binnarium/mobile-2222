@@ -1,4 +1,4 @@
-import 'package:lab_movil_2222/services/i-load-information.service.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';

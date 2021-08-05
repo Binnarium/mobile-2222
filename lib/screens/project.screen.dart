@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
+import 'package:lab_movil_2222/services/load-login-information.service.dart';
+import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';

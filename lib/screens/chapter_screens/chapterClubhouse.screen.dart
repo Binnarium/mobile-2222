@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
 import 'package:lab_movil_2222/screens/project.screen.dart';
 import 'package:lab_movil_2222/services/i-load-information.service.dart';
@@ -39,7 +40,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
               context,
               StageIntroductionScreen.route,
               arguments: StageIntroductionScreen(
-                chapterSettings: chapters[this.widget.chapterSettings.stage],
+                city: chapters[this.widget.chapterSettings.stage],
               ),
             );
     if (this.widget.chapterSettings.enabledPages.project == true) {

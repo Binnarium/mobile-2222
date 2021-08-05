@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class IdeaContainerWidget extends StatelessWidget {
-  //texto que irá dentro del contenedor
+  /// texto que irá dentro del contenedor
   final String text;
-  //para determinar dónde se encuentra el lado más extenso de la imagen del contenedor
+
+  /// para determinar dónde se encuentra el lado más extenso de la imagen del contenedor
   final int orientation;
 
-  const IdeaContainerWidget({
-    required this.text,
+  /// apply big bubble styles when enabled
+  final bool bigStyle;
+
+  IdeaContainerWidget({
+    required String text,
     required this.orientation,
-  });
+    this.bigStyle = false,
+  }) : this.text = text.trim();
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +27,29 @@ class IdeaContainerWidget extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Positioned(
+        Positioned.fill(
           child: Image(
             fit: BoxFit.fill,
             image: AssetImage(
               'assets/backgrounds/decorations/bubble_background_decoration.png',
             ),
           ),
-          bottom: 0,
-          left: 0,
-          top: 0,
-          right: 0,
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(50, 40, 35, 30),
-          child: Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
+          padding: this.bigStyle
+              ? EdgeInsets.fromLTRB(70, 65, 45, 40)
+              : EdgeInsets.fromLTRB(50, 50, 35, 25),
+          child: Container(
+            constraints: BoxConstraints(minHeight: this.bigStyle ? 180 : 100),
+            child: Center(
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: (this.bigStyle
+                        ? korolevFont.headline5
+                        : korolevFont.bodyText1)
+                    ?.copyWith(color: Colors.black),
+              ),
             ),
           ),
         ),
