@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
-import 'package:lab_movil_2222/services/i-load-information.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
