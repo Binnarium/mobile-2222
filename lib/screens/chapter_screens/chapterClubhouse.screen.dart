@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/screens/project.screen.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -26,15 +27,12 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
   @override
   void initState() {
     super.initState();
-    ILoadInformationService<List<CityDto>> loader =
-        LoadCitiesSettingService();
+    ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
     loader.load().then((value) => this.setState(() => this.chapters = value));
   }
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-
     VoidCallback? nextPage = this.widget.chapterSettings.stage == 12
         ? null
         : () => Navigator.pushNamed(
@@ -44,9 +42,18 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
                 city: chapters[this.widget.chapterSettings.stage],
               ),
             );
+    if (this.widget.chapterSettings.enabledPages.project == true) {
+      nextPage = () => Navigator.pushNamed(
+            context,
+            ProjectScreen.route,
+            arguments:
+                ProjectScreen(chapterSettings: this.widget.chapterSettings),
+          );
+    }
+    VoidCallback prevPage = () => Navigator.pop(context);
 
     print(prevPage);
-    print(nextPage);
+    print("cual es la siguiente página: $nextPage");
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
