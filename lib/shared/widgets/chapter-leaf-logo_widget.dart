@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'app-logo.widget.dart';
+
+@Deprecated('Use instead AppLogo with the city logo kind')
 class ChapterLeafLogoWidget extends StatelessWidget {
   const ChapterLeafLogoWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Image(
-      alignment: Alignment.topLeft,
-      image: AssetImage(
-        'assets/backgrounds/decorations/logo_leaf.png',
-      ),
-    );
+    return AppLogo(kind: AppImage.cityLogo);
   }
 }
