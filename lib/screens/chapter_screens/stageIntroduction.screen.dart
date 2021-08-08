@@ -94,19 +94,26 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
         ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(this.widget.city.phaseName.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: korolevFont.headline3
-                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1)),
+        Text(
+          this.widget.city.phaseName.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: korolevFont.headline3
+              ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1),
+        ),
         SizedBox(height: 10),
-        //Texto cambiar por funcionalidad de cuenta de días
+
+        /// city name with hero functionality, apply no underline style to prevent
+        /// yellow underline on transition
         Hero(
-          tag: 'name-${this.widget.city.id}',
+          tag: this.widget.city.nameTag,
           child: Text(
             this.widget.city.name.toUpperCase(),
             textAlign: TextAlign.center,
-            style: korolevFont.headline1
-                ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: 5),
+            style: korolevFont.headline1?.apply(
+              fontSizeFactor: fontSize - 0.5,
+              fontWeightDelta: 5,
+              decoration: TextDecoration.none,
+            ),
           ),
         ),
         SizedBox(height: size.height * 0.05),
