@@ -12,10 +12,10 @@ const Map<AppImage, ImageProvider> _AppImages = {
   /// Image used inside each city, this image has a transparent 2222 word witch enables
   /// easy merging with the colored background
   AppImage.cityLogo: AssetImage('assets/backgrounds/decorations/logo_leaf.png'),
-  AppImage.defaultAppLogo:
-      AssetImage('assets/backgrounds/logo_background2.png'),
-  AppImage.animatedAppLogo:
-      AssetImage('assets/backgrounds/logo_background1.png')
+  /// TODO: add docs
+  AppImage.defaultAppLogo: AssetImage('assets/backgrounds/logo_background2.png'),
+  /// TODO: add docs
+  AppImage.animatedAppLogo: AssetImage('assets/backgrounds/logo_background1.png')
 };
 
 /// wrapper to get an app logo

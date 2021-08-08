@@ -61,5 +61,9 @@ class CityDto {
   ImageProvider get iconImage => NetworkImage(this.icon.url);
   ImageProvider get iconMapImage => NetworkImage(this.iconMap.url);
 
-  get phaseName => 'Etapa ${this.stage}';
+  get phaseName => 'Etapa ${this.stage}'.toUpperCase();
+
+  get imageTag => 'city-image-${this.id}'.toLowerCase();
+  get nameTag => 'city-name-${this.id}'.toLowerCase();
+  get phaseTag => 'city-phase-${this.id}'.toLowerCase();
 }
