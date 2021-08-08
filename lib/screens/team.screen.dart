@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:markdown/markdown.dart' as md;
 
 class TeamScreen extends StatefulWidget {
   static const String route = '/equipo';
@@ -31,11 +32,6 @@ class _TeamScreenState extends State<TeamScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
       body: Center(
         child: Stack(
           children: [
@@ -46,7 +42,7 @@ class _TeamScreenState extends State<TeamScreen> {
             _routeCurve(),
 
             ///body of the screen
-            _resourcesContent(size, context),
+            _resourcesContent(context),
           ],
         ),
       ),
@@ -54,39 +50,35 @@ class _TeamScreenState extends State<TeamScreen> {
   }
 
   ///body of the screen
-  _resourcesContent(Size size, BuildContext context) {
-    ///sizing the container to the mobile
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+  _resourcesContent(BuildContext context) {
+    if (this.loginPayload == null)
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(
+            ColorsApp.backgroundRed,
+          ),
+        ),
+      );
 
-      ///Listview of the whole screen
-      child: ListView(
+    final Size size = MediaQuery.of(context).size;
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (this.loginPayload == null)
-            Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  ColorsApp.backgroundRed,
-                ),
-              ),
-            ),
+          /// back button to return previous page
+          BackButton(color: Colors.white),
 
-          /// data is available
-          /// logo de 2222
-          if (this.loginPayload != null) ...[
-            SizedBox(
-              height: 20,
+          /// page content
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.1,
+              vertical: 24,
             ),
-            SizedBox(
-              height: 20,
-            ),
-            TeamContentMarkdown(
+            child: TeamContentMarkdown(
               teamContent: this.loginPayload!.teamText,
             ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+          ),
         ],
       ),
     );
@@ -119,6 +111,10 @@ class TeamContentMarkdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return MarkdownBody(
       data: this.teamContent,
+      builders: {
+        'h1': MarkdownHeadline1Builder(),
+        'h2': MarkdownHeadline1Builder(),
+      },
       styleSheet: MarkdownStyleSheet(
         p: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
         h2Align: WrapAlignment.center,
@@ -128,6 +124,19 @@ class TeamContentMarkdown extends StatelessWidget {
         orderedListAlign: WrapAlignment.center,
         listBullet: korolevFont.bodyText2?.apply(fontSizeFactor: 1.1),
       ),
+    );
+  }
+}
+
+class MarkdownHeadline1Builder extends MarkdownElementBuilder {
+  @override
+  Widget? visitText(md.Text element, TextStyle? preferredStyle) {
+    print(element);
+    return Container(
+      color: Colors.amber,
+      width: 200,
+      height: 200,
+      child: Text(element.text),
     );
   }
 }
