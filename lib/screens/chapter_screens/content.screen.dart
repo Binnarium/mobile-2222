@@ -13,10 +13,12 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ContentScreen extends StatefulWidget {
   static const String route = '/video';
-  final CityDto chapterSettings;
+  final CityDto city;
 
-  const ContentScreen({Key? key, required this.chapterSettings})
-      : super(key: key);
+  const ContentScreen({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -31,7 +33,7 @@ class _ContentScreenState extends State<ContentScreen> {
 
     ILoadInformationWithOptions<List<dynamic>, CityDto> loader =
         LoadContentsScreenInformationService(
-      chapterSettings: this.widget.chapterSettings,
+      chapterSettings: this.widget.city,
     );
     loader.load().then(
         (value) => this.setState(() => contents = value as List<ContentDto>));
@@ -50,7 +52,7 @@ class _ContentScreenState extends State<ContentScreen> {
         context,
         ResourcesScreen.route,
         arguments: ResourcesScreen(
-          cityDto: this.widget.chapterSettings,
+          cityDto: this.widget.city,
         ),
       );
     };
@@ -70,7 +72,7 @@ class _ContentScreenState extends State<ContentScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: widget.chapterSettings.color,
+                backgroundColor: widget.city.color,
                 reliefPosition: 'top-left',
               ),
 
@@ -100,7 +102,7 @@ class _ContentScreenState extends State<ContentScreen> {
           ///calls the head of the chapter (logo leaf, banner)
           ChapterHeadWidget(
             showStageLogo: true,
-            city: this.widget.chapterSettings,
+            city: this.widget.city,
           ),
           SizedBox(height: 20),
 
@@ -117,7 +119,7 @@ class _ContentScreenState extends State<ContentScreen> {
       return Center(
         child: CircularProgressIndicator(
           valueColor: new AlwaysStoppedAnimation<Color>(
-            this.widget.chapterSettings.color,
+            this.widget.city.color,
           ),
         ),
       );
@@ -131,7 +133,7 @@ class _ContentScreenState extends State<ContentScreen> {
             new VideoPlayerSegment(
               videoUrl: c.url!,
               description: c.description,
-              color: widget.chapterSettings.color,
+              color: widget.city.color,
             ),
           ],
         );
@@ -142,7 +144,7 @@ class _ContentScreenState extends State<ContentScreen> {
             PodcastAudioPlayer(
               audioUrl: c.url,
               description: c.description,
-              color: widget.chapterSettings.color,
+              color: widget.city.color,
             ),
           ],
         );
@@ -183,7 +185,7 @@ class _ContentScreenState extends State<ContentScreen> {
             Text(
               (title == null) ? 'No title Available' : title.toUpperCase(),
               style: korolevFont.headline6?.apply(
-                color: widget.chapterSettings.color,
+                color: widget.city.color,
               ),
             ),
           ],

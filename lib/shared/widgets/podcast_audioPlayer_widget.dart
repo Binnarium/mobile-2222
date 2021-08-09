@@ -1,7 +1,7 @@
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
-import 'package:audio_session/audio_session.dart';
 
 class PodcastAudioPlayer extends StatefulWidget {
   final String? audioUrl;
@@ -92,52 +92,36 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
             Container(
               child: Container(
                 width: size.width * 0.8,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    Image(
-                      image: AssetImage('assets/icons/podcast_icon.png'),
-                    ),
-                    SizedBox(
-                      width: (size.width < 325) ? 0 : size.width * 0.05,
+                    Container(
+                      height: 20,
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: _slider(),
                     ),
                     Container(
-                      width: (size.width < 325)
-                          ? size.width * 0.45
-                          : size.width * 0.55,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 20,
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: _slider(),
+                          Text(
+                            _position.toString().split(".")[0],
+                            style: korolevFont.bodyText2,
                           ),
-                          Container(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _position.toString().split(".")[0],
-                                  style: korolevFont.bodyText2,
-                                ),
-                                Text(
-                                  _duration.toString().split(".")[0],
-                                  style: korolevFont.bodyText2,
-                                ),
-                              ],
-                            ),
+                          Text(
+                            _duration.toString().split(".")[0],
+                            style: korolevFont.bodyText2,
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          _podcastButtons(_player, size),
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    _podcastButtons(_player, size),
                   ],
                 ),
               ),
@@ -245,7 +229,9 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
         ),
         child: Slider(
             activeColor: Colors.white,
-            inactiveColor: Colors.grey,
+
+            inactiveColor: Colors.white.withOpacity(0.5),
+
             min: 0.0,
             max: _duration.inSeconds.toDouble(),
             value: _position.inSeconds.toDouble(),
