@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/models/Login.model.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -111,10 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       width: double.infinity,
       height: size.height * 0.2,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/logo_background2.png',
-        ),
+      child: AppLogo(
+        kind: AppImage.defaultAppLogo,
         filterQuality: FilterQuality.high,
       ),
       padding: EdgeInsets.only(
@@ -181,10 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               "Carga horaria estimada para cada docente por ciudad:",
               style: korolevFont.headline5?.copyWith(
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
@@ -220,10 +218,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               "Tiempo total del viaje 2222",
               style: korolevFont.headline5?.copyWith(
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),

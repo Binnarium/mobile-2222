@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
@@ -117,12 +118,11 @@ class _SplashScreenState extends State<SplashScreen> {
       //largo y ancho del logo dentro
       width: double.infinity,
       height: size.height * 0.45,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/logo_background1.png',
-        ),
+      child: AppLogo(
+        kind: AppImage.animatedAppLogo,
         filterQuality: FilterQuality.high,
       ),
+
       padding: EdgeInsets.only(
         top: size.height * 0.04,
       ),
