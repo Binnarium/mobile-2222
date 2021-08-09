@@ -94,11 +94,17 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
         ),
         SizedBox(height: spacedSize),
         //Texto cambiar por funcionalidad de cuenta de días
-        Text(
-          this.widget.city.phaseName.toUpperCase(),
-          textAlign: TextAlign.center,
-          style: korolevFont.headline3
-              ?.apply(fontSizeFactor: fontSize - 0.5, fontWeightDelta: -1),
+        Hero(
+          tag: this.widget.city.phaseTag,
+          child: Text(
+            this.widget.city.phaseName,
+            textAlign: TextAlign.center,
+            style: korolevFont.headline3?.apply(
+              fontSizeFactor: fontSize - 0.5,
+              fontWeightDelta: -1,
+              decoration: TextDecoration.none,
+            ),
+          ),
         ),
         SizedBox(height: 10),
 
