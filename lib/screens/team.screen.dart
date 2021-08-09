@@ -186,8 +186,8 @@ class MarkdownCustomCreators extends MarkdownElementBuilder {
               width: 10,
             ),
             Container(
-              width: 10,
-              height: 10,
+              width: 8,
+              height: 8,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
