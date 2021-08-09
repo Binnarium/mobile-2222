@@ -1,7 +1,7 @@
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
-import 'package:audio_session/audio_session.dart';
 
 class PodcastAudioPlayer extends StatefulWidget {
   final String? audioUrl;
@@ -245,7 +245,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
         ),
         child: Slider(
             activeColor: Colors.white,
-            inactiveColor: Colors.grey,
+            inactiveColor: Colors.white,
             min: 0.0,
             max: _duration.inSeconds.toDouble(),
             value: _position.inSeconds.toDouble(),

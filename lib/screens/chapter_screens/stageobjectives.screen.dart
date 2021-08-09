@@ -41,7 +41,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
         context,
         ContentScreen.route,
         arguments: ContentScreen(
-          chapterSettings: this.widget.chapterSettings,
+          city: this.widget.chapterSettings,
         ),
       );
     };
