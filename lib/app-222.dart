@@ -27,8 +27,8 @@ class App2222 extends StatelessWidget {
 
         /// material app theme
         theme: ThemeData(
-          fontFamily: 'Korolev',
-          textTheme: korolevFont.apply(bodyColor: Colors.black),
+          fontFamily: KorolevFont.fontFamily,
+          textTheme: KorolevFont(),
           accentColor: ColorsApp.backgroundBottomBar,
           splashColor: ColorsApp.backgroundBottomBar,
         ),
