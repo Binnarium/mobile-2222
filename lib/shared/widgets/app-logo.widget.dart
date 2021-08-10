@@ -11,6 +11,9 @@ enum AppImage {
 
   /// TODO: add docs
   defaultAppLogo,
+
+  /// TODO: add docs
+  loadingLogo,
 }
 
 /// Map containing all available app images
@@ -19,7 +22,8 @@ const Map<AppImage, ImageProvider> _AppImages = {
   AppImage.defaultAppLogo:
       AssetImage('assets/backgrounds/logo_background2.png'),
   AppImage.animatedAppLogo:
-      AssetImage('assets/backgrounds/logo_background1.png')
+      AssetImage('assets/backgrounds/logo_background1.png'),
+  AppImage.loadingLogo: AssetImage('assets/backgrounds/logo_background1.png'),
 };
 
 /// wrapper to get an app logo
@@ -40,9 +44,15 @@ class AppLogo extends Image {
     Key? key,
     required AppImage kind,
     FilterQuality? filterQuality,
+    double? width,
+    double? height,
+    BoxFit? fit,
   }) : super(
           key: key,
           filterQuality: filterQuality ?? FilterQuality.high,
           image: getAppLogo(kind),
+          width: width,
+          height: height,
+          fit: fit,
         );
 }

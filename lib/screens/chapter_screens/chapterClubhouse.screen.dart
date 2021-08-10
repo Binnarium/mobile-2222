@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
-import 'package:lab_movil_2222/screens/project.screen.dart';
+import 'package:lab_movil_2222/screens/city-project.screen.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
@@ -45,9 +45,9 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
     if (this.widget.chapterSettings.enabledPages.project == true) {
       nextPage = () => Navigator.pushNamed(
             context,
-            ProjectScreen.route,
+            CityProjectScreen.route,
             arguments:
-                ProjectScreen(chapterSettings: this.widget.chapterSettings),
+                CityProjectScreen(city: this.widget.chapterSettings),
           );
     }
     VoidCallback prevPage = () => Navigator.pop(context);
