@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/models/city.dto.dart';
 
 class LoadArgumentScreenInformationService
     extends ILoadInformationWithOptions<List<String>, CityDto> {
+    
   const LoadArgumentScreenInformationService({
     required final CityDto chapterSettings,
   }) : super(options: chapterSettings);
