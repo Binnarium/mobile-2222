@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/shared/models/city.dto.dart';
+import 'package:lab_movil_2222/models/city.dto.dart';
 
 class LoadArgumentScreenInformationService
     extends ILoadInformationWithOptions<List<String>, CityDto> {

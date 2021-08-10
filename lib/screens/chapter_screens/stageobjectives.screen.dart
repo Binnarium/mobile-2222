@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/Competence.model.dart';
+import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
-import 'package:lab_movil_2222/shared/models/Competence.model.dart';
-import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';

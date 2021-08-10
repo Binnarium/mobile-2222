@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
+import 'package:lab_movil_2222/models/Login.model.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
-import 'package:lab_movil_2222/shared/models/Login.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';

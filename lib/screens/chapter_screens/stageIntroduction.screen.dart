@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
-import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
