@@ -215,10 +215,10 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             return GridView.builder(
               ///general spacing per resource
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                mainAxisExtent: (size.height > 700) ? 200 : 180,
+                crossAxisCount: 2,
+                crossAxisSpacing: 25,
+                mainAxisSpacing: 35,
+                mainAxisExtent: (size.height > 700) ? 300 : 280,
                 // childAspectRatio: 1,
               ),
               itemCount: compeTemp.length,
