@@ -30,6 +30,7 @@ class App2222 extends StatelessWidget {
           brightness: Brightness.dark,
           fontFamily: KorolevFont.fontFamily,
           textTheme: KorolevFont(),
+          primaryTextTheme: KorolevFont(textColor: ColorsApp.black),
           colorScheme: ColorScheme.dark(
             primary: ColorsApp.white,
             onPrimary: ColorsApp.black,

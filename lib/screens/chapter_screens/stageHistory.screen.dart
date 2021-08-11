@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart'
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageHistoryScreen extends StatefulWidget {
@@ -130,11 +131,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       child: history.text == null
           ? Text('No se ha cargado texto')
-          : Text(
-              history.text as String,
-              style: korolevFont.bodyText1,
-              textAlign: TextAlign.left,
-            ),
+          : Markdown2222(data: history.text!),
     );
   }
 
