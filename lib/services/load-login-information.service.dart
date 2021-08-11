@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/shared/models/Login.model.dart';
+import 'package:lab_movil_2222/models/welcome.dto.dart';
 
-class LoadLoginInformationService extends ILoadInformationService<LoginDto> {
+class LoadLoginInformationService extends ILoadInformationService<WelcomeDto> {
   @override
-  Future<LoginDto> load() async {
+  Future<WelcomeDto> load() async {
     final snap = await FirebaseFirestore.instance
         .collection('cities')
         .doc('welcome')
@@ -15,7 +15,7 @@ class LoadLoginInformationService extends ILoadInformationService<LoginDto> {
 
     final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
 
-    final result = LoginDto.fromJson(payload);
+    final result = WelcomeDto.fromMap(payload);
     return result;
   }
 }

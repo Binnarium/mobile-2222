@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
-import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
-import 'package:lab_movil_2222/shared/models/city.dto.dart';
+import 'package:lab_movil_2222/models/Lecture.model.dart';
+import 'package:lab_movil_2222/models/OnlineResource.model.dart';
+import 'package:lab_movil_2222/models/city.dto.dart';
 
 class LoadOnlineResourcesScreenInformationService
     extends ILoadInformationWithOptions<List<ResourcesDto>, CityDto> {
