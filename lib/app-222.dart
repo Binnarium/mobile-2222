@@ -27,10 +27,14 @@ class App2222 extends StatelessWidget {
 
         /// material app theme
         theme: ThemeData(
+          brightness: Brightness.dark,
           fontFamily: KorolevFont.fontFamily,
           textTheme: KorolevFont(),
-          accentColor: ColorsApp.backgroundBottomBar,
-          splashColor: ColorsApp.backgroundBottomBar,
+          colorScheme: ColorScheme.dark(
+            primary: ColorsApp.white,
+            onPrimary: ColorsApp.black,
+            background: ColorsApp.red,
+          ),
         ),
 
         initialRoute: SplashScreen.route,

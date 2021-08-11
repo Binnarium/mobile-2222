@@ -31,7 +31,7 @@ class KorolevFont extends TextTheme {
           ),
           headline4: TextStyle(
             fontFamily: fontFamily,
-            fontSize: 28,
+            fontSize: 34,
             color: textColor,
             fontWeight: FontWeight.w500,
           ),
@@ -51,7 +51,7 @@ class KorolevFont extends TextTheme {
             fontFamily: fontFamily,
             fontSize: 16,
             color: textColor,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
           ),
           subtitle2: TextStyle(
             fontFamily: fontFamily,
@@ -67,9 +67,9 @@ class KorolevFont extends TextTheme {
           ),
           bodyText2: TextStyle(
             fontFamily: fontFamily,
-            fontSize: 16,
+            fontSize: 14,
             color: textColor,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
           caption: TextStyle(
             fontFamily: fontFamily,

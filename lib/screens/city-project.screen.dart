@@ -4,7 +4,7 @@ import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
-import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
@@ -129,7 +129,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           height: 30,
         ),
         if (this.project == null)
-          IconLoading()
+          AppLoading()
         else ...[
           Container(
             padding: EdgeInsets.only(right: 50),
@@ -192,65 +192,4 @@ _taskButton(BuildContext context, color) {
       ),
     ),
   );
-}
-
-class IconLoading extends StatefulWidget {
-  const IconLoading({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _IconLoadingState createState() => _IconLoadingState();
-}
-
-class _IconLoadingState extends State<IconLoading>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _animation;
-
-  initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-      value: 0,
-      lowerBound: 0,
-      upperBound: 1,
-    );
-
-    _animation =
-        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
-
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        _controller.forward();
-      }
-    });
-    _controller.forward();
-  }
-
-  @override
-  dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    final double sideWidth = size.width * 0.3;
-
-    return FadeTransition(
-      opacity: _animation,
-      child: AppLogo(
-        kind: AppImage.loadingLogo,
-        width: sideWidth,
-        height: sideWidth,
-        fit: BoxFit.contain,
-      ),
-    );
-  }
 }

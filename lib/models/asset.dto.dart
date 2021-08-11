@@ -21,16 +21,13 @@ class VideoDto extends AssetDto {
   final int duration;
   final String format;
 
-  VideoDto({
-    required String url,
-    required String path,
-    required String name,
-    required this.duration,
-    required this.format,
-  }) : super(
-          name: name,
-          path: path,
-          url: url,
+  VideoDto.fromMap(final Map<String, dynamic> payload)
+      : this.format = payload['format'] ?? '',
+        this.duration = payload['duration'] ?? '',
+        super(
+          name: payload['name'] ?? '',
+          path: payload['path'] ?? '',
+          url: payload['url'] ?? '',
         );
 }
 

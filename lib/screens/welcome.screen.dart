@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/models/Login.model.dart';
+import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -20,13 +21,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
 
-    ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
+    ILoadInformationService<WelcomeDto> loader = LoadLoginInformationService();
     loader
         .load()
         .then((value) => this.setState(() => this.loginPayload = value));
   }
 
-  LoginDto? loginPayload;
+  WelcomeDto? loginPayload;
 
   ///página de login donde pide usuario y contraseña
   @override
@@ -63,24 +64,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   ///Cuerpo de la pantalla
   _loginBody(Size size, BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       child: Column(
         children: [
-          // if (this.widget.error) {
-          //   Text(loginInfo.error.toString());
-          // }
-
+          /// Animation until welcome data is loaded
           if (this.loginPayload == null)
             Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  ColorsApp.backgroundRed,
-                ),
-              ),
-            ),
+              child: AppLoading(),
+            )
 
-          /// data is available
-          /// logo de 2222
-          if (this.loginPayload != null) ...[
+          /// data finally loaded
+          /// asume data has loaded
+          else ...[
             _logo(size),
             SizedBox(height: size.height * 0.05),
 
@@ -92,8 +87,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             SizedBox(height: size.height * 0.05),
             _descriptionText(context, this.loginPayload!.pageTitle, size),
-            _video(this.loginPayload!.welcomeVideo["url"],
-                ColorsApp.backgroundRed),
+            _video(
+                this.loginPayload!.welcomeVideo.url, ColorsApp.backgroundRed),
             _profundityText(context, this.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),

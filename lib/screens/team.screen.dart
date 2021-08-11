@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/models/Login.model.dart';
+import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -15,13 +15,13 @@ class TeamScreen extends StatefulWidget {
 }
 
 class _TeamScreenState extends State<TeamScreen> {
-  LoginDto? loginPayload;
+  WelcomeDto? loginPayload;
 
   @override
   void initState() {
     super.initState();
 
-    ILoadInformationService<LoginDto> loader = LoadLoginInformationService();
+    ILoadInformationService<WelcomeDto> loader = LoadLoginInformationService();
     loader
         .load()
         .then((value) => this.setState(() => this.loginPayload = value));
@@ -74,7 +74,7 @@ class _TeamScreenState extends State<TeamScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: TeamContentMarkdown(
+            child: _TeamContentMarkdown(
               teamContent: this.loginPayload!.teamText,
             ),
           ),
@@ -98,8 +98,8 @@ class _TeamScreenState extends State<TeamScreen> {
 
 /// Markdown content adapted to implement design guides, The team content is
 /// mainly centered
-class TeamContentMarkdown extends StatelessWidget {
-  const TeamContentMarkdown({
+class _TeamContentMarkdown extends StatelessWidget {
+  const _TeamContentMarkdown({
     Key? key,
     required this.teamContent,
   }) : super(key: key);
@@ -122,7 +122,7 @@ class TeamContentMarkdown extends StatelessWidget {
         h2: textTheme.headline4,
         h3: textTheme.headline6,
         h4: textTheme.caption,
-        p: textTheme.bodyText2,
+        p: textTheme.subtitle1,
       ),
     );
   }
