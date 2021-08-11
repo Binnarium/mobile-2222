@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
-import 'package:lab_movil_2222/screens/project.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 enum NavigationBarPages {
@@ -94,7 +94,8 @@ class CustomNavigationBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Navigator.pushNamed(
-                context, ProjectScreen.route), //ORIGINAL StatisticsScreen.route
+                context,
+                CityProjectScreen.route), //ORIGINAL StatisticsScreen.route
             child: Container(
               child: ImageIcon(
                 AssetImage('assets/icons/stats_icon.png'),

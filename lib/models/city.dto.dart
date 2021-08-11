@@ -1,22 +1,21 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/models/image.dto.dart';
 
-class CityConfigurationDto {
+import 'asset.dto.dart';
+
+class _CityConfigurationDto {
   final int colorHex;
 
-  CityConfigurationDto.fromMap(final Map<String, dynamic> payload)
+  _CityConfigurationDto.fromMap(final Map<String, dynamic> payload)
       : this.colorHex = payload['colorHex'];
 }
 
-class CityEnabledPagesDto {
+class _CityEnabledPagesDto {
   final bool activities;
   final bool questionary;
   final bool clubhouse;
   final bool project;
 
-  CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
+  _CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] ?? false,
         this.questionary = payload['questionary'] ?? false,
         this.clubhouse = payload['clubhouse'] ?? false,
@@ -29,8 +28,8 @@ class CityDto {
   final int stage;
   final ImageDto icon;
   final ImageDto iconMap;
-  final CityConfigurationDto configuration;
-  final CityEnabledPagesDto enabledPages;
+  final _CityConfigurationDto configuration;
+  final _CityEnabledPagesDto enabledPages;
 
   const CityDto({
     required this.id,
@@ -47,15 +46,15 @@ class CityDto {
         this.name = payload['name'] as String,
         this.stage = payload['stage'] as int,
         this.configuration =
-            CityConfigurationDto.fromMap(payload['configuration']),
+            _CityConfigurationDto.fromMap(payload['configuration']),
         this.enabledPages =
-            CityEnabledPagesDto.fromMap(payload['enabledPages']),
+            _CityEnabledPagesDto.fromMap(payload['enabledPages']),
         this.icon = ImageDto.fromMap(payload['icon']),
         this.iconMap = ImageDto.fromMap(payload['iconMap']);
 
   Color get color => Color(this.configuration.colorHex);
 
-  @Deprecated('use icon.url instead')
+  @Deprecated('use icon.url instead, or iconImage')
   String get chapterImageUrl => this.icon.url;
 
   ImageProvider get iconImage => NetworkImage(this.icon.url);

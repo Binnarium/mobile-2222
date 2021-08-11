@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/models/Lecture.model.dart';
+import 'package:lab_movil_2222/models/OnlineResource.model.dart';
+import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/services/load-resources-screen-information.service.dart';
-import 'package:lab_movil_2222/shared/models/Lecture.model.dart';
-import 'package:lab_movil_2222/shared/models/OnlineResource.model.dart';
-import 'package:lab_movil_2222/shared/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
