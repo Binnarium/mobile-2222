@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
@@ -24,6 +25,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   WelcomeDto? loginPayload;
+  String? _email;
+  String? _password;
 
   @override
   void initState() {
@@ -210,6 +213,9 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        onChanged: (value) {
+          _email = value;
+        },
         cursorColor: Colors.black54,
         style: Theme.of(context)
             .textTheme
@@ -238,6 +244,9 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        onChanged: (value) {
+          _password = value;
+        },
         cursorColor: Colors.black54,
         style: korolevFont.headline5?.apply(
           color: Colors.black54,
@@ -269,7 +278,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         ///Navigates to main screen
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(HomeScreen.route);
+          _login();
+          
         },
         child: Text(
           'Ingresar',
@@ -278,6 +288,15 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  Future<void> _login() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email!, password: _password!);
+    } on FirebaseAuthException catch (e) {
+      print("Error: $e");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
 }
-
-
