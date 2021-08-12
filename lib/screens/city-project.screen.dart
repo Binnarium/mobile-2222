@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
+import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
@@ -29,11 +31,17 @@ class CityProjectScreen extends StatefulWidget {
 }
 
 class _CityProjectScreenState extends State<CityProjectScreen> {
+  late List<CityDto> chapters;
+
   ProjectDto? project;
 
   @override
   void initState() {
     super.initState();
+
+    /// called service to load the next chapter
+    ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
+    loader.load().then((value) => this.setState(() => this.chapters = value));
     print('called');
     this
         .widget
@@ -52,7 +60,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               context,
               StageIntroductionScreen.route,
               arguments: StageIntroductionScreen(
-                city: this.widget.city,
+                /// will go to the next chapter
+                city: chapters[this.widget.city.stage],
               ),
             );
 

@@ -24,8 +24,14 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void initState() {
+    super.initState();
     chewieController = ChewieController(
       videoPlayerController: this.widget.videoPlayerController,
+      placeholder: Center(
+        child: Image(
+          image: AssetImage('assets/backgrounds/logo_background2.png'),
+        ),
+      ),
       looping: this.widget.isLoop,
       autoInitialize: true,
       aspectRatio: 16 / 9,
@@ -36,8 +42,6 @@ class _VideoPlayerState extends State<VideoPlayer> {
         handleColor: this.widget.color,
       ),
     );
-
-    super.initState();
   }
 
   @override

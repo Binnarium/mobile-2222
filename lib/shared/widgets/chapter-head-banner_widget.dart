@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 
-import 'chapter-leaf-logo_widget.dart';
 import 'city-stage.widget.dart';
 
 class ChapterHeadWidget extends StatelessWidget {
@@ -22,7 +22,7 @@ class ChapterHeadWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (this.showAppLogo) ChapterLeafLogoWidget(),
+        if (this.showAppLogo) AppLogo(kind: AppImage.cityLogo),
 
         /// added a container in the middle, so that in the event of any of
         /// the components is not enabled, it gets pushed to the right side using

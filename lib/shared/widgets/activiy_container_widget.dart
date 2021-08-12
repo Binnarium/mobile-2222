@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ActivitiesWidget extends StatelessWidget {
   final CityDto chapterSettings;
@@ -8,31 +7,28 @@ class ActivitiesWidget extends StatelessWidget {
     Key? key,
     required this.chapterSettings,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List<Widget> activities = [];
-    if (this.chapterSettings.enabledPages.clubhouse != null &&
-        this.chapterSettings.enabledPages.clubhouse) {
-      activities.add(_activity(size, "Eventos Clubhouse",
+    if (this.chapterSettings.enabledPages.clubhouse) {
+      activities.add(_activity(context, size, "Eventos Clubhouse",
           "assets/icons/clubhouse_activity_icon.png"));
       activities.add(SizedBox(
         height: 20,
       ));
     }
-    if (this.chapterSettings.enabledPages.questionary != null &&
-        this.chapterSettings.enabledPages.questionary) {
-      activities.add(_activity(size, "Cuestionario",
+    if (this.chapterSettings.enabledPages.questionary) {
+      activities.add(_activity(context, size, "Cuestionario",
           "assets/icons/multiple_choice_activity_icon.png"));
       activities.add(SizedBox(
         height: 20,
       ));
     }
-    if (this.chapterSettings.enabledPages.project != null &&
-        this.chapterSettings.enabledPages.project) {
-      activities.add(_activity(
-          size, "Proyecto Docente", "assets/icons/project_activity_icon.png"));
+    if (this.chapterSettings.enabledPages.project) {
+      activities.add(_activity(context, size, "Proyecto Docente",
+          "assets/icons/project_activity_icon.png"));
       activities.add(SizedBox(
         height: 20,
       ));
@@ -45,6 +41,7 @@ class ActivitiesWidget extends StatelessWidget {
   }
 
   Center _activity(
+    BuildContext context,
     Size size,
     String name,
     String iconPath,
@@ -76,8 +73,10 @@ class ActivitiesWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Text(
                         name.toUpperCase(),
-                        style: korolevFont.headline6!.copyWith(
-                            color: this.chapterSettings.color),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: this.chapterSettings.color),
                       ),
                     ),
                     Padding(
@@ -85,6 +84,10 @@ class ActivitiesWidget extends StatelessWidget {
                       child: Text(
                         "Tenim ipsam voluptaem quia voluptas sit aspe natur aut odit fugit sed quia",
                         textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(color: Colors.black),
                       ),
                     ),
                   ],
@@ -105,4 +108,3 @@ class ActivitiesWidget extends StatelessWidget {
     );
   }
 }
-

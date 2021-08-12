@@ -28,6 +28,8 @@ class IdeaContainerWidget extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Positioned.fill(
+          /// uncomment this to make image rotations
+          // child: _ideasImage(orientation),
           child: Image(
             fit: BoxFit.fill,
             image: AssetImage(
@@ -102,64 +104,6 @@ class IdeaContainerWidget extends StatelessWidget {
         image: AssetImage(
           'assets/backgrounds/decorations/bubble_background_decoration.png',
         ),
-      ),
-    );
-  }
-
-  //donde se crea el container que tiene el texto como child
-  Widget _textIdea(Size size, String text) {
-    Map<String, EdgeInsets> margins = {
-      "TopRight": EdgeInsets.only(
-        top: (size.height > 800) ? 20 : 10,
-        left: (size.height > 800) ? 15 : 10,
-        right: (size.height > 800) ? 20 : 20,
-        bottom: (size.height > 800) ? 30 : 10,
-      ),
-      "CenterLeft": (size.height > 800 && size.width >= 375)
-          ? EdgeInsets.only(left: 20, right: 10)
-          : EdgeInsets.only(left: 15, right: 10),
-      "BottomRight": EdgeInsets.only(
-        left: (size.height > 820 && size.width >= 375)
-            ? 10
-            : (size.width >= 370)
-                ? 5
-                : 10,
-        right: (size.height > 820 && size.width >= 375)
-            ? 25
-            : (size.width >= 370)
-                ? 10
-                : 20,
-        top: (size.height > 820 && size.width >= 375)
-            ? 15
-            : (size.width >= 370)
-                ? 30
-                : 15,
-      ),
-      "TopLeft": EdgeInsets.only(
-        left: (size.height > 820) ? 15 : 22,
-        right: (size.height > 820) ? 10 : 15,
-        bottom: 15,
-      ),
-      "BottomLeft": EdgeInsets.only(
-        left: (size.height > 820 && size.width >= 375) ? 20 : 25,
-        right: (size.height > 820 && size.width >= 375) ? 0 : 10,
-        top: (size.height > 820) ? 0 : 15,
-      ),
-    };
-
-    return Text(
-      //se emplea el texto recibido por entrada
-      text,
-
-      style: korolevFont.bodyText1?.apply(
-        color: Colors.black,
-        fontSizeFactor: (size.height > 560)
-            ? (size.height > 800 && size.width >= 380)
-                ? 0.87
-                : (size.width >= 360 && size.height >= 560)
-                    ? 0.8
-                    : 0.7
-            : 0.6,
       ),
     );
   }
