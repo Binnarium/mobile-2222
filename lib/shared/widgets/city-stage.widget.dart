@@ -14,8 +14,8 @@ class CityStageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final double imageSize = (size.width < 400) ? 50 : 75;
-    final double fontSizeFactor = (size.width < 400) ? 0.8 : 1;
+    final double imageSize = (size.width < 400) ? 60 : 75;
+    final double fontSizeFactor = (size.width < 400) ? 0.9 : 1;
 
     /// first of all the main row of items needs to take the minimal space required
     /// therefore it looks great in small devices

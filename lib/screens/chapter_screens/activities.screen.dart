@@ -50,7 +50,7 @@ class ActivitiesScreen extends StatelessWidget {
               ),
 
               ///body of the screen
-              _activitiesContent(size),
+              _activitiesContent(context, size),
             ],
           ),
         ),
@@ -62,7 +62,7 @@ class ActivitiesScreen extends StatelessWidget {
     );
   }
 
-  _activitiesContent(Size size) {
+  _activitiesContent(BuildContext context, Size size) {
     /// sizing the container to the mobile
     return Container(
       /// Listview of the whole screen
@@ -83,7 +83,10 @@ class ActivitiesScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
             child: Text(
               'Actividades'.toUpperCase(),
-              style: korolevFont.headline2?.apply(fontSizeFactor: 0.8),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2!
+                  .apply(fontSizeFactor: 0.8),
               textAlign: TextAlign.center,
             ),
           ),
@@ -96,6 +99,7 @@ class ActivitiesScreen extends StatelessWidget {
       ),
     );
   }
+
   _activitiesBody(Size size) {
     return ActivitiesWidget(chapterSettings: chapterSettings);
   }
