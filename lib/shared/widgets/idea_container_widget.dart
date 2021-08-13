@@ -1,51 +1,54 @@
-
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'dart:math' as math;
 
 enum BubbleKind {
-  type1,
-  type2,
-  type3,
+  TopRight,
+  CenterLeft,
+  BottomRight,
+  TopLeft,
+  BottomLeft,
 }
 
-const Map<BubbleKind, Matrix4> _BubbleRotations = {};
+Map<BubbleKind, Matrix4> _bubbleRotations = {
+  BubbleKind.TopRight: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(math.pi) //se rota eje y
+    ..rotateY(math.pi),
+  BubbleKind.CenterLeft: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(math.pi) //se rota eje y
+    ..rotateY(0)
+    ..rotateZ(0.3),
+  BubbleKind.BottomLeft: Matrix4.rotationX(0),
+  BubbleKind.BottomRight: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(0) //se rota eje y
+    ..rotateY(math.pi),
+  BubbleKind.TopLeft: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(math.pi) //se rota eje y
+    ..rotateY(0),
+};
 
-const Map<BubbleKind, EdgeInsetsGeometry> _BubblePaddings = {};
+/// determines the padding for normal bubbles
+const Map<BubbleKind, EdgeInsetsGeometry> _BubblePaddings = {
+  BubbleKind.TopRight: EdgeInsets.fromLTRB(40, 35, 45, 40),
+  BubbleKind.CenterLeft: EdgeInsets.fromLTRB(60, 35, 45, 50),
+  BubbleKind.BottomLeft: EdgeInsets.fromLTRB(50, 45, 25, 40),
+  BubbleKind.BottomRight: EdgeInsets.fromLTRB(40, 45, 45, 40),
+  BubbleKind.TopLeft: EdgeInsets.fromLTRB(50, 35, 35, 30),
+};
 
-// // //donde se crea la imagen blanca
-// //   _ideasImage(int index) {
-// //     Map<int, String> orientations = {
-// //       0: "TopRight",
-// //       1: "CenterLeft",
-// //       2: "BottomRight",
-// //       3: "TopLeft",
-// //       4: "BottomLeft",
-// //     };
+/// determines the padding for big bubbles
+const Map<BubbleKind, EdgeInsetsGeometry> _BigBubblePaddings = {
+  BubbleKind.TopRight: EdgeInsets.fromLTRB(50, 45, 65, 50),
+  BubbleKind.CenterLeft: EdgeInsets.fromLTRB(40, 45, 35, 30),
+  BubbleKind.BottomLeft: EdgeInsets.fromLTRB(70, 65, 45, 40),
+  BubbleKind.BottomRight: EdgeInsets.fromLTRB(40, 45, 45, 40),
+  BubbleKind.TopLeft: EdgeInsets.fromLTRB(30, 35, 55, 30),
+};
 
-// //     final String orientation = orientations[index]!;
-
-// //     Map<String, Matrix4> rotations = {
-// //       "BottomLeft": Matrix4.rotationX(0),
-// //       "TopRight": Matrix4.identity() //matriz de perspectiva
-// //         ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-// //         ..rotateX(math.pi) //se rota eje y
-// //         ..rotateY(math.pi),
-// //       "TopLeft": Matrix4.identity() //matriz de perspectiva
-// //         ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-// //         ..rotateX(math.pi) //se rota eje y
-// //         ..rotateY(0),
-// //       "BottomRight": Matrix4.identity() //matriz de perspectiva
-// //         ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-// //         ..rotateX(0) //se rota eje y
-// //         ..rotateY(math.pi),
-// //       "CenterLeft": Matrix4.identity() //matriz de perspectiva
-// //         ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-// //         ..rotateX(math.pi) //se rota eje y
-// //         ..rotateY(0)
-// //         ..rotateZ(0.3),
-// //     };
-// //     return;
-// //   }
 class IdeaContainerWidget extends StatelessWidget {
   /// texto que irá dentro del contenedor
   final String text;
@@ -58,8 +61,10 @@ class IdeaContainerWidget extends StatelessWidget {
     required BubbleKind bubbleKind,
     this.bigStyle = false,
   })  : this.text = text.trim(),
-        this.bubbleRotation = _BubbleRotations[bubbleKind]!,
-        this.innerPadding = _BubblePaddings[bubbleKind]!;
+        this.bubbleRotation = _bubbleRotations[bubbleKind]!,
+        this.innerPadding = (bigStyle)
+            ? _BigBubblePaddings[bubbleKind]!
+            : _BubblePaddings[bubbleKind]!;
 
   final EdgeInsetsGeometry innerPadding;
   final Matrix4 bubbleRotation;
@@ -74,10 +79,16 @@ class IdeaContainerWidget extends StatelessWidget {
       children: [
         Positioned.fill(
           /// uncomment this to make image rotations
-          child: Image(
-            fit: BoxFit.fill,
-            image: AssetImage(
-              'assets/backgrounds/decorations/bubble_background_decoration.png',
+          child: Transform(
+            //se emplea las rotaciones de arriba
+            transform: this.bubbleRotation,
+            //para que rote en el mismo eje
+            alignment: FractionalOffset.center,
+            child: Image(
+              fit: BoxFit.fill,
+              image: AssetImage(
+                'assets/backgrounds/decorations/bubble_background_decoration.png',
+              ),
             ),
           ),
         ),
@@ -97,18 +108,6 @@ class IdeaContainerWidget extends StatelessWidget {
                         : korolevFont.bodyText1)
                     ?.copyWith(color: Colors.black),
               ),
-            ),
-          ),
-        ),
-        Transform(
-          //se emplea las rotaciones de arriba
-          transform: this.bubbleRotation,
-          //para que rote en el mismo eje
-          alignment: FractionalOffset.center,
-          child: Image(
-            fit: BoxFit.fill,
-            image: AssetImage(
-              'assets/backgrounds/decorations/bubble_background_decoration.png',
             ),
           ),
         ),

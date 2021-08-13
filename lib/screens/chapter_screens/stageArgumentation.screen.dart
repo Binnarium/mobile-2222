@@ -145,7 +145,7 @@ class CustomBubbleList extends StatelessWidget {
               constraints: BoxConstraints(maxWidth: 360),
               child: IdeaContainerWidget(
                 text: current,
-                bubbleKind: BubbleKind.type1,
+                bubbleKind: BubbleKind.values[i % BubbleKind.values.length],
                 bigStyle: true,
               ),
             ),
@@ -164,7 +164,7 @@ class CustomBubbleList extends StatelessWidget {
                   flex: 2,
                   child: IdeaContainerWidget(
                     text: current,
-                    bubbleKind: BubbleKind.type2,
+                    bubbleKind: BubbleKind.values[i % BubbleKind.values.length],
                   ),
                 ),
                 Flexible(child: Container())

@@ -21,27 +21,10 @@ class VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<VideoPlayer> {
   late ChewieController chewieController;
-
+  bool showVideo = false;
   @override
   void initState() {
     super.initState();
-    chewieController = ChewieController(
-      videoPlayerController: this.widget.videoPlayerController,
-      placeholder: Center(
-        child: Image(
-          image: AssetImage('assets/backgrounds/logo_background2.png'),
-        ),
-      ),
-      looping: this.widget.isLoop,
-      autoInitialize: true,
-      aspectRatio: 16 / 9,
-      allowedScreenSleep: false,
-      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-      materialProgressColors: ChewieProgressColors(
-        playedColor: this.widget.color,
-        handleColor: this.widget.color,
-      ),
-    );
   }
 
   @override
@@ -56,7 +39,52 @@ class _VideoPlayerState extends State<VideoPlayer> {
     return new ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: AspectRatio(
-            aspectRatio: 16 / 9, child: Chewie(controller: chewieController)));
+            aspectRatio: 16 / 9,
+            child: (showVideo)
+                ? Chewie(controller: chewieController)
+                : GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showVideo = true;
+                        chewieController = ChewieController(
+                          videoPlayerController:
+                              this.widget.videoPlayerController,
+                          placeholder: Center(
+                            child: Image(
+                              image: AssetImage(
+                                  'assets/backgrounds/logo_background2.png'),
+                            ),
+                          ),
+                          looping: this.widget.isLoop,
+                          autoInitialize: true,
+                          aspectRatio: 16 / 9,
+                          allowedScreenSleep: false,
+                          deviceOrientationsAfterFullScreen: [
+                            DeviceOrientation.portraitUp
+                          ],
+                          materialProgressColors: ChewieProgressColors(
+                            playedColor: this.widget.color,
+                            handleColor: this.widget.color,
+                          ),
+                        );
+                      });
+                    },
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Image.asset(
+                            'assets/backgrounds/logo_background2.png',
+                          ),
+                        ),
+                        Center(
+                            child: Icon(
+                          Icons.play_arrow_rounded,
+                          size: 80,
+                          color: this.widget.color.withOpacity(0.5),
+                        ))
+                      ],
+                    ),
+                  )));
   }
 }
 
