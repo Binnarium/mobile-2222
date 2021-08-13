@@ -1,29 +1,43 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
+import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class StageIntroductionScreen extends StatefulWidget {
+class CityIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
+
   final CityDto city;
 
-  const StageIntroductionScreen({
+  final ILoadOptions<CityIntroductionDto, CityDto> introductionLoader;
+
+  CityIntroductionScreen({
     Key? key,
-    required this.city,
-  }) : super(key: key);
+    required CityDto city,
+  })  : this.city = city,
+        this.introductionLoader = LoadCityIntroductionService(city: city),
+        super(key: key);
 
   @override
-  _StageIntroductionScreenState createState() =>
-      _StageIntroductionScreenState();
+  _CityIntroductionScreenState createState() => _CityIntroductionScreenState();
 }
 
-class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
+class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
+  CityIntroductionDto? introductionDto;
+
   @override
   void initState() {
+    this
+        .widget
+        .introductionLoader
+        .load()
+        .then((value) => this.setState(() => this.introductionDto = value));
     super.initState();
   }
 
@@ -63,7 +77,7 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
             ),
 
             /// scroll-able content
-            _introductionBody(size),
+            _introductionBody(size, context),
           ],
         ),
       ),
@@ -74,7 +88,9 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
     );
   }
 
-  _introductionBody(Size size) {
+  _introductionBody(Size size, BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final double sidePadding = size.width * 0.5;
     //Creando el Scroll
     double spacedSize = size.height * 0.08;
     double fontSize = (size.height > 700) ? 1.2 : 1.1;
@@ -85,28 +101,34 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
     if (size.height < 650) {
       spacedSize = size.height * 0.08;
     }
+
     return ListView(
-      /// city logo
       children: [
-        ChapterHeadWidget(
-          showAppLogo: true,
-          city: widget.city,
+        /// app logo
+        Padding(
+          padding: EdgeInsets.only(bottom: spacedSize),
+          child: ChapterHeadWidget(
+            showAppLogo: true,
+            city: widget.city,
+          ),
         ),
-        SizedBox(height: spacedSize),
-        //Texto cambiar por funcionalidad de cuenta de días
-        Hero(
-          tag: this.widget.city.phaseTag,
-          child: Text(
-            this.widget.city.phaseName,
-            textAlign: TextAlign.center,
-            style: korolevFont.headline3?.apply(
-              fontSizeFactor: fontSize - 0.5,
-              fontWeightDelta: -1,
-              decoration: TextDecoration.none,
+
+        /// Texto cambiar por funcionalidad de cuenta de días
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Hero(
+            tag: this.widget.city.phaseTag,
+            child: Text(
+              this.widget.city.phaseName,
+              textAlign: TextAlign.center,
+              style: textTheme.headline3!.apply(
+                  // fontSizeFactor: fontSize - 0.5,
+                  // fontWeightDelta: -1,
+                  // decoration: TextDecoration.none,
+                  ),
             ),
           ),
         ),
-        SizedBox(height: 10),
 
         /// city name with hero functionality, apply no underline style to prevent
         /// yellow underline on transition
@@ -125,33 +147,22 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
         SizedBox(height: size.height * 0.05),
         _logoContainer(size),
         SizedBox(height: size.height * 0.07),
-        FutureBuilder(
-          future: _readIntroductionText(),
-          builder: (BuildContext context, AsyncSnapshot<String> readings) {
-            if (readings.hasError) {
-              return Text(readings.error.toString());
-            }
 
-            if (readings.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    this.widget.city.color,
+        /// loading screen or content
+        Padding(
+          padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+          child: (this.introductionDto == null)
+              ? AppLoading()
+              : Container(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+                  child: Text(
+                    this.introductionDto!.description.toString(),
+                    style:
+                        korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              );
-            }
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-              child: Text(
-                readings.data.toString(),
-                style: korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
-                textAlign: TextAlign.center,
-              ),
-            );
-          },
-        ),
-        SizedBox(height: size.height * 0.07),
+        )
       ],
     );
   }
@@ -172,25 +183,5 @@ class _StageIntroductionScreenState extends State<StageIntroductionScreen> {
         top: size.height * 0.04,
       ),
     );
-  }
-
-  Future<String> _readIntroductionText() async {
-    String description = "";
-    await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.city.id)
-        .collection('pages')
-        .doc('introduction')
-        .get()
-        .then(
-      (DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          dynamic data = documentSnapshot.data()!;
-          description = data['description'];
-        }
-      },
-    );
-    // print('description antes de enviar: $description');
-    return description;
   }
 }

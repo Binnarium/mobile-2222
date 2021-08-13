@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/services/load-cities-with-map-position.service.da
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-import 'chapter_screens/stageIntroduction.screen.dart';
+import 'chapter_screens/city-introduction.screen.dart';
 import 'welcome.screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -205,8 +205,8 @@ class MapCityButton extends StatelessWidget {
                   splashColor: this.city.color.withOpacity(0.5),
                   onTap: () => Navigator.pushNamed(
                     context,
-                    StageIntroductionScreen.route,
-                    arguments: StageIntroductionScreen(
+                    CityIntroductionScreen.route,
+                    arguments: CityIntroductionScreen(
                       city: city,
                     ),
                   ),
