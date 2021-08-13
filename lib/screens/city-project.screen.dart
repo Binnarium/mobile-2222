@@ -119,17 +119,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
       children: [
         Center(
           child: Text(
-            "PROYECTO PERSONAL",
-            style: textTheme.headline4,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "DE INNOVACIÓN DOCENTE",
+            "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
             style: textTheme.headline5,
             textAlign: TextAlign.center,
           ),

@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
-import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -25,8 +24,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   WelcomeDto? loginPayload;
-  String? _email;
-  String? _password;
+  String? _email = 'testlogin@gmail.com';
+  String? _password = 'jossue123';
 
   @override
   void initState() {
@@ -212,7 +211,8 @@ class _LoginScreenState extends State<LoginScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: TextField(
+      child: TextFormField(
+        initialValue: _email,
         onChanged: (value) {
           _email = value;
         },
@@ -243,7 +243,8 @@ class _LoginScreenState extends State<LoginScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: TextField(
+      child: TextFormField(
+        initialValue: _password,
         onChanged: (value) {
           _password = value;
         },
@@ -279,7 +280,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ///Navigates to main screen
         onPressed: () {
           _login();
-          
         },
         child: Text(
           'Ingresar',
