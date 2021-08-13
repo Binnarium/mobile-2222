@@ -69,9 +69,6 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(
-          height: 10,
-        ),
         ChapterHeadWidget(
           showAppLogo: true,
           showStageLogo: true,

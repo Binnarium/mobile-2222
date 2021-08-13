@@ -1,23 +1,73 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'dart:math' as math;
+
+enum BubbleKind {
+  TopRight,
+  CenterLeft,
+  BottomRight,
+  TopLeft,
+  BottomLeft,
+}
+
+Map<BubbleKind, Matrix4> _bubbleRotations = {
+  BubbleKind.TopRight: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(math.pi) //se rota eje y
+    ..rotateY(math.pi),
+  BubbleKind.CenterLeft: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(math.pi) //se rota eje y
+    ..rotateY(0)
+    ..rotateZ(0.3),
+  BubbleKind.BottomLeft: Matrix4.rotationX(0),
+  BubbleKind.BottomRight: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(0) //se rota eje y
+    ..rotateY(math.pi),
+  BubbleKind.TopLeft: Matrix4.identity() //matriz de perspectiva
+    ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
+    ..rotateX(math.pi) //se rota eje y
+    ..rotateY(0),
+};
+
+/// determines the padding for normal bubbles
+const Map<BubbleKind, EdgeInsetsGeometry> _BubblePaddings = {
+  BubbleKind.TopRight: EdgeInsets.fromLTRB(40, 35, 45, 40),
+  BubbleKind.CenterLeft: EdgeInsets.fromLTRB(60, 35, 45, 50),
+  BubbleKind.BottomLeft: EdgeInsets.fromLTRB(50, 45, 25, 40),
+  BubbleKind.BottomRight: EdgeInsets.fromLTRB(40, 45, 45, 40),
+  BubbleKind.TopLeft: EdgeInsets.fromLTRB(50, 35, 35, 30),
+};
+
+/// determines the padding for big bubbles
+const Map<BubbleKind, EdgeInsetsGeometry> _BigBubblePaddings = {
+  BubbleKind.TopRight: EdgeInsets.fromLTRB(50, 45, 65, 50),
+  BubbleKind.CenterLeft: EdgeInsets.fromLTRB(40, 45, 35, 30),
+  BubbleKind.BottomLeft: EdgeInsets.fromLTRB(70, 65, 45, 40),
+  BubbleKind.BottomRight: EdgeInsets.fromLTRB(40, 45, 45, 40),
+  BubbleKind.TopLeft: EdgeInsets.fromLTRB(30, 35, 55, 30),
+};
 
 class IdeaContainerWidget extends StatelessWidget {
   /// texto que irá dentro del contenedor
   final String text;
-
-  /// para determinar dónde se encuentra el lado más extenso de la imagen del contenedor
-  final int orientation;
 
   /// apply big bubble styles when enabled
   final bool bigStyle;
 
   IdeaContainerWidget({
     required String text,
-    required this.orientation,
+    required BubbleKind bubbleKind,
     this.bigStyle = false,
-  }) : this.text = text.trim();
+  })  : this.text = text.trim(),
+        this.bubbleRotation = _bubbleRotations[bubbleKind]!,
+        this.innerPadding = (bigStyle)
+            ? _BigBubblePaddings[bubbleKind]!
+            : _BubblePaddings[bubbleKind]!;
+
+  final EdgeInsetsGeometry innerPadding;
+  final Matrix4 bubbleRotation;
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +78,25 @@ class IdeaContainerWidget extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Positioned.fill(
-          child: Image(
-            fit: BoxFit.fill,
-            image: AssetImage(
-              'assets/backgrounds/decorations/bubble_background_decoration.png',
+          /// uncomment this to make image rotations
+          child: Transform(
+            //se emplea las rotaciones de arriba
+            transform: this.bubbleRotation,
+            //para que rote en el mismo eje
+            alignment: FractionalOffset.center,
+            child: Image(
+              fit: BoxFit.fill,
+              image: AssetImage(
+                'assets/backgrounds/decorations/bubble_background_decoration.png',
+              ),
             ),
           ),
         ),
         Padding(
-          padding: this.bigStyle
-              ? EdgeInsets.fromLTRB(70, 65, 45, 40)
-              : EdgeInsets.fromLTRB(50, 50, 35, 25),
+          // padding: this.bigStyle
+          //     ? EdgeInsets.fromLTRB(70, 65, 45, 40)
+          //     : EdgeInsets.fromLTRB(50, 50, 35, 25),
+          padding: this.innerPadding,
           child: Container(
             constraints: BoxConstraints(minHeight: this.bigStyle ? 180 : 100),
             child: Center(
@@ -53,114 +111,7 @@ class IdeaContainerWidget extends StatelessWidget {
             ),
           ),
         ),
-
-        // _ideasImage(this.orientation),
-        // _textIdea(size, text),
       ],
-    );
-  }
-
-  //donde se crea la imagen blanca
-  _ideasImage(int index) {
-    Map<int, String> orientations = {
-      0: "TopRight",
-      1: "CenterLeft",
-      2: "BottomRight",
-      3: "TopLeft",
-      4: "BottomLeft",
-    };
-
-    final String orientation = orientations[index]!;
-
-    Map<String, Matrix4> rotations = {
-      "BottomLeft": Matrix4.rotationX(0),
-      "TopRight": Matrix4.identity() //matriz de perspectiva
-        ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-        ..rotateX(math.pi) //se rota eje y
-        ..rotateY(math.pi),
-      "TopLeft": Matrix4.identity() //matriz de perspectiva
-        ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-        ..rotateX(math.pi) //se rota eje y
-        ..rotateY(0),
-      "BottomRight": Matrix4.identity() //matriz de perspectiva
-        ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-        ..rotateX(0) //se rota eje y
-        ..rotateY(math.pi),
-      "CenterLeft": Matrix4.identity() //matriz de perspectiva
-        ..setEntry(3, 2, 0.001) //con esto se rota por el eje x
-        ..rotateX(math.pi) //se rota eje y
-        ..rotateY(0)
-        ..rotateZ(0.3),
-    };
-    return Transform(
-      //se emplea las rotaciones de arriba
-      transform: rotations[orientation]!,
-      //para que rote en el mismo eje
-      alignment: FractionalOffset.center,
-      child: Image(
-        fit: BoxFit.fill,
-        image: AssetImage(
-          'assets/backgrounds/decorations/bubble_background_decoration.png',
-        ),
-      ),
-    );
-  }
-
-  //donde se crea el container que tiene el texto como child
-  Widget _textIdea(Size size, String text) {
-    Map<String, EdgeInsets> margins = {
-      "TopRight": EdgeInsets.only(
-        top: (size.height > 800) ? 20 : 10,
-        left: (size.height > 800) ? 15 : 10,
-        right: (size.height > 800) ? 20 : 20,
-        bottom: (size.height > 800) ? 30 : 10,
-      ),
-      "CenterLeft": (size.height > 800 && size.width >= 375)
-          ? EdgeInsets.only(left: 20, right: 10)
-          : EdgeInsets.only(left: 15, right: 10),
-      "BottomRight": EdgeInsets.only(
-        left: (size.height > 820 && size.width >= 375)
-            ? 10
-            : (size.width >= 370)
-                ? 5
-                : 10,
-        right: (size.height > 820 && size.width >= 375)
-            ? 25
-            : (size.width >= 370)
-                ? 10
-                : 20,
-        top: (size.height > 820 && size.width >= 375)
-            ? 15
-            : (size.width >= 370)
-                ? 30
-                : 15,
-      ),
-      "TopLeft": EdgeInsets.only(
-        left: (size.height > 820) ? 15 : 22,
-        right: (size.height > 820) ? 10 : 15,
-        bottom: 15,
-      ),
-      "BottomLeft": EdgeInsets.only(
-        left: (size.height > 820 && size.width >= 375) ? 20 : 25,
-        right: (size.height > 820 && size.width >= 375) ? 0 : 10,
-        top: (size.height > 820) ? 0 : 15,
-      ),
-    };
-
-    return Text(
-      //se emplea el texto recibido por entrada
-      text,
-
-      style: korolevFont.bodyText1?.apply(
-        color: Colors.black,
-        fontSizeFactor: (size.height > 560)
-            ? (size.height > 800 && size.width >= 380)
-                ? 0.87
-                : (size.width >= 360 && size.height >= 560)
-                    ? 0.8
-                    : 0.7
-            : 0.6,
-      ),
     );
   }
 }

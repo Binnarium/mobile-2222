@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/models/Competence.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -212,15 +213,15 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             }
             final List<CompetenceModel> compeTemp =
                 compe.data as List<CompetenceModel>;
-            return GridView.builder(
+
+            /// implemented staggered to avoid the unnecesary spacing in gridviewBuilder
+            return StaggeredGridView.countBuilder(
               ///general spacing per resource
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 25,
-                mainAxisSpacing: 35,
-                mainAxisExtent: (size.height > 700) ? 300 : 280,
-                // childAspectRatio: 1,
-              ),
+              crossAxisCount: 2,
+
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
               itemCount: compeTemp.length,
 
               /// property that sizes the container automaticly according

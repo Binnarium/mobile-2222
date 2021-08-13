@@ -55,6 +55,7 @@ class _ContentScreenState extends State<ContentScreen> {
           cityDto: this.widget.city,
         ),
       );
+      this.dispose();
     };
 
     Size size = MediaQuery.of(context).size;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/services/Video_settings.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 
 /// Class that creates a video player depending on video URL and the description of the video
 class VideoPlayerSegment extends StatefulWidget {
@@ -45,10 +45,9 @@ class _VideoPlayerSegment extends State<VideoPlayerSegment> {
 
   _textContent(Size size, String? description) {
     return Container(
-      padding: EdgeInsets.only(bottom: 30),
-      child: Text(
-        (description == null) ? '' : description,
-        style: korolevFont.bodyText1?.apply(),
+        padding: EdgeInsets.only(bottom: 30),
+        child: Markdown2222(
+        data: (description == null) ? '' : description,
       ),
     );
   }
