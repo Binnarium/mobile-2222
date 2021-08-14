@@ -15,7 +15,7 @@ class UserService {
   }
 
   Stream<bool> isSignIn$() {
-    return this._firebaseAuth.userChanges().take(1).map((user) => user == null);
+    return this._firebaseAuth.userChanges().take(1).map((user) => user != null);
   }
 
   Stream<bool> signIn$(String email, String password) {
