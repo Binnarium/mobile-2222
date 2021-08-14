@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
+import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
@@ -20,20 +19,30 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   // final bool _visible = true;
+  StreamSubscription? sub;
+
   @override
   void initState() {
     super.initState();
-    Timer(
-      Duration(seconds: 5),
-      () => _createRoute(context),
-    );
+
+    this.sub = UserService.instance.isSignIn$().listen((isSignIn) {
+      if (isSignIn)
+        Navigator.pushReplacementNamed(this.context, HomeScreen.route);
+      else
+        Navigator.pushReplacementNamed(this.context, LoginScreen.route);
+    });
+  }
+
+  @override
+  void deactivate() {
+    this.sub?.cancel();
+    super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     //tamaño de la pantalla
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -41,16 +50,13 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: ColorsApp.backgroundRed,
 
       /// creando pantalla introductoria
-      body: GestureDetector(
-        onTap: () => _createRoute(context),
-        child: Stack(
-          children: [
-            //llamando al widget del arco
-            _arcContainer(),
-            //llamando al cuerpo
-            _introductionBody(size),
-          ],
-        ),
+      body: Stack(
+        children: [
+          //llamando al widget del arco
+          _arcContainer(),
+          //llamando al cuerpo
+          _introductionBody(size),
+        ],
       ),
     );
   }
@@ -177,66 +183,65 @@ class _SplashScreenState extends State<SplashScreen> {
     return daysLeft.inDays.toString();
   }
 
-  void _createRoute(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return FutureBuilder(
-            future: _initialization,
-            builder: (context,snapshot){
-              if(snapshot.hasError){
-                return Scaffold(
-                  body: Center(
-                    child: Text("Error: ${snapshot.error}"),
-                  ),
-                );
-              }
-              if(snapshot.connectionState == ConnectionState.done){
-                return StreamBuilder(
-                  stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context,snapshot){
-                    if(snapshot.connectionState == ConnectionState.active){
-                      User? user = snapshot.data as User?;
-                      if(user == null){
-                        return LoginScreen();
-                      }else{
-                        return HomeScreen();
-                      } 
-                    }
-                    return LoginScreen();
-                  },
-                );
-              }
-              return Scaffold(
-                  body: Center(
-                    child: Text("Checking Authentication..."),
-                  ),
-                );
-            },
-          );
-        },
-        
-        transitionDuration: Duration(seconds: 5),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          // var begin = Offset(0.0, 1.0);
-          // var end = Offset.zero;
-          // var curve = Curves.easeInQuart;
+  // void _createRoute(BuildContext context) {
+  //   Navigator.of(context).pushReplacement(
+  //     PageRouteBuilder(
+  //       pageBuilder: (context, animation, secondaryAnimation) {
+  //         return FutureBuilder(
+  //           future: _initialization,
+  //           builder: (context, snapshot) {
+  //             if (snapshot.hasError) {
+  //               return Scaffold(
+  //                 body: Center(
+  //                   child: Text("Error: ${snapshot.error}"),
+  //                 ),
+  //               );
+  //             }
+  //             if (snapshot.connectionState == ConnectionState.done) {
+  //               return StreamBuilder(
+  //                 stream: FirebaseAuth.instance.authStateChanges(),
+  //                 builder: (context, snapshot) {
+  //                   if (snapshot.connectionState == ConnectionState.active) {
+  //                     User? user = snapshot.data as User?;
+  //                     if (user == null) {
+  //                       return LoginScreen();
+  //                     } else {
+  //                       return HomeScreen();
+  //                     }
+  //                   }
+  //                   return LoginScreen();
+  //                 },
+  //               );
+  //             }
+  //             return Scaffold(
+  //               body: Center(
+  //                 child: Text("Checking Authentication..."),
+  //               ),
+  //             );
+  //           },
+  //         );
+  //       },
+  //       transitionDuration: Duration(seconds: 5),
+  //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //         // var begin = Offset(0.0, 1.0);
+  //         // var end = Offset.zero;
+  //         // var curve = Curves.easeInQuart;
 
-          // var tween =
-          //     Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+  //         // var tween =
+  //         //     Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-          // return SlideTransition(
-          //   position: animation.drive(tween),
-          //   child: child,
-          // );
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        },
-      ),
-    );
-  }
+  //         // return SlideTransition(
+  //         //   position: animation.drive(tween),
+  //         //   child: child,
+  //         // );
+  //         return FadeTransition(
+  //           opacity: animation,
+  //           child: child,
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }
 
 //Creando arco pagina introductoria

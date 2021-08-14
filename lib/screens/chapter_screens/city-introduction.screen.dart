@@ -8,7 +8,7 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
@@ -90,7 +90,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
 
   _introductionBody(Size size, BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final double sidePadding = size.width * 0.5;
+    final double sidePadding = size.width * 0.08;
     //Creando el Scroll
     double spacedSize = size.height * 0.08;
     double fontSize = (size.height > 700) ? 1.2 : 1.1;
@@ -121,67 +121,46 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
             child: Text(
               this.widget.city.phaseName,
               textAlign: TextAlign.center,
-              style: textTheme.headline3!.apply(
-                  // fontSizeFactor: fontSize - 0.5,
-                  // fontWeightDelta: -1,
-                  // decoration: TextDecoration.none,
-                  ),
+              style: textTheme.headline4,
             ),
           ),
         ),
 
         /// city name with hero functionality, apply no underline style to prevent
         /// yellow underline on transition
-        Hero(
-          tag: this.widget.city.nameTag,
-          child: Text(
-            this.widget.city.name.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: korolevFont.headline1?.apply(
-              fontSizeFactor: fontSize - 0.5,
-              fontWeightDelta: 5,
-              decoration: TextDecoration.none,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Hero(
+            tag: this.widget.city.nameTag,
+            child: Text(this.widget.city.name.toUpperCase(),
+                textAlign: TextAlign.center, style: textTheme.headline2),
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.only(bottom: 40),
+          child: Hero(
+            tag: this.widget.city.icon.path,
+            child: Image(
+              width: double.infinity,
+              height: size.height * 0.35,
+              image: this.widget.city.iconImage,
+              filterQuality: FilterQuality.high,
             ),
           ),
         ),
-        SizedBox(height: size.height * 0.05),
-        _logoContainer(size),
-        SizedBox(height: size.height * 0.07),
 
         /// loading screen or content
         Padding(
           padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
           child: (this.introductionDto == null)
               ? AppLoading()
-              : Container(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-                  child: Text(
-                    this.introductionDto!.description.toString(),
-                    style:
-                        korolevFont.bodyText1?.apply(fontSizeFactor: fontSize),
-                    textAlign: TextAlign.center,
-                  ),
+              : Markdown2222(
+                  data: this.introductionDto!.description,
+                  contentAlignment: WrapAlignment.center,
                 ),
         )
       ],
-    );
-  }
-
-  _logoContainer(size) {
-    return Container(
-      //largo y ancho del logo dentro
-      width: double.infinity,
-      height: size.height * 0.35,
-      child: Hero(
-        tag: this.widget.city.icon.path,
-        child: Image.network(
-          this.widget.city.chapterImageUrl,
-          filterQuality: FilterQuality.high,
-        ),
-      ),
-      padding: EdgeInsets.only(
-        top: size.height * 0.04,
-      ),
     );
   }
 }
