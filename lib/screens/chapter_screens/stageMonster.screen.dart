@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -100,20 +101,19 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
             ),
           );
         }
-        return Align(
-          alignment: Alignment.center,
+        return Center(
           child: Container(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-            margin: EdgeInsets.symmetric(
-                vertical: size.height * 0.1, horizontal: size.width * 0.1),
-            child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: size.height * 0.08,
+              horizontal: size.width * 0.08,
+            ),
+            child: FadeInImage(
+              placeholder: getAppLogo(AppImage.loadingLogo),
+              fit: BoxFit.contain,
               width: size.width * 0.8,
               height: size.height * 0.7,
-              child: Image(
-                fit: BoxFit.contain,
-                image: NetworkImage(
-                  url.data.toString(),
-                ),
+              image: NetworkImage(
+                url.data.toString(),
               ),
             ),
           ),

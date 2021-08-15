@@ -79,8 +79,29 @@ class _LoginScreenState extends State<LoginScreen> {
   _loginBody(Size size, BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 64),
+      padding:
+          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 64),
       children: [
+        /// app logo
+        Padding(
+          padding: const EdgeInsets.only(bottom: 40),
+          child: Center(
+            child: AppLogo(
+              kind: AppImage.defaultAppLogo,
+            ),
+          ),
+        ),
+
+        /// App Title
+        Padding(
+          padding: const EdgeInsets.only(bottom: 32),
+          child: Text(
+            'Lab Móvil 2222'.toUpperCase(),
+            style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
+            textAlign: TextAlign.center,
+          ),
+        ),
+
         /// loading animation
         if (this.loginPayload == null)
           Center(
@@ -90,26 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
         /// data is available
         /// logo de 2222
         else ...[
-          /// app logo
-          Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: Center(
-              child: AppLogo(
-                kind: AppImage.defaultAppLogo,
-              ),
-            ),
-          ),
-
-          /// App Title
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32),
-            child: Text(
-              'Lab Móvil 2222'.toUpperCase(),
-              style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
-              textAlign: TextAlign.center,
-            ),
-          ),
-
           /// principal text
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
@@ -123,9 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
           /// video container
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: VideoPlayerSegment(
-              color: ColorsApp.backgroundRed,
-              videoUrl: this.loginPayload!.welcomeVideo.url,
+            child: VideoPlayer(
+              video: this.loginPayload!.welcomeVideo,
             ),
           ),
 

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/models/Competence.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -10,7 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
   static const String route = '/objectives';
@@ -122,7 +121,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     return Container(
         // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
 
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
         child: FutureBuilder(
           future: _readObjective(),
           builder: (BuildContext context, AsyncSnapshot<String> objective) {
@@ -139,10 +138,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                 ),
               );
             }
-            return Text(
-              objective.data.toString(),
-              style: korolevFont.bodyText1,
-              textAlign: TextAlign.left,
+            return Markdown2222(
+              data: objective.data.toString(),
             );
           },
         ));
@@ -153,10 +150,10 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     return Container(
       ///general left padding 25
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
 
       ///To resize the parent container of the list of books
-      //height: (list.length) * bodyContainerHeight * 0.125,
+      //height: (list.length) * bodyContainerHeight * 0.0825,
       child: FutureBuilder(
           future: _readIdea(),
           builder:
@@ -190,59 +187,73 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   _compeBody(Size size) {
     ///main container
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
 
       ///To resize the parent container of the online resources grid
       ///Creates a grid with the necesary online resources
       child: FutureBuilder(
-          future: _readCompetences(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<CompetenceModel>> compe) {
-            if (compe.hasError) {
-              return Text(compe.error.toString());
-            }
+        future: _readCompetences(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CompetenceModel>> compe) {
+          if (compe.hasError) {
+            return Text(compe.error.toString());
+          }
 
-            if (compe.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    this.widget.chapterSettings.color,
-                  ),
+          if (compe.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(
+                  this.widget.chapterSettings.color,
                 ),
-              );
-            }
-            final List<CompetenceModel> compeTemp =
-                compe.data as List<CompetenceModel>;
-
-            /// implemented staggered to avoid the unnecesary spacing in gridviewBuilder
-            return StaggeredGridView.countBuilder(
-              ///general spacing per resource
-              crossAxisCount: 2,
-
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
-              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-              itemCount: compeTemp.length,
-
-              /// property that sizes the container automaticly according
-              /// the items
-              shrinkWrap: true,
-
-              ///to avoid the scroll
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                ///calls the custom widget with the item parameters
-                final item = compeTemp.elementAt(index);
-                if (item is CompetenceModel) {
-                  return CompeResourcesListItem(
-                    name: item.name,
-                    image: item.image,
-                  );
-                }
-                return Text('Kind of content not found');
-              },
+              ),
             );
-          }),
+          }
+          final List<CompetenceModel> compeTemp =
+              compe.data as List<CompetenceModel>;
+
+          return Wrap(
+            spacing: size.width * 0.08,
+            runSpacing: 20,
+            alignment: WrapAlignment.center,
+            children: [
+              for (var item in compeTemp)
+                CompeResourcesListItem(
+                  name: item.name,
+                  image: item.image,
+                )
+            ],
+          );
+
+          /// implemented staggered to avoid the unnecesary spacing in gridviewBuilder
+          // return StaggeredGridView.countBuilder(
+          //   ///general spacing per resource
+          //   crossAxisCount: 2,
+
+          //   crossAxisSpacing: 15,
+          //   mainAxisSpacing: 15,
+          //   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+          //   itemCount: compeTemp.length,
+
+          //   /// property that sizes the container automaticly according
+          //   /// the items
+          //   shrinkWrap: true,
+
+          //   ///to avoid the scroll
+          //   physics: NeverScrollableScrollPhysics(),
+          //   itemBuilder: (context, index) {
+          //     ///calls the custom widget with the item parameters
+          //     final item = compeTemp.elementAt(index);
+          //     if (item is CompetenceModel) {
+          //       return CompeResourcesListItem(
+          //         name: item.name,
+          //         image: item.image,
+          //       );
+          //     }
+          //     return Text('Kind of content not found');
+          //   },
+          // );
+        },
+      ),
     );
   }
 
