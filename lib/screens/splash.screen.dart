@@ -23,10 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
   // final bool _visible = true;
   StreamSubscription? sub;
 
-  @override
+@override
   void initState() {
     super.initState();
-
     this.sub = UserService.instance.isSignIn$().listen((isSignIn) {
       if (isSignIn)
         Navigator.pushReplacementNamed(this.context, HomeScreen.route);
