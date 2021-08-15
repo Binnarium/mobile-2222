@@ -48,7 +48,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
           context,
           StageHistoryScreen.route,
           arguments: StageHistoryScreen(
-            chapterSettings: this.widget.city,
+            city: this.widget.city,
           ),
         );
 
@@ -115,13 +115,17 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
 
         /// Texto cambiar por funcionalidad de cuenta de días
         Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(
+            bottom: 16,
+            left: sidePadding,
+            right: sidePadding,
+          ),
           child: Hero(
             tag: this.widget.city.phaseTag,
             child: Text(
               this.widget.city.phaseName,
               textAlign: TextAlign.center,
-              style: textTheme.headline4,
+              style: textTheme.headline5,
             ),
           ),
         ),
@@ -129,21 +133,34 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
         /// city name with hero functionality, apply no underline style to prevent
         /// yellow underline on transition
         Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: EdgeInsets.only(
+            bottom: 8,
+            left: sidePadding,
+            right: sidePadding,
+          ),
           child: Hero(
             tag: this.widget.city.nameTag,
-            child: Text(this.widget.city.name.toUpperCase(),
-                textAlign: TextAlign.center, style: textTheme.headline2),
+            child: Text(
+              this.widget.city.name.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: textTheme.headline3,
+            ),
           ),
         ),
 
+        /// city logo
+        /// since image is in a 1 to 1 aspect ratio make height and width the same
         Padding(
-          padding: EdgeInsets.only(bottom: 40),
+          padding: EdgeInsets.only(
+            bottom: 40,
+            left: sidePadding,
+            right: sidePadding,
+          ),
           child: Hero(
             tag: this.widget.city.icon.path,
             child: Image(
-              width: double.infinity,
-              height: size.height * 0.35,
+              width: size.height * 0.25,
+              height: size.height * 0.25,
               image: this.widget.city.iconImage,
               filterQuality: FilterQuality.high,
             ),
