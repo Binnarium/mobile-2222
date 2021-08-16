@@ -63,13 +63,13 @@ class KorolevFont extends TextTheme {
             fontFamily: fontFamily,
             fontSize: 16,
             color: textColor,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
           bodyText2: TextStyle(
             fontFamily: fontFamily,
             fontSize: 16,
             color: textColor,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
           caption: TextStyle(
             fontFamily: fontFamily,

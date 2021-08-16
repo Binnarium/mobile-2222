@@ -49,7 +49,7 @@ class _ContentScreenState extends State<ContentScreen> {
         context,
         ResourcesScreen.route,
         arguments: ResourcesScreen(
-          cityDto: this.widget.city,
+          city: this.widget.city,
         ),
       );
       this.dispose();
