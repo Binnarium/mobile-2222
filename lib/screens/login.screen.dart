@@ -1,8 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
+import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
+import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
@@ -27,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _email = 'testlogin@gmail.com';
   String? _password = 'jossue123';
 
+  StreamSubscription? signInSub;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +41,12 @@ class _LoginScreenState extends State<LoginScreen> {
         .loader
         .load()
         .then((value) => this.setState(() => this.loginPayload = value));
+  }
+
+  @override
+  void deactivate() {
+    this.signInSub?.cancel();
+    super.deactivate();
   }
 
   ///página de login donde pide usuario y contraseña
@@ -68,8 +79,29 @@ class _LoginScreenState extends State<LoginScreen> {
   _loginBody(Size size, BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 64),
+      padding:
+          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 64),
       children: [
+        /// app logo
+        Padding(
+          padding: const EdgeInsets.only(bottom: 40),
+          child: Center(
+            child: AppLogo(
+              kind: AppImage.defaultAppLogo,
+            ),
+          ),
+        ),
+
+        /// App Title
+        Padding(
+          padding: const EdgeInsets.only(bottom: 32),
+          child: Text(
+            'Lab Móvil 2222'.toUpperCase(),
+            style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
+            textAlign: TextAlign.center,
+          ),
+        ),
+
         /// loading animation
         if (this.loginPayload == null)
           Center(
@@ -79,26 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
         /// data is available
         /// logo de 2222
         else ...[
-          /// app logo
-          Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: Center(
-              child: AppLogo(
-                kind: AppImage.defaultAppLogo,
-              ),
-            ),
-          ),
-
-          /// App Title
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32),
-            child: Text(
-              'Lab Móvil 2222'.toUpperCase(),
-              style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
-              textAlign: TextAlign.center,
-            ),
-          ),
-
           /// principal text
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
@@ -112,9 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
           /// video container
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: VideoPlayerSegment(
-              color: ColorsApp.backgroundRed,
-              videoUrl: this.loginPayload!.welcomeVideo.url,
+            child: VideoPlayer(
+              video: this.loginPayload!.welcomeVideo,
             ),
           ),
 
@@ -276,27 +287,19 @@ class _LoginScreenState extends State<LoginScreen> {
           primary: ColorsApp.backgroundBottomBar,
           elevation: 5,
         ),
-
-        ///Navigates to main screen
-        onPressed: () {
-          _login();
-        },
+        onPressed: () => this.signInSub = UserService.instance
+            .signIn$(this._email!, this._password!)
+            .listen((success) {
+          if (success)
+            Navigator.of(context).pushReplacementNamed(HomeScreen.route);
+          else
+            print(success);
+        }),
         child: Text(
           'Ingresar',
           style: korolevFont.headline6?.apply(),
         ),
       ),
     );
-  }
-
-  Future<void> _login() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email!, password: _password!);
-    } on FirebaseAuthException catch (e) {
-      print("Error: $e");
-    } catch (e) {
-      print("Error: $e");
-    }
   }
 }

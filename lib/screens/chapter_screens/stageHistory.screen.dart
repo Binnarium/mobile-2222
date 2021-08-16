@@ -1,8 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/History.model.dart';
+import 'package:lab_movil_2222/models/city-history.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
+import 'package:lab_movil_2222/services/load-city-history.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
@@ -11,20 +15,33 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageHistoryScreen extends StatefulWidget {
   static const String route = '/history';
-  final CityDto chapterSettings;
+  final CityDto city;
 
-  const StageHistoryScreen({
+  final LoadCityHistoryService historyLoader;
+
+  StageHistoryScreen({
     Key? key,
-    required this.chapterSettings,
-  }) : super(key: key);
+    required CityDto city,
+  })  : this.city = city,
+        this.historyLoader = LoadCityHistoryService(city: city),
+        super(key: key);
+
   @override
   _StageHistoryScreenState createState() => _StageHistoryScreenState();
 }
 
 class _StageHistoryScreenState extends State<StageHistoryScreen> {
+  CityHistoryDto? historyDto;
+
   @override
   void initState() {
     super.initState();
+
+    this
+        .widget
+        .historyLoader
+        .load()
+        .then((value) => this.setState(() => this.historyDto = value));
   }
 
   @override
@@ -35,7 +52,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
         context,
         StageMonsterScreen.route,
         arguments: StageMonsterScreen(
-          city: this.widget.chapterSettings,
+          city: this.widget.city,
         ),
       );
     };
@@ -54,7 +71,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
         child: Stack(
           children: [
             ChapterBackgroundWidget(
-              backgroundColor: this.widget.chapterSettings.color,
+              backgroundColor: this.widget.city.color,
               reliefPosition: 'bottom-right',
             ),
             _routeCurve(),
@@ -96,7 +113,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
           ),
           ChapterHeadWidget(
             showStageLogo: true,
-            city: this.widget.chapterSettings,
+            city: this.widget.city,
           ),
           SizedBox(height: spacedBodyContainers),
           // _imageOne(size),
@@ -109,120 +126,61 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
 
   Widget _titleHistory(Size size, TitleHistoryDto history) {
     return Container(
-      //decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      alignment: Alignment.centerLeft,
-
-      child: history.title == null
-          ? Text(
-              'No se ha cargado texto',
-              style: korolevFont.headline6,
-              textAlign: TextAlign.left,
-            )
-          : Text(
-              history.title as String,
-              style: korolevFont.headline6,
-              textAlign: TextAlign.left,
-            ),
+      width: double.infinity,
+      child: Text(
+        history.title,
+        style: korolevFont.headline6,
+        textAlign: TextAlign.left,
+      ),
     );
   }
 
   Widget _textHistory(Size size, TextHistoryDto history) {
-    return Container(
-      // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-      child: history.text == null
-          ? Text('No se ha cargado texto')
-          : Markdown2222(data: history.text!),
-    );
+    return Markdown2222(data: history.text);
   }
 
   Widget _buildHistoryImage(Size size, ImageHistoryDto history) {
-    double marginRight = size.width * 0.05;
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: marginRight),
-      child: history.url == null
-          ? Container(
-              alignment: Alignment.center,
-              height: 150,
-              width: 150,
-              color: Colors.black45,
-              child: Text(
-                'No image Available',
-                style: korolevFont.bodyText2,
-                textAlign: TextAlign.center,
-              ),
-            )
-          : Image(
-              image: NetworkImage(
-                history.url as String,
-              ),
-              filterQuality: FilterQuality.high,
-            ),
+    return Image(
+      image: history.image == null
+          ? getAppLogo(AppImage.cityLogo)
+          : NetworkImage(history.image!.url),
+      width: min(size.width * 0.4, 300),
+      filterQuality: FilterQuality.high,
+      fit: BoxFit.contain,
     );
   }
 
-  Future<List<HistoryDto>> _readContents() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.widget.chapterSettings.id)
-        .collection('pages')
-        .doc('history')
-        .get();
-
-    /// validate the documents has data
-    if (!snap.exists) new ErrorDescription('Document history does not exists');
-
-    /// get content of document for later iterations
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final List<dynamic> data = payload['content'];
-
-    /// turn the list into list of history dot's
-    final contents = data.map((e) => HistoryDto.fromJson(e)).toList();
-
-    return contents;
-  }
-
   _contentsBody(Size size) {
+    final double sidePadding = size.width * 0.08;
+
     ///main container
-    return Container(
-
-        ///general left padding 25
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-        alignment: Alignment.centerLeft,
-
-        ///To resize the parent container of the list of books
-        child: FutureBuilder(
-            future: _readContents(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<HistoryDto>> contents) {
-              if (contents.hasError) return Text(contents.error.toString());
-
-              if (contents.connectionState == ConnectionState.waiting)
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                      Colors.white,
-                    ),
-                  ),
-                );
-
-              final List<HistoryDto> historyContent =
-                  contents.data as List<HistoryDto>;
-
-              final List<Widget> contentWidgets = historyContent.map((history) {
-                if (history is TitleHistoryDto)
-                  return _titleHistory(size, history);
-                if (history is ImageHistoryDto)
-                  return _buildHistoryImage(size, history);
-                if (history is TextHistoryDto)
-                  return _textHistory(size, history);
-                throw ErrorDescription('Kind of history content not found');
-              }).toList();
-
-              return Column(
-                children: contentWidgets,
-              );
-            }));
+    return Column(
+      children: [
+        if (this.historyDto == null)
+          Center(child: AppLoading())
+        else ...[
+          for (HistoryContentDto content in this.historyDto!.content)
+            if (content is TitleHistoryDto)
+              Padding(
+                padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 40),
+                child: _titleHistory(size, content),
+              )
+            else if (content is ImageHistoryDto)
+              Padding(
+                padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
+                child: Row(
+                  children: [
+                    _buildHistoryImage(size, content),
+                  ],
+                ),
+              )
+            else if (content is TextHistoryDto)
+              Padding(
+                padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+                child: _textHistory(size, content),
+              ),
+        ],
+      ],
+    );
   }
 }

@@ -1,24 +1,34 @@
-abstract class ContentDto {
+import 'package:lab_movil_2222/models/asset.dto.dart';
+
+abstract class ContentDto<T> {
   final String kind;
+  final String description;
+  final String author;
+  final String title;
+  final T content;
 
   ContentDto._({
     required this.kind,
+    required this.author,
+    required this.description,
+    required this.content,
+    required this.title,
   });
 
   static ContentDto fromJson(Map<String, dynamic> payload) {
     final String kind = payload['kind'];
     if (kind == 'CONTENT#VIDEO')
-      return VideoDto(
+      return VideoContentDto(
         kind: kind,
         title: payload['title'],
-        url: payload['url'],
         author: payload['author'],
         description: payload['description'],
+        video: VideoDto.fromMap(payload),
       );
     else
-      return PodcastDto(
+      return PodcastContentDto(
         kind: kind,
-        url: payload['url'],
+        podcast: AudioDto.fromMap(payload),
         author: payload['author'],
         title: payload['title'],
         description: payload['description'],
@@ -26,34 +36,34 @@ abstract class ContentDto {
   }
 }
 
-class VideoDto extends ContentDto {
-  final String? url;
-  final String? author;
-  final String? description;
-  final String? title;
-
-  VideoDto({
+class VideoContentDto extends ContentDto<VideoDto> {
+  VideoContentDto({
     required String kind,
-    this.url,
-    this.title,
-    this.author,
-    this.description,
-  }) : super._(kind: kind);
+    required String author,
+    required String description,
+    required String title,
+    required VideoDto video,
+  }) : super._(
+          kind: kind,
+          author: author,
+          description: description,
+          title: title,
+          content: video,
+        );
 }
 
-class PodcastDto extends ContentDto {
-  final String? text;
-  final String? url;
-  final String? author;
-  final String? description;
-  final String? title;
-
-  PodcastDto({
+class PodcastContentDto extends ContentDto<AudioDto> {
+  PodcastContentDto({
     required String kind,
-    this.url,
-    this.author,
-    this.description,
-    this.title,
-    this.text,
-  }) : super._(kind: kind);
+    required String author,
+    required String description,
+    required String title,
+    required AudioDto podcast,
+  }) : super._(
+          kind: kind,
+          author: author,
+          description: description,
+          title: title,
+          content: podcast,
+        );
 }

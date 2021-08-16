@@ -1,73 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/city-resources.dto.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OnlineResourcesGridItem extends StatelessWidget {
-  final String? name;
-  final String kind;
-  final String? description;
-  final Size size;
-  final String? redirect;
-  final String? id;
+class ExternalLinkCard extends StatelessWidget {
+  final ExternalLinkDto externalLinkDto;
 
-  final Color color;
-
-  const OnlineResourcesGridItem({
+  const ExternalLinkCard({
     Key? key,
-    required this.description,
-    required this.size,
-    required this.color,
-    required this.name,
-    required this.kind,
-    required this.redirect,
-    this.id,
+    required this.externalLinkDto,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String kindIcon = this.kind.replaceAll("LINK#", '');
-    print("kindIcon: $kindIcon");
-    double fontSize = (size.height > 600) ? 0.9 : 0.7;
+    final double sidePadding = MediaQuery.of(context).size.width * 0.04;
     return Material(
       type: MaterialType.transparency,
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
-        onTap: () {
-          if (redirect != null) {
-            launch(redirect!);
-          }
-        },
+        onTap: () => launch(this.externalLinkDto.link),
         child: Container(
-          // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-          child: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            // alignment: WrapAlignment.start,
-            spacing: 5,
-            runSpacing: 10,
-
+          padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (kindIcon.contains("OTHER"))
-                  ? Icon(
-                      Icons.link_rounded,
-                      color: Colors.white,
-                    )
-                  : Image(
-                      image: AssetImage(
-                          'assets/icons/${kindIcon.toLowerCase()}_icon.png'),
-                      filterQuality: FilterQuality.high,
-                    ),
-              Text(
-                (name != null) ? name! : "No name Available",
-                style: korolevFont.headline6?.apply(fontSizeFactor: fontSize),
-                // overflow: TextOverflow.ellipsis,
-                // maxLines: 2,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Image(
+                  image: this.externalLinkDto.iconImage,
+                  filterQuality: FilterQuality.high,
+                  width: 50,
+                  height: 50,
+                  color: Colors2222.white,
+                ),
               ),
-              Text(
-                (description == null) ? "" : description!,
-                style: korolevFont.bodyText2,
-                // overflow: TextOverflow.ellipsis,
-                // maxLines: 9,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  this.externalLinkDto.title,
+                  style: korolevFont.subtitle1,
+                ),
               ),
+              Markdown2222(data: this.externalLinkDto.description)
             ],
           ),
         ),

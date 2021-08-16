@@ -7,9 +7,13 @@ class CompeResourcesListItem extends StatelessWidget {
   final Map<String, dynamic> image;
   final String? id;
 
-  const CompeResourcesListItem(
-      {Key? key, required this.name, required this.image, this.kind, this.id})
-      : super(key: key);
+  const CompeResourcesListItem({
+    Key? key,
+    required this.name,
+    required this.image,
+    this.kind,
+    this.id,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,39 +23,29 @@ class CompeResourcesListItem extends StatelessWidget {
     image['url'] == null
         ? imageNe = new NetworkImage(imageurl)
         : imageNe = new NetworkImage(image['url']);
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 15,),
-      
-      width: double.infinity,
-      // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+    return Column(
+      children: [
+        ///seeks if an image url is provided, otherwise returns the no image png
 
-      ///static height
-      // height: 120,
-      child: Column(
-        
-        children: [
-          ///seeks if an image url is provided, otherwise returns the no image png
+        Image(
+          image: imageNe,
+          height: 60,
+          alignment: Alignment.center,
+        ),
+        SizedBox(
+          height: 9,
+        ),
 
-          Image(
-            image: imageNe,
-            height: 60,
-            alignment: Alignment.center,
-          ),
-          SizedBox(
-            height: 9,
-          ),
+        ///Makes the column flexible to avoid the overflow
 
-          ///Makes the column flexible to avoid the overflow
-
-          Text(
-            this.name,
-            style: korolevFont.bodyText1,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+        Text(
+          this.name,
+          style: korolevFont.bodyText1,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 4,
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }
