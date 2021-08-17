@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
+import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -32,6 +33,8 @@ class CityProjectScreen extends StatefulWidget {
 
 class _CityProjectScreenState extends State<CityProjectScreen> {
   late List<CityDto> chapters;
+
+  AudioPlayerProvider audioProvider = AudioPlayerProvider();
 
   ProjectDto? project;
 
@@ -157,6 +160,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             Container(
               alignment: Alignment.center,
               child: PodcastAudioPlayer(
+                audioProvider: audioProvider,
                 audioUrl: this.project!.audio!.url,
                 description: "",
                 color: this.widget.city.color,

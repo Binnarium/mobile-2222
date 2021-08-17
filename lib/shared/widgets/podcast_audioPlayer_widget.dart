@@ -1,14 +1,21 @@
-import 'package:audio_session/audio_session.dart';
+import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class PodcastAudioPlayer extends StatefulWidget {
   final String? audioUrl;
   final Color color;
+  final AudioPlayerProvider audioProvider;
   final String? description;
   PodcastAudioPlayer(
-      {Key? key, this.audioUrl, this.description, required this.color})
+      {Key? key,
+      this.audioUrl,
+      this.description,
+      required this.color,
+      required this.audioProvider})
       : super(key: key);
 
   @override
@@ -16,7 +23,7 @@ class PodcastAudioPlayer extends StatefulWidget {
 }
 
 class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
-  final AudioPlayer _player = AudioPlayer();
+  late AudioPlayer audioPlayer;
   Duration _duration = new Duration();
   Duration _position = new Duration();
   Icon _playIcon = Icon(Icons.play_arrow_rounded);
@@ -28,32 +35,13 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   }
 
   Future<void> _init() async {
-    // Inform the operating system of our app's audio attributes etc.
-    // We pick a reasonable default for an app that plays speech.
-    final session = await AudioSession.instance;
-    await session.configure(AudioSessionConfiguration.speech());
-    // Listen to errors during playback.
-    _player.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stackTrace) {
-      print('A stream error occurred: $e');
-    });
-    if (this.widget.audioUrl == null) {
-      print("error, no podcast link available");
-    } else {
-      try {
-        await _player
-            .setAudioSource(AudioSource.uri(Uri.parse(this.widget.audioUrl!)));
-      } catch (e) {
-        print("Error loading audio source: $e");
-      }
-    }
-    // Try to load audio from a source and catch any errors.
-    _player.positionStream.listen((event) {
+    await this.widget.audioProvider.setAudioSource(this.widget.audioUrl!);
+    this.widget.audioProvider.player.positionStream.listen((event) {
       setState(() {
         _position = event;
       });
     });
-    _player.durationStream.listen((event) {
+    this.widget.audioProvider.player.durationStream.listen((event) {
       setState(() {
         _duration = event!;
       });
@@ -64,14 +52,15 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   void dispose() {
     // Release decoders and buffers back to the operating system making them
     // available for other apps to use.
-    _player.dispose();
-
+    this.widget.audioProvider.dispose();
+    print("Audio provider disposed");
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    audioPlayer = this.widget.audioProvider.player;
     if (this.widget.audioUrl != null) {
       return _podcastContainer(size);
     }
@@ -121,7 +110,7 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
                     SizedBox(
                       height: 5,
                     ),
-                    _podcastButtons(_player, size),
+                    _podcastButtons(audioPlayer, size),
                   ],
                 ),
               ),
@@ -136,15 +125,14 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       // width: size.width * 0.5,
-      child: Text(
-        (description == null) ? 'No description Available' : description,
-        style: korolevFont.bodyText1?.apply(),
-      ),
+      child: (description == null)
+          ? Text('No description Available')
+          : Markdown2222(data: description),
     );
   }
 
   _podcastButtons(AudioPlayer controller, Size size) {
-    return Row(
+    return new Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildVideoButton(
@@ -185,30 +173,30 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
         return currentPosition - Duration(seconds: 5);
       }));
   Future _forward5Seconds() async => (_goToPosition((currentPosition) {
-        if (currentPosition + Duration(seconds: 5) >= _player.duration!) {
-          return _player.duration!;
+        if (currentPosition + Duration(seconds: 5) >= audioPlayer.duration!) {
+          return audioPlayer.duration!;
         }
         return currentPosition + Duration(seconds: 5);
       }));
 
   Future _playOrPause() async {
-    if (_player.playing) {
-      if (_player.position >= _player.duration!) {
+    if (audioPlayer.playing) {
+      if (audioPlayer.position >= audioPlayer.duration!) {
         setState(() {
-          _player.seek(Duration.zero);
+          audioPlayer.seek(Duration.zero);
           _playIcon = Icon(Icons.pause_rounded);
-          _player.play();
+          audioPlayer.play();
         });
       } else {
         setState(() {
           _playIcon = Icon(Icons.play_arrow_rounded);
-          _player.pause();
+          audioPlayer.pause();
         });
       }
     } else {
       setState(() {
         _playIcon = Icon(Icons.pause_rounded);
-        _player.play();
+        audioPlayer.play();
       });
     }
   }
@@ -216,36 +204,36 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
   Future _goToPosition(
     Duration Function(Duration currentPosition) builder,
   ) async {
-    final currentPosition = _player.position;
+    final currentPosition = audioPlayer.position;
     final newPosition = builder(currentPosition);
 
-    await _player.seek(newPosition);
+    await audioPlayer.seek(newPosition);
   }
 
   _slider() {
-    return SliderTheme(
-        data: SliderThemeData(
-          trackShape: CustomTrackShape(),
-        ),
-        child: Slider(
-            activeColor: Colors.white,
-
-            inactiveColor: Colors.white.withOpacity(0.5),
-
-            min: 0.0,
-            max: _duration.inSeconds.toDouble(),
-            value: _position.inSeconds.toDouble(),
-            onChanged: (double value) {
-              setState(() {
-                _changeToSecond(value.toInt());
-                value = value;
-              });
-            }));
+    return new SliderTheme(
+      data: SliderThemeData(
+        trackShape: CustomTrackShape(),
+      ),
+      child: new Slider(
+        activeColor: Colors.white,
+        inactiveColor: Colors.white.withOpacity(0.5),
+        min: 0.0,
+        max: _duration.inSeconds.toDouble(),
+        value: this.widget.audioProvider.position!.inSeconds.toDouble(),
+        onChanged: (double value) {
+          setState(() {
+            _changeToSecond(value.toInt());
+            value = value;
+          });
+        },
+      ),
+    );
   }
 
   void _changeToSecond(int second) {
     Duration newDuration = Duration(seconds: second);
-    _player.seek(newDuration);
+    audioPlayer.seek(newDuration);
   }
 }
 
