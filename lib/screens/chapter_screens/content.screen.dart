@@ -43,7 +43,6 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   void dispose() {
-    print("audioProvider Disposed successfully");
     super.dispose();
   }
 
@@ -159,10 +158,28 @@ class _ContentScreenState extends State<ContentScreen> {
                 ),
               ),
             ] else if (c is PodcastContentDto) ...[
-              _titleContainer(size, c.author, c.title, " - podcast"),
-              new PodcastAudioPlayer(
-                audio: c.content,
-                color: widget.city.color,
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 32,
+                ),
+                child: _titleContainer(size, c.author, c.title, " - podcast"),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: sidePadding,
+                  left: sidePadding,
+                  bottom: 32,
+                ),
+                child: (c.description == null)
+                    ? Text('No description Available')
+                    : Markdown2222(data: c.description),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                child: PodcastAudioPlayer(
+                  audio: c.content,
+                  color: widget.city.color,
+                ),
               ),
             ],
           ],
