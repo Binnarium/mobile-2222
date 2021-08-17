@@ -1,71 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/Lecture.model.dart';
-import 'package:lab_movil_2222/models/OnlineResource.model.dart';
+import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
-import 'package:lab_movil_2222/services/load-resources-screen-information.service.dart';
+import 'package:lab_movil_2222/services/load-city-resources.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/shared/widgets/lectures-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/reading-item.widget.dart';
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
-  final CityDto cityDto;
+  final CityDto city;
 
-  const ResourcesScreen({
+  final ILoadOptions<CityResourcesDto, CityDto> resourcesLoader;
+
+  ResourcesScreen({
     Key? key,
-    required this.cityDto,
-  }) : super(key: key);
+    required CityDto city,
+  })  : this.city = city,
+        this.resourcesLoader = LoadCityResourcesService(city: city),
+        super(key: key);
 
   @override
   _ResourcesScreenState createState() => _ResourcesScreenState();
 }
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
-  List<ResourcesDto>? onlineResources;
-  List<LecturesDto>? readings;
+  CityResourcesDto? resourcesDto;
 
   @override
   void initState() {
     super.initState();
 
-    ILoadInformationWithOptions<List<dynamic>, CityDto> resourcesLoader =
-        LoadOnlineResourcesScreenInformationService(
-      chapterSettings: this.widget.cityDto,
-    );
-
-    resourcesLoader.load().then((value) =>
-        this.setState(() => onlineResources = value as List<ResourcesDto>));
-
-    ILoadInformationWithOptions<List<dynamic>, CityDto> readingsLoader =
-        LoadReadingsResourcesScreenInformationService(
-      chapterSettings: this.widget.cityDto,
-    );
-    readingsLoader.load().then(
-        (value) => this.setState(() => readings = value as List<LecturesDto>));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    this
+        .widget
+        .resourcesLoader
+        .load()
+        .then((value) => this.setState(() => this.resourcesDto = value));
   }
 
   @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = (this.widget.cityDto.enabledPages.activities)
+    VoidCallback nextPage = (this.widget.city.enabledPages.activities)
         ? () {
             Navigator.pushNamed(
               context,
               ActivitiesScreen.route,
               arguments: ActivitiesScreen(
-                chapterSettings: this.widget.cityDto,
+                chapterSettings: this.widget.city,
               ),
             );
           }
@@ -74,7 +63,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               context,
               ChapterClubhouseScreen.route,
               arguments: ChapterClubhouseScreen(
-                chapterSettings: this.widget.cityDto,
+                chapterSettings: this.widget.city,
               ),
             );
           };
@@ -93,7 +82,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           child: Stack(
             children: [
               ChapterBackgroundWidget(
-                backgroundColor: widget.cityDto.color,
+                backgroundColor: widget.city.color,
               ),
 
               ///body of the screen
@@ -111,142 +100,79 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   ///body of the screen
   _resourcesContent(Size size) {
+    final double sidePadding = size.width * 0.04;
+
     ///sizing the container to the mobile
-    return Container(
-      ///Listview of the whole screen
-      child: ListView(
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          ChapterHeadWidget(
+    return ListView(
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: ChapterHeadWidget(
             showStageLogo: true,
-            city: this.widget.cityDto,
+            city: this.widget.city,
           ),
-          SizedBox(
-            height: 20,
-          ),
-
-          ///chapter title screen widgets
-          ChapterTitleSection(
-            title: 'LECTURAS',
-          ),
-          SizedBox(
-            height: 20,
-          ),
-
-          ///list of the bodys (json expected)
-          _booksBody(size),
-          SizedBox(height: 30),
-          ChapterTitleSection(
-            title: 'RECURSOS ONLINE',
-          ),
-          SizedBox(
-            height: 40,
+        ),
+        if (this.resourcesDto == null)
+          AppLoading()
+        else ...[
+          /// readings title screen widgets
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: ChapterTitleSection(
+              title: 'LECTURAS',
+            ),
           ),
 
-          ///calling the body of online resources, expected a json
-          _onlineResourcesBody(size),
-          SizedBox(
-            height: 20,
+          /// readings
+          for (ReadingDto reading in this.resourcesDto!.readings)
+            Padding(
+              padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+              child: ReadingItem(readingDto: reading),
+            ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40),
+            child: ChapterTitleSection(
+              title: 'RECURSOS ONLINE',
+            ),
           ),
+
+          /// external links
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+
+            ///Creates a grid with the necesary online resources
+            child: StaggeredGridView.countBuilder(
+              ///general spacing per resource
+              crossAxisCount: 2,
+              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+              itemCount: this.resourcesDto!.externalLinks.length,
+
+              /// property that sizes the container automatically according
+              /// the items
+              shrinkWrap: true,
+
+              ///to avoid the scroll
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = this.resourcesDto!.externalLinks.elementAt(index);
+                print(item);
+                print(item.kind);
+
+                ///calls the custom widget with the item parameters
+                if (item is ExternalLinkDto) {
+                  return ExternalLinkCard(externalLinkDto: item);
+                }
+
+                return Text('Kind of content not found');
+              },
+            ),
+          )
         ],
-      ),
-    );
-  }
-
-  /// books body method
-  _booksBody(Size size) {
-    if (this.readings == null)
-      return Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(
-            Colors.white,
-          ),
-        ),
-      );
-
-    /// main container
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-
-      ///To resize the parent container of the list of books
-
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: readings!.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            final item = readings!.elementAt(index);
-
-            ///calls the custom widget with the item parameters
-
-            return LecturesListItem(
-              title: item.name!,
-              author: item.author!,
-              year: item.publishedDate!,
-              size: size,
-              link: item.link,
-              review: item.about,
-              hasLineBehind: (index == (readings!.length - 1)) ? false : true,
-              imageURL: item.coverUrl,
-            );
-          }),
-    );
-  }
-
-  ///Method of the online resources
-  _onlineResourcesBody(Size size) {
-    if (this.readings == null)
-      return Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(
-            Colors.white,
-          ),
-        ),
-      );
-
-    ///main container
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-
-      ///To resize the parent container of the online resources grid
-
-      ///Creates a grid with the necesary online resources
-      child: StaggeredGridView.countBuilder(
-        ///general spacing per resource
-        crossAxisCount: 2,
-
-        crossAxisSpacing: 15,
-        mainAxisSpacing: 15,
-        staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-        itemCount: onlineResources!.length,
-
-        /// property that sizes the container automaticly according
-        /// the items
-        shrinkWrap: true,
-
-        ///to avoid the scroll
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          final item = onlineResources!.elementAt(index);
-          print(item);
-          print(item.kind);
-
-          ///calls the custom widget with the item parameters
-          if (item is OnlineResourceDto) {
-            return OnlineResourcesGridItem(
-              color: widget.cityDto.color,
-              size: size,
-              name: item.name!,
-              kind: item.kind!,
-              description: item.description,
-              redirect: item.redirect,
-            );
-          }
-          return Text('Kind of content not found');
-        },
-      ),
+      ],
     );
   }
 }

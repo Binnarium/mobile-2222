@@ -1,14 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
@@ -43,48 +42,11 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () => Navigator.pushNamed(
-          context,
-          StageHistoryScreen.route,
-          arguments: StageHistoryScreen(
-            chapterSettings: this.widget.city,
-          ),
-        );
-
-    // Navigator.pushNamed(context, StageIntroductionScreen.route);
-
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          /// left
-          if (details.delta.dx > 5) prevPage();
-
-          /// right
-          if (details.delta.dx < -5) nextPage();
-        },
-
-        /// main content of page
-        /// the content includes a background with images, and scroll-able content
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            /// first layer is the background with road-map
-            ChapterBackgroundWidget(
-              backgroundColor: widget.city.color,
-              reliefPosition: 'bottom-right',
-            ),
-
-            /// scroll-able content
-            _introductionBody(size, context),
-          ],
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.city,
+      backgroundPosition: BackgroundDecoration.bottomRight,
+      body: _introductionBody(size, context),
     );
   }
 
@@ -115,13 +77,17 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
 
         /// Texto cambiar por funcionalidad de cuenta de días
         Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(
+            bottom: 16,
+            left: sidePadding,
+            right: sidePadding,
+          ),
           child: Hero(
             tag: this.widget.city.phaseTag,
             child: Text(
               this.widget.city.phaseName,
               textAlign: TextAlign.center,
-              style: textTheme.headline4,
+              style: textTheme.headline5,
             ),
           ),
         ),
@@ -129,21 +95,34 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
         /// city name with hero functionality, apply no underline style to prevent
         /// yellow underline on transition
         Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: EdgeInsets.only(
+            bottom: 8,
+            left: sidePadding,
+            right: sidePadding,
+          ),
           child: Hero(
             tag: this.widget.city.nameTag,
-            child: Text(this.widget.city.name.toUpperCase(),
-                textAlign: TextAlign.center, style: textTheme.headline2),
+            child: Text(
+              this.widget.city.name.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: textTheme.headline3,
+            ),
           ),
         ),
 
+        /// city logo
+        /// since image is in a 1 to 1 aspect ratio make height and width the same
         Padding(
-          padding: EdgeInsets.only(bottom: 40),
+          padding: EdgeInsets.only(
+            bottom: 40,
+            left: sidePadding,
+            right: sidePadding,
+          ),
           child: Hero(
             tag: this.widget.city.icon.path,
             child: Image(
-              width: double.infinity,
-              height: size.height * 0.35,
+              width: size.height * 0.25,
+              height: size.height * 0.25,
               image: this.widget.city.iconImage,
               filterQuality: FilterQuality.high,
             ),

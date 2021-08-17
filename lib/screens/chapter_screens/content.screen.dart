@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/VideoPodcast.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/models/content-dto.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -49,7 +49,7 @@ class _ContentScreenState extends State<ContentScreen> {
         context,
         ResourcesScreen.route,
         arguments: ResourcesScreen(
-          cityDto: this.widget.city,
+          city: this.widget.city,
         ),
       );
       this.dispose();

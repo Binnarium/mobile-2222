@@ -5,7 +5,7 @@ import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:video_player/video_player.dart';
 
-const double VideoAspectRatio = 16 / 9;
+const double VIDEO_ASPECT_RATIO = 16 / 9;
 
 /// Class that creates a video player depending on video URL and the description of the video
 class VideoPlayer extends StatefulWidget {
@@ -20,6 +20,8 @@ class VideoPlayer extends StatefulWidget {
 
     /// color used to match controls
     this.color = Colors2222.primary,
+
+    /// video controller
     VideoPlayerController? videoPlayerController,
 
     /// by default video does not loop
@@ -37,13 +39,15 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void dispose() {
+    this.widget.controller.pause();
+    this.widget.controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: VideoAspectRatio,
+      aspectRatio: VIDEO_ASPECT_RATIO,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -55,6 +59,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   controller: this.widget.controller,
                   isLoop: this.widget.isLoop,
                   color: this.widget.color,
+                  videoDto: this.widget.video,
                 )
 
               /// play video button
@@ -63,6 +68,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   onTap: () => setState(() => showVideo = true),
                   child: _VideoPlaceholder(
                     color: this.widget.color,
+                    videoDto: this.widget.video,
                   ),
                 ),
         ),
@@ -75,9 +81,11 @@ class _VideoPlaceholder extends StatelessWidget {
   _VideoPlaceholder({
     Key? key,
     required this.color,
+    required this.videoDto,
   }) : super(key: key);
 
   final Color color;
+  final VideoDto videoDto;
 
   @override
   Widget build(BuildContext context) {
@@ -87,20 +95,20 @@ class _VideoPlaceholder extends StatelessWidget {
 
     return Stack(
       children: [
+        /// background color using a darken version of the color
         Positioned.fill(
           child: Container(
             color: darkenColor,
           ),
         ),
-        // background image
-        // Image.asset(
-        //   'assets/backgrounds/logo_background2.png',
-        // ),
-        Center(
-          child: Icon(
-            Icons.play_arrow_rounded,
-            size: 80,
-            color: Colors2222.white,
+
+        /// placeholder image
+        Positioned.fill(
+          child: Image(
+            image: this.videoDto.placeholderImage,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
           ),
         )
       ],
@@ -115,14 +123,18 @@ class _Video2222 extends Chewie {
     required VideoPlayerController controller,
     required bool isLoop,
     required Color color,
+    required VideoDto videoDto,
   }) : super(
           key: key,
           controller: ChewieController(
             videoPlayerController: controller,
             looping: isLoop,
-            placeholder: _VideoPlaceholder(color: color),
+            placeholder: _VideoPlaceholder(
+              color: color,
+              videoDto: videoDto,
+            ),
             autoInitialize: true,
-            aspectRatio: VideoAspectRatio,
+            aspectRatio: VIDEO_ASPECT_RATIO,
             allowedScreenSleep: false,
 
             /// allowed orientations

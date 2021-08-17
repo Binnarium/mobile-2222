@@ -115,31 +115,54 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 50),
+      padding:
+          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 50),
       children: [
-        Center(
-          child: Text(
-            "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
-            style: textTheme.headline5,
-            textAlign: TextAlign.center,
-          ),
+        Text(
+          "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
+          style: textTheme.headline5,
+          textAlign: TextAlign.center,
         ),
         SizedBox(
-          height: 30,
+          height: 16,
         ),
         if (this.project == null)
           AppLoading()
         else ...[
-          Container(
-            padding: EdgeInsets.only(right: 50),
-            child: Text(
-              this.project!.activity,
-              style: textTheme.headline6,
-              textAlign: TextAlign.center,
+          LayoutBuilder(
+            builder: (context, constraints) => Container(
+              width: constraints.maxWidth * 0.7,
+              padding: EdgeInsets.only(bottom: 16),
+              child: Stack(
+                children: [
+                  /// text
+                  Container(
+                    padding: EdgeInsets.only(
+                      top: 16,
+                      bottom: 80,
+                      right: constraints.maxWidth * 0.35,
+                      left: constraints.maxWidth * 0.05,
+                    ),
+                    child: Text(
+                      this.project!.activity,
+                      style: textTheme.headline6,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  /// path background
+                  Positioned.fill(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => Image.asset(
+                        'assets/images/path-project.png',
+                        alignment: Alignment.bottomRight,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 90,
           ),
           MarkdownBody(
             data: this.project!.explanation,

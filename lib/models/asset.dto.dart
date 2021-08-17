@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// Base class for statics assets shared in the app
 ///
 /// use the specific kind of asset like:
@@ -29,6 +31,9 @@ class VideoDto extends AssetDto {
           path: payload['path'] ?? '',
           url: payload['url'] ?? '',
         );
+
+  ImageProvider get placeholderImage =>
+      AssetImage('assets/images/video-placeholder-1.png');
 }
 
 /// Image asset
@@ -44,6 +49,8 @@ class ImageDto extends AssetDto {
           path: payload['path'],
           url: payload['url'],
         );
+
+  ImageProvider get image => NetworkImage(this.url);
 }
 
 /// Audio asset

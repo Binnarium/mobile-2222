@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
+
+@Deprecated('Since Scaffold2222 chapter background should not be used')
 class ChapterBackgroundWidget extends StatelessWidget {
   final Color backgroundColor;
   final String? reliefPosition;
@@ -12,7 +14,9 @@ class ChapterBackgroundWidget extends StatelessWidget {
     return Container(
       child: Stack(
         children: [
-          CustomBackground(backgroundColor: this.backgroundColor),
+          CustomBackground(
+            backgroundColor: this.backgroundColor,
+          ),
           _relieve(),
         ],
       ),
