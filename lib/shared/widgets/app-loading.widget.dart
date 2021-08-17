@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 
@@ -21,7 +23,7 @@ class _AppLoadingState extends State<AppLoading> with TickerProviderStateMixin {
       duration: const Duration(seconds: 1),
       vsync: this,
       value: 0,
-      lowerBound: 0,
+      lowerBound: 0.2,
       upperBound: 1,
     );
 
@@ -47,7 +49,7 @@ class _AppLoadingState extends State<AppLoading> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    final double sideWidth = size.width * 0.2;
+    final double sideWidth = min(300, size.width * 0.2);
 
     return Container(
       width: sideWidth,

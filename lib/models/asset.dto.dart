@@ -31,6 +31,9 @@ class VideoDto extends AssetDto {
           path: payload['path'] ?? '',
           url: payload['url'] ?? '',
         );
+
+  ImageProvider get placeholderImage =>
+      AssetImage('assets/images/video-placeholder-1.png');
 }
 
 /// Image asset
