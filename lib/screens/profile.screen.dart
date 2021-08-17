@@ -61,18 +61,14 @@ class ProfileScreen extends StatelessWidget {
             height: 30,
           ),
           Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'MI PERFIL',
-                style: korolevFont.headline5?.apply(fontSizeFactor: 0.96),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
+            child: Text(
+              'MI PERFIL',
+              style: korolevFont.headline6,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+            ),
+          ),
           SizedBox(
             height: 10,
           ),
@@ -83,9 +79,9 @@ class ProfileScreen extends StatelessWidget {
                   EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
               child: Text(
                 'RODRIGO ZAMORANO',
-                style: korolevFont.headline3?.apply(fontSizeFactor: 0.77),
+                style: korolevFont.headline5,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 1,
                 textAlign: TextAlign.center,
               )),
           SizedBox(
@@ -107,7 +103,6 @@ class ProfileScreen extends StatelessWidget {
                 Image(
                   image: AssetImage(
                       'assets/backgrounds/decorations/elipse_profile.png'),
-                  height: bodyContainerHeight * 0.35,
                 ),
                 SizedBox(
                   width: 10,
@@ -140,7 +135,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 32,
           ),
           Container(
               // decoration:
@@ -173,18 +168,19 @@ class ProfileScreen extends StatelessWidget {
             height: bodyContainerHeight * 0.5,
           ),
           Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'CONSUMO DE CONTENIDOS',
-                style: korolevFont.headline4?.apply(fontSizeFactor: 0.80),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
+            // decoration: BoxDecoration(
+            //   border: Border.all(color: Colors.white)
+            // ),
+            margin:
+                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
+            child: Text(
+              'CONSUMO DE CONTENIDOS',
+              style: korolevFont.headline6,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+            ),
+          ),
           SizedBox(
             height: 10,
           ),
