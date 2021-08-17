@@ -87,8 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             SizedBox(height: size.height * 0.05),
             _descriptionText(context, this.loginPayload!.pageTitle, size),
-            _video(
-                this.loginPayload!.welcomeVideo.url, ColorsApp.backgroundRed),
+            VideoPlayer(video: this.loginPayload!.welcomeVideo),
             _profundityText(context, this.loginPayload!.profundityText, size),
             SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
@@ -276,14 +275,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               decoration: TextDecoration.underline, fontSizeFactor: 0.7),
         ),
       ),
-    );
-  }
-
-  ///Vídeo que actualmente está como NetworkImage
-  _video(String url, Color color) {
-    return VideoPlayerSegment(
-      videoUrl: url,
-      color: color,
     );
   }
 }

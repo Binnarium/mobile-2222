@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageIntroduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/city-project.screen.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -37,8 +37,8 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
         ? null
         : () => Navigator.pushNamed(
               context,
-              StageIntroductionScreen.route,
-              arguments: StageIntroductionScreen(
+              CityIntroductionScreen.route,
+              arguments: CityIntroductionScreen(
                 city: chapters[this.widget.chapterSettings.stage],
               ),
             );

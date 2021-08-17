@@ -4,15 +4,18 @@ import 'package:lab_movil_2222/models/VideoPodcast.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ContentScreen extends StatefulWidget {
-  static const String route = '/video';
+  static const String route = '/contenido';
   final CityDto city;
 
   const ContentScreen({
@@ -31,17 +34,11 @@ class _ContentScreenState extends State<ContentScreen> {
   void initState() {
     super.initState();
 
-    ILoadInformationWithOptions<List<dynamic>, CityDto> loader =
+    ILoadOptions<List<ContentDto>, CityDto> loader =
         LoadContentsScreenInformationService(
       chapterSettings: this.widget.city,
     );
-    loader.load().then(
-        (value) => this.setState(() => contents = value as List<ContentDto>));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    loader.load().then((value) => this.setState(() => contents = value));
   }
 
   @override
@@ -52,7 +49,7 @@ class _ContentScreenState extends State<ContentScreen> {
         context,
         ResourcesScreen.route,
         arguments: ResourcesScreen(
-          cityDto: this.widget.city,
+          city: this.widget.city,
         ),
       );
       this.dispose();
@@ -116,81 +113,94 @@ class _ContentScreenState extends State<ContentScreen> {
 
   /// method that returns List<Widget> from firestore depending on content (video, podcast)
   _pageContent(Size size) {
-    if (contents == null) {
-      return Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(
-            this.widget.city.color,
-          ),
-        ),
-      );
-    }
+    final double sidePadding = size.width * 0.08;
 
-    final List<Widget> contentWidgets = contents!.map<Widget>((c) {
-      if (c is VideoDto)
-        return Column(
-          children: [
-            _titleContainer(size, c.author, c.title, " - vídeo"),
-            new VideoPlayerSegment(
-              videoUrl: c.url!,
-              description: c.description,
-              color: widget.city.color,
-            ),
+    if (contents == null)
+      return Center(
+        child: AppLoading(),
+      );
+    else
+      return Column(
+        children: [
+          for (ContentDto c in this.contents!) ...[
+            if (c is VideoContentDto) ...[
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 32,
+                ),
+                child: _titleContainer(size, c.author, c.title, " - vídeo"),
+              ),
+
+              /// text content
+              Padding(
+                padding: EdgeInsets.only(
+                  right: sidePadding,
+                  left: sidePadding,
+                  bottom: 32,
+                ),
+                child: Markdown2222(data: c.description),
+              ),
+
+              /// video container
+              Padding(
+                padding: EdgeInsets.only(
+                  right: sidePadding,
+                  left: sidePadding,
+                  bottom: 32,
+                ),
+                child: VideoPlayer(
+                  video: c.content,
+                  color: widget.city.color,
+                ),
+              ),
+            ] else if (c is PodcastContentDto) ...[
+              _titleContainer(size, c.author, c.title, " - podcast"),
+              PodcastAudioPlayer(
+                audioUrl: c.content.url,
+                description: c.description,
+                color: widget.city.color,
+              ),
+            ],
           ],
-        );
-      if (c is PodcastDto)
-        return Column(
-          children: [
-            _titleContainer(size, c.author, c.title, " - podcast"),
-            PodcastAudioPlayer(
-              audioUrl: c.url,
-              description: c.description,
-              color: widget.city.color,
-            ),
-          ],
-        );
-      throw ErrorDescription('Kind of content not found');
-    }).toList();
-    return Column(
-      children: contentWidgets,
-    );
+        ],
+      );
   }
 
   _titleContainer(Size size, String? author, String? title, String kind) {
-    return UnconstrainedBox(
-      child: Container(
-        color: Colors.white,
-        width: size.width,
-        padding:
-            EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(
-                    text: (author == null)
-                        ? 'No author available'
-                        : author.toUpperCase(),
-                    style: korolevFont.headline5
-                        ?.apply(color: Colors.black, fontSizeFactor: 0.7),
-                    children: [
-                  TextSpan(
-                    text: kind.toUpperCase(),
-                    style: korolevFont.headline5
-                        ?.apply(color: Colors.black45, fontSizeFactor: 0.7),
-                  )
-                ])),
-            SizedBox(
-              height: 10,
+    return Container(
+      color: Colors2222.white,
+      width: double.infinity,
+      padding:
+          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+              text: TextSpan(
+                  text: (author == null)
+                      ? 'No author available'
+                      : author.toUpperCase(),
+                  style: korolevFont.subtitle1?.apply(
+                    color: Colors.black,
+                  ),
+                  children: [
+                TextSpan(
+                  text: kind.toUpperCase(),
+                  style: korolevFont.subtitle2?.apply(
+                    color: Colors.black45,
+                  ),
+                )
+              ])),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            (title == null) ? 'No title Available' : title.toUpperCase(),
+            style: korolevFont.headline6?.apply(
+              color: widget.city.color,
             ),
-            Text(
-              (title == null) ? 'No title Available' : title.toUpperCase(),
-              style: korolevFont.headline6?.apply(
-                color: widget.city.color,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

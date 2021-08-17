@@ -11,7 +11,7 @@ import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 
-import 'chapter_screens/stageIntroduction.screen.dart';
+import 'chapter_screens/city-introduction.screen.dart';
 
 class CityProjectScreen extends StatefulWidget {
   static const String route = '/project';
@@ -58,8 +58,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ? null
         : () => Navigator.pushNamed(
               context,
-              StageIntroductionScreen.route,
-              arguments: StageIntroductionScreen(
+              CityIntroductionScreen.route,
+              arguments: CityIntroductionScreen(
                 /// will go to the next chapter
                 city: chapters[this.widget.city.stage],
               ),
@@ -119,17 +119,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
       children: [
         Center(
           child: Text(
-            "PROYECTO PERSONAL",
-            style: textTheme.headline4,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Text(
-            "DE INNOVACIÓN DOCENTE",
+            "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
             style: textTheme.headline5,
             textAlign: TextAlign.center,
           ),

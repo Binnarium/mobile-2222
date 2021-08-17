@@ -12,13 +12,24 @@ class Markdown2222 extends StatelessWidget {
   const Markdown2222({
     Key? key,
     required this.data,
+    this.contentAlignment,
   }) : super(key: key);
+
+  final WrapAlignment? contentAlignment;
 
   @override
   Widget build(BuildContext context) {
     return fmd.MarkdownBody(
       data: this.data,
-      styleSheet: fmd.MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      styleSheet: fmd.MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+        h1Align: this.contentAlignment,
+        h2Align: this.contentAlignment,
+        h3Align: this.contentAlignment,
+        h4Align: this.contentAlignment,
+        h5Align: this.contentAlignment,
+        h6Align: this.contentAlignment,
+        textAlign: this.contentAlignment,
+      ),
     );
   }
 }

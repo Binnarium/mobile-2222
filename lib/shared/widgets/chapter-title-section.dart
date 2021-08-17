@@ -5,31 +5,29 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 class ChapterTitleSection extends StatelessWidget {
   final String title;
 
-  ChapterTitleSection({Key? key, required this.title}) : super(key: key);
+  ChapterTitleSection({
+    Key? key,
+    required String title,
+  })  : this.title = title.toUpperCase(),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return UnconstrainedBox(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorsApp.backgroundBottomBar,
+    final double leftPadding = MediaQuery.of(context).size.width * 0.08;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          color: Colors2222.black,
+          padding: EdgeInsets.fromLTRB(leftPadding, 5, 5, 5),
+          child: Text(
+            title,
+            style: korolevFont.headline5,
+            textAlign: TextAlign.end,
+          ),
         ),
-        padding: EdgeInsets.all(5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 30,
-            ),
-            Text(
-              title,
-              style: korolevFont.headline5,
-              textAlign: TextAlign.end,
-            ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }

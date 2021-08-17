@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 
 class IdeaResourcesListItem extends StatelessWidget {
   final String? description;
@@ -26,11 +26,8 @@ class IdeaResourcesListItem extends StatelessWidget {
         spacing: 5,
 
         children: [
-          Text(
-            descTemp,
-            style: korolevFont.bodyText1,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
+          Markdown2222(
+            data: descTemp,
           ),
         ],
       ),
