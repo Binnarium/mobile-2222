@@ -23,7 +23,7 @@ const Map<AppImage, ImageProvider> _AppImages = {
       AssetImage('assets/backgrounds/logo_background2.png'),
   AppImage.animatedAppLogo:
       AssetImage('assets/backgrounds/logo_background1.png'),
-  AppImage.loadingLogo: AssetImage('assets/backgrounds/logo_background1.png'),
+  AppImage.loadingLogo: AssetImage('assets/images/loading-placeholder.png'),
 };
 
 /// wrapper to get an app logo
