@@ -160,9 +160,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             Container(
               alignment: Alignment.center,
               child: PodcastAudioPlayer(
-                audioProvider: audioProvider,
-                audioUrl: this.project!.audio!.url,
-                description: "",
+                audio: this.project!.audio!,
                 color: this.widget.city.color,
               ),
             ),

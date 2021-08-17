@@ -1,35 +1,53 @@
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:audio_session/audio_session.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
 
 class AudioPlayerProvider with ChangeNotifier {
-  AudioPlayer _player = AudioPlayer();
+  /// manage controls
+  final AudioPlayer player = AudioPlayer();
 
-  AudioPlayer get player => this._player;
+  AudioDto? _currentAudio;
 
-  Future<void> setAudioSource(String url) async {
-    // Inform the operating system of our app's audio attributes etc.
-    // We pick a reasonable default for an app that plays speech.
+  // late AudioSession player;
+  AudioPlayerProvider() {
+    AudioSession.instance.then(
+      (session) =>
+          // Inform the operating system of our app's audio attributes etc.
+          // We pick a reasonable default for an app that plays speech.
+          session.configure(AudioSessionConfiguration.speech()),
+    );
 
-    final session = await AudioSession.instance;
-
-    await session.configure(AudioSessionConfiguration.speech());
     // Listen to errors during playback.
-    _player.playbackEventStream.listen((event) {},
+    player.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
     });
-    {
-      try {
-        await _player.setAudioSource(AudioSource.uri(Uri.parse(url)));
-      } catch (e) {
-        print("Error loading audio source: $e");
-      }
-    }
-    notifyListeners();
   }
 
-  Duration? get duration => this._player.duration;
+  Future<bool> setAudio(AudioDto audio) async {
+    this._currentAudio = audio;
+    try {
+      /// load audio to player
+      await player.setAudioSource(AudioSource.uri(Uri.parse(audio.url)));
+      this.player.play();
+      return true;
+    } catch (e) {
+      print("Error loading audio source: $e");
+      return false;
+    } finally {
+      notifyListeners();
+    }
+  }
 
-  Duration? get position => this._player.position;
+  Stream<Duration?>? get duration$ => this.player.durationStream;
+
+  Stream<Duration>? get position$ => this.player.positionStream;
+
+  AudioDto? get current => this._currentAudio;
+
+  close() {
+    this._currentAudio = null;
+    this.player.stop();
+  }
 }

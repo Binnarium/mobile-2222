@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/VideoPodcast.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -30,7 +29,6 @@ class ContentScreen extends StatefulWidget {
 
 class _ContentScreenState extends State<ContentScreen> {
   List<ContentDto>? contents;
-  AudioPlayerProvider audioProvider = AudioPlayerProvider();
 
   @override
   void initState() {
@@ -45,7 +43,6 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   void dispose() {
-    this.audioProvider.dispose();
     print("audioProvider Disposed successfully");
     super.dispose();
   }
@@ -54,7 +51,6 @@ class _ContentScreenState extends State<ContentScreen> {
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
-      this.audioProvider.player.stop();
       Navigator.pushNamed(
         context,
         ResourcesScreen.route,
@@ -165,9 +161,7 @@ class _ContentScreenState extends State<ContentScreen> {
             ] else if (c is PodcastContentDto) ...[
               _titleContainer(size, c.author, c.title, " - podcast"),
               new PodcastAudioPlayer(
-                audioProvider: audioProvider,
-                audioUrl: c.content.url,
-                description: c.description,
+                audio: c.content,
                 color: widget.city.color,
               ),
             ],
