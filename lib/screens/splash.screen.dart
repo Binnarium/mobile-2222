@@ -3,13 +3,13 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 import 'home.screen.dart';
+import 'login.screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String route = '/splash';
@@ -19,14 +19,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-  // final bool _visible = true;
-  StreamSubscription? sub;
+  StreamSubscription? redirectSub;
 
-@override
+  @override
   void initState() {
     super.initState();
-    this.sub = UserService.instance.isSignIn$().listen((isSignIn) {
+
+    /// authenticate user and redirect to correct screen
+    this.redirectSub = UserService.instance.isSignIn$().listen((isSignIn) {
       if (isSignIn)
         Navigator.pushReplacementNamed(this.context, HomeScreen.route);
       else
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void deactivate() {
-    this.sub?.cancel();
+    this.redirectSub?.cancel();
     super.deactivate();
   }
 
@@ -89,16 +89,29 @@ class _SplashScreenState extends State<SplashScreen> {
         }
         if (days.hasData) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: size.height * 0.03),
-              //llamando el logo introductorio
-              _logoIntro(size),
-              //creando el espaciado necesario
-              SizedBox(height: size.height * 0.06),
-              //llamando el logo UTPL pantalla inicial
-              _logoUtpl(size),
-              //creando el espaciado necesario
-              SizedBox(height: spacedSize),
+              /// llamando el logo introductorio
+              Padding(
+                padding: const EdgeInsets.only(top: 120, bottom: 64),
+                child: AppLogo(
+                  width: min(400, size.width * 0.7),
+                  kind: AppImage.animatedAppLogo,
+                  filterQuality: FilterQuality.high,
+                ),
+              ),
+
+              /// llamando el logo UTPL pantalla inicial
+              Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: AppLogo(
+                  width: min(300, size.width * 0.5),
+                  kind: AppImage.utplLogo,
+                  filterQuality: FilterQuality.high,
+                ),
+              ),
+
+              Expanded(child: Container()),
 
               //Texto cambiar por funcionalidad de cuenta de días
               Text('FALTAN',
@@ -121,37 +134,6 @@ class _SplashScreenState extends State<SplashScreen> {
         }
         return Text("Error loading daysleft _configuration_");
       },
-    );
-  }
-
-  _logoIntro(Size size) {
-    return Container(
-      //largo y ancho del logo dentro
-      width: double.infinity,
-      height: size.height * 0.45,
-      child: AppLogo(
-        kind: AppImage.animatedAppLogo,
-        filterQuality: FilterQuality.high,
-      ),
-
-      padding: EdgeInsets.only(
-        top: size.height * 0.04,
-      ),
-    );
-  }
-
-  _logoUtpl(Size size) {
-    return Container(
-      width: double.infinity,
-      height: size.height * 0.17,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/logo_utpl1.png',
-        ),
-      ),
-      padding: EdgeInsets.only(
-        top: size.height * 0.02,
-      ),
     );
   }
 

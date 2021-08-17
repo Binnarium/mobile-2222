@@ -10,6 +10,9 @@ enum AppImage {
   animatedAppLogo,
 
   /// TODO: add docs
+  utplLogo,
+
+  /// TODO: add docs
   defaultAppLogo,
 
   /// TODO: add docs
@@ -19,10 +22,9 @@ enum AppImage {
 /// Map containing all available app images
 const Map<AppImage, ImageProvider> _AppImages = {
   AppImage.cityLogo: AssetImage('assets/backgrounds/decorations/logo_leaf.png'),
-  AppImage.defaultAppLogo:
-      AssetImage('assets/backgrounds/logo_background2.png'),
-  AppImage.animatedAppLogo:
-      AssetImage('assets/backgrounds/logo_background1.png'),
+  AppImage.defaultAppLogo: AssetImage('assets/images/logo-2222.png'),
+  AppImage.animatedAppLogo: AssetImage('assets/images/logo-2222.png'),
+  AppImage.utplLogo: AssetImage('assets/images/logo-utpl.png'),
   AppImage.loadingLogo: AssetImage('assets/images/loading-placeholder.png'),
 };
 
