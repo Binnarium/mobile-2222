@@ -211,17 +211,20 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           final List<CompetenceModel> compeTemp =
               compe.data as List<CompetenceModel>;
 
-          return Wrap(
-            spacing: size.width * 0.08,
-            runSpacing: 20,
-            alignment: WrapAlignment.center,
-            children: [
-              for (var item in compeTemp)
-                CompeResourcesListItem(
-                  name: item.name,
-                  image: item.image,
-                )
-            ],
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 20.0, top: 10),
+            child: Wrap(
+              spacing: size.width * 0.08,
+              runSpacing: 20,
+              alignment: WrapAlignment.center,
+              children: [
+                for (var item in compeTemp)
+                  CompeResourcesListItem(
+                    name: item.name,
+                    image: item.image,
+                  ),
+              ],
+            ),
           );
 
           /// implemented staggered to avoid the unnecesary spacing in gridviewBuilder

@@ -42,6 +42,11 @@ class _ContentScreenState extends State<ContentScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     VoidCallback prevPage = () => Navigator.pop(context);
     VoidCallback nextPage = () {
@@ -52,7 +57,6 @@ class _ContentScreenState extends State<ContentScreen> {
           city: this.widget.city,
         ),
       );
-      this.dispose();
     };
 
     Size size = MediaQuery.of(context).size;
@@ -154,11 +158,28 @@ class _ContentScreenState extends State<ContentScreen> {
                 ),
               ),
             ] else if (c is PodcastContentDto) ...[
-              _titleContainer(size, c.author, c.title, " - podcast"),
-              PodcastAudioPlayer(
-                audioUrl: c.content.url,
-                description: c.description,
-                color: widget.city.color,
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 32,
+                ),
+                child: _titleContainer(size, c.author, c.title, " - podcast"),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: sidePadding,
+                  left: sidePadding,
+                  bottom: 32,
+                ),
+                child: (c.description == null)
+                    ? Text('No description Available')
+                    : Markdown2222(data: c.description),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                child: PodcastAudioPlayer(
+                  audio: c.content,
+                  color: widget.city.color,
+                ),
               ),
             ],
           ],
