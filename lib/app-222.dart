@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lab_movil_2222/providers/ui_bottomBar_provider.dart';
+import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/shared/routes/routes.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -16,7 +16,7 @@ class App2222 extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => new UIBottomBarProvider(),
+          create: (_) => AudioPlayerProvider(),
         )
       ],
       child: MaterialApp(
@@ -30,11 +30,11 @@ class App2222 extends StatelessWidget {
           brightness: Brightness.dark,
           fontFamily: KorolevFont.fontFamily,
           textTheme: KorolevFont(),
-          primaryTextTheme: KorolevFont(textColor: ColorsApp.black),
+          primaryTextTheme: KorolevFont(textColor: Colors2222.black),
           colorScheme: ColorScheme.dark(
-            primary: ColorsApp.white,
-            onPrimary: ColorsApp.black,
-            background: ColorsApp.red,
+            primary: Colors2222.white,
+            onPrimary: Colors2222.black,
+            background: Colors2222.red,
           ),
         ),
 
