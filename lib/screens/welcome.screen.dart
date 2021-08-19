@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -85,15 +86,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.05),
+            // SizedBox(height: size.height * 0.05),
             _descriptionText(context, this.loginPayload!.pageTitle, size),
             VideoPlayer(video: this.loginPayload!.welcomeVideo),
             _profundityText(context, this.loginPayload!.profundityText, size),
-            SizedBox(height: size.height * 0.01),
+            // SizedBox(height: size.height * 0.01),
             _sheetButton(context, size),
-            SizedBox(height: size.height * 0.01),
+            // SizedBox(height: size.height * 0.01),
             _workloadText(context, this.loginPayload!.workloadText, size),
-            SizedBox(height: size.height * 0.05),
+            // SizedBox(height: size.height * 0.05),
 
             /// formulario (falta aplicar backend)
           ],
@@ -106,22 +107,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Container(
       width: double.infinity,
       height: size.height * 0.2,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/logo_background2.png',
-        ),
-        filterQuality: FilterQuality.high,
-      ),
-      padding: EdgeInsets.only(
-        top: size.height * 0.05,
-      ),
+      child: AppLogo(kind: AppImage.defaultAppLogo),
+      // padding: EdgeInsets.only(
+      //   top: size.height * 0.05,
+      // ),
     );
   }
 
   _workloadText(BuildContext context, String workloadText, Size size) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      // margin: EdgeInsets.symmetric(horizontal: 40),
       padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(7.0) //
@@ -236,7 +232,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _descriptionText(BuildContext context, String description, Size size) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      padding: EdgeInsets.symmetric(vertical: 32),
       child: Text(
         description,
         style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
@@ -248,7 +244,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _profundityText(BuildContext context, String depthText, Size size) {
     return Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+        padding: EdgeInsets.symmetric(vertical: 32),
         child: MarkdownBody(
           data: depthText,
           styleSheet: MarkdownStyleSheet(
@@ -262,7 +258,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _sheetButton(BuildContext context, Size size) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      // padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       width: double.infinity,
       child: TextButton(
         onPressed: () {
@@ -271,7 +267,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
         child: Text(
           'Equipo 2222',
-          style: korolevFont.headline6?.apply(
+          style: korolevFont.headline5?.apply(
               decoration: TextDecoration.underline, fontSizeFactor: 0.7),
         ),
       ),

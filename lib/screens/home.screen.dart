@@ -228,7 +228,7 @@ class _MapCityButton extends StatelessWidget {
             right: -this.size,
             child: Center(
               child: Text(
-                '${this.city.stage} ${this.city.name.toUpperCase()}',
+                '${this.city.stage}. ${this.city.name.toUpperCase()}',
                 style:
                     smallFont ? korolevFont.bodyText2 : korolevFont.headline5,
               ),
