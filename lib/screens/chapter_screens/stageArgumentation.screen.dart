@@ -47,9 +47,6 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
       route: StageArgumentationScreen.route,
       body: ListView(
         children: [
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.chapterSettings,

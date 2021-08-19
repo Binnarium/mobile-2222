@@ -31,9 +31,6 @@ class ActivitiesScreen extends StatelessWidget {
       child: ListView(
         // physics: NeverScrollableScrollPhysics(),
         children: [
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.chapterSettings,

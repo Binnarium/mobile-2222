@@ -60,9 +60,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     ///sizing the container to the mobile
     return ListView(
       children: [
-        SizedBox(
-          height: 10,
-        ),
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: ChapterHeadWidget(

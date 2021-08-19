@@ -46,9 +46,6 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
       ///Listview of the whole screen
       child: ListView(
         children: [
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.chapterSettings,

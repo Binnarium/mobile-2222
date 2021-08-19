@@ -54,9 +54,6 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
       route: StageHistoryScreen.route,
       body: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.city,

@@ -57,9 +57,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       height: double.infinity,
       child: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.chapterSettings,
