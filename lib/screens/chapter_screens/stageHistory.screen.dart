@@ -3,14 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city-history.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageHistoryScreen extends StatefulWidget {
@@ -46,71 +44,16 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        StageMonsterScreen.route,
-        arguments: StageMonsterScreen(
-          city: this.widget.city,
-        ),
-      );
-    };
-
     final size = MediaQuery.of(context).size;
-    print(size);
-    return Scaffold(
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          /// left
-          if (details.delta.dx > 5) prevPage();
-
-          /// right
-          if (details.delta.dx < -5) nextPage();
-        },
-        child: Stack(
-          children: [
-            ChapterBackgroundWidget(
-              backgroundColor: this.widget.city.color,
-              reliefPosition: 'bottom-right',
-            ),
-            _routeCurve(),
-            _stageBody(size),
-          ],
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
-    );
-  }
-
-  _routeCurve() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/white_route_curve_background.png',
-        ),
-        color: Colors.white.withOpacity(0.25),
-      ),
-    );
-  }
-
-  ///scroll-able content
-  _stageBody(Size size) {
     double bodyContainerHeight = size.height * 0.75;
 
     double spacedBodyContainers = bodyContainerHeight * 0.04;
-
-    return Container(
-      alignment: Alignment.topLeft,
-      child: ListView(
+    return Scaffold2222(
+      city: this.widget.city,
+      backgrounds: [BackgroundDecoration.bottomLeft, BackgroundDecoration.path],
+      route: StageHistoryScreen.route,
+      body: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.city,

@@ -30,27 +30,21 @@ class CityStageWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             /// stage of the city
-            Hero(
-              tag: this.cityDto.phaseTag,
-              child: Text(
-                this.cityDto.phaseName,
-                style: korolevFont.headline5!
-                    .copyWith(decoration: TextDecoration.none),
-                textAlign: TextAlign.right,
-                textScaleFactor: fontSizeFactor,
-              ),
+            Text(
+              this.cityDto.phaseName,
+              style: korolevFont.headline5!
+                  .copyWith(decoration: TextDecoration.none),
+              textAlign: TextAlign.right,
+              textScaleFactor: fontSizeFactor,
             ),
 
             /// city name
-            Hero(
-              tag: this.cityDto.nameTag,
-              child: Text(
-                this.cityDto.name.toUpperCase(),
-                textAlign: TextAlign.right,
-                style: korolevFont.headline6!
-                    .copyWith(decoration: TextDecoration.none),
-                textScaleFactor: fontSizeFactor,
-              ),
+            Text(
+              this.cityDto.name.toUpperCase(),
+              textAlign: TextAlign.right,
+              style: korolevFont.headline6!
+                  .copyWith(decoration: TextDecoration.none),
+              textScaleFactor: fontSizeFactor,
             ),
           ],
         ),

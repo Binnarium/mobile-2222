@@ -3,16 +3,13 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/reading-item.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
@@ -47,54 +44,12 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = (this.widget.city.enabledPages.activities)
-        ? () {
-            Navigator.pushNamed(
-              context,
-              ActivitiesScreen.route,
-              arguments: ActivitiesScreen(
-                chapterSettings: this.widget.city,
-              ),
-            );
-          }
-        : () {
-            Navigator.pushNamed(
-              context,
-              ChapterClubhouseScreen.route,
-              arguments: ChapterClubhouseScreen(
-                chapterSettings: this.widget.city,
-              ),
-            );
-          };
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          ///To make the horizontal scroll to the next or previous page.
-          onPanUpdate: (details) {
-            /// left
-            if (details.delta.dx > 5) prevPage();
-
-            /// right
-            if (details.delta.dx < -5) nextPage();
-          },
-          child: Stack(
-            children: [
-              ChapterBackgroundWidget(
-                backgroundColor: widget.city.color,
-              ),
-
-              ///body of the screen
-              _resourcesContent(size),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.city,
+      backgrounds: [BackgroundDecoration.topLeft],
+      route: ResourcesScreen.route,
+      body: _resourcesContent(size),
     );
   }
 
@@ -105,9 +60,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     ///sizing the container to the mobile
     return ListView(
       children: [
-        SizedBox(
-          height: 10,
-        ),
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: ChapterHeadWidget(
