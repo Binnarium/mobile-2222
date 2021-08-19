@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
@@ -88,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Center(
             child: AppLogo(
               kind: AppImage.defaultAppLogo,
+              width: min(350, size.width * 0.6),
             ),
           ),
         ),
