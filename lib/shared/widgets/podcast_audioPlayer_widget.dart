@@ -82,7 +82,14 @@ class __PodcastAudioPlayerState extends State<PodcastAudioPlayer> {
             _PlayerControlIcon(
               color: this.widget.color,
               icon: Icons.play_arrow,
-              onPressed: () => audioProvider.setAudio(this.widget.audio),
+              onPressed: () {
+                /// implemented setstate to activate the icons of the podcast
+                setState(
+                  () {
+                    audioProvider.setAudio(this.widget.audio);
+                  },
+                );
+              },
             ),
         ],
       ),
