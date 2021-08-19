@@ -150,7 +150,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               workload: this.loginPayload!.workloadText,
             ),
           ),
-
         ],
       ],
     );
@@ -160,22 +159,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Container(
       width: double.infinity,
       height: size.height * 0.2,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/logo_background2.png',
-        ),
-        filterQuality: FilterQuality.high,
-      ),
-      padding: EdgeInsets.only(
-        top: size.height * 0.05,
-      ),
+      child: AppLogo(kind: AppImage.defaultAppLogo),
+      // padding: EdgeInsets.only(
+      //   top: size.height * 0.05,
+      // ),
     );
   }
 
   _workloadText(BuildContext context, String workloadText, Size size) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      // margin: EdgeInsets.symmetric(horizontal: 40),
       padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(7.0) //
@@ -290,7 +284,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _descriptionText(BuildContext context, String description, Size size) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      padding: EdgeInsets.symmetric(vertical: 32),
       child: Text(
         description,
         style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
@@ -302,7 +296,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _profundityText(BuildContext context, String depthText, Size size) {
     return Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+        padding: EdgeInsets.symmetric(vertical: 32),
         child: MarkdownBody(
           data: depthText,
           styleSheet: MarkdownStyleSheet(
@@ -316,7 +310,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _sheetButton(BuildContext context, Size size) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      // padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       width: double.infinity,
       child: TextButton(
         onPressed: () {
@@ -325,7 +319,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
         child: Text(
           'Equipo 2222',
-          style: korolevFont.headline6?.apply(
+          style: korolevFont.headline5?.apply(
               decoration: TextDecoration.underline, fontSizeFactor: 0.7),
         ),
       ),
