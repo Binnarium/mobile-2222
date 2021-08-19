@@ -3,13 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class StageArgumentationScreen extends StatefulWidget {
   static const String route = '/argumentation';
@@ -41,73 +39,32 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        StageObjetivesScreen.route,
-        arguments: StageObjetivesScreen(
-          chapterSettings: this.widget.chapterSettings,
-        ),
-      );
-    };
-
     Size size = MediaQuery.of(context).size;
 
-    print(size);
-    return Scaffold(
-      body: GestureDetector(
-        onPanUpdate: (panning) {
-          /// left
-          if (panning.delta.dx > 5) prevPage();
-
-          /// right
-          if (panning.delta.dx < -5) nextPage();
-        },
-        child: Stack(
-          children: [
-            //widget custom que crea el background con el logo de la izq
-            ChapterBackgroundWidget(
-              backgroundColor: widget.chapterSettings.color,
-              reliefPosition: 'top-right',
-            ),
-            //decoración adicional del background
-            _backgroundDecoration(size),
-            // _ideas(size),
-          ],
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
-    );
-  }
-
-  _backgroundDecoration(Size size) {
-    return ListView(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        ChapterHeadWidget(
-          showStageLogo: true,
-          city: this.widget.chapterSettings,
-        ),
-        if (this.questions != null)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: CustomBubbleList(
-              ideas: this.questions!,
-            ),
-          )
-        else
-          Center(
-            child: CircularProgressIndicator(
-              color: ColorsApp.white,
-            ),
+    return Scaffold2222(
+      city: this.widget.chapterSettings,
+      backgrounds: [BackgroundDecoration.topRight],
+      route: StageArgumentationScreen.route,
+      body: ListView(
+        children: [
+          SizedBox(
+            height: 10,
           ),
-      ],
+          ChapterHeadWidget(
+            showStageLogo: true,
+            city: this.widget.chapterSettings,
+          ),
+          if (this.questions != null)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
+              child: CustomBubbleList(
+                ideas: this.questions!,
+              ),
+            )
+          else
+            AppLoading(),
+        ],
+      ),
     );
   }
 }

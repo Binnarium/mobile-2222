@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/activiy_container_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class ActivitiesScreen extends StatelessWidget {
   static const String route = '/activities';
@@ -18,47 +15,12 @@ class ActivitiesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        ChapterClubhouseScreen.route,
-        arguments: ChapterClubhouseScreen(
-          chapterSettings: this.chapterSettings,
-        ),
-      );
-    };
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          ///To make the horizontal scroll to the next or previous page.
-          // onPanUpdate: (details) =>
-          //     (details.delta.dx > 5 ? prevPage : nextPage)(),
-          onPanUpdate: (details) {
-            ///left
-            if (details.delta.dx > 5) prevPage();
-
-            ///right
-            if (details.delta.dx < -5) nextPage();
-          },
-          child: Stack(
-            children: [
-              ChapterBackgroundWidget(
-                backgroundColor: Color(chapterSettings.configuration.colorHex),
-                reliefPosition: 'bottom-right',
-              ),
-
-              ///body of the screen
-              _activitiesContent(context, size),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+    return Scaffold2222(
+      city: this.chapterSettings,
+      backgrounds: [BackgroundDecoration.topLeft],
+      route: ActivitiesScreen.route,
+      body: _activitiesContent(context, size),
     );
   }
 

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
-import 'package:lab_movil_2222/screens/city-project.screen.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/club-resources-grid-item_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterClubhouseScreen extends StatefulWidget {
@@ -33,57 +30,12 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback? nextPage = this.widget.chapterSettings.stage == 12
-        ? null
-        : () => Navigator.pushNamed(
-              context,
-              CityIntroductionScreen.route,
-              arguments: CityIntroductionScreen(
-                city: chapters[this.widget.chapterSettings.stage],
-              ),
-            );
-    if (this.widget.chapterSettings.enabledPages.project == true) {
-      nextPage = () => Navigator.pushNamed(
-            context,
-            CityProjectScreen.route,
-            arguments:
-                CityProjectScreen(city: this.widget.chapterSettings),
-          );
-    }
-    VoidCallback prevPage = () => Navigator.pop(context);
-
-    print(prevPage);
-    print("cual es la siguiente página: $nextPage");
-
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          ///To make the horizontal scroll to the next or previous page.
-          onPanUpdate: (details) {
-            /// left
-            if (details.delta.dx > 5) prevPage();
-
-            /// right
-            if (details.delta.dx < -5 && nextPage != null) nextPage();
-          },
-          child: Stack(
-            children: [
-              ChapterBackgroundWidget(
-                backgroundColor: widget.chapterSettings.color,
-                reliefPosition: 'bottom-right',
-              ),
-
-              ///body of the screen
-              _resourcesContent(size),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        prevPage: prevPage,
-        nextPage: nextPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.chapterSettings,
+      backgrounds: [BackgroundDecoration.topRight],
+      route: ChapterClubhouseScreen.route,
+      body: _resourcesContent(size),
     );
   }
 
