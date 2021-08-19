@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
@@ -17,11 +15,16 @@ import 'package:lab_movil_2222/themes/textTheme.dart';
 class ContentScreen extends StatefulWidget {
   static const String route = '/contenido';
   final CityDto city;
+  final ILoadOptions<List<ContentDto>, CityDto> loader;
 
-  const ContentScreen({
+  ContentScreen({
     Key? key,
-    required this.city,
-  }) : super(key: key);
+    required CityDto city,
+  })  : this.city = city,
+        this.loader = LoadContentsScreenInformationService(
+          chapterSettings: city,
+        ),
+        super(key: key);
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -34,60 +37,21 @@ class _ContentScreenState extends State<ContentScreen> {
   void initState() {
     super.initState();
 
-    ILoadOptions<List<ContentDto>, CityDto> loader =
-        LoadContentsScreenInformationService(
-      chapterSettings: this.widget.city,
-    );
-    loader.load().then((value) => this.setState(() => contents = value));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    this
+        .widget
+        .loader
+        .load()
+        .then((value) => this.setState(() => contents = value));
   }
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        ResourcesScreen.route,
-        arguments: ResourcesScreen(
-          city: this.widget.city,
-        ),
-      );
-    };
-
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          ///To make the horizontal scroll to the next or previous page.
-          onPanUpdate: (details) {
-            /// left
-            if (details.delta.dx > 5) prevPage();
-
-            /// right
-            if (details.delta.dx < -5) nextPage();
-          },
-          child: Stack(
-            children: [
-              ChapterBackgroundWidget(
-                backgroundColor: widget.city.color,
-                reliefPosition: 'top-left',
-              ),
-
-              /// calls the method who brings the whole firestore query (List<Widget>)
-              _stageVideoContent(size, context),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.city,
+      backgrounds: [BackgroundDecoration.topRight],
+      route: ContentScreen.route,
+      body: _stageVideoContent(size, context),
     );
   }
 
@@ -97,10 +61,6 @@ class _ContentScreenState extends State<ContentScreen> {
       /// builds an initial Listview with the banner at first element
       child: ListView(
         children: [
-          SizedBox(
-            height: 10,
-          ),
-
           ///calls the head of the chapter (logo leaf, banner)
           ChapterHeadWidget(
             showStageLogo: true,

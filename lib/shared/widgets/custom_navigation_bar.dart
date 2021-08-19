@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/city-project.screen.dart';
-import 'package:lab_movil_2222/screens/club_house.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';

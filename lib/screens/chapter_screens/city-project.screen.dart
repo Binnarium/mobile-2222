@@ -8,11 +8,8 @@ import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
-
-import 'chapter_screens/city-introduction.screen.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class CityProjectScreen extends StatefulWidget {
   static const String route = '/project';
@@ -55,49 +52,15 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-
-    VoidCallback? nextPage = this.widget.city.stage == 12
-        ? null
-        : () => Navigator.pushNamed(
-              context,
-              CityIntroductionScreen.route,
-              arguments: CityIntroductionScreen(
-                /// will go to the next chapter
-                city: chapters[this.widget.city.stage],
-              ),
-            );
-
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-          child: GestureDetector(
-        ///To make the horizontal scroll to the next or previous page.
-        onPanUpdate: (details) {
-          /// left
-          if (details.delta.dx > 5) prevPage();
-
-          /// right
-          if (details.delta.dx < -5 && nextPage != null) nextPage();
-        },
-        child: Stack(
-          children: [
-            ChapterBackgroundWidget(
-              backgroundColor: this.widget.city.color,
-              reliefPosition: 'top-right',
-            ),
-            _routeCurve(),
-
-            ///body of the screen
-
-            _projectSheet(context, size, this.widget.city.color)
-          ],
-        ),
-      )),
-      bottomNavigationBar: CustomNavigationBar(
-        prevPage: prevPage,
-        nextPage: nextPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.city,
+      backgrounds: [
+        BackgroundDecoration.bottomRight,
+        BackgroundDecoration.path
+      ],
+      route: CityProjectScreen.route,
+      body: _projectSheet(context, size, this.widget.city.color),
     );
   }
 

@@ -32,7 +32,7 @@ class ChapterHeadWidget extends StatelessWidget {
         if (this.showStageLogo)
           Flexible(
             child: Container(
-              margin: EdgeInsets.only(right: size.width * 0.04),
+              margin: EdgeInsets.only(top: 16, right: size.width * 0.04),
               child: CityStageWidget(
                 cityDto: this.city,
               ),

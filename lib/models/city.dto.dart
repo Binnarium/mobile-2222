@@ -9,13 +9,13 @@ class _CityConfigurationDto {
       : this.colorHex = payload['colorHex'];
 }
 
-class _CityEnabledPagesDto {
+class CityEnabledPagesDto {
   final bool activities;
   final bool questionary;
   final bool clubhouse;
   final bool project;
 
-  _CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
+  CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] ?? false,
         this.questionary = payload['questionary'] ?? false,
         this.clubhouse = payload['clubhouse'] ?? false,
@@ -29,17 +29,8 @@ class CityDto {
   final ImageDto icon;
   final ImageDto iconMap;
   final _CityConfigurationDto configuration;
-  final _CityEnabledPagesDto enabledPages;
-
-  const CityDto({
-    required this.id,
-    required this.name,
-    required this.stage,
-    required this.enabledPages,
-    required this.configuration,
-    required this.icon,
-    required this.iconMap,
-  });
+  final CityEnabledPagesDto enabledPages;
+  CityDto? nextCity;
 
   CityDto.fromMap(final Map<String, dynamic> payload)
       : this.id = payload['id'],
@@ -48,9 +39,12 @@ class CityDto {
         this.configuration =
             _CityConfigurationDto.fromMap(payload['configuration']),
         this.enabledPages =
-            _CityEnabledPagesDto.fromMap(payload['enabledPages']),
+            CityEnabledPagesDto.fromMap(payload['enabledPages']),
         this.icon = ImageDto.fromMap(payload['icon']),
-        this.iconMap = ImageDto.fromMap(payload['iconMap']);
+        this.iconMap = ImageDto.fromMap(payload['iconMap']),
+        this.nextCity = null;
+
+  void addNextCity(CityDto next) => this.nextCity = next;
 
   Color get color => Color(this.configuration.colorHex);
 
@@ -63,6 +57,4 @@ class CityDto {
   get phaseName => 'Etapa ${this.stage}'.toUpperCase();
 
   get imageTag => 'city-image-${this.id}'.toLowerCase();
-  get nameTag => 'city-name-${this.id}'.toLowerCase();
-  get phaseTag => 'city-phase-${this.id}'.toLowerCase();
 }

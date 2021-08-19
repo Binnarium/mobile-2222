@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class StageMonsterScreen extends StatefulWidget {
   static const String route = '/monster';
@@ -23,46 +21,13 @@ class StageMonsterScreen extends StatefulWidget {
 class _StageMonsterScreenState extends State<StageMonsterScreen> {
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        StageArgumentationScreen.route,
-        arguments: StageArgumentationScreen(
-          chapterSettings: this.widget.city,
-        ),
-      );
-    };
-
     Size size = MediaQuery.of(context).size;
     print(size);
-    return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          onPanUpdate: (details) {
-            /// left
-            if (details.delta.dx > 5) prevPage();
-
-            /// right
-            if (details.delta.dx < -5) nextPage();
-          },
-          child: Stack(
-            children: [
-              //widget custom que crea el background con el logo de la izq
-              ChapterBackgroundWidget(
-                backgroundColor: widget.city.color,
-                reliefPosition: 'top-right',
-              ),
-              //decoración adicional del background
-              _backgroundDecoration(size),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.city,
+      backgrounds: [BackgroundDecoration.topRight],
+      route: StageMonsterScreen.route,
+      body: _backgroundDecoration(size),
     );
   }
 
@@ -71,7 +36,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ChapterHeadWidget(
-          showAppLogo: true,
+          showAppLogo: false,
           showStageLogo: true,
           city: this.widget.city,
         ),

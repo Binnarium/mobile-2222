@@ -2,14 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/Competence.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
   static const String route = '/objectives';
@@ -35,41 +33,13 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback prevPage = () => Navigator.pop(context);
-    VoidCallback nextPage = () {
-      Navigator.pushNamed(
-        context,
-        ContentScreen.route,
-        arguments: ContentScreen(
-          city: this.widget.chapterSettings,
-        ),
-      );
-    };
-
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          /// left
-          if (details.delta.dx > 5) prevPage();
 
-          /// right
-          if (details.delta.dx < -5) nextPage();
-        },
-        child: Stack(
-          children: [
-            ChapterBackgroundWidget(
-              backgroundColor: this.widget.chapterSettings.color,
-              reliefPosition: 'top-left',
-            ),
-            _stageBody(size),
-          ],
-        ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+    return Scaffold2222(
+      city: this.widget.chapterSettings,
+      backgrounds: [BackgroundDecoration.topRight],
+      route: StageObjetivesScreen.route,
+      body: _stageBody(size),
     );
   }
 
@@ -87,9 +57,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       height: double.infinity,
       child: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.chapterSettings,
