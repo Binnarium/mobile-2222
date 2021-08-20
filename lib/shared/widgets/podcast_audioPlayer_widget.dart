@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:provider/provider.dart';
 
 class PodcastAudioPlayer extends StatefulWidget {
@@ -218,6 +217,7 @@ class __AudioSliderState extends State<_AudioSlider> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -247,11 +247,11 @@ class __AudioSliderState extends State<_AudioSlider> {
           children: [
             Text(
               this.positionData?.position.toString().split(".")[0] ?? '0:00',
-              style: korolevFont.bodyText2,
+              style: textTheme.bodyText2,
             ),
             Text(
               this.positionData?.duration.toString().split(".")[0] ?? '0:00',
-              style: korolevFont.bodyText2,
+              style: textTheme.bodyText2,
             ),
           ],
         ),

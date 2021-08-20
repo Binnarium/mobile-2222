@@ -193,35 +193,6 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
               ],
             ),
           );
-
-          /// implemented staggered to avoid the unnecesary spacing in gridviewBuilder
-          // return StaggeredGridView.countBuilder(
-          //   ///general spacing per resource
-          //   crossAxisCount: 2,
-
-          //   crossAxisSpacing: 15,
-          //   mainAxisSpacing: 15,
-          //   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-          //   itemCount: compeTemp.length,
-
-          //   /// property that sizes the container automaticly according
-          //   /// the items
-          //   shrinkWrap: true,
-
-          //   ///to avoid the scroll
-          //   physics: NeverScrollableScrollPhysics(),
-          //   itemBuilder: (context, index) {
-          //     ///calls the custom widget with the item parameters
-          //     final item = compeTemp.elementAt(index);
-          //     if (item is CompetenceModel) {
-          //       return CompeResourcesListItem(
-          //         name: item.name,
-          //         image: item.image,
-          //       );
-          //     }
-          //     return Text('Kind of content not found');
-          //   },
-          // );
         },
       ),
     );

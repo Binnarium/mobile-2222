@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class StageHistoryScreen extends StatefulWidget {
   static const String route = '/history';
@@ -68,11 +67,12 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   }
 
   Widget _titleHistory(Size size, TitleHistoryDto history) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       width: double.infinity,
       child: Text(
         history.title,
-        style: korolevFont.headline6,
+        style: textTheme.headline6,
         textAlign: TextAlign.left,
       ),
     );

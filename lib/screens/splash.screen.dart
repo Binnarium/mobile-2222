@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       /// define a color for all page since it is a single color page
-      backgroundColor: ColorsApp.backgroundRed,
+      backgroundColor: Colors2222.red,
 
       /// creando pantalla introductoria
       body: _introductionBody(size),

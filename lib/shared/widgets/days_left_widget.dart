@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class DaysLeftWidget extends StatelessWidget {
   @override
@@ -11,11 +9,12 @@ class DaysLeftWidget extends StatelessWidget {
     //tamaño de la pantalla
     final size = MediaQuery.of(context).size;
     //llamando al cuerpo
-    return _introductionBody(size);
+    return _introductionBody(context, size);
   }
 }
 
-_introductionBody(Size size) {
+_introductionBody(BuildContext context, Size size) {
+  final TextTheme textTheme = Theme.of(context).textTheme;
   //Creando el Scroll
   double spacedSize = size.height * 0.165;
   double daysLeftSize = size.height * 0.0011;
@@ -37,7 +36,7 @@ _introductionBody(Size size) {
         return Center(
           child: CircularProgressIndicator(
             valueColor: new AlwaysStoppedAnimation<Color>(
-              ColorsApp.backgroundRed,
+              Colors2222.red,
             ),
           ),
         );
@@ -47,19 +46,19 @@ _introductionBody(Size size) {
           children: [
             //Texto cambiar por funcionalidad de cuenta de días
             Text('FALTAN',
-                style: korolevFont.headline6
+                style: textTheme.headline6
                     ?.apply(fontSizeFactor: size.height * 0.001)),
             SizedBox(height: size.height * 0.01),
             //Texto cambiar por funcionalidad de cuenta de días
 
             Text(days.data! + " DÍAS",
                 style:
-                    korolevFont.headline3?.apply(fontSizeFactor: daysLeftSize)),
+                    textTheme.headline3?.apply(fontSizeFactor: daysLeftSize)),
 
             //Texto cambiar por funcionalidad de cuenta de días
             SizedBox(height: size.height * 0.005),
             Text('PARA ACABAR EL VIAJE',
-                style: korolevFont.headline6
+                style: textTheme.headline6
                     ?.apply(fontSizeFactor: size.height * 0.001)),
           ],
         );

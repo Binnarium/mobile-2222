@@ -7,7 +7,7 @@ import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class TeamScreen extends StatefulWidget {
-  static const String route = '/equipo';
+  static const String route = '/team';
 
   @override
   _TeamScreenState createState() => _TeamScreenState();
@@ -28,13 +28,14 @@ class _TeamScreenState extends State<TeamScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: Stack(
           children: [
+            /// Ignore deprecated cause Scaffold 2222 needs city as param
+            // ignore: deprecated_member_use_from_same_package
             ChapterBackgroundWidget(
-              backgroundColor: ColorsApp.backgroundRed,
+              backgroundColor: Colors2222.red,
               reliefPosition: 'top-right',
             ),
             _routeCurve(),
@@ -53,7 +54,7 @@ class _TeamScreenState extends State<TeamScreen> {
       return Center(
         child: CircularProgressIndicator(
           valueColor: new AlwaysStoppedAnimation<Color>(
-            ColorsApp.backgroundRed,
+            Colors2222.red,
           ),
         ),
       );

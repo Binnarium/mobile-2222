@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class CompeResourcesListItem extends StatelessWidget {
   final String name;
@@ -17,6 +16,7 @@ class CompeResourcesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     NetworkImage imageNe;
     String imageurl =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShMSIXzP_rbfUPmoKrBDCxlBFCITYnuzuVHg&usqp=CAU';
@@ -40,7 +40,7 @@ class CompeResourcesListItem extends StatelessWidget {
 
         Text(
           this.name,
-          style: korolevFont.bodyText1,
+          style: textTheme.bodyText1,
           overflow: TextOverflow.ellipsis,
           maxLines: 4,
           textAlign: TextAlign.center,

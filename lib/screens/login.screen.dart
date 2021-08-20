@@ -14,7 +14,6 @@ import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
@@ -63,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             ///Container del color rojo
             CustomBackground(
-              backgroundColor: ColorsApp.backgroundRed,
+              backgroundColor: Colors2222.red,
             ),
 
             ///contiene todo el cuerpo de la pantalla, se envía el size y el context
@@ -99,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.only(bottom: 32),
           child: Text(
             'Lab Móvil 2222'.toUpperCase(),
-            style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
+            style: textTheme.headline6!.apply(fontSizeFactor: 1.3),
             textAlign: TextAlign.center,
           ),
         ),
@@ -118,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Text(
               this.loginPayload!.pageTitle,
-              style: korolevFont.subtitle2?.apply(fontSizeFactor: 1.2),
+              style: textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
               textAlign: TextAlign.center,
             ),
           ),
@@ -140,11 +139,19 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           /// team button
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: TextButton(
-              onPressed: () => Navigator.pushNamed(context, TeamScreen.route),
-              child: Text('Equipo 2222'),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: TextButton(
+                onPressed: () => Navigator.pushNamed(context, TeamScreen.route),
+                child: Text(
+                  'Equipo 2222',
+                  style: textTheme.headline5?.apply(
+                      decoration: TextDecoration.underline,
+                      fontSizeFactor: 0.7),
+                ),
+              ),
             ),
           ),
 
@@ -165,12 +172,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   ///Formulario de login
   _loginForm(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       child: Column(
         children: [
           Text(
             'Comienza tu aventura',
-            style: korolevFont.headline6!.apply(fontSizeFactor: 1.3),
+            style: textTheme.headline6!.apply(fontSizeFactor: 1.3),
             textAlign: TextAlign.center,
           ),
           SizedBox(
@@ -195,6 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   TextButton _registerText(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return TextButton(
       onPressed: () {
         print('texto de registro presionado');
@@ -203,11 +212,11 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RichText(
         text: TextSpan(
           text: '¿No tienes cuenta? Regístrate ',
-          style: korolevFont.headline6?.apply(fontSizeFactor: 0.7),
+          style: textTheme.headline6?.apply(fontSizeFactor: 0.7),
           children: [
             TextSpan(
               text: 'aquí',
-              style: korolevFont.headline6?.apply(
+              style: textTheme.headline6?.apply(
                   decoration: TextDecoration.underline, fontSizeFactor: 0.7),
             )
           ],
@@ -250,6 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   ///campo de contraseña
   _passwordField(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       height: 40,
       decoration: BoxDecoration(
@@ -262,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _password = value;
         },
         cursorColor: Colors.black54,
-        style: korolevFont.headline5?.apply(
+        style: textTheme.headline5?.apply(
           color: Colors.black54,
           fontSizeFactor: 0.8,
         ),
@@ -281,12 +291,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _loginButton(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     double buttonWidth = MediaQuery.of(context).size.width;
     return Container(
       width: buttonWidth,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: ColorsApp.backgroundBottomBar,
+          primary: Colors2222.backgroundBottomBar,
           elevation: 5,
         ),
         onPressed: () => this.signInSub = UserService.instance
@@ -299,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }),
         child: Text(
           'Ingresar',
-          style: korolevFont.headline6?.apply(),
+          style: textTheme.headline6?.apply(),
         ),
       ),
     );
