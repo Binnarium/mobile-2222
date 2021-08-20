@@ -14,11 +14,17 @@ class CityEnabledPagesDto {
   final bool questionary;
   final bool clubhouse;
   final bool project;
+  final bool resources;
+  final bool introductoryVideo;
+  final bool argumentation;
 
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] ?? false,
         this.questionary = payload['questionary'] ?? false,
         this.clubhouse = payload['clubhouse'] ?? false,
+        this.resources = payload['resources'] ?? false,
+        this.introductoryVideo = payload['introductoryVideo'] ?? false,
+        this.argumentation = payload['argumentation'] ?? false,
         this.project = payload['project'] ?? false;
 }
 

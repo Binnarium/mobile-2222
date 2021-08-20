@@ -49,7 +49,18 @@ class CityNavigator {
   static List<_ScaffoldRouteBuilder> _routes(
           CityEnabledPagesDto enabledPagesDto, CityDto city) =>
       [
-        /// introduction screen screen
+        // /// introduction screen screen
+        // if (enabledPagesDto.introductoryVideo)
+        //   _ScaffoldRouteBuilder(
+        //     route: CityIntroductionScreen.route,
+        //     builder: (context) => Navigator.pushNamed(
+        //       context,
+        //       CityIntroductionScreen.route,
+        //       arguments: CityIntroductionScreen(
+        //         city: city,
+        //       ),
+        //     ),
+        //   ),
         _ScaffoldRouteBuilder(
           route: CityIntroductionScreen.route,
           builder: (context) => Navigator.pushNamed(
@@ -86,16 +97,17 @@ class CityNavigator {
         ),
 
         /// ideas
-        _ScaffoldRouteBuilder(
-          route: StageArgumentationScreen.route,
-          builder: (context) => Navigator.pushNamed(
-            context,
-            StageArgumentationScreen.route,
-            arguments: StageArgumentationScreen(
-              chapterSettings: city,
+        if (enabledPagesDto.argumentation)
+          _ScaffoldRouteBuilder(
+            route: StageArgumentationScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              StageArgumentationScreen.route,
+              arguments: StageArgumentationScreen(
+                chapterSettings: city,
+              ),
             ),
           ),
-        ),
 
         /// objectives
         _ScaffoldRouteBuilder(
@@ -122,28 +134,30 @@ class CityNavigator {
         ),
 
         /// resources
-        _ScaffoldRouteBuilder(
-          route: ResourcesScreen.route,
-          builder: (context) => Navigator.pushNamed(
-            context,
-            ResourcesScreen.route,
-            arguments: ResourcesScreen(
-              city: city,
+        if (enabledPagesDto.resources)
+          _ScaffoldRouteBuilder(
+            route: ResourcesScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ResourcesScreen.route,
+              arguments: ResourcesScreen(
+                city: city,
+              ),
             ),
           ),
-        ),
 
         /// resources
-        _ScaffoldRouteBuilder(
-          route: ActivitiesScreen.route,
-          builder: (context) => Navigator.pushNamed(
-            context,
-            ActivitiesScreen.route,
-            arguments: ActivitiesScreen(
-              chapterSettings: city,
+        if (enabledPagesDto.activities)
+          _ScaffoldRouteBuilder(
+            route: ActivitiesScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ActivitiesScreen.route,
+              arguments: ActivitiesScreen(
+                chapterSettings: city,
+              ),
             ),
           ),
-        ),
 
         /// clubhouse
         if (enabledPagesDto.activities && enabledPagesDto.clubhouse)
