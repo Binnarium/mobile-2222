@@ -6,16 +6,12 @@ enum AppImage {
   /// easy merging with the colored background
   cityLogo,
 
-  /// TODO: add docs
   animatedAppLogo,
 
-  /// TODO: add docs
   utplLogo,
 
-  /// TODO: add docs
   defaultAppLogo,
 
-  /// TODO: add docs
   loadingLogo,
 }
 

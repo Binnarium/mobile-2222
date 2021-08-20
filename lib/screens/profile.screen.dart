@@ -1,12 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/screens/login.screen.dart';
+import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  StreamSubscription? signoutSub;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +25,16 @@ class ProfileScreen extends StatelessWidget {
       body: Center(
         child: Stack(
           children: [
+            /// deprecated ignored due to Scaffold2222 needs city parameter
+            // ignore: deprecated_member_use_from_same_package
             ChapterBackgroundWidget(
-              backgroundColor: ColorsApp.backgroundRed,
+              backgroundColor: Colors2222.red,
               reliefPosition: 'top-right',
             ),
             _routeCurve(),
 
             ///body of the screen
-            _resourcesContent(size),
+            _resourcesContent(size, context),
           ],
         ),
       ),
@@ -33,216 +45,187 @@ class ProfileScreen extends StatelessWidget {
   }
 
   ///body of the screen
-  _resourcesContent(Size size) {
-    double bodyMarginWidth = size.width * 0.03;
+  _resourcesContent(Size size, BuildContext context) {
     double bodyContainerHeight = size.height * 0.33;
     double bodyMarginLeft = size.width * 0.10;
     if (size.width > 500) {
       bodyContainerHeight = size.height * 0.99;
     }
 
-    ///sizing the container to the mobile
-    return Container(
-      margin: EdgeInsets.only(
-        right: bodyMarginWidth,
-      ),
-
-      ///Listview of the whole screen
-      child: ListView(
-        children: [
-          // TODO: fix this screen
-          // ChapterHeadWidget(
-          //   phaseName: 'etapa 4',
-          //   chapterName: 'aztlán',
-          //   city:
-          //       'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
-          // ),
-          SizedBox(
-            height: 30,
+    /// sizing the container to the mobile
+    return ListView(
+      children: [
+        // TODO: fix this screen
+        // ChapterHeadWidget(
+        //   phaseName: 'etapa 4',
+        //   chapterName: 'aztlán',
+        //   city:
+        //       'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
+        // ),
+        Container(
+          padding: EdgeInsets.only(top: 30, bottom: 10),
+          child: Text(
+            'MI PERFIL',
+            style: Theme.of(context).textTheme.headline6,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
           ),
-          Container(
+        ),
+        Container(
+            padding: EdgeInsets.only(bottom: 30),
             child: Text(
-              'MI PERFIL',
-              style: korolevFont.headline6,
+              'RODRIGO ZAMORANO',
+              style: Theme.of(context).textTheme.headline5,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               textAlign: TextAlign.center,
-            ),
+            )),
+        Container(
+          padding: EdgeInsets.only(bottom: 32),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Image(
+                image: AssetImage(
+                    'assets/backgrounds/decorations/elipse_profile.png'),
+                height: 80,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Wrap(
+                runAlignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                direction: Axis.vertical,
+                children: [
+                  Text(
+                    'Profesor de xxx xxx xxxxx xxx',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.apply(fontSizeFactor: 0.97),
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Otra información secundaria',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.apply(fontSizeFactor: 0.97),
+                    // overflow: TextOverflow.ellipsis,
+                    // maxLines: 2,
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              )
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-              // decoration:
-              //     BoxDecoration(border: Border.all(color: Colors.white)),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'RODRIGO ZAMORANO',
-                style: korolevFont.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            // width: double.infinity,
-            // height: bodyContainerHeight * 0.35,
-            // decoration: BoxDecoration(
-            //   border: Border.all(color: Colors.white)
-            // ),
-            // margin:
-            //     EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-            child: Wrap(
-              // direction: Axis.horizontal,
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Image(
-                  image: AssetImage(
-                      'assets/backgrounds/decorations/elipse_profile.png'),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Wrap(
-                  runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  direction: Axis.vertical,
-                  children: [
-                    Text(
-                      'Profesor de xxx xxx xxxxx xxx',
-                      style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
-                      // overflow: TextOverflow.ellipsis,
-                      // maxLines: 2,
-                      textAlign: TextAlign.left,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Otra información secundaria',
-                      style: korolevFont.bodyText1?.apply(fontSizeFactor: 0.97),
-                      // overflow: TextOverflow.ellipsis,
-                      // maxLines: 2,
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 32,
-          ),
-          Container(
-              // decoration:
-              //     BoxDecoration(border: Border.all(color: Colors.white)),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'NIVELES COMPLETADOS',
-                style: korolevFont.headline4?.apply(fontSizeFactor: 0.80),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-              // decoration:
-              //     BoxDecoration(border: Border.all(color: Colors.white)),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                '4',
-                style: korolevFont.headline4?.apply(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(
-            height: bodyContainerHeight * 0.5,
-          ),
-          Container(
-            // decoration: BoxDecoration(
-            //   border: Border.all(color: Colors.white)
-            // ),
+        ),
+
+        Container(
+            padding: EdgeInsets.only(
+                left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
+            child: Text(
+              'NIVELES COMPLETADOS',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4
+                  ?.apply(fontSizeFactor: 0.80),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+              textAlign: TextAlign.center,
+            )),
+
+        Container(
+            // decoration:
+            //     BoxDecoration(border: Border.all(color: Colors.white)),
             margin:
                 EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
             child: Text(
-              'CONSUMO DE CONTENIDOS',
-              style: korolevFont.headline6,
+              '4',
+              style: Theme.of(context).textTheme.headline4?.apply(),
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+              maxLines: 4,
               textAlign: TextAlign.center,
-            ),
+            )),
+        SizedBox(
+          height: bodyContainerHeight * 0.5,
+        ),
+        Container(
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: Colors.white)
+          // ),
+          padding: EdgeInsets.only(
+              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
+          child: Text(
+            'CONSUMO DE CONTENIDOS',
+            style: Theme.of(context).textTheme.headline6,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
           ),
-          SizedBox(
-            height: 10,
+        ),
+        Container(
+          // decoration: BoxDecoration(
+          //   border: Border.all(color: Colors.white)
+          // ),
+          padding: EdgeInsets.only(
+              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 30),
+          child: Text(
+            '22%',
+            style: Theme.of(context)
+                .textTheme
+                .headline3
+                ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
+            textAlign: TextAlign.center,
           ),
-          Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                '22%',
-                style: korolevFont.headline3
-                    ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(
-            height: 30,
+        ),
+        Container(
+          padding: EdgeInsets.only(
+              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
+          child: Text(
+            'PROXIMA ETAPA',
+            style: Theme.of(context)
+                .textTheme
+                .headline4
+                ?.apply(fontSizeFactor: 0.60),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
+            textAlign: TextAlign.center,
           ),
-          Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'PROXIMA ETAPA',
-                style: korolevFont.headline4?.apply(fontSizeFactor: 0.60),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(
-            height: 10,
+        ),
+        Container(
+          padding: EdgeInsets.only(
+              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 35),
+          child: Text(
+            'ATLÁNTIDA',
+            style: Theme.of(context)
+                .textTheme
+                .headline3
+                ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
+            textAlign: TextAlign.center,
           ),
-          Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white)
-              // ),
-              margin:
-                  EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-              child: Text(
-                'ATLÁNTIDA',
-                style: korolevFont.headline3
-                    ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(
-            height: 35,
-          ),
-          DaysLeftWidget(),
-        ],
-      ),
+        ),
+        DaysLeftWidget(),
+        SizedBox(
+          height: 32,
+        ),
+        _logoutButton(context),
+        SizedBox(
+          height: 32,
+        ),
+      ],
     );
   }
-
-  ///books body method
-
-  ///Method of the online resources
 
   _routeCurve() {
     return Container(
@@ -253,7 +236,46 @@ class ProfileScreen extends StatelessWidget {
         image: AssetImage(
           'assets/backgrounds/decorations/white_route_curve_background.png',
         ),
-        color: Color.fromRGBO(255, 255, 255, 100),
+        color: Color.fromRGBO(255, 255, 255, 100).withOpacity(0.3),
+      ),
+    );
+  }
+
+  _logoutButton(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    double buttonWidth = MediaQuery.of(context).size.width;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: buttonWidth * 0.1),
+      width: buttonWidth,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors2222.backgroundBottomBar,
+          elevation: 5,
+        ),
+        onPressed: () =>
+            this.signoutSub = UserService.instance.signOut$().listen((success) {
+          if (success) {
+            /// shows snackbar
+            scaffold.showSnackBar(SnackBar(
+              content: Text(
+                "Cierre de sesión exitoso.",
+                style: textTheme.bodyText1,
+              ),
+              backgroundColor: Colors2222.backgroundBottomBar,
+              action: SnackBarAction(
+                  label: 'ENTENDIDO',
+                  textColor: Colors.blue.shade300,
+                  onPressed: scaffold.hideCurrentSnackBar),
+            ));
+            Navigator.of(context).pushReplacementNamed(LoginScreen.route);
+          } else
+            print(success);
+        }),
+        child: Text(
+          'Cerrar sesión',
+          style: textTheme.headline6?.apply(),
+        ),
       ),
     );
   }

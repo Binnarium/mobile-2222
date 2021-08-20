@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterSubtitleSection extends StatelessWidget {
   final String title;
@@ -9,20 +8,20 @@ class ChapterSubtitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return UnconstrainedBox(
       alignment: Alignment.center,
       child: Container(
         decoration: BoxDecoration(
-          color: ColorsApp.backgroundBottomBar,
+          color: Colors2222.backgroundBottomBar,
         ),
         padding: EdgeInsets.all(5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
             Text(
               title,
-              style: korolevFont.headline5,
+              style: textTheme.headline5,
               textAlign: TextAlign.center,
             ),
           ],

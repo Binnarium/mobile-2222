@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ClubResourcesGridItem extends StatelessWidget {
   final String theme;
@@ -15,6 +14,7 @@ class ClubResourcesGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     Size size = MediaQuery.of(context).size;
     double fontSize = (size.height > 600) ? 0.9 : 0.7;
     double width = (size.height > 600) ? 110 : 95;
@@ -31,7 +31,7 @@ class ClubResourcesGridItem extends StatelessWidget {
           ),
           Text(
             schedule,
-            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize - 0.1),
+            style: textTheme.headline6?.apply(fontSizeFactor: fontSize - 0.1),
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),
@@ -40,7 +40,7 @@ class ClubResourcesGridItem extends StatelessWidget {
           ),
           Text(
             theme,
-            style: korolevFont.headline6?.apply(fontSizeFactor: fontSize - 0.1),
+            style: textTheme.headline6?.apply(fontSizeFactor: fontSize - 0.1),
             overflow: TextOverflow.ellipsis,
             maxLines: 6,
           ),
@@ -62,7 +62,7 @@ class ClubResourcesGridItem extends StatelessWidget {
                     border: Border.all(color: Colors.white)),
                 child: Text(
                   agenda,
-                  style: korolevFont.headline6
+                  style: textTheme.headline6
                       ?.apply(fontSizeFactor: fontSize - 0.3),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

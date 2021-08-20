@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class CityStageWidget extends StatelessWidget {
   final CityDto cityDto;
@@ -13,6 +12,8 @@ class CityStageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
     final double imageSize = (size.width < 400) ? 60 : 75;
     final double fontSizeFactor = (size.width < 400) ? 0.9 : 1;
@@ -32,7 +33,7 @@ class CityStageWidget extends StatelessWidget {
             /// stage of the city
             Text(
               this.cityDto.phaseName,
-              style: korolevFont.headline5!
+              style: textTheme.headline5!
                   .copyWith(decoration: TextDecoration.none),
               textAlign: TextAlign.right,
               textScaleFactor: fontSizeFactor,
@@ -42,7 +43,7 @@ class CityStageWidget extends StatelessWidget {
             Text(
               this.cityDto.name.toUpperCase(),
               textAlign: TextAlign.right,
-              style: korolevFont.headline6!
+              style: textTheme.headline6!
                   .copyWith(decoration: TextDecoration.none),
               textScaleFactor: fontSizeFactor,
             ),

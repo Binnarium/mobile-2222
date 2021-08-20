@@ -84,7 +84,7 @@ class WorkloadMarkdown extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: ColorsApp.white,
+        color: Colors2222.white,
         borderRadius: BorderRadius.circular(8),
       ),
       padding: EdgeInsets.all(size.width * 0.1),
@@ -97,7 +97,7 @@ class WorkloadMarkdown extends StatelessWidget {
         },
         styleSheet: fmd.MarkdownStyleSheet(
           h2: textTheme.subtitle1,
-          h3: textTheme.subtitle1!.apply(color: ColorsApp.red),
+          h3: textTheme.subtitle1!.apply(color: Colors2222.red),
           p: textTheme.bodyText2,
         ),
       ),

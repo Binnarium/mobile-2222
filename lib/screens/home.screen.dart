@@ -8,7 +8,6 @@ import 'package:lab_movil_2222/services/load-cities-with-map-position.service.da
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 import 'chapter_screens/city-introduction.screen.dart';
 import 'welcome.screen.dart';
@@ -165,6 +164,7 @@ class _MapCityButton extends StatelessWidget {
     final Size fontFactor = MediaQuery.of(context).size;
     final bool smallFont = fontFactor.width < 750;
 
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       width: this.size,
       height: this.size,
@@ -229,8 +229,7 @@ class _MapCityButton extends StatelessWidget {
             child: Center(
               child: Text(
                 '${this.city.stage}. ${this.city.name.toUpperCase()}',
-                style:
-                    smallFont ? korolevFont.bodyText2 : korolevFont.headline5,
+                style: smallFont ? textTheme.bodyText2 : textTheme.headline5,
               ),
             ),
           )

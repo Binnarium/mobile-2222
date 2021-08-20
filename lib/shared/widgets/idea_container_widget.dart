@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'dart:math' as math;
 
 enum BubbleKind {
@@ -73,6 +72,8 @@ class IdeaContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     /// contenedor principal que contendrá la imagen y el texto en un stack
     return Stack(
       alignment: Alignment.center,
@@ -103,10 +104,9 @@ class IdeaContainerWidget extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: (this.bigStyle
-                        ? korolevFont.headline5
-                        : korolevFont.bodyText1)
-                    ?.copyWith(color: Colors.black),
+                style:
+                    (this.bigStyle ? textTheme.headline5 : textTheme.bodyText1)
+                        ?.copyWith(color: Colors.black),
               ),
             ),
           ),

@@ -31,7 +31,7 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorsApp.backgroundBottomBar,
+      color: Colors2222.backgroundBottomBar,
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -42,7 +42,7 @@ class CustomNavigationBar extends StatelessWidget {
               child: ImageIcon(
                 AssetImage('assets/icons/left_arrow_icon.png'),
                 color: this.prevPage == null
-                    ? ColorsApp.backgroundBottomBar
+                    ? Colors2222.backgroundBottomBar
                     : Colors.grey,
               ),
             ),
@@ -93,8 +93,7 @@ class CustomNavigationBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(
-                context,
+            onTap: () => Navigator.pushNamed(context,
                 CityProjectScreen.route), //ORIGINAL StatisticsScreen.route
             child: Container(
               child: ImageIcon(
@@ -124,7 +123,7 @@ class CustomNavigationBar extends StatelessWidget {
               child: ImageIcon(
                 AssetImage('assets/icons/right_arrow_icon.png'),
                 color: this.nextPage == null
-                    ? ColorsApp.backgroundBottomBar
+                    ? Colors2222.backgroundBottomBar
                     : Colors.grey,
               ),
             ),
