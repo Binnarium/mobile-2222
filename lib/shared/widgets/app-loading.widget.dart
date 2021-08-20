@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 
 class AppLoading extends StatefulWidget {
   const AppLoading({
@@ -49,7 +50,7 @@ class _AppLoadingState extends State<AppLoading> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    final double sideWidth = min(300, size.width * 0.2);
+    final double sideWidth = min(400, size.width * 0.3);
 
     return Container(
       width: sideWidth,
@@ -61,6 +62,7 @@ class _AppLoadingState extends State<AppLoading> with TickerProviderStateMixin {
           width: sideWidth,
           height: sideWidth,
           fit: BoxFit.contain,
+          color: Colors2222.white
         ),
       ),
     );
