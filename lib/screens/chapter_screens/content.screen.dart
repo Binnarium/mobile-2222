@@ -10,7 +10,6 @@ import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ContentScreen extends StatefulWidget {
   static const String route = '/contenido';
@@ -148,6 +147,7 @@ class _ContentScreenState extends State<ContentScreen> {
   }
 
   _titleContainer(Size size, String? author, String? title, String kind) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       color: Colors2222.white,
       width: double.infinity,
@@ -161,13 +161,13 @@ class _ContentScreenState extends State<ContentScreen> {
                   text: (author == null)
                       ? 'No author available'
                       : author.toUpperCase(),
-                  style: korolevFont.subtitle1?.apply(
+                  style: textTheme.subtitle1?.apply(
                     color: Colors.black,
                   ),
                   children: [
                 TextSpan(
                   text: kind.toUpperCase(),
-                  style: korolevFont.subtitle2?.apply(
+                  style: textTheme.subtitle2?.apply(
                     color: Colors.black45,
                   ),
                 )
@@ -177,7 +177,7 @@ class _ContentScreenState extends State<ContentScreen> {
           ),
           Text(
             (title == null) ? 'No title Available' : title.toUpperCase(),
-            style: korolevFont.headline6?.apply(
+            style: textTheme.headline6?.apply(
               color: widget.city.color,
             ),
           ),

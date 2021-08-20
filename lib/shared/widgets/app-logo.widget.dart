@@ -6,16 +6,12 @@ enum AppImage {
   /// easy merging with the colored background
   cityLogo,
 
-  /// TODO: add docs
   animatedAppLogo,
 
-  /// TODO: add docs
   utplLogo,
 
-  /// TODO: add docs
   defaultAppLogo,
 
-  /// TODO: add docs
   loadingLogo,
 }
 
@@ -25,7 +21,7 @@ const Map<AppImage, ImageProvider> _AppImages = {
   AppImage.defaultAppLogo: AssetImage('assets/images/logo-2222.png'),
   AppImage.animatedAppLogo: AssetImage('assets/images/logo-2222.png'),
   AppImage.utplLogo: AssetImage('assets/images/logo-utpl.png'),
-  AppImage.loadingLogo: AssetImage('assets/images/loading-placeholder.png'),
+  AppImage.loadingLogo: AssetImage('assets/gifs/loading.gif'),
 };
 
 /// wrapper to get an app logo
@@ -49,6 +45,7 @@ class AppLogo extends Image {
     double? width,
     double? height,
     BoxFit? fit,
+    Color? color,
   }) : super(
           key: key,
           filterQuality: filterQuality ?? FilterQuality.high,
@@ -56,5 +53,6 @@ class AppLogo extends Image {
           width: width,
           height: height,
           fit: fit,
+          color: color,
         );
 }

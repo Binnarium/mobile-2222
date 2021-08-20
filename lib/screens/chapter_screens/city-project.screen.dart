@@ -64,18 +64,6 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     );
   }
 
-  _routeCurve() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/white_route_curve_background.png',
-        ),
-        color: Colors.white.withOpacity(0.25),
-      ),
-    );
-  }
-
   _projectSheet(BuildContext context, Size size, Color color) {
     final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;

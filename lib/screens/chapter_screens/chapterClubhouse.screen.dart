@@ -6,7 +6,6 @@ import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
 import 'package:lab_movil_2222/shared/widgets/club-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
@@ -84,18 +83,18 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
   _titleClub(Size size) {
     String texto = 'CLUBHOUSE';
 
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       child: Text(
         texto,
-        style: korolevFont.headline2,
+        style: textTheme.headline2,
         textAlign: TextAlign.center,
       ),
     );
   }
 
   _bodyClub(Size size) {
-    double bodyMarginWidth = size.width * 0.05;
-
+    final TextTheme textTheme = Theme.of(context).textTheme;
     String texto =
         'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.';
 
@@ -103,7 +102,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
       child: Text(
         texto,
-        style: korolevFont.bodyText2,
+        style: textTheme.bodyText2,
         textAlign: TextAlign.center,
       ),
     );

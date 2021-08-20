@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       /// define a color for all page since it is a single color page
-      backgroundColor: ColorsApp.backgroundRed,
+      backgroundColor: Colors2222.red,
 
       /// creando pantalla introductoria
       body: _introductionBody(size),
@@ -76,6 +77,9 @@ class _SplashScreenState extends State<SplashScreen> {
               filterQuality: FilterQuality.high,
             ),
           ),
+
+          /// llamando el logo UTPL pantalla inicial
+          AppLoading(),
         ],
       ),
     );

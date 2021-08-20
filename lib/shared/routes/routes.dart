@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
@@ -25,10 +26,10 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
       switch (settings.name) {
         case SplashScreen.route:
           return SplashScreen();
-          
+
         case WelcomeScreen.route:
           return WelcomeScreen();
-          
+
         case TeamScreen.route:
           return TeamScreen();
 
@@ -46,7 +47,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case StatisticsScreen.route:
           return StatisticsScreen();
-          
+
         case GoalsScreen.route:
           return GoalsScreen();
 
@@ -111,8 +112,12 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return CityProjectScreen(
             city: args.city,
           );
+
         default:
-          return HomeScreen();
+
+          ///TODO: Fix this bad gateway
+          /// to exit the application (in theory)
+          throw SystemChannels.platform.invokeMethod('SystemNavigator.pop');
       }
     },
   );

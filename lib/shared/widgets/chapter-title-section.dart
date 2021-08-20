@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 
 class ChapterTitleSection extends StatelessWidget {
   final String title;
@@ -13,6 +12,7 @@ class ChapterTitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     final double leftPadding = MediaQuery.of(context).size.width * 0.08;
 
     return Row(
@@ -23,7 +23,7 @@ class ChapterTitleSection extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(leftPadding, 5, 5, 5),
           child: Text(
             title,
-            style: korolevFont.headline5,
+            style: textTheme.headline5,
             textAlign: TextAlign.end,
           ),
         ),

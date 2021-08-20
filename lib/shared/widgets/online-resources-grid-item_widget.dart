@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExternalLinkCard extends StatelessWidget {
@@ -15,6 +14,7 @@ class ExternalLinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     final double sidePadding = MediaQuery.of(context).size.width * 0.04;
     return Material(
       type: MaterialType.transparency,
@@ -40,7 +40,7 @@ class ExternalLinkCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   this.externalLinkDto.title,
-                  style: korolevFont.subtitle1,
+                  style: textTheme.subtitle1,
                 ),
               ),
               Markdown2222(data: this.externalLinkDto.description)

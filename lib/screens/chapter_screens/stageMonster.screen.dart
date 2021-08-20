@@ -92,7 +92,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
         .collection('cities')
         .doc(this.widget.city.id)
         .collection('pages')
-        .doc('argument')
+        .doc('monster')
         .get();
 
     if (!snap.exists)

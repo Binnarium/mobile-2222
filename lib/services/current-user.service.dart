@@ -35,4 +35,18 @@ class UserService {
 
     return signInTask;
   }
+
+  Stream<bool> signOut$() {
+    final Stream<bool> signOutTask = this
+        ._firebaseAuth
+        .signOut()
+        .asStream()
+        .map((_) => true)
+        .handleError((error) {
+      print(error);
+      return false;
+    });
+
+    return signOutTask;
+  }
 }

@@ -10,7 +10,7 @@ class GoalsScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          CustomBackground(backgroundColor: ColorsApp.backgroundRed),
+          CustomBackground(backgroundColor: Colors2222.red),
           Center(
             child: Text('Goals Page'),
           ),
