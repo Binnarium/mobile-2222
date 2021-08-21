@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           /// llamando el logo introductorio
           Padding(
-            padding: const EdgeInsets.only(top: 120, bottom: 80),
+            padding: const EdgeInsets.only(top: 100, bottom: 60),
             child: AppLogo(
               width: min(400, size.width * 0.7),
               kind: AppImage.animatedAppLogo,
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           /// llamando el logo UTPL pantalla inicial
           Padding(
-            padding: const EdgeInsets.only(bottom: 48),
+            padding: const EdgeInsets.only(bottom: 40),
             child: AppLogo(
               width: min(300, size.width * 0.5),
               kind: AppImage.utplLogo,

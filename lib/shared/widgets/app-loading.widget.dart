@@ -14,15 +14,18 @@ class AppLoading extends StatelessWidget {
 
     final double sideWidth = min(400, size.width * 0.3);
 
-    return Container(
-      width: sideWidth,
-      height: sideWidth,
-      child: AppLogo(
-          kind: AppImage.loadingLogo,
-          width: sideWidth,
-          height: sideWidth,
-          fit: BoxFit.contain,
-          color: Colors2222.white
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: sideWidth,
+          maxHeight: sideWidth,
+        ),
+        child: AppLogo(
+            kind: AppImage.loadingLogo,
+            width: sideWidth,
+            height: sideWidth,
+            fit: BoxFit.contain,
+            color: Colors2222.white),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lab_movil_2222/chat/screens/list-chats.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
@@ -59,6 +60,10 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return CityIntroductionScreen(
             city: args.city,
           );
+
+        /// all chats screens
+        case ListChatsScreen.route:
+          return ListChatsScreen();
 
         case StageHistoryScreen.route:
           final args = settings.arguments as StageHistoryScreen;
