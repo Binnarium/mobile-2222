@@ -22,6 +22,13 @@ class UserService {
         .map((user) => user != null);
   }
 
+  Stream<User?> userUID$() {
+    return Future.delayed(Duration(seconds: 1))
+        .asStream()
+        .map((_) => this._firebaseAuth.currentUser)
+        .take(1);
+  }
+
   Stream<bool> signIn$(String email, String password) {
     final Stream<bool> signInTask = this
         ._firebaseAuth
