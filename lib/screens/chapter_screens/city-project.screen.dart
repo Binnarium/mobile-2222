@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
@@ -5,11 +10,14 @@ import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
+import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
+import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 
 class CityProjectScreen extends StatefulWidget {
   static const String route = '/project';
@@ -42,7 +50,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     /// called service to load the next chapter
     ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
     loader.load().then((value) => this.setState(() => this.chapters = value));
-    print('called');
+
     this
         .widget
         .projectLoader
@@ -161,10 +169,187 @@ _taskButton(BuildContext context, color) {
       ),
 
       ///Navigates to main screen
-      onPressed: () {},
+      onPressed: () async {
+        return await showDialog(
+            context: context,
+            builder: (context) {
+              /// creates the alert dialog to upload file
+              return UploadFileDialog(
+                color: color,
+              );
+            });
+      },
       child: Text(
         'Subir Tarea',
       ),
     ),
   );
+}
+
+/// Creates alert dialog to upload file [color] is needed to create the button
+/// with the city color
+class UploadFileDialog extends StatefulWidget {
+  final Color color;
+  const UploadFileDialog({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
+
+  @override
+  _UploadFileDialogState createState() => _UploadFileDialogState();
+}
+
+class _UploadFileDialogState extends State<UploadFileDialog> {
+  StreamSubscription? userService;
+  UploadTask? task;
+  String? userUID;
+  File? file;
+  @override
+  Widget build(BuildContext context) {
+    this.userService = UserService.instance.userUID$().listen((event) {
+      userUID = event!.uid;
+    });
+    final fileName =
+        file != null ? (file!.path) : 'No se ha seleccionado el archivo';
+    return AlertDialog(
+      backgroundColor: Colors2222.backgroundBottomBar,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            (file == null) ? 'Elige tu proyecto' : 'Sube tu proyecto',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          ButtonWidget(
+            color: widget.color,
+            text: 'Elegir archivo',
+            icon: Icons.attach_file_rounded,
+            onClicked: selectFile,
+          ),
+          SizedBox(height: 8),
+          Text(
+            fileName,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ButtonWidget(
+            color: widget.color,
+            icon: Icons.upload_file_rounded,
+            text: 'Subir archivo',
+            onClicked: uploadFile,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          task != null ? buildUploadStatus(task!) : Container(),
+        ],
+      ),
+    );
+  }
+
+  Future selectFile() async {
+    print('User UID: $userUID');
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+
+    /// to get the path of the file
+    final path = result.files.single.path!;
+    setState(() {
+      file = File(path);
+    });
+  }
+
+  /// to upload a file
+  Future uploadFile() async {
+    print('User UID: $userUID');
+    if (file == null) return;
+    final fileName = file!.path;
+    final destination = 'players/$userUID/$fileName';
+
+    task = UploadFileToFirebaseService.uploadFile(destination, file!);
+    setState(() {});
+    if (task == null) return;
+
+    final snapshot = await task!.whenComplete(() => {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download link: $urlDownload');
+  }
+
+  Widget buildUploadStatus(UploadTask uploadTask) =>
+      StreamBuilder<TaskSnapshot>(
+          stream: task!.snapshotEvents,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final snap = snapshot.data!;
+              final progress = snap.bytesTransferred / snap.totalBytes;
+              final percentage = (progress * 100).toStringAsFixed(1);
+              return Text(
+                (progress == 1.0)
+                    ? '¡Subido con éxito!'
+                    : 'Subiendo: $percentage %',
+                style: Theme.of(context).textTheme.bodyText2,
+              );
+            } else {
+              return Container();
+            }
+          });
+}
+
+/// creates a custom elevated button [color] is needed to create the button
+/// with the city color, [text] is the string of the button, [icon] is the icon
+/// at the head of the button, [onClicked] is the function that will be
+/// executed on pressed
+class ButtonWidget extends StatelessWidget {
+  final Color color;
+  final String? text;
+  final IconData? icon;
+  final VoidCallback? onClicked;
+  const ButtonWidget({
+    Key? key,
+    required this.color,
+    this.text,
+    this.onClicked,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    return ElevatedButton(
+      onPressed: onClicked,
+      child: buildContent(textTheme),
+      style: ElevatedButton.styleFrom(
+        primary: color,
+      ),
+    );
+  }
+
+  Widget buildContent(TextTheme textTheme) {
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          (icon != null)
+              ? Icon(
+                  icon,
+                  color: Colors2222.backgroundBottomBar,
+                )
+              : Container(),
+          SizedBox(
+            width: 12,
+          ),
+          Text(
+            text ?? '',
+            style: textTheme.bodyText1,
+          ),
+        ],
+      ),
+    );
+  }
 }
