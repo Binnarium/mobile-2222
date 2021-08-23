@@ -31,11 +31,6 @@ class App2222 extends StatelessWidget {
           fontFamily: KorolevFont.fontFamily,
           textTheme: KorolevFont(),
           primaryTextTheme: KorolevFont(textColor: Colors2222.black),
-          colorScheme: ColorScheme.dark(
-            primary: Colors2222.white,
-            onPrimary: Colors2222.black,
-            background: Colors2222.red,
-          ),
         ),
 
         initialRoute: SplashScreen.route,
