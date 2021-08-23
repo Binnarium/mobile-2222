@@ -10,7 +10,6 @@ import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 import 'chapter_screens/city-introduction.screen.dart';
-import 'welcome.screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = '/';
@@ -54,12 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomNavigationBar(
-        homeAction: () => Navigator.pushNamed(
-          context,
-          WelcomeScreen.route,
-        ),
-      ),
+      bottomNavigationBar: CustomNavigationBar(),
       body: (this.cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
