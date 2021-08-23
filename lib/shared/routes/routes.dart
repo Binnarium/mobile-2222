@@ -8,6 +8,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
@@ -70,6 +71,11 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           final args = settings.arguments as ChatScreen;
           return ChatScreen(
             chat: args.chat,
+          );
+        case IntroductoryVideoScreen.route:
+          final args = settings.arguments as IntroductoryVideoScreen;
+          return IntroductoryVideoScreen(
+            city: args.city,
           );
 
         case StageHistoryScreen.route:

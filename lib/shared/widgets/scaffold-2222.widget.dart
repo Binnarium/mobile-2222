@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.d
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
@@ -49,18 +50,20 @@ class CityNavigator {
   static List<_ScaffoldRouteBuilder> _routes(
           CityEnabledPagesDto enabledPagesDto, CityDto city) =>
       [
-        // /// introduction screen screen
-        // if (enabledPagesDto.introductoryVideo)
-        //   _ScaffoldRouteBuilder(
-        //     route: CityIntroductionScreen.route,
-        //     builder: (context) => Navigator.pushNamed(
-        //       context,
-        //       CityIntroductionScreen.route,
-        //       arguments: CityIntroductionScreen(
-        //         city: city,
-        //       ),
-        //     ),
-        //   ),
+        /// video introduction screen
+        if (enabledPagesDto.introductoryVideo)
+          _ScaffoldRouteBuilder(
+            route: IntroductoryVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              IntroductoryVideoScreen.route,
+              arguments: IntroductoryVideoScreen(
+                city: city,
+              ),
+            ),
+          ),
+
+        /// introduction screen
         _ScaffoldRouteBuilder(
           route: CityIntroductionScreen.route,
           builder: (context) => Navigator.pushNamed(
@@ -208,6 +211,13 @@ class CityNavigator {
     }
 
     return null;
+  }
+
+  static _ScaffoldRouteBuilder getFirsScreen(CityDto cityDto) {
+    final List<_ScaffoldRouteBuilder> availableRoutes =
+        CityNavigator._routes(cityDto.enabledPages, cityDto);
+
+    return availableRoutes[0];
   }
 }
 
