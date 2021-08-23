@@ -150,14 +150,14 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               height: 60,
             ),
           ],
-          _taskButton(context, color)
+          _taskButton(context, color, this.widget.city.name)
         ],
       ],
     );
   }
 }
 
-_taskButton(BuildContext context, color) {
+_taskButton(BuildContext context, color, String cityName) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -175,12 +175,17 @@ _taskButton(BuildContext context, color) {
             builder: (context) {
               /// creates the alert dialog to upload file
               return UploadFileDialog(
+                cityName: cityName,
                 color: color,
               );
             });
       },
       child: Text(
         'Subir Tarea',
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(color: Colors2222.black),
       ),
     ),
   );
@@ -190,9 +195,11 @@ _taskButton(BuildContext context, color) {
 /// with the city color
 class UploadFileDialog extends StatefulWidget {
   final Color color;
+  final String cityName;
   const UploadFileDialog({
     Key? key,
     required this.color,
+    required this.cityName,
   }) : super(key: key);
 
   @override
@@ -204,15 +211,16 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   UploadTask? task;
   String? userUID;
   File? file;
+  String? fileName;
   @override
   Widget build(BuildContext context) {
     this.userService = UserService.instance.userUID$().listen((event) {
       userUID = event!.uid;
     });
-    final fileName =
-        file != null ? (file!.path) : 'No se ha seleccionado el archivo';
+    // fileName =
+    //     file != null ? (fileName) : 'No se ha seleccionado el archivo';
     return AlertDialog(
-      backgroundColor: Colors2222.backgroundBottomBar,
+      backgroundColor: Colors2222.black,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -225,21 +233,21 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             height: 16,
           ),
           ButtonWidget(
-            color: widget.color,
+            color: this.widget.color,
             text: 'Elegir archivo',
             icon: Icons.attach_file_rounded,
             onClicked: selectFile,
           ),
           SizedBox(height: 8),
           Text(
-            fileName,
+            fileName ?? 'No se ha seleccionado el archivo',
             style: Theme.of(context).textTheme.bodyText2,
           ),
           SizedBox(
             height: 10,
           ),
           ButtonWidget(
-            color: widget.color,
+            color: this.widget.color,
             icon: Icons.upload_file_rounded,
             text: 'Subir archivo',
             onClicked: uploadFile,
@@ -260,8 +268,10 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
     /// to get the path of the file
     final path = result.files.single.path!;
+
     setState(() {
       file = File(path);
+      fileName = result.files.single.name;
     });
   }
 
@@ -269,11 +279,12 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   Future uploadFile() async {
     print('User UID: $userUID');
     if (file == null) return;
-    final fileName = file!.path;
-    final destination = 'players/$userUID/$fileName';
 
+    final destination = 'players/$userUID/${this.widget.cityName}/$fileName';
+    print("LOCATION: $destination");
     task = UploadFileToFirebaseService.uploadFile(destination, file!);
     setState(() {});
+
     if (task == null) return;
 
     final snapshot = await task!.whenComplete(() => {});
@@ -338,7 +349,7 @@ class ButtonWidget extends StatelessWidget {
           (icon != null)
               ? Icon(
                   icon,
-                  color: Colors2222.backgroundBottomBar,
+                  color: Colors2222.black,
                 )
               : Container(),
           SizedBox(
