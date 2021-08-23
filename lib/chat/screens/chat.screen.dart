@@ -3,66 +3,74 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
-class ListChatsScreen extends StatefulWidget {
-  static const route = "/list-chats";
+class ChatScreen extends StatefulWidget {
+  static const route = "/chat";
+  final ChatModel chat;
 
-  final Stream<List<ChatModel>> userChats;
+  final Stream<List<MessageModel>> messagesStream;
 
-  ListChatsScreen({Key? key})
-      : this.userChats = FirebaseFirestore.instance
+  ChatScreen({
+    Key? key,
+    required ChatModel chat,
+  })  : this.chat = chat,
+        this.messagesStream = FirebaseFirestore.instance
             .collection('chats')
+            .doc(chat.id)
+            .collection('messages')
             .snapshots()
             .map((event) =>
-                event.docs.map((e) => ChatModel.fromMap(e.data())).toList()),
+                event.docs.map((e) => MessageModel.fromMap(e.data())).toList()),
         super(key: key);
 
   @override
-  _ListChatsScreenState createState() => _ListChatsScreenState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ListChatsScreenState extends State<ListChatsScreen> {
-  StreamSubscription? _chatsSub;
-  List<ChatModel>? chats;
+class _ChatScreenState extends State<ChatScreen> {
+  StreamSubscription? _messagesSub;
+  List<MessageModel>? messages;
   @override
   void initState() {
     super.initState();
-    _chatsSub = this
+    _messagesSub = this
         .widget
-        .userChats
-        .listen((event) => this.setState(() => this.chats = event));
+        .messagesStream
+        .listen((event) => this.setState(() => this.messages = event));
   }
 
   @override
   void dispose() {
-    this._chatsSub?.cancel();
+    this._messagesSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       backgroundColor: Colors2222.primary,
       appBar: AppBar(
         title: Text(
-          'Comunidades 2222',
+          this.widget.chat.id,
           style: textTheme.subtitle1,
         ),
       ),
       body: ListView(
         children: [
           ///
-          if (this.chats == null)
+          if (this.messages == null)
             AppLoading()
           else
-            for (ChatModel chat in this.chats!)
+            for (MessageModel message in this.messages!)
               ListTile(
-                title: Text(chat.id),
+                title: Text(message.id),
                 subtitle: Text(
-                  chat.participantsNames,
+                  message.text ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

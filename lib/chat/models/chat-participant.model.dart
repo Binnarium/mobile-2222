@@ -1,11 +1,8 @@
 class ChatParticipantModel {
   final String uid;
   final String displayName;
-  final String email;
 
-  ChatParticipantModel({
-    required this.uid,
-    required this.displayName,
-    required this.email,
-  });
+  ChatParticipantModel.fromMap(Map<String, dynamic> map)
+      : this.uid = map['uid'],
+        this.displayName = map['displayName'];
 }
