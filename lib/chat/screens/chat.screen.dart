@@ -103,7 +103,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                           /// content
                           Flexible(
-                            flex: 3,
+                            flex: 4,
                             child: Container(
                               width: double.infinity,
                               child: Column(

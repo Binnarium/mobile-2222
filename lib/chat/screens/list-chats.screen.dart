@@ -63,7 +63,7 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
           else
             for (ChatModel chat in this.chats!)
               ListTile(
-                title: Text(chat.id),
+                title: Text('Identificador: ${chat.id}'),
                 subtitle: Text(
                   chat.participantsNames,
                   maxLines: 1,
