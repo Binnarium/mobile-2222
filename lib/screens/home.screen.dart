@@ -7,9 +7,8 @@ import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
+import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-
-import 'chapter_screens/city-introduction.screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = '/';
@@ -200,13 +199,10 @@ class _MapCityButton extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               child: InkWell(
                 splashColor: this.city.color.withOpacity(0.5),
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  CityIntroductionScreen.route,
-                  arguments: CityIntroductionScreen(
-                    city: city,
-                  ),
-                ),
+                onTap: () {
+                  final route = CityNavigator.getFirsScreen(this.city);
+                  route.builder(context);
+                },
                 child: Container(),
               ),
             ),
