@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -54,9 +55,11 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
       ),
       body: ListView(
         children: [
-          ///
+          /// if no chats loaded show loading icon
           if (this.chats == null)
             AppLoading()
+
+          /// show a list of all chats
           else
             for (ChatModel chat in this.chats!)
               ListTile(
@@ -66,7 +69,12 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                onTap: () {},
+                onTap: () => Navigator.of(context).pushNamed(
+                  ChatScreen.route,
+                  arguments: ChatScreen(
+                    chat: chat,
+                  ),
+                ),
               ),
         ],
       ),

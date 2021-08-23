@@ -57,25 +57,20 @@ class _SplashScreenState extends State<SplashScreen> {
       height: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           /// llamando el logo introductorio
-          Padding(
-            padding: const EdgeInsets.only(top: 100, bottom: 60),
-            child: AppLogo(
-              width: min(400, size.width * 0.7),
-              kind: AppImage.animatedAppLogo,
-              filterQuality: FilterQuality.high,
-            ),
+          AppLogo(
+            width: min(400, size.width * 0.7),
+            kind: AppImage.animatedAppLogo,
+            filterQuality: FilterQuality.high,
           ),
 
           /// llamando el logo UTPL pantalla inicial
-          Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: AppLogo(
-              width: min(300, size.width * 0.5),
-              kind: AppImage.utplLogo,
-              filterQuality: FilterQuality.high,
-            ),
+          AppLogo(
+            width: min(300, size.width * 0.5),
+            kind: AppImage.utplLogo,
+            filterQuality: FilterQuality.high,
           ),
 
           /// llamando el logo UTPL pantalla inicial

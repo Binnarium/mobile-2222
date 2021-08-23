@@ -16,6 +16,14 @@ abstract class AssetDto {
     required this.path,
     required this.name,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'url': this.url,
+      'path': this.path,
+      'name': this.name,
+    };
+  }
 }
 
 /// Video asset
@@ -34,6 +42,18 @@ class VideoDto extends AssetDto {
 
   ImageProvider get placeholderImage =>
       AssetImage('assets/images/video-placeholder-1.png');
+
+  @override
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = super.toMap();
+
+    map.addAll({
+      "duration": this.duration,
+      "format": this.format,
+    });
+
+    return map;
+  }
 }
 
 /// Image asset
@@ -51,6 +71,18 @@ class ImageDto extends AssetDto {
         );
 
   ImageProvider get image => NetworkImage(this.url);
+
+  @override
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = super.toMap();
+
+    map.addAll({
+      "width": this.width,
+      "height": this.height,
+    });
+
+    return map;
+  }
 }
 
 /// Audio asset

@@ -96,6 +96,19 @@ abstract class MessageModel {
 
     throw UnimplementedError();
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": this.id,
+      "kind": this.kind,
+      "asset": this.asset?.toMap(),
+      "text": this.text,
+      "banned": this.banned,
+      "sendedDate": Timestamp.fromDate(this.sendedDate),
+      "senderId": this.senderId,
+      "sender": this.sender.toMap(),
+    };
+  }
 }
 
 /// Message of type [MessageKind.video]
