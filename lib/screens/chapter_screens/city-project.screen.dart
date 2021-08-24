@@ -8,10 +8,12 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
+import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -212,13 +214,23 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   String? userUID;
   File? file;
   String? fileName;
+  PlayerDto? player;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     this.userService = UserService.instance.userUID$().listen((event) {
       userUID = event!.uid;
+      LoadPlayerInformationService playerLoader =
+          LoadPlayerInformationService();
+      playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
+            this.player = value;
+          }));
     });
-    // fileName =
-    //     file != null ? (fileName) : 'No se ha seleccionado el archivo';
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors2222.black,
       content: Column(
@@ -263,6 +275,11 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
   Future selectFile() async {
     print('User UID: $userUID');
+
+    print('playerdto: ${player!.medals.first.obtained}');
+    print('playerdto: ${player!.points}');
+    print('playerdto: ${player!.uid}');
+
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
 
@@ -282,12 +299,29 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
     final destination = 'players/$userUID/${this.widget.cityName}/$fileName';
     print("LOCATION: $destination");
-    task = UploadFileToFirebaseService.uploadFile(destination, file!);
+    task = UploadFileToFirebaseService.uploadFile(destination, file!, userUID!);
     setState(() {});
 
     if (task == null) return;
 
-    final snapshot = await task!.whenComplete(() => {});
+    bool medalFound = false;
+    final snapshot = await task!.whenComplete(() => {
+          /// seeks for all medals in the medals array
+          player!.medals.asMap().forEach((key, value) {
+            if (value.cityRef == this.widget.cityName) {
+              medalFound = true;
+              print('hay medalla');
+            }
+          }),
+
+          /// if there is no medal with the city name, creates new one
+          if (!medalFound)
+            {
+              print('no hay medalla'),
+              UploadFileToFirebaseService.writeMedal(
+                  userUID!, this.widget.cityName),
+            }
+        });
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download link: $urlDownload');
   }
