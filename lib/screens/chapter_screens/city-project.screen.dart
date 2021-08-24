@@ -8,10 +8,12 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
+import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -150,14 +152,14 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               height: 60,
             ),
           ],
-          _taskButton(context, color)
+          _taskButton(context, color, this.widget.city.name)
         ],
       ],
     );
   }
 }
 
-_taskButton(BuildContext context, color) {
+_taskButton(BuildContext context, color, String cityName) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -175,12 +177,17 @@ _taskButton(BuildContext context, color) {
             builder: (context) {
               /// creates the alert dialog to upload file
               return UploadFileDialog(
+                cityName: cityName,
                 color: color,
               );
             });
       },
       child: Text(
         'Subir Tarea',
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(color: Colors2222.black),
       ),
     ),
   );
@@ -190,9 +197,11 @@ _taskButton(BuildContext context, color) {
 /// with the city color
 class UploadFileDialog extends StatefulWidget {
   final Color color;
+  final String cityName;
   const UploadFileDialog({
     Key? key,
     required this.color,
+    required this.cityName,
   }) : super(key: key);
 
   @override
@@ -204,15 +213,26 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   UploadTask? task;
   String? userUID;
   File? file;
+  String? fileName;
+  PlayerDto? player;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     this.userService = UserService.instance.userUID$().listen((event) {
       userUID = event!.uid;
+      LoadPlayerInformationService playerLoader =
+          LoadPlayerInformationService();
+      playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
+            this.player = value;
+          }));
     });
-    final fileName =
-        file != null ? (file!.path) : 'No se ha seleccionado el archivo';
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors2222.backgroundBottomBar,
+      backgroundColor: Colors2222.black,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -225,21 +245,21 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             height: 16,
           ),
           ButtonWidget(
-            color: widget.color,
+            color: this.widget.color,
             text: 'Elegir archivo',
             icon: Icons.attach_file_rounded,
             onClicked: selectFile,
           ),
           SizedBox(height: 8),
           Text(
-            fileName,
+            fileName ?? 'No se ha seleccionado el archivo',
             style: Theme.of(context).textTheme.bodyText2,
           ),
           SizedBox(
             height: 10,
           ),
           ButtonWidget(
-            color: widget.color,
+            color: this.widget.color,
             icon: Icons.upload_file_rounded,
             text: 'Subir archivo',
             onClicked: uploadFile,
@@ -255,13 +275,20 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
   Future selectFile() async {
     print('User UID: $userUID');
+
+    print('playerdto: ${player!.medals.first.obtained}');
+    print('playerdto: ${player!.points}');
+    print('playerdto: ${player!.uid}');
+
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
 
     /// to get the path of the file
     final path = result.files.single.path!;
+
     setState(() {
       file = File(path);
+      fileName = result.files.single.name;
     });
   }
 
@@ -269,14 +296,32 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   Future uploadFile() async {
     print('User UID: $userUID');
     if (file == null) return;
-    final fileName = file!.path;
-    final destination = 'players/$userUID/$fileName';
 
-    task = UploadFileToFirebaseService.uploadFile(destination, file!);
+    final destination = 'players/$userUID/${this.widget.cityName}/$fileName';
+    print("LOCATION: $destination");
+    task = UploadFileToFirebaseService.uploadFile(destination, file!, userUID!);
     setState(() {});
+
     if (task == null) return;
 
-    final snapshot = await task!.whenComplete(() => {});
+    bool medalFound = false;
+    final snapshot = await task!.whenComplete(() => {
+          /// seeks for all medals in the medals array
+          player!.medals.asMap().forEach((key, value) {
+            if (value.cityRef == this.widget.cityName) {
+              medalFound = true;
+              print('hay medalla');
+            }
+          }),
+
+          /// if there is no medal with the city name, creates new one
+          if (!medalFound)
+            {
+              print('no hay medalla'),
+              UploadFileToFirebaseService.writeMedal(
+                  userUID!, this.widget.cityName),
+            }
+        });
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download link: $urlDownload');
   }
@@ -338,7 +383,7 @@ class ButtonWidget extends StatelessWidget {
           (icon != null)
               ? Icon(
                   icon,
-                  color: Colors2222.backgroundBottomBar,
+                  color: Colors2222.black,
                 )
               : Container(),
           SizedBox(
