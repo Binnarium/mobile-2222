@@ -70,13 +70,25 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
-
+    Color incomingMessage = Colors2222.primary;
+    
     return Scaffold(
-      backgroundColor: Colors2222.primary,
+      backgroundColor: Colors2222.white,
       appBar: AppBar(
-        title: Text(
-          this.widget.chat.id,
-          style: textTheme.subtitle1,
+        backgroundColor: Colors2222.primary,
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage('assets/icons/avatar_icon.png'),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.only(start: 25),
+              child: Text(
+                'Nombre Apellido',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          ],
         ),
       ),
       body: Column(
@@ -100,38 +112,49 @@ class _ChatScreenState extends State<ChatScreen> {
                           if (FirebaseAuth.instance.currentUser?.uid ==
                               message.senderId)
                             Flexible(child: Container(), flex: 1),
+                            
+                          
+                            /// content
+                            Flexible(
+                              flex: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  color: (FirebaseAuth.instance.currentUser?.uid ==
+                              message.senderId)? Colors2222.grey: Colors2222.red,
+                                ),
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment:
+                                      FirebaseAuth.instance.currentUser?.uid ==
+                                              message.senderId
+                                          ? CrossAxisAlignment.end
+                                          : CrossAxisAlignment.start,
+                                  children: [
+                                    /// sender
+                                    Text(
+                                      message.sender.displayName,
+                                      style: TextStyle(
+                                          fontFamily:
+                                              textTheme.subtitle2!.fontFamily,
+                                          color: Colors2222.black),
+                                    ),
 
-                          /// content
-                          Flexible(
-                            flex: 4,
-                            child: Container(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment:
-                                    FirebaseAuth.instance.currentUser?.uid ==
-                                            message.senderId
-                                        ? CrossAxisAlignment.end
-                                        : CrossAxisAlignment.start,
-                                children: [
-                                  /// sender
-                                  Text(
-                                    message.sender.displayName,
-                                    style: textTheme.subtitle2,
-                                  ),
-
-                                  /// content sended
-                                  Markdown2222(
-                                    data: message.text ?? '',
-                                    contentAlignment: FirebaseAuth
-                                                .instance.currentUser?.uid ==
-                                            message.senderId
-                                        ? WrapAlignment.end
-                                        : WrapAlignment.start,
-                                  ),
-                                ],
+                                    /// content sended
+                                    Markdown2222(
+                                      data: message.text ?? '',
+                                      contentAlignment: FirebaseAuth
+                                                  .instance.currentUser?.uid ==
+                                              message.senderId
+                                          ? WrapAlignment.end
+                                          : WrapAlignment.start,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
 
                           /// add item to take 1/4 of the space
                           if (FirebaseAuth.instance.currentUser?.uid !=
@@ -199,6 +222,11 @@ class _MessageTextInputState extends State<MessageTextInput> {
         /// text input
         Expanded(
           child: TextField(
+            cursorColor: Colors2222.black,
+            style: TextStyle(color: Colors2222.black),
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors2222.black))),
             controller: this.widget.myController,
             onSubmitted: (_) => _sendTextMessage,
           ),
@@ -206,6 +234,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
 
         /// send button
         IconButton(
+          color: Colors2222.black,
           icon: Icon(Icons.send),
           onPressed: _sendTextMessage,
         )
