@@ -9,7 +9,8 @@ import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.d
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 import 'activity-card.widget.dart';
 
@@ -50,7 +51,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     final double sidePadding = size.width * 0.08;
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.topLeft],
+      backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ActivitiesScreen.route,
       body: ListView(
         children: [

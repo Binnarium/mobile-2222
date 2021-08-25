@@ -7,9 +7,10 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ContentScreen extends StatefulWidget {
   static const String route = '/contenido';
@@ -48,7 +49,7 @@ class _ContentScreenState extends State<ContentScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.topRight],
+      backgrounds: [BackgroundDecorationStyle.topRight],
       route: ContentScreen.route,
       body: _stageVideoContent(size, context),
     );

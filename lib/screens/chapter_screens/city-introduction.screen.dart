@@ -7,7 +7,8 @@ import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
@@ -49,7 +50,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
 
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.bottomRight],
+      backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: CityIntroductionScreen.route,
       body: ListView(
         children: [
