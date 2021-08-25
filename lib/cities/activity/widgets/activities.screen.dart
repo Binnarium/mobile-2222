@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
@@ -16,7 +16,7 @@ import 'activity-card.widget.dart';
 class ActivitiesScreen extends StatefulWidget {
   static const String route = '/activities';
 
-  final ILoadOptions<CityActivityModel, CityDto> manualLoader;
+  final ILoadInformationService<CityActivityModel> manualLoader;
 
   final CityDto city;
 
@@ -24,7 +24,7 @@ class ActivitiesScreen extends StatefulWidget {
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.manualLoader = LoadCityService(city: city),
+        this.manualLoader = LoadCityService(),
         super(key: key);
 
   @override
