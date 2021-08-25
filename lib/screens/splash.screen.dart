@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
-import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
+import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:video_player/video_player.dart';
 
@@ -32,6 +32,6 @@ class SplashScreen extends StatelessWidget {
     if (isSignIn)
       Navigator.pushReplacementNamed(context, HomeScreen.route);
     else
-      Navigator.pushReplacementNamed(context, LoginScreen.route);
+      Navigator.pushReplacementNamed(context, StartVideoScreen.route);
   }
 }

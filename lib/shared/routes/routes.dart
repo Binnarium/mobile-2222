@@ -24,6 +24,7 @@ import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
+import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 
 MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
   return MaterialPageRoute(
@@ -31,6 +32,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
       switch (settings.name) {
         case SplashScreen.route:
           return SplashScreen();
+
+        case StartVideoScreen.route:
+          return StartVideoScreen();
 
         case WelcomeScreen.route:
           return WelcomeScreen();
