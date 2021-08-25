@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
+import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
@@ -48,7 +50,9 @@ class _ScaffoldRouteBuilder {
 
 class CityNavigator {
   static List<_ScaffoldRouteBuilder> _routes(
-          CityEnabledPagesDto enabledPagesDto, CityDto city) =>
+    CityEnabledPagesDto enabledPagesDto,
+    CityDto city,
+  ) =>
       [
         /// video introduction screen
         if (enabledPagesDto.introductoryVideo)
@@ -149,7 +153,7 @@ class CityNavigator {
             ),
           ),
 
-        /// resources
+        /// activities
         if (enabledPagesDto.activities)
           _ScaffoldRouteBuilder(
             route: ActivitiesScreen.route,
@@ -157,7 +161,7 @@ class CityNavigator {
               context,
               ActivitiesScreen.route,
               arguments: ActivitiesScreen(
-                chapterSettings: city,
+                city: city,
               ),
             ),
           ),
@@ -175,6 +179,19 @@ class CityNavigator {
             ),
           ),
 
+        /// project video
+        if (enabledPagesDto.projectVideo)
+          _ScaffoldRouteBuilder(
+            route: ProjectVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ProjectVideoScreen.route,
+              arguments: ProjectVideoScreen(
+                city: city,
+              ),
+            ),
+          ),
+
         /// project
         if (enabledPagesDto.activities && enabledPagesDto.project)
           _ScaffoldRouteBuilder(
@@ -183,6 +200,19 @@ class CityNavigator {
               context,
               CityProjectScreen.route,
               arguments: CityProjectScreen(
+                city: city,
+              ),
+            ),
+          ),
+
+        /// manual video
+        if (enabledPagesDto.manualVideo)
+          _ScaffoldRouteBuilder(
+            route: ManualVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ManualVideoScreen.route,
+              arguments: ManualVideoScreen(
                 city: city,
               ),
             ),

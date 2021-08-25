@@ -41,7 +41,7 @@ class VideoDto extends AssetDto {
         );
 
   ImageProvider get placeholderImage =>
-      AssetImage('assets/images/video-placeholder-1.png');
+      AssetImage('assets/images/video-placeholder.png');
 
   @override
   Map<String, dynamic> toMap() {

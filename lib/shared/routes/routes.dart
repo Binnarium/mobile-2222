@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
 import 'package:lab_movil_2222/chat/screens/list-chats.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
+import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
+import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
@@ -22,6 +24,7 @@ import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
+import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 
 MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
   return MaterialPageRoute(
@@ -29,6 +32,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
       switch (settings.name) {
         case SplashScreen.route:
           return SplashScreen();
+
+        case StartVideoScreen.route:
+          return StartVideoScreen();
 
         case WelcomeScreen.route:
           return WelcomeScreen();
@@ -116,7 +122,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ActivitiesScreen.route:
           final args = settings.arguments as ActivitiesScreen;
           return ActivitiesScreen(
-            chapterSettings: args.chapterSettings,
+            city: args.city,
           );
 
         case ChapterClubhouseScreen.route:
@@ -125,13 +131,28 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             chapterSettings: args.chapterSettings,
           );
 
+        case ProjectVideoScreen.route:
+          final args = settings.arguments as ProjectVideoScreen;
+          return ProjectVideoScreen(
+            city: args.city,
+          );
+
         case CityProjectScreen.route:
           final args = settings.arguments as CityProjectScreen;
           return CityProjectScreen(
             city: args.city,
           );
 
+        case ManualVideoScreen.route:
+          final args = settings.arguments as ManualVideoScreen;
+          return ManualVideoScreen(
+            city: args.city,
+          );
+
         default:
+          print('-----------------');
+          print('ROUTE NOT DEFINED');
+          print('-----------------');
 
           ///TODO: Fix this bad gateway
           /// to exit the application (in theory)

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ListChatsScreen extends StatefulWidget {
@@ -45,16 +47,34 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors2222.primary,
-      appBar: AppBar(
-        title: Text(
-          'Comunidades 2222',
-          style: textTheme.subtitle1,
-        ),
+      bottomNavigationBar: CustomNavigationBar(
+        activePage: NavigationBarPages.chat,
       ),
+      backgroundColor: Colors2222.primary,
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Comunidades 2222',
+      //     style: textTheme.subtitle1,
+      //   ),
+      // ),
       body: ListView(
         children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: ChapterHeadWidget(
+              showAppLogo: true,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: Center(
+                child: Text('EL CHAT DE 2222',
+                    style: textTheme.headline6!.apply(fontSizeFactor: 1.3))),
+          ),
+          _searchField(size),
+
           /// if no chats loaded show loading icon
           if (this.chats == null)
             AppLoading()
@@ -63,7 +83,13 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
           else
             for (ChatModel chat in this.chats!)
               ListTile(
-                title: Text('Identificador: ${chat.id}'),
+                ///TODO implementar esta linea cuando funcione lastMessage
+                /// trailing: Text('${chat.lastMessage!.sendedDate}'),
+                trailing: Text('16:50'),
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage('assets/icons/avatar_icon.png'),
+                ),
+                title: Text('${chat.participantsNames}'),
                 subtitle: Text(
                   chat.participantsNames,
                   maxLines: 1,
@@ -80,4 +106,41 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
       ),
     );
   }
+}
+
+_searchField(size) {
+  return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: size.width * 0.08,
+        vertical: 16,
+      ),
+      child: Row(
+        children: [
+          /// text input
+          Expanded(
+            child: TextField(
+              textAlignVertical: TextAlignVertical.center,
+              cursorColor: Colors2222.black,
+              style: TextStyle(color: Colors2222.black),
+
+              decoration: InputDecoration(
+
+                  ///Search Button
+                  suffixIcon: IconButton(
+                    color: Colors2222.grey,
+                    icon: Icon(Icons.search),
+                    onPressed: () => 0,
+                  ),
+                  hintText: 'BUSCAR CONTACTOS',
+                  hintStyle: TextStyle(color: Colors2222.grey),
+                  fillColor: Colors2222.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors2222.black))),
+              // controller: this.widget.myController,
+              // onSubmitted: (_) => _sendTextMessage,
+            ),
+          ),
+        ],
+      ));
 }
