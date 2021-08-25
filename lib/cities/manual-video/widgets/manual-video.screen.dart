@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/manual-video/model/city-manual-video.model.dart';
+import 'package:lab_movil_2222/cities/manual-video/services/load-manual-video.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/city-introductory-video.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
-class IntroductoryVideoScreen extends StatefulWidget {
-  static const String route = '/introductory-video';
+class ManualVideoScreen extends StatefulWidget {
+  static const String route = '/manual-video';
 
   final CityDto city;
 
-  final ILoadOptions<CityIntroductoryVideoDto, CityDto> introductoryVideoLoader;
+  final ILoadOptions<CityManualVideoModel, CityDto> manualLoader;
 
-  IntroductoryVideoScreen({
+  ManualVideoScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.introductoryVideoLoader = LoadCityIntroductoryVideo(city: city),
+        this.manualLoader = LoadManualVideoService(city: city),
         super(key: key);
 
   @override
-  _IntroductoryVideoScreenState createState() =>
-      _IntroductoryVideoScreenState();
+  _ManualVideoScreenState createState() => _ManualVideoScreenState();
 }
 
-class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
-  CityIntroductoryVideoDto? introductoryVideo;
+class _ManualVideoScreenState extends State<ManualVideoScreen> {
+  CityManualVideoModel? manualVideo;
 
   @override
   void initState() {
     super.initState();
     this
         .widget
-        .introductoryVideoLoader
+        .manualLoader
         .load()
-        .then((value) => this.setState(() => this.introductoryVideo = value));
+        .then((value) => this.setState(() => this.manualVideo = value));
   }
 
   @override
@@ -45,15 +45,19 @@ class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
     return Scaffold2222(
       city: this.widget.city,
       backgrounds: [BackgroundDecoration.bottomRight],
-      route: IntroductoryVideoScreen.route,
+      route: ManualVideoScreen.route,
       body: Stack(
         children: <Widget>[
+          /// loading state
           Center(child: AppLoading()),
-          if (this.introductoryVideo != null)
+
+          /// background video
+          if (this.manualVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(
-                this.introductoryVideo!.video.url,
+                this.manualVideo!.video.url,
               ),
+              onPressed: () => launch(this.manualVideo!.link),
             ),
         ],
       ),

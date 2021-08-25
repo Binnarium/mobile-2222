@@ -17,6 +17,8 @@ class CityEnabledPagesDto {
   final bool resources;
   final bool introductoryVideo;
   final bool argumentation;
+  final bool manualVideo;
+  final bool projectVideo;
 
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] ?? false,
@@ -25,6 +27,8 @@ class CityEnabledPagesDto {
         this.resources = payload['resources'] ?? false,
         this.introductoryVideo = payload['introductoryVideo'] ?? false,
         this.argumentation = payload['argumentation'] ?? false,
+        this.manualVideo = payload['manualVideo'] ?? false,
+        this.projectVideo = payload['projectVideo'] ?? false,
         this.project = payload['project'] ?? false;
 }
 

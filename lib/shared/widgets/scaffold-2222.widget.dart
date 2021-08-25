@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
@@ -48,7 +49,9 @@ class _ScaffoldRouteBuilder {
 
 class CityNavigator {
   static List<_ScaffoldRouteBuilder> _routes(
-          CityEnabledPagesDto enabledPagesDto, CityDto city) =>
+    CityEnabledPagesDto enabledPagesDto,
+    CityDto city,
+  ) =>
       [
         /// video introduction screen
         if (enabledPagesDto.introductoryVideo)
@@ -149,7 +152,7 @@ class CityNavigator {
             ),
           ),
 
-        /// resources
+        /// activities
         if (enabledPagesDto.activities)
           _ScaffoldRouteBuilder(
             route: ActivitiesScreen.route,
@@ -183,6 +186,19 @@ class CityNavigator {
               context,
               CityProjectScreen.route,
               arguments: CityProjectScreen(
+                city: city,
+              ),
+            ),
+          ),
+
+        /// manual video
+        if (enabledPagesDto.manualVideo)
+          _ScaffoldRouteBuilder(
+            route: ManualVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ManualVideoScreen.route,
+              arguments: ManualVideoScreen(
                 city: city,
               ),
             ),
