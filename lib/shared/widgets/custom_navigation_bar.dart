@@ -41,8 +41,7 @@ class CustomNavigationBar extends StatelessWidget {
               child: Container(
                 child: ImageIcon(
                   AssetImage('assets/icons/left_arrow_icon.png'),
-                  color: this.prevPage == null
-                      ? Colors2222.black : Colors.grey,
+                  color: this.prevPage == null ? Colors2222.black : Colors.grey,
                 ),
               ),
             ),
@@ -88,32 +87,31 @@ class CustomNavigationBar extends StatelessWidget {
               child: Container(
                 child: Icon(
                   Icons.info,
-                  color: this.activePage == NavigationBarPages.chat
+                  color: this.activePage == NavigationBarPages.page4
                       ? Colors.white
                       : Colors.grey,
                 ),
               ),
             ),
-    
+
             /// chat button
             GestureDetector(
               onTap: () => Navigator.pushNamed(context, ListChatsScreen.route),
               child: Icon(
                 Icons.message,
-                color: Colors2222.white.withOpacity(
-                  NavigationBarPages.chat == this.activePage ? 1 : 0.8,
-                ),
+                color: this.activePage == NavigationBarPages.chat
+                    ? Colors2222.white
+                    : Colors2222.grey,
               ),
             ),
-    
+
             /// next page button
             GestureDetector(
               onTap: this.nextPage,
               child: Container(
                 child: ImageIcon(
                   AssetImage('assets/icons/right_arrow_icon.png'),
-                  color: this.nextPage == null
-                      ? Colors2222.black : Colors.grey,
+                  color: this.nextPage == null ? Colors2222.black : Colors.grey,
                 ),
               ),
             ),
