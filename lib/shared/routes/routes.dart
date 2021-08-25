@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
 import 'package:lab_movil_2222/chat/screens/list-chats.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
+import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
@@ -124,6 +125,12 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           final args = settings.arguments as ChapterClubhouseScreen;
           return ChapterClubhouseScreen(
             chapterSettings: args.chapterSettings,
+          );
+
+        case ProjectVideoScreen.route:
+          final args = settings.arguments as ProjectVideoScreen;
+          return ProjectVideoScreen(
+            city: args.city,
           );
 
         case CityProjectScreen.route:
