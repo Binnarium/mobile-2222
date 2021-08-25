@@ -7,12 +7,12 @@ import 'city-stage.widget.dart';
 class ChapterHeadWidget extends StatelessWidget {
   final bool showAppLogo;
   final bool showStageLogo;
-  final CityDto city;
+  final CityDto? city;
 
   const ChapterHeadWidget({
     this.showAppLogo = false,
     this.showStageLogo = false,
-    required this.city,
+    this.city,
   });
 
   @override
@@ -34,7 +34,7 @@ class ChapterHeadWidget extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(top: 16, right: size.width * 0.04),
               child: CityStageWidget(
-                cityDto: this.city,
+                cityDto: this.city!,
               ),
             ),
           ),
