@@ -117,10 +117,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           Flexible(
                             flex: 4,
                             child: Container(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                    BorderRadius.all(Radius.circular(12)),
                                 color:
                                     (FirebaseAuth.instance.currentUser?.uid ==
                                             message.senderId)
