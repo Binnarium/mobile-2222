@@ -129,10 +129,11 @@ class _Video2222 extends Chewie {
           controller: ChewieController(
             videoPlayerController: controller,
             looping: isLoop,
-            placeholder: _VideoPlaceholder(
-              color: color,
-              videoDto: videoDto,
-            ),
+            // placeholder: _VideoPlaceholder(
+            //   color: color,
+            //   videoDto: videoDto,
+            // ),
+            placeholder: Center(child: Image(image: videoDto.placeholderImage)),
             autoInitialize: true,
             aspectRatio: VIDEO_ASPECT_RATIO,
             allowedScreenSleep: false,
