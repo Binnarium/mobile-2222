@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/activities.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
@@ -161,7 +161,7 @@ class CityNavigator {
               context,
               ActivitiesScreen.route,
               arguments: ActivitiesScreen(
-                chapterSettings: city,
+                city: city,
               ),
             ),
           ),

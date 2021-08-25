@@ -11,7 +11,7 @@ class _CityConfigurationDto {
 
 class CityEnabledPagesDto {
   final bool activities;
-  final bool questionary;
+  final bool contribution;
   final bool clubhouse;
   final bool project;
   final bool resources;
@@ -22,7 +22,7 @@ class CityEnabledPagesDto {
 
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] ?? false,
-        this.questionary = payload['questionary'] ?? false,
+        this.contribution = payload['contribution'] ?? false,
         this.clubhouse = payload['clubhouse'] ?? false,
         this.resources = payload['resources'] ?? false,
         this.introductoryVideo = payload['introductoryVideo'] ?? false,
