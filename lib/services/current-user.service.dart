@@ -15,11 +15,13 @@ class UserService {
   }
 
   Stream<bool> isSignIn$() {
-    return Future.delayed(Duration(seconds: 5))
-        .asStream()
-        .map((_) => this._firebaseAuth.currentUser)
+    return Stream.value(this._firebaseAuth.currentUser)
         .take(1)
         .map((user) => user != null);
+  }
+
+  bool isSignIn() {
+    return this._firebaseAuth.currentUser != null;
   }
 
   Stream<User?> userUID$() {

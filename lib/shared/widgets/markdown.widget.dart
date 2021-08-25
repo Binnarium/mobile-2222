@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart' as fmd;
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:markdown/markdown.dart' as md;
 
 @Deprecated('use the Markdown2222 instead')
@@ -8,10 +9,12 @@ typedef Markdown = Markdown2222;
 
 class Markdown2222 extends StatelessWidget {
   final String data;
+  final Color color;
 
   const Markdown2222({
     Key? key,
     required this.data,
+    this.color = Colors2222.white,
     this.contentAlignment,
   }) : super(key: key);
 
@@ -21,7 +24,10 @@ class Markdown2222 extends StatelessWidget {
   Widget build(BuildContext context) {
     return fmd.MarkdownBody(
       data: this.data,
-      styleSheet: fmd.MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+      /// TODO: rewrite
+      styleSheet: fmd.MarkdownStyleSheet.fromTheme(Theme.of(context)
+              .copyWith(textTheme: KorolevFont(textColor: this.color)))
+          .copyWith(
         h1Align: this.contentAlignment,
         h2Align: this.contentAlignment,
         h3Align: this.contentAlignment,
