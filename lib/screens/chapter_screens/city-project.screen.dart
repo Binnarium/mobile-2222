@@ -226,6 +226,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
       playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
             this.player = value;
           }));
+      playerLoader.loadProjects(event.uid);
     });
   }
 
@@ -305,24 +306,30 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     if (task == null) return;
 
     bool medalFound = false;
-    final snapshot = await task!.whenComplete(() => {
-          /// seeks for all medals in the medals array
-          player!.medals.asMap().forEach((key, value) {
-            if (value.cityRef == this.widget.cityName) {
-              medalFound = true;
-              print('hay medalla');
-            }
-          }),
+    final snapshot = await task!.whenComplete(
+      () => {
+        /// seeks for all medals in the medals array
+        player!.medals.asMap().forEach((key, value) {
+          if (value.cityRef == this.widget.cityName) {
+            medalFound = true;
+            print('hay medalla');
+          }
+        }),
 
-          /// if there is no medal with the city name, creates new one
-          if (!medalFound)
-            {
-              print('no hay medalla'),
-              UploadFileToFirebaseService.writeMedal(
-                  userUID!, this.widget.cityName),
-            }
-        });
+        /// if there is no medal with the city name, creates new one
+        if (!medalFound)
+          {
+            print('no hay medalla'),
+            UploadFileToFirebaseService.writeMedal(
+                userUID!, this.widget.cityName),
+          }
+      },
+    );
     final urlDownload = await snapshot.ref.getDownloadURL();
+
+    /// to write the project in the users project collection
+    UploadFileToFirebaseService.writePlayerProjectFile(
+        userUID!, this.widget.cityName, destination, urlDownload);
     print('Download link: $urlDownload');
   }
 
