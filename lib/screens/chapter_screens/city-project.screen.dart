@@ -282,7 +282,12 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     print('playerdto: ${player!.points}');
     print('playerdto: ${player!.uid}');
 
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowMultiple: false,
+        allowedExtensions: (this.widget.cityName != "Angkor")
+            ? ['pdf']
+            : ['mp3', 'wav', 'm4p', 'ogg', 'wma', '3gp']);
     if (result == null) return;
 
     /// to get the path of the file
