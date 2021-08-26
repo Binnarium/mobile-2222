@@ -24,7 +24,7 @@ class ReadingDto {
 
   ReadingDto.fromMap(Map<String, dynamic> payload)
       : this.name = payload['name'],
-        this.about = payload['about'],
+        this.about = payload['about'] ?? 'Sin descripción',
         this.author = payload['author'] ?? 'Sin autor',
         this.link = payload['link'] ?? null,
         this.publishedYear = payload['publishedYear'] ?? null,
@@ -54,7 +54,7 @@ abstract class ExternalLinkDto {
       : this.kind = data['kind'],
         this.link = data['link'] ?? 'https://google.com',
         this.title = data['title'],
-        this.description = data['description'];
+        this.description = data['description'] ?? "no description available";
 
   static ExternalLinkDto fromMap(Map<String, dynamic> data) {
     final String kind = data['kind'];

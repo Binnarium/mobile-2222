@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+
 enum BubbleKind {
   TopRight,
   CenterLeft,
@@ -101,13 +103,20 @@ class IdeaContainerWidget extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints(minHeight: this.bigStyle ? 180 : 100),
             child: Center(
-              child: Text(
-                text,
-                textAlign: TextAlign.center,
-                style:
-                    (this.bigStyle ? textTheme.headline5 : textTheme.bodyText1)
-                        ?.copyWith(color: Colors.black),
-              ),
+              child: (!this.bigStyle)
+
+                  /// Added markdown to small bubbles since text size isn't
+                  /// supported yet
+                  ? Markdown2222(
+                      data: text,
+                      color: Colors.black,
+                      contentAlignment: WrapAlignment.center,
+                    )
+                  : Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: textTheme.headline5?.copyWith(color: Colors.black),
+                    ),
             ),
           ),
         ),
