@@ -12,6 +12,7 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/videoPlayerTest.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -125,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
           /// video container
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: VideoPlayer(
+            child: VideoPlayerTest(
               video: this.loginPayload!.welcomeVideo,
             ),
           ),

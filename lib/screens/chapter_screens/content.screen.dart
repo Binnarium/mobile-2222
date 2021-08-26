@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -8,6 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/videoPlayerTest.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -31,7 +33,6 @@ class ContentScreen extends StatefulWidget {
 
 class _ContentScreenState extends State<ContentScreen> {
   List<ContentDto>? contents;
-
   @override
   void initState() {
     super.initState();
@@ -111,10 +112,19 @@ class _ContentScreenState extends State<ContentScreen> {
                   left: sidePadding,
                   bottom: 32,
                 ),
-                child: VideoPlayer(
-                  video: c.content,
-                  color: widget.city.color,
-                ),
+                // child: VideoPlayer(
+                //   video: c.content,
+                //   color: widget.city.color,
+                // ),
+                /// asking if its running on web (since web is not supported in VideoPlayerTest)
+                child: (!kIsWeb)
+                    ? VideoPlayerTest(
+                        video: c.content,
+                      )
+                    : VideoPlayer(
+                        video: c.content,
+                        color: widget.city.color,
+                      ),
               ),
             ] else if (c is PodcastContentDto) ...[
               Padding(

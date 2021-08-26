@@ -51,27 +51,27 @@ class _VideoPlayerState extends State<VideoPlayer> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          color: this.widget.color,
-          child: (showVideo)
+            color: this.widget.color,
+            child:
 
-              /// video with controls
-              ? _Video2222(
-                  controller: this.widget.controller,
-                  isLoop: this.widget.isLoop,
-                  color: this.widget.color,
-                  videoDto: this.widget.video,
-                )
+                /// video with controls
+                _Video2222(
+              controller: this.widget.controller,
+              isLoop: this.widget.isLoop,
+              color: this.widget.color,
+              videoDto: this.widget.video,
+            )
 
-              /// play video button
-              /// when tapped show the video player
-              : GestureDetector(
-                  onTap: () => setState(() => showVideo = true),
-                  child: _VideoPlaceholder(
-                    color: this.widget.color,
-                    videoDto: this.widget.video,
-                  ),
-                ),
-        ),
+            /// play video button
+            /// when tapped show the video player
+            // : GestureDetector(
+            //     onTap: () => setState(() => showVideo = true),
+            //     child: _VideoPlaceholder(
+            //       color: this.widget.color,
+            //       videoDto: this.widget.video,
+            //     ),
+            //   ),
+            ),
       ),
     );
   }
@@ -141,8 +141,8 @@ class _Video2222 extends Chewie {
             /// allowed orientations
             deviceOrientationsAfterFullScreen: [
               DeviceOrientation.portraitUp,
-              DeviceOrientation.landscapeLeft,
-              DeviceOrientation.landscapeRight
+              // DeviceOrientation.landscapeLeft,
+              // DeviceOrientation.landscapeRight
             ],
 
             /// bg color
