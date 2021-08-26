@@ -108,16 +108,17 @@ class CityNavigator {
         ),
 
         /// content
-        _ScaffoldRouteBuilder(
-          route: ContentScreen.route,
-          builder: (context) => Navigator.pushNamed(
-            context,
-            ContentScreen.route,
-            arguments: ContentScreen(
-              city: city,
+        if (enabledPagesDto.content)
+          _ScaffoldRouteBuilder(
+            route: ContentScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ContentScreen.route,
+              arguments: ContentScreen(
+                city: city,
+              ),
             ),
           ),
-        ),
 
         /// resources
         if (enabledPagesDto.resources)
@@ -158,19 +159,6 @@ class CityNavigator {
             ),
           ),
 
-        /// project video
-        if (enabledPagesDto.projectVideo)
-          _ScaffoldRouteBuilder(
-            route: ProjectVideoScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ProjectVideoScreen.route,
-              arguments: ProjectVideoScreen(
-                city: city,
-              ),
-            ),
-          ),
-
         /// project
         if (enabledPagesDto.activities && enabledPagesDto.project)
           _ScaffoldRouteBuilder(
@@ -179,6 +167,19 @@ class CityNavigator {
               context,
               CityProjectScreen.route,
               arguments: CityProjectScreen(
+                city: city,
+              ),
+            ),
+          ),
+
+        /// project video
+        if (enabledPagesDto.projectVideo)
+          _ScaffoldRouteBuilder(
+            route: ProjectVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ProjectVideoScreen.route,
+              arguments: ProjectVideoScreen(
                 city: city,
               ),
             ),

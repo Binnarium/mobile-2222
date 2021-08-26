@@ -129,22 +129,23 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   iconPath: "assets/icons/project_activity_icon.png",
                   onTap: () {
                     final List<Function> actions = [
-                      /// navigate to project video screen if enabled
-                      if (this.widget.city.enabledPages.projectVideo)
-                        () => Navigator.pushNamed(
-                              context,
-                              ProjectVideoScreen.route,
-                              arguments: ProjectVideoScreen(
-                                city: this.widget.city,
-                              ),
-                            ),
-
+                      /// TODO: THIS MIGHT NOT BE NECESSARY
                       /// navigate to project screen if enabled
                       if (this.widget.city.enabledPages.project)
                         () => Navigator.pushNamed(
                               context,
                               CityProjectScreen.route,
                               arguments: CityProjectScreen(
+                                city: this.widget.city,
+                              ),
+                            ),
+
+                      /// navigate to project video screen if enabled
+                      if (this.widget.city.enabledPages.projectVideo)
+                        () => Navigator.pushNamed(
+                              context,
+                              ProjectVideoScreen.route,
+                              arguments: ProjectVideoScreen(
                                 city: this.widget.city,
                               ),
                             ),
