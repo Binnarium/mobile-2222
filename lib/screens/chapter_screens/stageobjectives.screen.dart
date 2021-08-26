@@ -7,7 +7,8 @@ import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
   static const String route = '/objectives';
@@ -37,7 +38,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
     return Scaffold2222(
       city: this.widget.chapterSettings,
-      backgrounds: [BackgroundDecoration.topRight],
+      backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageObjetivesScreen.route,
       body: _stageBody(size),
     );

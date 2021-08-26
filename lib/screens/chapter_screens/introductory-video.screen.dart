@@ -5,7 +5,8 @@ import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:video_player/video_player.dart';
 
 class IntroductoryVideoScreen extends StatefulWidget {
@@ -44,7 +45,7 @@ class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.bottomRight],
+      backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: IntroductoryVideoScreen.route,
       body: Stack(
         children: <Widget>[

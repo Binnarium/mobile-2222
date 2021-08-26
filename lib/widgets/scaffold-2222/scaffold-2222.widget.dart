@@ -13,30 +13,9 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 
-import 'custom_navigation_bar.dart';
-
-enum BackgroundDecoration {
-  topRight,
-  topLeft,
-  bottomRight,
-  bottomLeft,
-  path,
-}
-
-const Map<BackgroundDecoration, ImageProvider> _BackgroundsDecorations = {
-  BackgroundDecoration.topLeft:
-      AssetImage('assets/backgrounds/background-decorations/top-left.png'),
-  BackgroundDecoration.topRight:
-      AssetImage('assets/backgrounds/background-decorations/top-right.png'),
-  BackgroundDecoration.bottomLeft:
-      AssetImage('assets/backgrounds/background-decorations/bottom-left.png'),
-  BackgroundDecoration.bottomRight:
-      AssetImage('assets/backgrounds/background-decorations/bottom-right.png'),
-  BackgroundDecoration.path:
-      AssetImage('assets/backgrounds/background-decorations/path.png'),
-};
+import '../../shared/widgets/custom_navigation_bar.dart';
 
 class _ScaffoldRouteBuilder {
   final String route;
@@ -129,16 +108,17 @@ class CityNavigator {
         ),
 
         /// content
-        _ScaffoldRouteBuilder(
-          route: ContentScreen.route,
-          builder: (context) => Navigator.pushNamed(
-            context,
-            ContentScreen.route,
-            arguments: ContentScreen(
-              city: city,
+        if (enabledPagesDto.content)
+          _ScaffoldRouteBuilder(
+            route: ContentScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ContentScreen.route,
+              arguments: ContentScreen(
+                city: city,
+              ),
             ),
           ),
-        ),
 
         /// resources
         if (enabledPagesDto.resources)
@@ -179,19 +159,6 @@ class CityNavigator {
             ),
           ),
 
-        /// project video
-        if (enabledPagesDto.projectVideo)
-          _ScaffoldRouteBuilder(
-            route: ProjectVideoScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ProjectVideoScreen.route,
-              arguments: ProjectVideoScreen(
-                city: city,
-              ),
-            ),
-          ),
-
         /// project
         if (enabledPagesDto.activities && enabledPagesDto.project)
           _ScaffoldRouteBuilder(
@@ -200,6 +167,19 @@ class CityNavigator {
               context,
               CityProjectScreen.route,
               arguments: CityProjectScreen(
+                city: city,
+              ),
+            ),
+          ),
+
+        /// project video
+        if (enabledPagesDto.projectVideo)
+          _ScaffoldRouteBuilder(
+            route: ProjectVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ProjectVideoScreen.route,
+              arguments: ProjectVideoScreen(
                 city: city,
               ),
             ),
@@ -265,7 +245,7 @@ class Scaffold2222 extends StatelessWidget {
 
   final Widget body;
   final String route;
-  final List<BackgroundDecoration> backgrounds;
+  final List<BackgroundDecorationStyle> backgrounds;
   final CityDto city;
   final _ScaffoldRouteBuilder? _nextRoute;
 
@@ -298,72 +278,9 @@ class Scaffold2222 extends StatelessWidget {
           /// right
           if (nextPage != null && details.delta.dx < -5) nextPage();
         },
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Stack(
-            children: [
-              /// background image align to top
-              if (this.backgrounds.contains(BackgroundDecoration.topRight))
-                Positioned.fill(
-                  child: Image(
-                    image:
-                        _BackgroundsDecorations[BackgroundDecoration.topRight]!,
-                    width: double.infinity,
-                    alignment: Alignment.topRight,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              if (this.backgrounds.contains(BackgroundDecoration.topLeft))
-                Positioned.fill(
-                  child: Image(
-                    image:
-                        _BackgroundsDecorations[BackgroundDecoration.topLeft]!,
-                    width: double.infinity,
-                    alignment: Alignment.topLeft,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-
-              /// background image align to bottom
-              if (this.backgrounds.contains(BackgroundDecoration.bottomLeft))
-                Positioned.fill(
-                  child: Image(
-                    alignment: Alignment.bottomLeft,
-                    image: _BackgroundsDecorations[
-                        BackgroundDecoration.bottomLeft]!,
-                    width: double.infinity,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-
-              if (this.backgrounds.contains(BackgroundDecoration.bottomRight))
-                Positioned.fill(
-                  child: Image(
-                    alignment: Alignment.bottomRight,
-                    image: _BackgroundsDecorations[
-                        BackgroundDecoration.bottomRight]!,
-                    width: double.infinity,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-
-              /// background path decoration
-              if (this.backgrounds.contains(BackgroundDecoration.path))
-                Positioned.fill(
-                  child: Image(
-                    image: _BackgroundsDecorations[BackgroundDecoration.path]!,
-                    width: double.infinity,
-                    fit: BoxFit.contain,
-                    alignment: Alignment.bottomCenter,
-                    color: Colors2222.white.withOpacity(0.2),
-                  ),
-                ),
-
-              /// main content
-              Positioned.fill(child: this.body),
-            ],
-          ),
+        child: BackgroundDecoration(
+          backgroundDecorationsStyles: backgrounds,
+          child: body,
         ),
       ),
     );

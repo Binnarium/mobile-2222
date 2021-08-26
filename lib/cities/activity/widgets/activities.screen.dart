@@ -1,17 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
-import 'package:lab_movil_2222/cities/activity/widgets/activiy_container_widget.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
+import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+
+import 'activity-card.widget.dart';
 
 class ActivitiesScreen extends StatefulWidget {
   static const String route = '/activities';
 
-  final ILoadOptions<CityActivityModel, CityDto> manualLoader;
+  final ILoadInformationService<CityActivityModel> manualLoader;
 
   final CityDto city;
 
@@ -19,7 +25,7 @@ class ActivitiesScreen extends StatefulWidget {
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.manualLoader = LoadCityService(city: city),
+        this.manualLoader = LoadCityService(),
         super(key: key);
 
   @override
@@ -42,50 +48,122 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final double sidePadding = size.width * 0.08;
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.topLeft],
+      backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ActivitiesScreen.route,
-      body: _activitiesContent(context, size),
-    );
-  }
-
-  _activitiesContent(BuildContext context, Size size) {
-    /// sizing the container to the mobile
-    return Container(
-      /// Listview of the whole screen
-      child: ListView(
-        // physics: NeverScrollableScrollPhysics(),
+      body: ListView(
         children: [
+          /// dead widget
           ChapterHeadWidget(
             showStageLogo: true,
             city: this.widget.city,
           ),
-          SizedBox(
-            height: 20,
-          ),
+
+          /// title
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            padding: EdgeInsets.only(top: 36),
             child: Text(
               'Actividades'.toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline2!
-                  .apply(fontSizeFactor: 0.8),
+              style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          // _activitiesCircle(size),
-          this.activity == null ? AppLoading() : _activitiesBody(size),
+
+          /// activities card
+          if (this.activity == null)
+            AppLoading()
+          else ...[
+            /// contribution card
+            if (this.widget.city.enabledPages.contribution)
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 24,
+                  left: sidePadding,
+                  right: sidePadding,
+                ),
+                child: ActivityCardWidget(
+                  color: this.widget.city.color,
+                  content: this.activity!.contribution,
+                  iconPath: "assets/icons/multiple_choice_activity_icon.png",
+                  onTap: () {},
+                  title: "Tu Contribución",
+                ),
+              ),
+
+            /// clubhouse event
+            if (this.widget.city.enabledPages.clubhouse)
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 24,
+                  left: sidePadding,
+                  right: sidePadding,
+                ),
+                child: ActivityCardWidget(
+                  color: this.widget.city.color,
+                  content: this.activity!.clubhouse,
+                  iconPath: "assets/icons/clubhouse_activity_icon.png",
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ChapterClubhouseScreen.route,
+                    arguments: ChapterClubhouseScreen(
+                      chapterSettings: this.widget.city,
+                    ),
+                  ),
+                  title: "Eventos Clubhouse",
+                ),
+              ),
+
+            /// project
+            if (this.widget.city.enabledPages.project)
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 24,
+                  left: sidePadding,
+                  right: sidePadding,
+                ),
+                child: ActivityCardWidget(
+                  color: this.widget.city.color,
+                  content: this.activity!.project,
+                  iconPath: "assets/icons/project_activity_icon.png",
+                  onTap: () {
+                    final List<Function> actions = [
+                      /// TODO: THIS MIGHT NOT BE NECESSARY
+                      /// navigate to project screen if enabled
+                      if (this.widget.city.enabledPages.project)
+                        () => Navigator.pushNamed(
+                              context,
+                              CityProjectScreen.route,
+                              arguments: CityProjectScreen(
+                                city: this.widget.city,
+                              ),
+                            ),
+
+                      /// navigate to project video screen if enabled
+                      if (this.widget.city.enabledPages.projectVideo)
+                        () => Navigator.pushNamed(
+                              context,
+                              ProjectVideoScreen.route,
+                              arguments: ProjectVideoScreen(
+                                city: this.widget.city,
+                              ),
+                            ),
+
+                      /// default void function
+                      () {}
+                    ];
+                    actions.first();
+                  },
+                  title: "Proyecto Docente",
+                ),
+              ),
+          ],
+
+          /// end page padding
+          SizedBox(height: 24)
         ],
       ),
     );
-  }
-
-  _activitiesBody(Size size) {
-    return ActivitiesWidget(city: widget.city, activity: activity!);
   }
 }
