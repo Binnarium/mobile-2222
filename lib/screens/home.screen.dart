@@ -61,17 +61,45 @@ class _HomeScreenState extends State<HomeScreen> {
             )
 
           /// otherwise load the map with cities
-          : SafeArea(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  controller: this.scrollController,
-                  child: _CitiesScrollMap(
-                    citiesWithPositions:
-                        this.cities as List<CityWithMapPositionDto>,
+          : Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Stack(
+                children: [
+                  /// background content to fill whitespace
+                  Positioned.fill(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        /// top decoration matching maps bottom
+                        Expanded(
+                          child: Image.asset(
+                            'assets/backgrounds/map-background-top.png',
+                            repeat: ImageRepeat.repeatY,
+                          ),
+                        ),
+
+                        /// bottom decoration matching maps bottom
+                        Expanded(
+                          child: Image.asset(
+                            'assets/backgrounds/map-background-bottom.png',
+                            repeat: ImageRepeat.repeatY,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+
+                  /// scroll content
+                  SingleChildScrollView(
+                    clipBehavior: Clip.none,
+                    controller: this.scrollController,
+                    child: _CitiesScrollMap(
+                      citiesWithPositions:
+                          this.cities as List<CityWithMapPositionDto>,
+                    ),
+                  ),
+                ],
               ),
             ),
     );
@@ -97,6 +125,12 @@ class _CitiesScrollMap extends StatelessWidget {
     /// of the map
     return Stack(
       children: [
+        Positioned.fill(
+          child: Container(
+            color: Colors2222.black,
+          ),
+        ),
+
         /// map image in this context is used as a background
         Image(
           image: this.mapImage,
