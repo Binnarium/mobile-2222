@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
-import 'package:lab_movil_2222/services/load-login-information.service.dart';
+import 'package:lab_movil_2222/services/load-team.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -14,16 +14,16 @@ class TeamScreen extends StatefulWidget {
 }
 
 class _TeamScreenState extends State<TeamScreen> {
-  WelcomeDto? loginPayload;
+  TeamDto? teamDto;
 
   @override
   void initState() {
     super.initState();
 
-    ILoadInformationService<WelcomeDto> loader = LoadLoginInformationService();
+    ILoadInformationService<TeamDto> loader = LoadTeamService();
     loader
         .load()
-        .then((value) => this.setState(() => this.loginPayload = value));
+        .then((value) => this.setState(() => this.teamDto = value));
   }
 
   @override
@@ -50,7 +50,7 @@ class _TeamScreenState extends State<TeamScreen> {
 
   ///body of the screen
   _resourcesContent(BuildContext context) {
-    if (this.loginPayload == null)
+    if (this.teamDto == null)
       return Center(
         child: CircularProgressIndicator(
           valueColor: new AlwaysStoppedAnimation<Color>(
@@ -75,7 +75,7 @@ class _TeamScreenState extends State<TeamScreen> {
               vertical: 24,
             ),
             child: TeamContentMarkdown(
-              teamContent: this.loginPayload!.teamText,
+              teamContent: this.teamDto!.teamText,
             ),
           ),
         ],
