@@ -94,9 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   SingleChildScrollView(
                     clipBehavior: Clip.none,
                     controller: this.scrollController,
-                    child: _CitiesScrollMap(
-                      citiesWithPositions:
-                          this.cities as List<CityWithMapPositionDto>,
+                    child: SafeArea(
+                      bottom: false,
+                      child: _CitiesScrollMap(
+                        citiesWithPositions:
+                            this.cities as List<CityWithMapPositionDto>,
+                      ),
                     ),
                   ),
                 ],
