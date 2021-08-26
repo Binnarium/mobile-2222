@@ -84,8 +84,10 @@ class _ChatScreenState extends State<ChatScreen> {
             Padding(
               padding: EdgeInsetsDirectional.only(start: 25),
               child: Text(
-                'Nombre Apellido',
+                this.widget.chat.participantsNames,
                 style: TextStyle(color: Colors.white),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             )
           ],

@@ -28,8 +28,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   WelcomeDto? loginPayload;
-  String? _email = 'testlogin@gmail.com';
-  String? _password = 'jossue123';
+  String? _email = 'player0@mail.com';
+  String? _password = '123456';
 
   StreamSubscription? signInSub;
 

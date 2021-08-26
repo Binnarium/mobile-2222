@@ -177,6 +177,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'uid': credentials.user!.uid,
                       });
 
+                      /// add to group
+                      /// TODO: move to function
+                      await FirebaseFirestore.instance
+                          .collection('chats')
+                          .doc('ZRncSssBoxIbApvXO9Vr')
+                          .update({
+                        'participantsUids':
+                            FieldValue.arrayUnion([credentials.user!.uid]),
+                        'participants': FieldValue.arrayUnion([
+                          {
+                            'displayName': displayName,
+                            'uid': credentials.user!.uid,
+                          }
+                        ]),
+                      });
+
                       /// complete navigation and notify user
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(' Bienvenido ${registeredPlayer.name}'),
