@@ -1,24 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 
-class LoadCityService extends ILoadOptions<CityActivityModel, CityDto> {
-  const LoadCityService({
-    required final CityDto city,
-  }) : super(options: city);
-
+class LoadCityService extends ILoadInformationService<CityActivityModel> {
   @override
   Future<CityActivityModel> load() async {
     final payload = await FirebaseFirestore.instance
-        .collection('cities')
-        .doc(this.options.id)
-        .collection('pages')
-        .doc('activity')
+        .collection('application')
+        .doc('activities')
         .get();
 
-    if (!payload.exists) throw new ErrorDescription('activity not found');
+    if (!payload.exists) throw new ErrorDescription('activities not found');
     return CityActivityModel.fromMap(payload.data()!);
   }
 }

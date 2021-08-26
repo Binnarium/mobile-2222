@@ -9,7 +9,8 @@ import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/reading-item.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
@@ -47,7 +48,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.topLeft],
+      backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ResourcesScreen.route,
       body: _resourcesContent(size),
     );

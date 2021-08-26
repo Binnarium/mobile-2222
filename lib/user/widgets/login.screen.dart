@@ -14,6 +14,7 @@ import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
@@ -27,8 +28,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   WelcomeDto? loginPayload;
-  String? _email = 'testlogin@gmail.com';
-  String? _password = 'jossue123';
+  String? _email = 'player0@mail.com';
+  String? _password = '123456';
 
   StreamSubscription? signInSub;
 
@@ -205,9 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextButton _registerText(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return TextButton(
-      onPressed: () {
-        print('texto de registro presionado');
-      },
+      onPressed: () => Navigator.pushNamed(context, RegisterScreen.route),
       style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.red)),
       child: RichText(
         text: TextSpan(

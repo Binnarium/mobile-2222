@@ -18,13 +18,14 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart'
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
-import 'package:lab_movil_2222/screens/login.screen.dart';
 import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
+import 'package:lab_movil_2222/user/widgets/login.screen.dart';
+import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 
 MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
   return MaterialPageRoute(
@@ -44,6 +45,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case LoginScreen.route:
           return LoginScreen();
+
+        case RegisterScreen.route:
+          return RegisterScreen();
 
         case ClubHouseScreen.route:
           return ClubHouseScreen();

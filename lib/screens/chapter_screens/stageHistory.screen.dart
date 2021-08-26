@@ -8,7 +8,8 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageHistoryScreen extends StatefulWidget {
   static const String route = '/history';
@@ -49,7 +50,10 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     double spacedBodyContainers = bodyContainerHeight * 0.04;
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.bottomLeft, BackgroundDecoration.path],
+      backgrounds: [
+        BackgroundDecorationStyle.bottomLeft,
+        BackgroundDecorationStyle.path
+      ],
       route: StageHistoryScreen.route,
       body: ListView(
         children: <Widget>[

@@ -7,7 +7,8 @@ import 'package:lab_movil_2222/services/load-arguments-screen-information.servic
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageArgumentationScreen extends StatefulWidget {
   static const String route = '/argumentation';
@@ -43,7 +44,7 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
 
     return Scaffold2222(
       city: this.widget.chapterSettings,
-      backgrounds: [BackgroundDecoration.topRight],
+      backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageArgumentationScreen.route,
       body: ListView(
         children: [
