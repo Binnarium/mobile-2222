@@ -63,7 +63,7 @@ class TeamContentMarkdown extends StatelessWidget {
         'p': _MarkdownCustomCreators(),
       },
       styleSheet: fmd.MarkdownStyleSheet(
-        h2: textTheme.headline4,
+        h2: textTheme.headline4!.apply(fontWeightDelta: 10),
         h3: textTheme.headline6,
         h4: textTheme.caption,
         p: textTheme.subtitle1,
