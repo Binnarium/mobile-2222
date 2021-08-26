@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
@@ -32,7 +34,6 @@ class ContentScreen extends StatefulWidget {
 
 class _ContentScreenState extends State<ContentScreen> {
   List<ContentDto>? contents;
-
   @override
   void initState() {
     super.initState();
@@ -112,10 +113,14 @@ class _ContentScreenState extends State<ContentScreen> {
                   left: sidePadding,
                   bottom: 32,
                 ),
-                child: VideoPlayer(
-                  video: c.content,
-                  color: widget.city.color,
-                ),
+
+                /// asking if its running on web (because web is not supported
+                /// in better_player package)
+                child: (!kIsWeb)
+                    ? VideoPlayer(
+                        video: c.content,
+                      )
+                    : Image(image: c.content.placeholderImage),
               ),
             ] else if (c is PodcastContentDto) ...[
               Padding(

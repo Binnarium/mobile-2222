@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
@@ -126,9 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
           /// video container
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: VideoPlayer(
-              video: this.loginPayload!.welcomeVideo,
-            ),
+            child: (!kIsWeb)
+                ? VideoPlayer(
+                    video: this.loginPayload!.welcomeVideo,
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image(
+                        image:
+                            this.loginPayload!.welcomeVideo.placeholderImage),
+                  ),
           ),
 
           /// profundity text
