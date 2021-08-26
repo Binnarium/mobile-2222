@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageMonsterScreen extends StatefulWidget {
   static const String route = '/monster';
@@ -25,7 +26,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
     print(size);
     return Scaffold2222(
       city: this.widget.city,
-      backgrounds: [BackgroundDecoration.topRight],
+      backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageMonsterScreen.route,
       body: _backgroundDecoration(size),
     );

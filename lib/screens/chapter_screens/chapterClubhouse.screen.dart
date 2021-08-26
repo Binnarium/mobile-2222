@@ -5,7 +5,8 @@ import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-subtitle-section.dart';
 import 'package:lab_movil_2222/shared/widgets/club-resources-grid-item_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ChapterClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
@@ -32,7 +33,7 @@ class _ChapterClubhouseScreenState extends State<ChapterClubhouseScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold2222(
       city: this.widget.chapterSettings,
-      backgrounds: [BackgroundDecoration.topRight],
+      backgrounds: [BackgroundDecorationStyle.topRight],
       route: ChapterClubhouseScreen.route,
       body: _resourcesContent(size),
     );

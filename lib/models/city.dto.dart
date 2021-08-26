@@ -19,17 +19,19 @@ class CityEnabledPagesDto {
   final bool argumentation;
   final bool manualVideo;
   final bool projectVideo;
+  final bool content;
 
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
-      : this.activities = payload['activities'] ?? false,
-        this.contribution = payload['contribution'] ?? false,
-        this.clubhouse = payload['clubhouse'] ?? false,
-        this.resources = payload['resources'] ?? false,
-        this.introductoryVideo = payload['introductoryVideo'] ?? false,
-        this.argumentation = payload['argumentation'] ?? false,
-        this.manualVideo = payload['manualVideo'] ?? false,
-        this.projectVideo = payload['projectVideo'] ?? false,
-        this.project = payload['project'] ?? false;
+      : this.activities = payload['activities'] == true,
+        this.contribution = payload['contribution'] == true,
+        this.clubhouse = payload['clubhouse'] == true,
+        this.resources = payload['resources'] == true,
+        this.introductoryVideo = payload['introductoryVideo'] == true,
+        this.argumentation = payload['argumentation'] == true,
+        this.manualVideo = payload['manualVideo'] == true,
+        this.projectVideo = payload['projectVideo'] == true,
+        this.content = payload['content'] == true,
+        this.project = payload['project'] == true;
 }
 
 class CityDto {

@@ -7,8 +7,8 @@ import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
-import 'package:lab_movil_2222/shared/widgets/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = '/';

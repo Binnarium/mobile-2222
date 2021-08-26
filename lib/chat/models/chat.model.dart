@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 
 import 'chat-participant.model.dart';
@@ -36,6 +37,11 @@ class ChatModel {
             ? null
             : MessageModel.fromMap(map['lastMessage']);
 
-  String get participantsNames =>
-      this.participants.map((e) => e.displayName).join(', ');
+  final instance = FirebaseAuth.instance;
+  String get participantsNames => this
+      .participants
+      .where((element) => element.uid != instance.currentUser!.uid)
+      .map((e) => e.displayName)
+      .map((name) => name.split(' ').sublist(0, 2).join(' '))
+      .join(', ');
 }
