@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
-import 'package:lab_movil_2222/services/load-player-information.service.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/medals-list-item_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
+import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
@@ -20,250 +20,196 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  StreamSubscription? signoutSub;
-  StreamSubscription? userService;
-  String? userUID;
+  StreamSubscription? _signOutSub;
+  StreamSubscription? _loadPlayerSub;
   PlayerDto? player;
 
   @override
   void initState() {
     super.initState();
-    this.userService = UserService.instance.userUID$().listen((event) {
-      userUID = event!.uid;
-      LoadPlayerInformationService playerLoader =
-          LoadPlayerInformationService();
-      playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
-            this.player = value;
-          }));
+
+    /// load player data
+    this._loadPlayerSub = UserService.instance.player$().listen((player) {
+      this.setState(() {
+        this.player = player;
+      });
     });
+  }
+
+  @override
+  void deactivate() {
+    this._signOutSub?.cancel();
+    this._loadPlayerSub?.cancel();
+    super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            /// deprecated ignored due to Scaffold2222 needs city parameter
-            // ignore: deprecated_member_use_from_same_package
-            ChapterBackgroundWidget(
-              backgroundColor: Colors2222.red,
-              reliefPosition: 'top-right',
-            ),
-            _routeCurve(),
+    double sideSpacing = size.width * 0.08;
 
-            ///body of the screen
-            _resourcesContent(size, context),
-          ],
-        ),
-      ),
+    return Scaffold(
+      backgroundColor: Colors2222.red,
       bottomNavigationBar: CustomNavigationBar(
         activePage: NavigationBarPages.page3,
       ),
-    );
-  }
+      body: BackgroundDecoration(
+        backgroundDecorationsStyles: [
+          BackgroundDecorationStyle.path,
+          BackgroundDecorationStyle.topLeft
+        ],
 
-  ///body of the screen
-  _resourcesContent(Size size, BuildContext context) {
-    double bodyContainerHeight = size.height * 0.33;
-    double bodyMarginLeft = size.width * 0.10;
-    if (size.width > 500) {
-      bodyContainerHeight = size.height * 0.99;
-    }
-    
-     List<Medal> medalsTemp = player!.medals;
+        /// page content
+        child: this.player == null
+            ? Center(child: AppLoading())
+            : ListView(
+                padding:
+                    EdgeInsets.symmetric(horizontal: sideSpacing, vertical: 64),
+                children: [
+                  /// title
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 32),
+                    child: Text(
+                      'Mi viaje al día'.toUpperCase(),
+                      style: Theme.of(context).textTheme.headline4,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
 
-    /// sizing the container to the mobile
-    return ListView(
-      padding:
-          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 10),
-      children: [
-        // TODO: fix this screen
-        // ChapterHeadWidget(
-        //   phaseName: 'etapa 4',
-        //   chapterName: 'aztlán',
-        //   city:
-        //       'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
-        // ),
-        Padding(
-          padding: EdgeInsets.only(top: 30, bottom: 30),
-          child: Text(
-            'Mi viaje al día'.toUpperCase(),
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .apply(fontWeightDelta: 2),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-          ),
-        ),
-
-        Padding(
-          padding: EdgeInsets.only(bottom: 32),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Image(
-                image: AssetImage(
-                    'assets/backgrounds/decorations/elipse_profile.png'),
-                height: 80,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: Wrap(
-                      runAlignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.vertical,
+                  /// player profile
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 64),
+                    child: Row(
                       children: [
-                        Text((player != null) ? player!.name : 'cargando'),
-                        SizedBox(
-                          height: 3,
+                        /// player icon
+                        Image(
+                          image: AssetImage(
+                              'assets/backgrounds/decorations/elipse_profile.png'),
+                          height: 80,
                         ),
-                        Text((player != null) ? player!.email : 'cargando'),
-                      ])),
-            ],
-          ),
-        ),
-        
 
-        Padding(
-            padding: EdgeInsets.only(
-                left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
-            child: Text(
-              'NIVELES COMPLETADOS',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4
-                  ?.apply(fontSizeFactor: 0.80),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 4,
-              textAlign: TextAlign.center,
-            )),
+                        /// spacing between picture and information
+                        SizedBox(width: 10),
 
-        Container(
-            // decoration:
-            //     BoxDecoration(border: Border.all(color: Colors.white)),
-            margin:
-                EdgeInsets.only(left: bodyMarginLeft, right: bodyMarginLeft),
-            child: Text(
-              '4',
-              style: Theme.of(context).textTheme.headline4?.apply(),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 4,
-              textAlign: TextAlign.center,
-            )),
+                        /// page content
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /// player name
+                              Text(
+                                player!.name,
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
 
-        Padding(
-          // decoration: BoxDecoration(
-          //   border: Border.all(color: Colors.white)
-          // ),
-          padding: EdgeInsets.only(
-              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
-          child: Text(
-            'CONSUMO DE CONTENIDOS',
-            style: Theme.of(context).textTheme.headline6,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Padding(
-          // decoration: BoxDecoration(
-          //   border: Border.all(color: Colors.white)
-          // ),
-          padding: EdgeInsets.only(
-              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 30),
-          child: Text(
-            '22%',
-            style: Theme.of(context)
-                .textTheme
-                .headline3
-                ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
-          child: Text(
-            'PROXIMA ETAPA',
-            style: Theme.of(context)
-                .textTheme
-                .headline4
-                ?.apply(fontSizeFactor: 0.60),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              left: bodyMarginLeft, right: bodyMarginLeft, bottom: 35),
-          child: Text(
-            'ATLÁNTIDA',
-            style: Theme.of(context)
-                .textTheme
-                .headline3
-                ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-            textAlign: TextAlign.center,
-          ),
-        ),
+                              /// spacing
+                              SizedBox(height: 4),
 
-        Padding(
-          padding: const EdgeInsets.only(bottom: 25),
-          child: WorkloadMarkdown(
-            workload:
-                'Premios mínimos necesarios para aspirar a seguir en sharngri-la: 17',
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 25),
-          child: DaysLeftWidget(),
-        ),
-        Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Wrap(
-              runAlignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              direction: Axis.vertical,
-              children: [
-                for (var item in medalsTemp)
-                  (item != null)
-                      ? MedalsListItem(
-                          cityRef: item.cityRef,
-                        )
-                      : Text('Cargando medallas'),
-              ],
-            )),
-        _logoutButton(context),
-        SizedBox(
-          height: 32,
-        ),
-      ],
-    );
-  }
-  
+                              /// email
+                              Text(
+                                player!.email,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-  _routeCurve() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage(
-          'assets/backgrounds/decorations/white_route_curve_background.png',
-        ),
-        color: Color.fromRGBO(255, 255, 255, 100).withOpacity(0.3),
+                  /// completed levels
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        'NIVELES COMPLETADOS',
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.center,
+                      )),
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 32),
+                    child: Text(
+                      '4',
+                      style: Theme.of(context).textTheme.headline4,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      'CONSUMO DE CONTENIDOS',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 30),
+                    child: Text(
+                      '22%',
+                      style: Theme.of(context).textTheme.headline4,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: sideSpacing, right: sideSpacing, bottom: 10),
+                    child: Text(
+                      'PROXIMA ETAPA',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          ?.apply(fontSizeFactor: 0.60),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: sideSpacing, right: sideSpacing, bottom: 35),
+                    child: Text(
+                      'ATLÁNTIDA',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: WorkloadMarkdown(
+                      workload:
+                          'Premios mínimos necesarios para aspirar a seguir en Sharngri-la: 17 puntos!',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 25),
+                    child: DaysLeftWidget(),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      'Medallas Obtenidas',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  for (Medal medal in this.player!.medals)
+                    MedalsListItem(
+                      cityName: medal.cityRef,
+                    ),
+                  _logoutButton(context),
+                ],
+              ),
       ),
     );
   }
@@ -280,8 +226,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           primary: Colors2222.backgroundBottomBar,
           elevation: 5,
         ),
-        onPressed: () =>
-            this.signoutSub = UserService.instance.signOut$().listen((success) {
+        onPressed: () => this._signOutSub =
+            UserService.instance.signOut$().listen((success) {
           if (success) {
             /// shows snackbar
             scaffold.showSnackBar(SnackBar(

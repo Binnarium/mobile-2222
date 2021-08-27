@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lab_movil_2222/models/player.dto.dart';
 
 class UserService {
   final FirebaseAuth _firebaseAuth;
@@ -24,11 +26,27 @@ class UserService {
     return this._firebaseAuth.currentUser != null;
   }
 
-  Stream<User?> userUID$() {
+  Stream<User?> user$() {
     return Future.delayed(Duration(seconds: 1))
         .asStream()
-        .map((_) => this._firebaseAuth.currentUser)
-        .take(1);
+        .map((_) => this._firebaseAuth.currentUser);
+  }
+
+  /// TODO: move to correct file
+  /// TODO: refactor
+  Stream<PlayerDto?> player$() {
+    return this.user$().asyncMap((event) async {
+      print(event);
+      if (event == null) return null;
+
+      final payload = await FirebaseFirestore.instance
+          .collection('players')
+          .doc(event.uid)
+          .get();
+
+      if (!payload.exists) return null;
+      return PlayerDto.fromMap(payload.data()!);
+    });
   }
 
   Stream<bool> signIn$(String email, String password) {

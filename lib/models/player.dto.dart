@@ -22,8 +22,8 @@ class PlayerDto {
       : this.medals = ((payload['medals'] ?? []) as List)
             .map((e) => Medal.fromMap(e))
             .toList(),
-        this.points = payload['points'],
+        this.points = payload['points'] ?? 0,
         this.uid = payload['uid'],
-        this.name = payload['displayName']?? "",
-        this.email = payload['email']?? "";
+        this.name = payload['displayName'] ?? "",
+        this.email = payload['email'] ?? "";
 }
