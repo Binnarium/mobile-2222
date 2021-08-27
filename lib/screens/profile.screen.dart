@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
+import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter_background_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/medals-list-item_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 
@@ -17,6 +21,22 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? signoutSub;
+  StreamSubscription? userService;
+  String? userUID;
+  PlayerDto? player;
+
+  @override
+  void initState() {
+    super.initState();
+    this.userService = UserService.instance.userUID$().listen((event) {
+      userUID = event!.uid;
+      LoadPlayerInformationService playerLoader =
+          LoadPlayerInformationService();
+      playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
+            this.player = value;
+          }));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +71,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (size.width > 500) {
       bodyContainerHeight = size.height * 0.99;
     }
+    
+     List<Medal> medalsTemp = player!.medals;
 
     /// sizing the container to the mobile
     return ListView(
+      padding:
+          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 10),
       children: [
         // TODO: fix this screen
         // ChapterHeadWidget(
@@ -62,26 +86,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         //   city:
         //       'assets/backgrounds/chapterImages/aztlan_chapter_img.png',
         // ),
-        Container(
-          padding: EdgeInsets.only(top: 30, bottom: 10),
+        Padding(
+          padding: EdgeInsets.only(top: 30, bottom: 30),
           child: Text(
-            'MI PERFIL',
-            style: Theme.of(context).textTheme.headline6,
+            'Mi viaje al día'.toUpperCase(),
+            style: Theme.of(context)
+                .textTheme
+                .headline4!
+                .apply(fontWeightDelta: 2),
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
-            padding: EdgeInsets.only(bottom: 30),
-            child: Text(
-              'RODRIGO ZAMORANO',
-              style: Theme.of(context).textTheme.headline5,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-            )),
-        Container(
+
+        Padding(
           padding: EdgeInsets.only(bottom: 32),
           child: Wrap(
             alignment: WrapAlignment.center,
@@ -95,39 +114,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 width: 10,
               ),
-              Wrap(
-                runAlignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                direction: Axis.vertical,
-                children: [
-                  Text(
-                    'Profesor de xxx xxx xxxxx xxx',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.apply(fontSizeFactor: 0.97),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Otra información secundaria',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.apply(fontSizeFactor: 0.97),
-                    // overflow: TextOverflow.ellipsis,
-                    // maxLines: 2,
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              )
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Wrap(
+                      runAlignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.vertical,
+                      children: [
+                        Text((player != null) ? player!.name : 'cargando'),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text((player != null) ? player!.email : 'cargando'),
+                      ])),
             ],
           ),
         ),
+        
 
-        Container(
+        Padding(
             padding: EdgeInsets.only(
                 left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
             child: Text(
@@ -153,10 +158,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               maxLines: 4,
               textAlign: TextAlign.center,
             )),
-        SizedBox(
-          height: bodyContainerHeight * 0.5,
-        ),
-        Container(
+
+        Padding(
           // decoration: BoxDecoration(
           //   border: Border.all(color: Colors.white)
           // ),
@@ -170,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        Padding(
           // decoration: BoxDecoration(
           //   border: Border.all(color: Colors.white)
           // ),
@@ -187,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        Padding(
           padding: EdgeInsets.only(
               left: bodyMarginLeft, right: bodyMarginLeft, bottom: 10),
           child: Text(
@@ -201,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        Padding(
           padding: EdgeInsets.only(
               left: bodyMarginLeft, right: bodyMarginLeft, bottom: 35),
           child: Text(
@@ -215,10 +218,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        DaysLeftWidget(),
-        SizedBox(
-          height: 32,
+
+        Padding(
+          padding: const EdgeInsets.only(bottom: 25),
+          child: WorkloadMarkdown(
+            workload:
+                'Premios mínimos necesarios para aspirar a seguir en sharngri-la: 17',
+          ),
         ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 25),
+          child: DaysLeftWidget(),
+        ),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Wrap(
+              runAlignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              direction: Axis.vertical,
+              children: [
+                for (var item in medalsTemp)
+                  (item != null)
+                      ? MedalsListItem(
+                          cityRef: item.cityRef,
+                        )
+                      : Text('Cargando medallas'),
+              ],
+            )),
         _logoutButton(context),
         SizedBox(
           height: 32,
@@ -226,6 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
   }
+  
 
   _routeCurve() {
     return Container(
@@ -280,3 +307,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+// class LoadPlayerDialog extends StatefulWidget {
+//   @override
+//   LoadPlayerState createState() => LoadPlayerState();
+// }
+
+// class LoadPlayerState extends State<LoadPlayerDialog> {
+//   StreamSubscription? userService;
+//   String? userUID;
+//   PlayerDto? player;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     this.userService = UserService.instance.userUID$().listen((event) {
+//       userUID = event!.uid;
+//       LoadPlayerInformationService playerLoader =
+//           LoadPlayerInformationService();
+//       playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
+//             this.player = value;
+//           }));
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//         padding: const EdgeInsets.only(bottom: 15),
+//         child: Wrap(
+//             runAlignment: WrapAlignment.center,
+//             crossAxisAlignment: WrapCrossAlignment.start,
+//             direction: Axis.vertical,
+//             children: [
+//               Text((player != null) ? player!.name : 'cargando'),
+//               SizedBox(
+//                 height: 3,
+//               ),
+//               Text((player != null) ? player!.email : 'cargando'),
+//             ]));
+//   }
+
+//   Padding loadMedals() {
+//     final List<Medal> medalsTemp = player!.medals;
+//     return Padding(
+//         padding: const EdgeInsets.only(bottom: 15),
+//         child: Wrap(
+//           runAlignment: WrapAlignment.center,
+//           crossAxisAlignment: WrapCrossAlignment.start,
+//           direction: Axis.vertical,
+//           children: [
+//             for (var item in medalsTemp)
+//               (player!.medals != null)
+//                   ? MedalsListItem(
+//                       cityRef: item.cityRef,
+//                     )
+//                   : Text('Cargando medallas'),
+//           ],
+//         ));
+//   }
+// }
