@@ -220,7 +220,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   @override
   void initState() {
     super.initState();
-    this.userService = UserService.instance.userUID$().listen((event) {
+    this.userService = UserService.instance.user$().listen((event) {
       userUID = event!.uid;
       LoadPlayerInformationService playerLoader =
           LoadPlayerInformationService();

@@ -111,6 +111,45 @@ class WorkloadMarkdown extends StatelessWidget {
   }
 }
 
+///
+///
+///
+class ratingsMarkdown extends StatelessWidget {
+  final String ratings;
+
+  const ratingsMarkdown({
+    Key? key,
+    required this.ratings,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).primaryTextTheme;
+    final Size size = MediaQuery.of(context).size;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors2222.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: EdgeInsets.all(size.width * 0.1),
+      child: fmd.MarkdownBody(
+        data: this.ratings,
+        builders: {
+          'h2': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 8)),
+          'h3': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 4)),
+          'p': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 4)),
+        },
+        styleSheet: fmd.MarkdownStyleSheet(
+          h2: textTheme.subtitle1,
+          h3: textTheme.subtitle1!.apply(color: Colors2222.red),
+          p: textTheme.bodyText2,
+        ),
+      ),
+    );
+  }
+}
+
 /// utility to center markdown text
 class _MarkdownCenterText extends fmd.MarkdownElementBuilder {
   final EdgeInsets? padding;
