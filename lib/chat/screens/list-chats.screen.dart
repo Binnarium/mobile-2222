@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/models/player-search-result.model.dart';
 import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 
 class ListChatsScreen extends StatefulWidget {
   static const route = "/list-chats";
@@ -28,7 +32,11 @@ class ListChatsScreen extends StatefulWidget {
 
 class _ListChatsScreenState extends State<ListChatsScreen> {
   StreamSubscription? _chatsSub;
+
   List<ChatModel>? chats;
+
+  final TextEditingController _searchController = TextEditingController();
+  List<PlayerSearchResultModel>? playersResult;
   @override
   void initState() {
     super.initState();
@@ -48,17 +56,13 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
+    final double sidePadding = size.width * 0.08;
+
     return Scaffold(
       bottomNavigationBar: CustomNavigationBar(
         activePage: NavigationBarPages.chat,
       ),
       backgroundColor: Colors2222.primary,
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Comunidades 2222',
-      //     style: textTheme.subtitle1,
-      //   ),
-      // ),
       body: ListView(
         children: [
           Padding(
@@ -67,13 +71,57 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
               showAppLogo: true,
             ),
           ),
+
+          /// page title
           Padding(
             padding: const EdgeInsets.only(bottom: 40),
             child: Center(
-                child: Text('EL CHAT DE 2222',
-                    style: textTheme.headline6!.apply(fontSizeFactor: 1.3))),
+              child: Text('EL CHAT DE 2222', style: textTheme.headline5),
+            ),
           ),
-          _searchField(size),
+
+          /// search input
+          Padding(
+            padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+            child: TextFormField222(
+              controller: this._searchController,
+              label: 'Buscar Chat',
+              onValueChanged: (value) async {
+                if (value!.isEmpty) {
+                  this.setState(() {
+                    this.playersResult = null;
+                  });
+                  return;
+                }
+                HttpsCallable searchPlayers =
+                    FirebaseFunctions.instance.httpsCallable('searchPlayer');
+                final results = await searchPlayers<String>({"query": value});
+                final List<Map<String, dynamic>>? data =
+                    (jsonDecode(results.data) as List<dynamic>)
+                        .map((e) => e as Map<String, dynamic>)
+                        .toList();
+                List<PlayerSearchResultModel>? playersResult = data
+                    ?.map(
+                      (dynamic e) => PlayerSearchResultModel.fromMap(e),
+                    )
+                    .toList();
+
+                this.setState(() {
+                  this.playersResult = playersResult;
+                });
+              },
+              prefixIcon: Icons.search,
+            ),
+          ),
+
+          /// TODO:
+          if (this.playersResult != null) ...[
+            for (PlayerSearchResultModel player in this.playersResult!)
+              Padding(
+                padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+                child: Text(player.displayName),
+              ),
+          ],
 
           /// if no chats loaded show loading icon
           if (this.chats == null)
@@ -106,41 +154,4 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
       ),
     );
   }
-}
-
-_searchField(size) {
-  return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.08,
-        vertical: 16,
-      ),
-      child: Row(
-        children: [
-          /// text input
-          Expanded(
-            child: TextField(
-              textAlignVertical: TextAlignVertical.center,
-              cursorColor: Colors2222.black,
-              style: TextStyle(color: Colors2222.black),
-
-              decoration: InputDecoration(
-
-                  ///Search Button
-                  suffixIcon: IconButton(
-                    color: Colors2222.grey,
-                    icon: Icon(Icons.search),
-                    onPressed: () => 0,
-                  ),
-                  hintText: 'BUSCAR CONTACTOS',
-                  hintStyle: TextStyle(color: Colors2222.grey),
-                  fillColor: Colors2222.white,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors2222.black))),
-              // controller: this.widget.myController,
-              // onSubmitted: (_) => _sendTextMessage,
-            ),
-          ),
-        ],
-      ));
 }
