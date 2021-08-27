@@ -28,4 +28,6 @@ class LoadPlayerInformationService {
       throw new ErrorDescription('Player information not found');
     return PlayerDto.fromMap(payload.data()!);
   }
+
+  
 }
