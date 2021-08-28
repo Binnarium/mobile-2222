@@ -241,14 +241,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Stack(children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      message.asset!.url,
+                    child: Image.asset(
+                      'assets/images/video-placeholder.png',
                     ),
                   ),
                   Center(
                     child: Icon(
                       Icons.play_arrow_rounded,
-                      color: Colors.black,
+                      color: Colors.transparent.withOpacity(0.5),
                       size: 72,
                     ),
                   ),

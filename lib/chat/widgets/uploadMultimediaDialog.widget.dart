@@ -10,11 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
-import 'package:lab_movil_2222/services/current-user.service.dart';
-import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
 /// Creates alert dialog to upload file [color] is needed to create the button
 /// with the city color
@@ -69,14 +65,6 @@ class _UploadMultimediaDialogState extends State<UploadMultimediaDialog> {
               },
               color: Colors.purpleAccent.shade200,
             ),
-            // RoundedIconButton(
-            //   icon: Icons.description_rounded,
-            //   label: "Documento",
-            //   color: Colors.redAccent.shade200,
-            //   onPressed: () async {
-            //     await uploadFile('MESSAGE#IMAGE');
-            //   },
-            // ),
             RoundedIconButton(
               icon: Icons.movie,
               label: "Vídeo",
@@ -95,7 +83,7 @@ class _UploadMultimediaDialogState extends State<UploadMultimediaDialog> {
     /// allowed extensions depending on file kind
     Map<String, List<String>> allowedExtensions = {
       'MESSAGE#IMAGE': ['png', 'svg', 'jpg', 'jpeg'],
-      'MESSAGE#VIDEO': ['mp4']
+      'MESSAGE#VIDEO': ['mp4', 'avi', 'wmv', 'amv', 'm4v', 'gif']
     };
     final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -120,7 +108,7 @@ class _UploadMultimediaDialogState extends State<UploadMultimediaDialog> {
         print('User UID: ${this.widget.senderId}');
         if (file == null) return;
 
-        final destination = 'players/${this.widget.senderId}/assets/$fileName';
+        final destination = 'chats/${this.widget.chatId}/files/$fileName';
         print("LOCATION: $destination");
 
         task = UploadFileToFirebaseService.uploadFile(
@@ -132,67 +120,79 @@ class _UploadMultimediaDialogState extends State<UploadMultimediaDialog> {
         final snapshot = await task!;
 
         final urlDownload = await snapshot.ref.getDownloadURL();
-        if (kind == "MESSAGE#IMAGE") {
-          _sendImageMessage(
-              this.widget.messageId, fileName!, destination, urlDownload);
-        } else if (kind == "MESSAGE#VIDEO") {}
+
+        _sendMessage(
+            this.widget.messageId, fileName!, destination, urlDownload, kind);
+
         print('Download link: $urlDownload');
         Navigator.pop(context);
       },
     );
   }
 
-  // Widget buildUploadStatus(UploadTask uploadTask) =>
-  //     StreamBuilder<TaskSnapshot>(
-  //       stream: task!.snapshotEvents,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           final snap = snapshot.data!;
-  //           final progress = snap.bytesTransferred / snap.totalBytes;
-  //           final percentage = (progress * 100).toStringAsFixed(1);
-  //           return Text(
-  //             (progress == 1.0)
-  //                 ? '¡Subido con éxito!'
-  //                 : 'Subiendo: $percentage %',
-  //             style: Theme.of(context).textTheme.bodyText2,
-  //           );
-  //         } else {
-  //           return Container();
-  //         }
-  //       },
-  //     );
-
-  Future<void> _sendImageMessage(
-      String id, String filename, String path, String url) async {
+  Future<void> _sendMessage(
+      String id, String filename, String path, String url, String kind) async {
     User user = FirebaseAuth.instance.currentUser!;
-    Map<String, dynamic> imageMap = {
-      'width': 0,
-      'height': 0,
-      'name': filename,
-      'path': path,
-      'url': url,
-    };
 
-    /// send text message
-    ImageMessageModel image = ImageMessageModel(
-        id: id,
-        senderId: this.widget.sender.uid,
-        sendedDate: DateTime.now(),
-        sender: ChatParticipantModel(
-          displayName:
-              (user.displayName != '') ? user.displayName! : user.email!,
-          uid: user.uid,
-        ),
-        kind: 'MESSAGE#IMAGE',
-        image: ImageDto.fromMap(imageMap));
+    if (kind == "MESSAGE#IMAGE") {
+      Map<String, dynamic> imageMap = {
+        'width': 0,
+        'height': 0,
+        'name': filename,
+        'path': path,
+        'url': url,
+      };
 
-    print(image.toMap());
-    await FirebaseFirestore.instance
-        .collection('chats')
-        .doc(this.widget.chatId)
-        .collection('messages')
-        .doc(this.widget.messageId)
-        .set(image.toMap());
+      /// send image message
+      ImageMessageModel image = ImageMessageModel(
+          id: id,
+          senderId: this.widget.sender.uid,
+          sendedDate: DateTime.now(),
+          sender: ChatParticipantModel(
+            displayName:
+                (user.displayName != '') ? user.displayName! : user.email!,
+            uid: user.uid,
+          ),
+          kind: kind,
+          image: ImageDto.fromMap(imageMap));
+
+      print(image.toMap());
+      await FirebaseFirestore.instance
+          .collection('chats')
+          .doc(this.widget.chatId)
+          .collection('messages')
+          .doc(this.widget.messageId)
+          .set(image.toMap());
+    } else if (kind == "MESSAGE#VIDEO") {
+      Map<String, dynamic> videoMap = {
+        'format': '',
+        'duration': 0,
+        'name': filename,
+        'path': path,
+        'url': url,
+      };
+
+      /// send image message
+      VideoMessageModel video = VideoMessageModel(
+          id: id,
+          senderId: this.widget.sender.uid,
+          sendedDate: DateTime.now(),
+          sender: ChatParticipantModel(
+            displayName:
+                (user.displayName != '') ? user.displayName! : user.email!,
+            uid: user.uid,
+          ),
+          kind: kind,
+          video: VideoDto.fromMap(videoMap));
+
+      print(video.toMap());
+      await FirebaseFirestore.instance
+          .collection('chats')
+          .doc(this.widget.chatId)
+          .collection('messages')
+          .doc(this.widget.messageId)
+          .set(video.toMap());
+    }
   }
 }
 
