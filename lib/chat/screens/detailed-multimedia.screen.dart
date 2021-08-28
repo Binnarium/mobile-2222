@@ -6,8 +6,11 @@ import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 class DetailedMultimediaScreen extends StatefulWidget {
   static const String route = '/detailed-multimedia';
   final MessageModel message;
-  const DetailedMultimediaScreen({Key? key, required this.message})
-      : super(key: key);
+  const DetailedMultimediaScreen({
+    Key? key,
+    required MessageModel message,
+  })  : this.message = message,
+        super(key: key);
 
   @override
   _DetailedMultimediaScreenState createState() =>

@@ -10,12 +10,16 @@ class LoadPlayerInformationService {
         .doc(userUID)
         .collection('project')
         .get();
-    List<PlayerProject> projects =
-        payload.docs.map((e) => PlayerProject.fromMap(e.data(), e.id)).toList();
-    projects.forEach((element) {
-      print("USER PROJECTS: ${element.cityName}");
-    });
-    return projects;
+    if (payload.docs.isNotEmpty) {
+      List<PlayerProject> projects = payload.docs
+          .map((e) => PlayerProject.fromMap(e.data(), e.id))
+          .toList();
+      projects.forEach((element) {
+        // print("USER PROJECTS: ${element.cityName}");
+      });
+      return projects;
+    } else
+      return [];
   }
 
   Future<dynamic> loadInformation(String userUID) async {
@@ -28,6 +32,4 @@ class LoadPlayerInformationService {
       throw new ErrorDescription('Player information not found');
     return PlayerDto.fromMap(payload.data()!);
   }
-
-  
 }
