@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
+import 'package:lab_movil_2222/chat/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/widgets/uploadMultimediaDialog.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
@@ -214,7 +215,13 @@ class _ChatScreenState extends State<ChatScreen> {
               type: MaterialType.transparency,
               child: InkWell(
                 onTap: () {
-                  launch(message.asset!.url);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DetailedMultimediaScreen(message: message),
+                    ),
+                  );
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
@@ -236,7 +243,13 @@ class _ChatScreenState extends State<ChatScreen> {
               type: MaterialType.transparency,
               child: InkWell(
                 onTap: () {
-                  launch(message.asset!.url);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DetailedMultimediaScreen(message: message),
+                    ),
+                  );
                 },
                 child: Stack(children: [
                   ClipRRect(

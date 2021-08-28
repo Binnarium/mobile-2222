@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
+import 'package:lab_movil_2222/chat/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/screens/list-chats.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
@@ -82,6 +83,14 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return ChatScreen(
             chat: args.chat,
           );
+
+        /// to go to the multimedia detailed screen in the chat
+        case DetailedMultimediaScreen.route:
+          final args = settings.arguments as DetailedMultimediaScreen;
+          return DetailedMultimediaScreen(
+            message: args.message,
+          );
+
         case IntroductoryVideoScreen.route:
           final args = settings.arguments as IntroductoryVideoScreen;
           return IntroductoryVideoScreen(
