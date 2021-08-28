@@ -12,7 +12,6 @@ import 'package:lab_movil_2222/chat/widgets/uploadMultimediaDialog.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
   static const route = "/chat";
@@ -194,6 +193,7 @@ class _ChatScreenState extends State<ChatScreen> {
         .set(message.toMap());
   }
 
+  /// determines type of message (text, image, or video)
   Widget messageContent(MessageModel message) {
     switch (message.kind) {
       case "MESSAGE#TEXT":
@@ -215,12 +215,10 @@ class _ChatScreenState extends State<ChatScreen> {
               type: MaterialType.transparency,
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DetailedMultimediaScreen(message: message),
-                    ),
+                    DetailedMultimediaScreen.route,
+                    arguments: DetailedMultimediaScreen(message: message),
                   );
                 },
                 child: ClipRRect(
@@ -239,35 +237,35 @@ class _ChatScreenState extends State<ChatScreen> {
         if (message.asset?.url != null) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Material(
-              type: MaterialType.transparency,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DetailedMultimediaScreen(message: message),
-                    ),
-                  );
-                },
-                child: Stack(children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/video-placeholder.png',
-                    ),
+            child: Stack(children: [
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    'assets/images/video-placeholder.png',
                   ),
-                  Center(
+                ),
+              ),
+              Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      DetailedMultimediaScreen.route,
+                      arguments: DetailedMultimediaScreen(message: message),
+                    );
+                  },
+                  child: Center(
                     child: Icon(
                       Icons.play_arrow_rounded,
                       color: Colors.transparent.withOpacity(0.5),
-                      size: 72,
+                      size: 116,
                     ),
                   ),
-                ]),
+                ),
               ),
-            ),
+            ]),
           );
         } else {
           return Image.asset('assets/images/video-placeholder.png');
