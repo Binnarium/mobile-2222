@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               /// player name
                               Text(
-                                player!.name,
+                                player!.displayName,
                                 style: Theme.of(context).textTheme.headline6,
                               ),
 

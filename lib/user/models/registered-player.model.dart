@@ -1,10 +1,10 @@
-/// model of a player registered in the application
-class RegisteredPlayer {
+/// model of a player inscribed to access the application
+class PlayerInscription {
   final String email;
   final String name;
   final String lastName;
 
-  RegisteredPlayer({
+  PlayerInscription({
     required this.email,
     required this.name,
     required this.lastName,

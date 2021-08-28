@@ -1,14 +1,13 @@
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/models/register-form.model.dart';
-import 'package:lab_movil_2222/user/models/registered-player.model.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
+import 'package:lab_movil_2222/user/services/register-user.service.dart';
+import 'package:lab_movil_2222/user/widgets/widgets/authentication-snackbar.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 
@@ -21,8 +20,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final RegisterFormModel _formValue = RegisterFormModel.empty();
+  final IRegisterService registerService = RegisterService();
 
   ///página de login donde pide usuario y contraseña
   @override
@@ -80,13 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Correo Electrónico',
                   keyboardType: TextInputType.emailAddress,
                   onValueChanged: (email) => this._formValue.email = email!,
-                  validator: (email) {
-                    bool emailValid = RegExp(
-                            r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-                        .hasMatch(email!);
-                    if (!emailValid) return 'Correo electrónico invalido';
-                    return null;
-                  },
+                  validator: _validateEmail,
                 ),
               ),
 
@@ -97,16 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Contraseña',
                   onValueChanged: (password) =>
                       this._formValue.password = password!,
-                  validator: (value) {
-                    final int numberCaracteres = 6;
-                    if (value == null || value.isEmpty) {
-                      return 'Ingresa una contraseña valida';
-                    }
-                    if (value.length < numberCaracteres) {
-                      return 'La contraseña debe tener al menos $numberCaracteres caracteres';
-                    }
-                    return null;
-                  },
+                  validator: _validatePassword,
                 ),
               ),
 
@@ -117,12 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Validar Contraseña',
                   onValueChanged: (password) =>
                       this._formValue.validatePassword = password!,
-                  validator: (password) {
-                    if (this._formValue.password == null ||
-                        this._formValue.password != password)
-                      return 'Las contraseñas no coinciden';
-                    return null;
-                  },
+                  validator: _validatePasswordsMatch,
                 ),
               ),
 
@@ -133,99 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   elevation: 5,
                 ),
                 child: Text('REGISTRATE AHORA'),
-                onPressed: () async {
-                  if (this._formKey.currentState!.validate()) {
-                    this._formKey.currentState!.save();
-                    try {
-                      /// validate user is registered
-                      final inscribed = await FirebaseFirestore.instance
-                          .collection('inscribed-players')
-                          .doc(this._formValue.email!)
-                          .get();
-
-                      if (!inscribed.exists)
-                        throw ErrorDescription(
-                            'No estas inscrito para participar del viaje');
-
-                      final RegisteredPlayer registeredPlayer =
-                          RegisteredPlayer(
-                        email: inscribed.data()!['email'],
-                        name: inscribed.data()!['name'],
-                        lastName: inscribed.data()!['lastName'],
-                      );
-
-                      /// create account with email and password
-                      final credentials = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: this._formValue.email!,
-                              password: this._formValue.password!);
-
-                      if (credentials.user == null)
-                        throw ErrorDescription('No se pudo iniciar Sesión');
-
-                      /// configure account information
-                      final String displayName =
-                          '${registeredPlayer.name} ${registeredPlayer.lastName}';
-                      await credentials.user!.updateDisplayName(displayName);
-
-                      /// create player profile
-                      await FirebaseFirestore.instance
-                          .collection('players')
-                          .doc(credentials.user!.uid)
-                          .set({
-                        'email': this._formValue.email!,
-                        'displayName': displayName,
-                        'uid': credentials.user!.uid,
-                      });
-
-                      /// add to group
-                      /// TODO: move to function
-                      await FirebaseFirestore.instance
-                          .collection('chats')
-                          .doc('ZRncSssBoxIbApvXO9Vr')
-                          .update({
-                        'participantsUids':
-                            FieldValue.arrayUnion([credentials.user!.uid]),
-                        'participants': FieldValue.arrayUnion([
-                          {
-                            'displayName': displayName,
-                            'uid': credentials.user!.uid,
-                          }
-                        ]),
-                      });
-
-                      /// complete navigation and notify user
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(' Bienvenido ${registeredPlayer.name}'),
-                      ));
-
-                      Navigator.pushReplacementNamed(context, HomeScreen.route);
-                    } on FirebaseAuthException catch (e) {
-                      /// email already in use
-                      if (e.code == 'email-already-in-use') {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              'Ya existe una cuenta usando este correo electrónico'),
-                          action: SnackBarAction(
-                            label: 'Inicia Sesión',
-                            onPressed: () => Navigator.pushReplacementNamed(
-                                context, LoginScreen.route),
-                          ),
-                        ));
-                      }
-
-                      /// show snackbar with default message
-                      else
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(e.code),
-                        ));
-                    } on ErrorDescription catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(e.valueToString()),
-                      ));
-                    }
-                  }
-                },
+                onPressed: this._register,
               ),
 
               /// already have an account button
@@ -241,5 +128,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  String? _validatePasswordsMatch(password) {
+    if (this._formValue.password != password)
+      return 'Las contraseñas no coinciden';
+    return null;
+  }
+
+  String? _validatePassword(value) {
+    final int numberCaracteres = 6;
+    if (value == null || value.isEmpty) {
+      return 'Ingresa una contraseña valida';
+    }
+    if (value.length < numberCaracteres) {
+      return 'La contraseña debe tener al menos $numberCaracteres caracteres';
+    }
+    return null;
+  }
+
+  String? _validateEmail(email) {
+    bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+        .hasMatch(email!);
+    if (!emailValid) return 'Correo electrónico invalido';
+    return null;
+  }
+
+  Future<void> _register() async {
+    if (this._formKey.currentState!.validate()) {
+      this._formKey.currentState!.save();
+      try {
+        final PlayerDto createdPlayer =
+            await this.registerService.register(this._formValue);
+
+        /// complete navigation and notify user
+        ScaffoldMessenger.of(context).showSnackBar(
+          AuthenticationSnackbar.welcome(
+            displayName: createdPlayer.displayName,
+          ),
+        );
+
+        /// navigate to home screen
+        Navigator.pushReplacementNamed(context, HomeScreen.route);
+      } on RegisterException catch (e) {
+        /// email already in use
+        if (e.code == RegisterErrorCode.emailAlreadyInUse) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthenticationSnackbar.alreadyRegistered(context: context),
+          );
+        } else if (e.code == RegisterErrorCode.notCreated) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthenticationSnackbar.accountNotRegistered(),
+          );
+        } else if (e.code == RegisterErrorCode.notInscribed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthenticationSnackbar.notInscribed(),
+          );
+        } else if (e.code == RegisterErrorCode.weakPassword) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthenticationSnackbar.weakPassword(),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthenticationSnackbar.somethingWentWrong(),
+          );
+        }
+      }
+    }
   }
 }

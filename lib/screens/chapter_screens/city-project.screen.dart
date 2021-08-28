@@ -278,9 +278,9 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   Future selectFile() async {
     print('User UID: $userUID');
 
-    print('playerdto: ${player!.medals.first.obtained}');
-    print('playerdto: ${player!.points}');
-    print('playerdto: ${player!.uid}');
+    print('playerdto: ${player?.medals.first.obtained}');
+    print('playerdto: ${player?.points}');
+    print('playerdto: ${player?.uid}');
 
     final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
