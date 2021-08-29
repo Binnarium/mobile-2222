@@ -4,21 +4,6 @@ import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/user/models/register-form.model.dart';
 import 'package:lab_movil_2222/user/models/registered-player.model.dart';
 
-// /// add to group
-// /// TODO: move to function
-// await FirebaseFirestore.instance
-//     .collection('chats')
-//     .doc('ZRncSssBoxIbApvXO9Vr')
-//     .update({
-//   'participantsUids':
-//       FieldValue.arrayUnion([credentials.user!.uid]),
-//   'participants': FieldValue.arrayUnion([
-//     {
-//       'displayName': displayName,
-//       'uid': credentials.user!.uid,
-//     }
-//   ]),
-/// TODO: add docs
 enum RegisterErrorCode {
   notInscribed,
   emailAlreadyInUse,
