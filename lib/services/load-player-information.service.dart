@@ -45,7 +45,10 @@ class LoadPlayerInformationService {
     
   }
 
-  Future<dynamic> loadInformation(String userUID) async {
+  
+
+  Future<PlayerDto> loadInformation(String userUID) async {
+
     final payload = await FirebaseFirestore.instance
         .collection('players')
         .doc(userUID)
