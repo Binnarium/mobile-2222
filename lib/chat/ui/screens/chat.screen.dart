@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
-import 'package:lab_movil_2222/chat/screens/detailed-multimedia.screen.dart';
-import 'package:lab_movil_2222/chat/widgets/uploadMultimediaDialog.widget.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/uploadMultimediaDialog.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Padding(
               padding: EdgeInsetsDirectional.only(start: 25),
               child: Text(
-                this.widget.chat.participantsNames,
+                this.widget.chat.chatName,
                 style: TextStyle(color: Colors.white),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

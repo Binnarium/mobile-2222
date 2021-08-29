@@ -73,247 +73,240 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
 
         /// page content
-        child: this.player == null
-            ? Center(child: AppLoading())
-            : ListView(
-                padding:
-                    EdgeInsets.symmetric(horizontal: sideSpacing, vertical: 64),
-                children: [
-                  /// title
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 32),
-                    child: Text(
-                      'Mi viaje al día'.toUpperCase(),
-                      style: Theme.of(context).textTheme.headline4,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  /// player profile
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 64),
-                    child: Row(
-                      children: [
-                        /// player icon
-                        Material(
-                          type: MaterialType.transparency,
-                          color: Colors.black,
-                          child: InkWell(
-                              borderRadius: BorderRadius.circular(40),
-                              focusColor: Colors.black,
-                              hoverColor: Colors.black,
-                              splashColor: Colors.black,
-                              child: (this.player?.avatarImage.url == "")
-                                  ? Image(
-                                      image: AssetImage(
-                                          'assets/backgrounds/decorations/elipse_profile.png'),
-                                      height: 80,
-                                    )
-                                  : CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        this.player!.avatarImage.url,
-                                      ),
-                                      maxRadius: 40,
-                                    ),
-                              onTap: () async {
-                                return await showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Center(
-                                          child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.7,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            (this.player?.avatarImage.url == "")
-                                                ? Image(
-                                                    image: AssetImage(
-                                                        'assets/backgrounds/decorations/elipse_profile.png'),
-                                                  )
-                                                : Image.network(
-                                                    this
-                                                        .player!
-                                                        .avatarImage
-                                                        .url,
-                                                  ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            ButtonWidget(
-                                              color: Colors2222.black,
-                                              onClicked: uploadAvatar,
-                                              text: 'Cambiar imagen',
-                                            )
-                                          ],
-                                        ),
-                                      ));
-                                    });
-                              }),
-                        ),
-
-                        /// spacing between picture and information
-                        SizedBox(width: 10),
-
-                        /// page content
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              /// player name
-                              Text(
-                                player!.name,
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-
-                              /// spacing
-                              SizedBox(height: 4),
-
-                              /// email
-                              Text(
-                                player!.email,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  /// completed levels
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        'NIVELES COMPLETADOS',
-                        style: Theme.of(context).textTheme.headline5,
-                        textAlign: TextAlign.center,
-                      )),
-
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 32),
-                    child: Text(
-                      '4',
-                      style: Theme.of(context).textTheme.headline4,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      'CONSUMO DE CONTENIDOS',
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 30),
-                    child: Text(
-                      '22%',
-                      style: Theme.of(context).textTheme.headline4,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: sideSpacing, right: sideSpacing, bottom: 10),
-                    child: Text(
-                      'PROXIMA ETAPA',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4
-                          ?.apply(fontSizeFactor: 0.60),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 4,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: sideSpacing, right: sideSpacing, bottom: 35),
-                    child: Text(
-                      'ATLÁNTIDA',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3
-                          ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 4,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
-                    child: WorkloadMarkdown(
-                      workload:
-                          'Premios mínimos necesarios para aspirar a seguir en Sharngri-la: 17 puntos!',
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 25),
-                    child: DaysLeftWidget(),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      'Medallas Obtenidas',
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  for (Medal medal in this.player!.medals)
-                    MedalsListItem(
-                      cityName: medal.cityRef,
-                    ),
-                  _logoutButton(context),
-                ],
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: sideSpacing, vertical: 64),
+          children: [
+            if (this.player == null)
+              Center(child: AppLoading())
+            else ...[
+              /// title
+              Padding(
+                padding: EdgeInsets.only(bottom: 32),
+                child: Text(
+                  'Mi viaje al día'.toUpperCase(),
+                  style: Theme.of(context).textTheme.headline4,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                ),
               ),
+
+              /// player profile
+              Padding(
+                padding: EdgeInsets.only(bottom: 64),
+                child: Row(
+                  children: [
+                    /// player icon
+                    Material(
+                      type: MaterialType.transparency,
+                      color: Colors.black,
+                      child: InkWell(
+                          borderRadius: BorderRadius.circular(40),
+                          focusColor: Colors.black,
+                          hoverColor: Colors.black,
+                          splashColor: Colors.black,
+                          child: (this.player?.avatarImage.url == "")
+                              ? Image(
+                                  image: AssetImage(
+                                      'assets/backgrounds/decorations/elipse_profile.png'),
+                                  height: 80,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    this.player!.avatarImage.url,
+                                  ),
+                                  maxRadius: 40,
+                                ),
+                          onTap: () async {
+                            return await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        (this.player?.avatarImage.url == "")
+                                            ? Image(
+                                                image: AssetImage(
+                                                    'assets/backgrounds/decorations/elipse_profile.png'),
+                                              )
+                                            : Image.network(
+                                                this.player!.avatarImage.url,
+                                              ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        ButtonWidget(
+                                          color: Colors2222.black,
+                                          onClicked: uploadAvatar,
+                                          text: 'Cambiar imagen',
+                                        )
+                                      ],
+                                    ),
+                                  ));
+                                });
+                          }),
+                    ),
+
+                    /// spacing between picture and information
+                    SizedBox(width: 10),
+
+                    /// page content
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// player name
+                          Text(
+                            player!.displayName,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+
+                          /// spacing
+                          SizedBox(height: 4),
+
+                          /// email
+                          Text(
+                            player!.email,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              /// completed levels
+              Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    'NIVELES COMPLETADOS',
+                    style: Theme.of(context).textTheme.headline5,
+                    textAlign: TextAlign.center,
+                  )),
+
+              Padding(
+                padding: EdgeInsets.only(bottom: 32),
+                child: Text(
+                  '4',
+                  style: Theme.of(context).textTheme.headline4,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  'CONSUMO DE CONTENIDOS',
+                  style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(bottom: 30),
+                child: Text(
+                  '22%',
+                  style: Theme.of(context).textTheme.headline4,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: sideSpacing, right: sideSpacing, bottom: 10),
+                child: Text(
+                  'PROXIMA ETAPA',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      ?.apply(fontSizeFactor: 0.60),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 4,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: sideSpacing, right: sideSpacing, bottom: 35),
+                child: Text(
+                  'ATLÁNTIDA',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 4,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: WorkloadMarkdown(
+                  workload:
+                      'Premios mínimos necesarios para aspirar a seguir en Sharngri-la: 17 puntos!',
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 25),
+                child: DaysLeftWidget(),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  'Medallas Obtenidas',
+                  style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              for (Medal medal in this.player!.medals)
+                MedalsListItem(
+                  cityName: medal.cityRef,
+                ),
+            ],
+            _logoutButton(context),
+          ],
+        ),
       ),
     );
   }
 
-  _logoutButton(BuildContext context) {
+  ElevatedButton _logoutButton(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     double buttonWidth = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: buttonWidth * 0.1),
-      width: buttonWidth,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors2222.backgroundBottomBar,
-          elevation: 5,
-        ),
-        onPressed: () => this._signOutSub =
-            UserService.instance.signOut$().listen((success) {
-          if (success) {
-            /// shows snackbar
-            scaffold.showSnackBar(SnackBar(
-              content: Text(
-                "Cierre de sesión exitoso.",
-                style: textTheme.bodyText1,
-              ),
-              backgroundColor: Colors2222.backgroundBottomBar,
-              action: SnackBarAction(
-                  label: 'ENTENDIDO',
-                  textColor: Colors.blue.shade300,
-                  onPressed: scaffold.hideCurrentSnackBar),
-            ));
-            Navigator.of(context).pushReplacementNamed(LoginScreen.route);
-          } else
-            print(success);
-        }),
-        child: Text(
-          'Cerrar sesión',
-          style: textTheme.headline6?.apply(),
-        ),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors2222.backgroundBottomBar,
+        elevation: 5,
+      ),
+      onPressed: () =>
+          this._signOutSub = UserService.instance.signOut$().listen((success) {
+        if (success) {
+          /// shows snackbar
+          scaffold.showSnackBar(SnackBar(
+            content: Text(
+              "Cierre de sesión exitoso.",
+              style: textTheme.bodyText1,
+            ),
+            backgroundColor: Colors2222.backgroundBottomBar,
+            action: SnackBarAction(
+                label: 'ENTENDIDO',
+                textColor: Colors.blue.shade300,
+                onPressed: scaffold.hideCurrentSnackBar),
+          ));
+          Navigator.of(context).pushReplacementNamed(LoginScreen.route);
+        } else
+          print(success);
+      }),
+      child: Text(
+        'Cerrar sesión',
+        style: textTheme.headline6?.apply(),
       ),
     );
   }
