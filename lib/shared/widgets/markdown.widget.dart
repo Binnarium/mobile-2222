@@ -78,17 +78,17 @@ class TeamContentMarkdown extends StatelessWidget {
 class ContributionContenMarkdown extends StatelessWidget {
   const ContributionContenMarkdown({
     Key? key,
-    required this.teamContent,
+    required this.contributionContent,
   }) : super(key: key);
 
-  final String teamContent;
+  final String contributionContent;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return fmd.MarkdownBody(
-      data: this.teamContent,
+      data: this.contributionContent,
       builders: {
         'h2': _MarkdownCenterText(),
         'h3': _MarkdownCenterText(padding: EdgeInsets.only(top: 35)),
@@ -96,10 +96,10 @@ class ContributionContenMarkdown extends StatelessWidget {
         'p': _MarkdownCustomCreators(),
       },
       styleSheet: fmd.MarkdownStyleSheet(
-        h2: textTheme.headline4!.apply(fontWeightDelta: 10,color: Colors2222.black),
-        h3: textTheme.headline6!.apply(color: Colors2222.black),
-        h4: textTheme.caption!.apply(color: Colors2222.black),
-        p: textTheme.subtitle1!.apply(color: Colors2222.black),
+        h2: textTheme.headline4!.apply(fontWeightDelta: 10),
+        h3: textTheme.headline6,
+        h4: textTheme.caption,
+        p: textTheme.subtitle1,
       ),
     );
   }

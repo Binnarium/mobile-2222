@@ -1,16 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution-idea.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution-lecture.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution-project.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
+
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
-
 
 class CityContributionScreen extends StatefulWidget {
   static const String route = '/contribution';
@@ -103,7 +100,8 @@ class _CityColaborationScreenState extends State<CityContributionScreen> {
             ),
           ),
           MarkdownBody(
-            data: 'Las contribuciones son el pilar fundamental de nuestro viaje mítico donde dejaremos nuestras experiencias y expectativas para la siguiente etapa',
+            data:
+                'Las contribuciones son el pilar fundamental de nuestro viaje mítico donde dejaremos nuestras experiencias y expectativas para la siguiente etapa',
             styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
               textAlign: WrapAlignment.center,
             ),
@@ -111,26 +109,21 @@ class _CityColaborationScreenState extends State<CityContributionScreen> {
           SizedBox(
             height: 16,
           ),
-          _contributionButton(context, color, 'Idea'),
-          _contributionButton(context, color, 'Lecture'),
-          _contributionButton(context, color, 'Project'),
-          
+          _contributionButton(context, color, 'Idea', this.widget.city),
+          _contributionButton(context, color, 'Lecture', this.widget.city),
+          _contributionButton(context, color, 'Project', this.widget.city),
         ]);
   }
 }
 
-_contributionButton(BuildContext context, color, String option) {
+_contributionButton(BuildContext context, color, String option, CityDto city) {
   double buttonWidth = MediaQuery.of(context).size.width;
-  String route= '';
-  String name= '';
-  if(option == 'Idea'){
-    route= ContributionIdeaScreen.route;
-    name= 'Idea';
-  }else if(option == 'Lecture'){
-    route = ContributionLectureScreen.route;
-    name= 'Lectura';
-  }else{
-    route = ContributionProjectScreen.route;
+  String name = '';
+  if (option == 'Idea') {
+    name = 'Idea';
+  } else if (option == 'Lecture') {
+    name = 'Lectura';
+  } else {
     name = 'Proyecto';
   }
   return Container(
@@ -143,7 +136,13 @@ _contributionButton(BuildContext context, color, String option) {
       ),
 
       ///Navigates to main screen
-      onPressed: () => Navigator.pushNamed(context, route),
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ContributionIdeasScreen(city: city, option: option),
+        ),
+      ),
       child: Text(
         'Contribucción de ${name}',
         style: Theme.of(context)
@@ -154,7 +153,3 @@ _contributionButton(BuildContext context, color, String option) {
     ),
   );
 }
-
-
-
-
