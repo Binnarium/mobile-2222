@@ -12,7 +12,6 @@ import 'package:lab_movil_2222/chat/widgets/uploadMultimediaDialog.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
   static const route = "/chat";
@@ -88,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Padding(
               padding: EdgeInsetsDirectional.only(start: 25),
               child: Text(
-                this.widget.chat.participantsNames,
+                this.widget.chat.chatName,
                 style: TextStyle(color: Colors.white),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

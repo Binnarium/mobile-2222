@@ -40,7 +40,7 @@ class PlayerDto {
       'medals': this.medals,
       'points': this.points,
       'uid': this.uid,
-      'name': this.displayName,
+      'displayName': this.displayName,
       'email': this.email,
     };
   }
