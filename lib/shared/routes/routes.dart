@@ -7,10 +7,13 @@ import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
+
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
@@ -67,6 +70,8 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case ProfileScreen.route:
           return ProfileScreen();
+
+     
 
         case CityIntroductionScreen.route:
           final args = settings.arguments as CityIntroductionScreen;
@@ -155,6 +160,20 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return CityProjectScreen(
             city: args.city,
           );
+
+        case CityContributionScreen.route:
+          final args = settings.arguments as CityContributionScreen;
+          return CityContributionScreen(
+            city: args.city,
+          );
+
+        case ContributionIdeasScreen.route:
+          final args = settings.arguments as ContributionIdeasScreen;
+          return ContributionIdeasScreen(
+            city: args.city,
+          );  
+
+        
 
         case ManualVideoScreen.route:
           final args = settings.arguments as ManualVideoScreen;

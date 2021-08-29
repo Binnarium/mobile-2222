@@ -4,9 +4,11 @@ import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.d
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
@@ -158,7 +160,19 @@ class CityNavigator {
               ),
             ),
           ),
-
+        ///Contribution
+        if (enabledPagesDto.activities && enabledPagesDto.contribution)
+          _ScaffoldRouteBuilder(
+            route: CityContributionScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              CityContributionScreen.route,
+              arguments: CityContributionScreen(
+                city: city,
+              ),
+            ),
+          ),
+        
         /// project
         if (enabledPagesDto.activities && enabledPagesDto.project)
           _ScaffoldRouteBuilder(
