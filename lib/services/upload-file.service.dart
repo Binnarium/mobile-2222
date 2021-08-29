@@ -27,14 +27,14 @@ class UploadFileToFirebaseService {
     }
   }
 
-  static void writeMedal(String userUID, String cityRef) {
+  static void writeMedal(String userUID, String cityRef) async {
     Map<String, dynamic> medal = {
       'cityRef': cityRef,
       'obtained': true,
       'obtainedDate': Timestamp.now()
     };
 
-    FirebaseFirestore.instance.collection('players').doc(userUID).update(
+    await FirebaseFirestore.instance.collection('players').doc(userUID).update(
       {
         'medals': FieldValue.arrayUnion([medal])
       },
@@ -43,7 +43,10 @@ class UploadFileToFirebaseService {
 
   static void writePlayerProjectFile(
       String userUID, String cityRef, String path, String url) async {
-    Map<String, dynamic> projectFile = {'path': path, 'url': url};
+    Map<String, dynamic> projectFile = {
+      'path': path,
+      'url': url,
+    };
     LoadPlayerInformationService playerLoader = LoadPlayerInformationService();
     List<PlayerProject> projects = await playerLoader.loadProjects(userUID);
     bool existingProject = false;
@@ -73,6 +76,53 @@ class UploadFileToFirebaseService {
         'completed': true,
         'files': [projectFile]
       });
+    }
+  }
+
+  static void deletePlayerProjectFile(
+      String userUID, String cityRef, String path, ProjectFile file) async {
+    LoadPlayerInformationService playerLoader = LoadPlayerInformationService();
+    List<PlayerProject> projects = await playerLoader.loadProjects(userUID);
+    bool existingProject = false;
+    int filesArrayLength = 0;
+    Map<String, dynamic> fileMap = {
+      "path": file.path,
+      "url": file.url,
+    };
+    projects.forEach((element) {
+      if (element.cityName == cityRef) {
+        existingProject = true;
+        element.files.forEach((element) {
+          // print("PATHS: ${element.path}");
+        });
+        filesArrayLength = element.files.length;
+        // print(filesArrayLength);
+      }
+    });
+    if (existingProject && filesArrayLength - 1 != 0) {
+      await FirebaseStorage.instance.refFromURL(file.url).delete();
+      print('File successfully deleted from storage');
+      await FirebaseFirestore.instance
+          .collection('players')
+          .doc(userUID)
+          .collection('project')
+          .doc(cityRef)
+          .update(
+        {
+          'files': FieldValue.arrayRemove([fileMap])
+        },
+      );
+      print('File reference successfully deleted from firestore');
+    } else {
+      await FirebaseStorage.instance.refFromURL(file.url).delete();
+      print('File successfully deleted from storage');
+      await FirebaseFirestore.instance
+          .collection('players')
+          .doc(userUID)
+          .collection('project')
+          .doc(cityRef)
+          .delete();
+      print('collection successfully deleted from players/projects');
     }
   }
 }
