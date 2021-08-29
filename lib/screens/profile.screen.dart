@@ -1,9 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
+import 'package:lab_movil_2222/services/load-player-information.service.dart';
+import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
@@ -23,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _signOutSub;
   StreamSubscription? _loadPlayerSub;
   PlayerDto? player;
+  ImageDto? avatarImage;
 
   @override
   void initState() {
@@ -34,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         this.player = player;
       });
     });
+    print('Player information: ${this.player?.avatarImage.url}');
   }
 
   @override
@@ -43,11 +52,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.deactivate();
   }
 
+  File? file;
+  String? fileName;
+  UploadTask? task;
+
   @override
   Widget build(BuildContext context) {
+    avatarImage = this.player?.avatarImage;
     Size size = MediaQuery.of(context).size;
     double sideSpacing = size.width * 0.08;
-
     return Scaffold(
       backgroundColor: Colors2222.red,
       bottomNavigationBar: CustomNavigationBar(
@@ -84,10 +97,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Row(
                       children: [
                         /// player icon
-                        Image(
-                          image: AssetImage(
-                              'assets/backgrounds/decorations/elipse_profile.png'),
-                          height: 80,
+                        Material(
+                          type: MaterialType.transparency,
+                          color: Colors.black,
+                          child: InkWell(
+                              borderRadius: BorderRadius.circular(40),
+                              focusColor: Colors.black,
+                              hoverColor: Colors.black,
+                              splashColor: Colors.black,
+                              child: (this.player?.avatarImage.url == "")
+                                  ? Image(
+                                      image: AssetImage(
+                                          'assets/backgrounds/decorations/elipse_profile.png'),
+                                      height: 80,
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        this.player!.avatarImage.url,
+                                      ),
+                                      maxRadius: 40,
+                                    ),
+                              onTap: () async {
+                                return await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Center(
+                                          child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            (this.player?.avatarImage.url == "")
+                                                ? Image(
+                                                    image: AssetImage(
+                                                        'assets/backgrounds/decorations/elipse_profile.png'),
+                                                  )
+                                                : Image.network(
+                                                    this
+                                                        .player!
+                                                        .avatarImage
+                                                        .url,
+                                                  ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            ButtonWidget(
+                                              color: Colors2222.black,
+                                              onClicked: uploadAvatar,
+                                              text: 'Cambiar imagen',
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                                    });
+                              }),
                         ),
 
                         /// spacing between picture and information
@@ -252,6 +317,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-}
 
+
+  Future selectAvatar() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+
+    if (result == null) return;
+
+    /// to get the path of the file
+    final path = result.files.single.path!;
+
+    setState(() {
+      file = File(path);
+      fileName = result.files.single.name;
+    });
+  }
+
+  /// to upload a file
+  Future uploadAvatar() async {
+    await selectAvatar().whenComplete(
+      () async {
+        print('User UID: ${this.player!.uid}');
+        if (file == null) return;
+
+        final destination = 'players/${this.player!.uid}/assets/$fileName';
+        print("LOCATION: $destination");
+
+        task = UploadFileToFirebaseService.uploadFile(
+            destination, file!, this.player!.uid);
+        setState(() {});
+
+        if (task == null) return;
+
+        final snapshot = await task!;
+
+        final urlDownload = await snapshot.ref.getDownloadURL();
+
+        LoadPlayerInformationService.updateAvatar(this.player!.uid, fileName!,
+            destination, urlDownload, this.player!.avatarImage.url);
+        print('Download link: $urlDownload');
+        Navigator.pop(context);
+      },
+    );
+  }
+}
 

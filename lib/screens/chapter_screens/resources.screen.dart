@@ -112,8 +112,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final item = this.resourcesDto!.externalLinks.elementAt(index);
-                print(item);
-                print(item.kind);
+                // print(item);
+                // print(item.kind);
 
                 ///calls the custom widget with the item parameters
                 if (item is ExternalLinkDto) {
