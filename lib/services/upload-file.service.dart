@@ -27,14 +27,14 @@ class UploadFileToFirebaseService {
     }
   }
 
-  static void writeMedal(String userUID, String cityRef) {
+  static void writeMedal(String userUID, String cityRef) async {
     Map<String, dynamic> medal = {
       'cityRef': cityRef,
       'obtained': true,
       'obtainedDate': Timestamp.now()
     };
 
-    FirebaseFirestore.instance.collection('players').doc(userUID).update(
+    await FirebaseFirestore.instance.collection('players').doc(userUID).update(
       {
         'medals': FieldValue.arrayUnion([medal])
       },
@@ -43,7 +43,10 @@ class UploadFileToFirebaseService {
 
   static void writePlayerProjectFile(
       String userUID, String cityRef, String path, String url) async {
-    Map<String, dynamic> projectFile = {'path': path, 'url': url};
+    Map<String, dynamic> projectFile = {
+      'path': path,
+      'url': url,
+    };
     LoadPlayerInformationService playerLoader = LoadPlayerInformationService();
     List<PlayerProject> projects = await playerLoader.loadProjects(userUID);
     bool existingProject = false;
