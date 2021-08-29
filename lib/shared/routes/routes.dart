@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lab_movil_2222/chat/screens/chat.screen.dart';
-import 'package:lab_movil_2222/chat/screens/detailed-multimedia.screen.dart';
-import 'package:lab_movil_2222/chat/screens/list-chats.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chat.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/list-chats.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
