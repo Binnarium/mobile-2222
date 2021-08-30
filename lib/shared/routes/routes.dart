@@ -4,16 +4,14 @@ import 'package:lab_movil_2222/chat/ui/screens/chat.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/list-chats.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/club_house.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
-
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
@@ -52,9 +50,6 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case RegisterScreen.route:
           return RegisterScreen();
-
-        case ClubHouseScreen.route:
-          return ClubHouseScreen();
 
         case StatisticsScreen.route:
           return StatisticsScreen();
@@ -143,10 +138,10 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             city: args.city,
           );
 
-        case ChapterClubhouseScreen.route:
-          final args = settings.arguments as ChapterClubhouseScreen;
-          return ChapterClubhouseScreen(
-            chapterSettings: args.chapterSettings,
+        case ClubhouseScreen.route:
+          final args = settings.arguments as ClubhouseScreen;
+          return ClubhouseScreen(
+            city: args.city,
           );
 
         case ProjectVideoScreen.route:

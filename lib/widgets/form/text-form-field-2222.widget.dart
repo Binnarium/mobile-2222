@@ -20,6 +20,8 @@ class TextFormField222 extends StatelessWidget {
   /// TODO: add docs
   final IconData? prefixIcon;
 
+  final Color primaryColor;
+
   /// TODO: add docs
   final TextEditingController? controller;
 
@@ -32,6 +34,7 @@ class TextFormField222 extends StatelessWidget {
     this.validator,
     this.prefixIcon,
     this.controller,
+    this.primaryColor = Colors2222.red,
   }) : super(key: key);
 
   TextFormField222.password({
@@ -41,6 +44,7 @@ class TextFormField222 extends StatelessWidget {
     this.prefixIcon,
     this.controller,
     this.validator,
+    this.primaryColor = Colors2222.red,
   })  : this.keyboardType = TextInputType.name,
         this.obscureText = true,
         super(key: key);
@@ -59,7 +63,7 @@ class TextFormField222 extends StatelessWidget {
       keyboardType: this.keyboardType,
 
       /// decorate input to match 2222 style
-      cursorColor: Colors2222.red,
+      cursorColor: this.primaryColor,
 
       /// style inner text
       style: inputStyle.copyWith(color: Colors2222.black),
@@ -77,7 +81,7 @@ class TextFormField222 extends StatelessWidget {
             ? null
             : Icon(
                 this.prefixIcon,
-                color: Colors2222.red,
+                color: this.primaryColor,
               ),
 
         /// style background
