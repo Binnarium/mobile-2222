@@ -61,13 +61,25 @@ class ImageDto extends AssetDto {
   final int width;
   final int height;
 
+  ImageDto({
+    required this.height,
+    required this.width,
+    required String name,
+    required String path,
+    required String url,
+  }) : super(
+          name: name,
+          path: path,
+          url: url,
+        );
+
   ImageDto.fromMap(final Map<String, dynamic> payload)
-      : this.height = payload['height'],
-        this.width = payload['width'],
+      : this.height = payload['height'] ?? 0,
+        this.width = payload['width'] ?? 0,
         super(
-          name: payload['name'],
-          path: payload['path'],
-          url: payload['url'],
+          name: payload['name'] ?? "",
+          path: payload['path'] ?? "",
+          url: payload['url'] ?? "",
         );
 
   ImageProvider get image => NetworkImage(this.url);

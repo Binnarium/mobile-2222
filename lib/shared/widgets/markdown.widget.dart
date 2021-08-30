@@ -75,6 +75,38 @@ class TeamContentMarkdown extends StatelessWidget {
 ///
 ///
 ///
+class ContributionContenMarkdown extends StatelessWidget {
+  const ContributionContenMarkdown({
+    Key? key,
+    required this.contributionContent,
+  }) : super(key: key);
+
+  final String contributionContent;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
+    return fmd.MarkdownBody(
+      data: this.contributionContent,
+      builders: {
+        'h2': _MarkdownCenterText(),
+        'h3': _MarkdownCenterText(padding: EdgeInsets.only(top: 35)),
+        'h4': _MarkdownCenterText(padding: EdgeInsets.only(top: 10)),
+        'p': _MarkdownCustomCreators(),
+      },
+      styleSheet: fmd.MarkdownStyleSheet(
+        h2: textTheme.headline4!.apply(fontWeightDelta: 10),
+        h3: textTheme.headline6,
+        h4: textTheme.caption,
+        p: textTheme.subtitle1,
+      ),
+    );
+  }
+}
+///
+///
+///
 class WorkloadMarkdown extends StatelessWidget {
   final String workload;
 

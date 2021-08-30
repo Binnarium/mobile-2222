@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -146,15 +147,28 @@ class CityNavigator {
             ),
           ),
 
+        ///Contribution
+        if (enabledPagesDto.activities && enabledPagesDto.contribution)
+          _ScaffoldRouteBuilder(
+            route: CityContributionScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              CityContributionScreen.route,
+              arguments: CityContributionScreen(
+                city: city,
+              ),
+            ),
+          ),
+
         /// clubhouse
         if (enabledPagesDto.activities && enabledPagesDto.clubhouse)
           _ScaffoldRouteBuilder(
-            route: ChapterClubhouseScreen.route,
+            route: ClubhouseScreen.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              ChapterClubhouseScreen.route,
-              arguments: ChapterClubhouseScreen(
-                chapterSettings: city,
+              ClubhouseScreen.route,
+              arguments: ClubhouseScreen(
+                city: city,
               ),
             ),
           ),

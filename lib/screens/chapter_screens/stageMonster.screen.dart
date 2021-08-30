@@ -23,7 +23,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size);
+    // print(size);
     return Scaffold2222(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],

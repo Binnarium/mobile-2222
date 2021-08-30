@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/chapterClubhouse.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
@@ -87,7 +88,13 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   color: this.widget.city.color,
                   content: this.activity!.contribution,
                   iconPath: "assets/icons/multiple_choice_activity_icon.png",
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    CityContributionScreen.route,
+                    arguments: CityContributionScreen(
+                      city: this.widget.city,
+                    ),
+                  ),
                   title: "Tu Contribución",
                 ),
               ),
@@ -106,9 +113,9 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   iconPath: "assets/icons/clubhouse_activity_icon.png",
                   onTap: () => Navigator.pushNamed(
                     context,
-                    ChapterClubhouseScreen.route,
-                    arguments: ChapterClubhouseScreen(
-                      chapterSettings: this.widget.city,
+                    ClubhouseScreen.route,
+                    arguments: ClubhouseScreen(
+                      city: this.widget.city,
                     ),
                   ),
                   title: "Eventos Clubhouse",

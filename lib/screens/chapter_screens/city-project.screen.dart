@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/models/player-projects.dto.dart';
 import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
@@ -18,6 +20,7 @@ import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
+import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
@@ -43,9 +46,9 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   late List<CityDto> chapters;
 
   AudioPlayerProvider audioProvider = AudioPlayerProvider();
-
+  List<PlayerProject>? playerProjects = [];
   ProjectDto? project;
-
+  String? userUID;
   @override
   void initState() {
     super.initState();
@@ -59,6 +62,18 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         .projectLoader
         .load()
         .then((value) => this.setState(() => this.project = value));
+    loadPlayerProjects();
+  }
+
+  /// to load the projects of the player and set to this screen
+  void loadPlayerProjects() async {
+    this.userUID = FirebaseAuth.instance.currentUser!.uid;
+    LoadPlayerInformationService playerLoader = LoadPlayerInformationService();
+    await playerLoader
+        .loadProjects(this.userUID!)
+        .then((value) => this.setState(() {
+              this.playerProjects = value;
+            }));
   }
 
   @override
@@ -71,14 +86,16 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
-      body: _projectSheet(context, size, this.widget.city.color),
+      body: _projectSheet(context, size, this.widget.city.color, userUID!,
+          this.playerProjects!),
     );
   }
 
-  _projectSheet(BuildContext context, Size size, Color color) {
+  _projectSheet(BuildContext context, Size size, Color color, String userUID,
+      List<PlayerProject> playerProjects) {
     final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
-
+    setState(() {});
     return ListView(
       padding:
           EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 50),
@@ -150,10 +167,19 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               ),
             ),
             SizedBox(
-              height: 60,
+              height: 40,
             ),
+            ProjectGalleryWidget(
+                city: this.widget.city,
+                userUID: userUID,
+                projects: playerProjects),
           ],
-          _taskButton(context, color, this.widget.city.name)
+
+          _taskButton(
+            context,
+            color,
+            this.widget.city.name,
+          )
         ],
       ],
     );
@@ -184,7 +210,7 @@ _taskButton(BuildContext context, color, String cityName) {
             });
       },
       child: Text(
-        'Subir Tarea',
+        'Subir Proyecto',
         style: Theme.of(context)
             .textTheme
             .bodyText1!
@@ -278,9 +304,9 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   Future selectFile() async {
     print('User UID: $userUID');
 
-    print('playerdto: ${player!.medals.first.obtained}');
-    print('playerdto: ${player!.points}');
-    print('playerdto: ${player!.uid}');
+    print('playerdto: ${player?.medals.first.obtained}');
+    print('playerdto: ${player?.points}');
+    print('playerdto: ${player?.uid}');
 
     final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
