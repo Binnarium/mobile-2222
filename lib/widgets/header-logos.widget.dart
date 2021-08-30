@@ -1,10 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 
-class CityStageWidget extends StatelessWidget {
+class LogosHeader extends StatelessWidget {
+  final bool showAppLogo;
+  final CityDto? showStageLogoCity;
+
+  const LogosHeader({
+    this.showAppLogo = false,
+    this.showStageLogoCity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (this.showAppLogo) AppLogo(kind: AppImage.cityLogo),
+
+        /// added a container in the middle, so that in the event of any of
+        /// the components is not enabled, it gets pushed to the right side using
+        /// the property of colum space between
+        Container(),
+
+        /// when a city logo is provided then show the stage logo
+        if (this.showStageLogoCity != null)
+          Flexible(
+            child: Container(
+              margin: EdgeInsets.only(top: 16, right: size.width * 0.04),
+              child: _CityStageWidget(cityDto: this.showStageLogoCity!),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _CityStageWidget extends StatelessWidget {
   final CityDto cityDto;
 
-  const CityStageWidget({
+  const _CityStageWidget({
     Key? key,
     required this.cityDto,
   }) : super(key: key);
@@ -33,8 +70,7 @@ class CityStageWidget extends StatelessWidget {
             /// stage of the city
             Text(
               this.cityDto.phaseName,
-              style: textTheme.headline5!
-                  .copyWith(decoration: TextDecoration.none),
+              style: textTheme.headline5,
               textAlign: TextAlign.right,
               textScaleFactor: fontSizeFactor,
             ),
@@ -43,8 +79,7 @@ class CityStageWidget extends StatelessWidget {
             Text(
               this.cityDto.name.toUpperCase(),
               textAlign: TextAlign.right,
-              style: textTheme.headline6!
-                  .copyWith(decoration: TextDecoration.none),
+              style: textTheme.headline6,
               textScaleFactor: fontSizeFactor,
             ),
           ],
@@ -52,11 +87,11 @@ class CityStageWidget extends StatelessWidget {
 
         /// space between icon and stage name
         SizedBox(
-          width: (size.width > 380) ? 10 : 5,
+          width: (size.width > 380) ? 8 : 4,
         ),
 
         /// city icon
-        /// important images are specked to have a 1:1 aspect ratio, therefore
+        /// important: images are specked to have a 1:1 aspect ratio, therefore
         /// image size determinate width and height of an image
         Hero(
           tag: this.cityDto.imageTag,

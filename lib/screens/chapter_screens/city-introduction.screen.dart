@@ -5,9 +5,9 @@ import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
@@ -57,9 +57,9 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
           /// app logo
           Padding(
             padding: EdgeInsets.only(bottom: 64),
-            child: ChapterHeadWidget(
+            child: LogosHeader(
               showAppLogo: true,
-              city: widget.city,
+              showStageLogoCity: widget.city,
             ),
           ),
 

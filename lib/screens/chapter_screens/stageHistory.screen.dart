@@ -6,9 +6,9 @@ import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageHistoryScreen extends StatefulWidget {
@@ -57,9 +57,8 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
       route: StageHistoryScreen.route,
       body: ListView(
         children: <Widget>[
-          ChapterHeadWidget(
-            showStageLogo: true,
-            city: this.widget.city,
+          LogosHeader(
+            showStageLogoCity: this.widget.city,
           ),
           SizedBox(height: spacedBodyContainers),
           // _imageOne(size),
