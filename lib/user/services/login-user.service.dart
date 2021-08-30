@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/user/models/login-form.model.dart';
 
 enum LoginErrorCode {
@@ -18,7 +18,7 @@ class LoginException implements Exception {
 }
 
 abstract class ILoginService {
-  Future<PlayerDto> login(LoginFormModel formModel);
+  Future<PlayerModel> login(LoginFormModel formModel);
 }
 
 class LoginService extends ILoginService {
@@ -26,7 +26,7 @@ class LoginService extends ILoginService {
   final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
 
   @override
-  Future<PlayerDto> login(LoginFormModel formModel) async {
+  Future<PlayerModel> login(LoginFormModel formModel) async {
     final User user = await this._signIn(
       formModel.email,
       formModel.password,
@@ -36,7 +36,7 @@ class LoginService extends ILoginService {
         await this._fFirestore.collection('players').doc(user.uid).get();
 
     if (!payload.exists) throw LoginException(LoginErrorCode.playerNotFound);
-    return PlayerDto.fromMap(payload.data()!);
+    return PlayerModel.fromMap(payload.data()!);
   }
 
   Future<User> _signIn(String email, String password) async {

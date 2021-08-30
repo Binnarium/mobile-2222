@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
@@ -239,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
       this._formKey.currentState!.save();
 
       try {
-        final PlayerDto player =
+        final PlayerModel player =
             await this._loginService.login(this._formValue);
         ScaffoldMessenger.of(context).showSnackBar(
           AuthenticationSnackbar.welcome(

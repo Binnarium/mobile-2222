@@ -3,7 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/models/player-contributions.dto.dart';
 import 'package:lab_movil_2222/models/player-projects.dto.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 
 class LoadPlayerInformationService {
   Future<List<PlayerProject>> loadProjects(String userUID) async {
@@ -46,8 +46,8 @@ class LoadPlayerInformationService {
   }
 
   
-
-  Future<PlayerDto> loadInformation(String userUID) async {
+@Deprecated('do not use this implementation')
+  Future<PlayerModel> loadInformation(String userUID) async {
 
     final payload = await FirebaseFirestore.instance
         .collection('players')
@@ -56,7 +56,7 @@ class LoadPlayerInformationService {
 
     if (!payload.exists)
       throw new ErrorDescription('Player information not found');
-    return PlayerDto.fromMap(payload.data()!);
+    return PlayerModel.fromMap(payload.data()!);
   }
 
   static void updateAvatar(String userUID, String filename, String path,

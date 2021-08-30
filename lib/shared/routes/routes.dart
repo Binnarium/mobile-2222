@@ -7,6 +7,7 @@ import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
+import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
@@ -20,7 +21,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart'
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
-import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
@@ -65,8 +65,6 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case ProfileScreen.route:
           return ProfileScreen();
-
-     
 
         case CityIntroductionScreen.route:
           final args = settings.arguments as CityIntroductionScreen;
@@ -166,9 +164,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           final args = settings.arguments as ContributionIdeasScreen;
           return ContributionIdeasScreen(
             city: args.city,
-          );  
-
-        
+          );
 
         case ManualVideoScreen.route:
           final args = settings.arguments as ManualVideoScreen;

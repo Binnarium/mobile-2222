@@ -10,8 +10,8 @@ import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/player-projects.dto.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
@@ -241,7 +241,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   String? userUID;
   File? file;
   String? fileName;
-  PlayerDto? player;
+  PlayerModel? player;
 
   @override
   void initState() {
@@ -304,8 +304,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   Future selectFile() async {
     print('User UID: $userUID');
 
-    print('playerdto: ${player?.medals.first.obtained}');
-    print('playerdto: ${player?.points}');
+    print('playerdto: ${player?.projectAwards.first.obtained}');
     print('playerdto: ${player?.uid}');
 
     final result = await FilePicker.platform.pickFiles(
@@ -341,8 +340,8 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     final snapshot = await task!.whenComplete(
       () => {
         /// seeks for all medals in the medals array
-        player!.medals.asMap().forEach((key, value) {
-          if (value.cityRef == this.widget.cityName) {
+        player!.projectAwards.asMap().forEach((key, value) {
+          if (value.cityId == this.widget.cityName) {
             medalFound = true;
             print('hay medalla');
           }

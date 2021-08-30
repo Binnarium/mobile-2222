@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/ui/screens/list-chats.screen.dart';
+import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
-import 'package:lab_movil_2222/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 

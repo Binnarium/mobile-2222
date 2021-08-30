@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 
 class UserService {
   final FirebaseAuth _firebaseAuth;
@@ -34,7 +34,7 @@ class UserService {
 
   /// TODO: move to correct file
   /// TODO: refactor
-  Stream<PlayerDto?> player$() {
+  Stream<PlayerModel?> player$() {
     return this.user$().asyncMap((event) async {
       print(event);
       if (event == null) return null;
@@ -45,7 +45,7 @@ class UserService {
           .get();
 
       if (!payload.exists) return null;
-      return PlayerDto.fromMap(payload.data()!);
+      return PlayerModel.fromMap(payload.data()!);
     });
   }
 

@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-contribution.service.dart';
-
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -36,7 +34,7 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
   String? userUID;
 
   String? fileName;
-  PlayerDto? player;
+  PlayerModel? player;
   @override
   void initState() {
     super.initState();
