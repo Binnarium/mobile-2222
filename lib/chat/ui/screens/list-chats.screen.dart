@@ -8,10 +8,10 @@ import 'package:lab_movil_2222/chat/services/search-chats.service.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-list-title.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/list-chat-item.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 
 class ListChatsScreen extends StatefulWidget {
   static const route = "/list-chats";
@@ -59,8 +59,8 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
     final double sidePadding = size.width * 0.08;
 
     return Scaffold(
-      bottomNavigationBar: CustomNavigationBar(
-        activePage: NavigationBarPages.chat,
+      bottomNavigationBar: Lab2222BottomNavigationBar(
+        activePage: Lab2222NavigationBarPages.chat,
       ),
       backgroundColor: Colors2222.primary,
       body: ListView(
