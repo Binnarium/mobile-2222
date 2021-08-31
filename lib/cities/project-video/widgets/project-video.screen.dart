@@ -42,7 +42,7 @@ class _ProjectVideoScreenState extends State<ProjectVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: ProjectVideoScreen.route,

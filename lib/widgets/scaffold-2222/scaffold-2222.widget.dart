@@ -269,8 +269,9 @@ class Scaffold2222 extends StatelessWidget {
     required String route,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
-        this.showBottomNavigationBar = true,
-        this.backgroundColor = city.color,
+        this._showBottomNavigationBar = true,
+        this._backgroundColor = city.color,
+        this._backButton = true,
         super(key: key);
 
   Scaffold2222.city({
@@ -281,8 +282,9 @@ class Scaffold2222 extends StatelessWidget {
     Color? color = Colors2222.red,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
-        this.showBottomNavigationBar = true,
-        this.backgroundColor = color ?? city.color,
+        this._showBottomNavigationBar = true,
+        this._backButton = true,
+        this._backgroundColor = color ?? city.color,
         super(key: key);
 
   Scaffold2222.empty({
@@ -290,8 +292,9 @@ class Scaffold2222 extends StatelessWidget {
     required this.body,
     this.backgrounds = const [],
   })  : this._nextRoute = null,
-        this.showBottomNavigationBar = false,
-        this.backgroundColor = Colors2222.red,
+        this._backButton = false,
+        this._showBottomNavigationBar = false,
+        this._backgroundColor = Colors2222.red,
         super(key: key);
 
   Scaffold2222.navigation({
@@ -299,20 +302,22 @@ class Scaffold2222 extends StatelessWidget {
     required this.body,
     this.backgrounds = const [],
   })  : this._nextRoute = null,
-        this.showBottomNavigationBar = true,
-        this.backgroundColor = Colors2222.red,
+        this._backButton = false,
+        this._showBottomNavigationBar = true,
+        this._backgroundColor = Colors2222.red,
         super(key: key);
 
   final Widget body;
   final List<BackgroundDecorationStyle> backgrounds;
   final _ScaffoldRouteBuilder? _nextRoute;
-  final bool showBottomNavigationBar;
-  final Color backgroundColor;
-  
+  final bool _backButton;
+  final bool _showBottomNavigationBar;
+  final Color _backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     /// back button
-    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback? prevPage = _backButton ? () => Navigator.pop(context) : null;
 
     /// next page button
     VoidCallback? nextPage = this._nextRoute == null
@@ -321,10 +326,10 @@ class Scaffold2222 extends StatelessWidget {
 
     /// page layout
     return Scaffold(
-      backgroundColor: this.backgroundColor,
+      backgroundColor: this._backgroundColor,
 
       /// add bottom navigation if enabled
-      bottomNavigationBar: (this.showBottomNavigationBar)
+      bottomNavigationBar: (this._showBottomNavigationBar)
           ? Lab2222BottomNavigationBar(
               nextPage: nextPage,
               prevPage: prevPage,
@@ -335,7 +340,7 @@ class Scaffold2222 extends StatelessWidget {
       body: GestureDetector(
         onPanUpdate: (details) {
           /// left
-          if (details.delta.dx > 5) prevPage();
+          if (prevPage != null && details.delta.dx > 5) prevPage();
 
           /// right
           if (nextPage != null && details.delta.dx < -5) nextPage();

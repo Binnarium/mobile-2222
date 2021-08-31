@@ -45,20 +45,17 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
               active: this.activePage == Lab2222NavigationBarPages.home,
             ),
             Lab2222BottomNavigationBarItem(
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, ProfileScreen.route),
+              onTap: () => Navigator.pushNamed(context, ProfileScreen.route),
               icon: AssetImage('assets/navbar/user.png'),
               active: this.activePage == Lab2222NavigationBarPages.profile,
             ),
             Lab2222BottomNavigationBarItem(
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, WelcomeScreen.route),
+              onTap: () => Navigator.pushNamed(context, WelcomeScreen.route),
               icon: AssetImage('assets/navbar/info.png'),
               active: this.activePage == Lab2222NavigationBarPages.information,
             ),
             Lab2222BottomNavigationBarItem(
-              onTap: () => Navigator.pushReplacementNamed(
-                  context, ListChatsScreen.route),
+              onTap: () => Navigator.pushNamed(context, ListChatsScreen.route),
               icon: AssetImage('assets/navbar/message-square.png'),
               active: this.activePage == Lab2222NavigationBarPages.chat,
             ),
