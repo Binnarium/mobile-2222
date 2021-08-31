@@ -103,7 +103,7 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
                 ),
                 Flexible(
                   flex: 3,
-                  child: Text("docente-instituciones".toUpperCase(),
+                  child: Text(text2,
                       textAlign: TextAlign.center,
                       style: textTheme.headline2
                           ?.copyWith(fontSize: (maxWidth > 360) ? 30 : 26)),
