@@ -13,13 +13,13 @@ import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/medals-list-item_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
@@ -64,8 +64,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double sideSpacing = size.width * 0.08;
     return Scaffold(
       backgroundColor: Colors2222.red,
-      bottomNavigationBar: CustomNavigationBar(
-        activePage: NavigationBarPages.page3,
+      bottomNavigationBar: Lab2222BottomNavigationBar(
+        activePage: Lab2222NavigationBarPages.information,
       ),
       body: BackgroundDecoration(
         backgroundDecorationsStyles: [

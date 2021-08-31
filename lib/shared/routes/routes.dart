@@ -19,7 +19,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/screens/goals.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
@@ -59,9 +58,6 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
 
         case StatisticsScreen.route:
           return StatisticsScreen();
-
-        case GoalsScreen.route:
-          return GoalsScreen();
 
         case ProfileScreen.route:
           return ProfileScreen();
