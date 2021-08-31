@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/micro_meso_macro.screen..dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
@@ -207,6 +208,19 @@ class CityNavigator {
               context,
               ManualVideoScreen.route,
               arguments: ManualVideoScreen(
+                city: city,
+              ),
+            ),
+          ),
+
+        /// mcrso-meso-macro
+        if (enabledPagesDto.microMesoMacro)
+          _ScaffoldRouteBuilder(
+            route: MicroMesoMacroScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              MicroMesoMacroScreen.route,
+              arguments: MicroMesoMacroScreen(
                 city: city,
               ),
             ),

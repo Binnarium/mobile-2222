@@ -14,6 +14,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart'
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/micro_meso_macro.screen..dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
@@ -139,6 +140,11 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ClubhouseScreen.route:
           final args = settings.arguments as ClubhouseScreen;
           return ClubhouseScreen(
+            city: args.city,
+          );
+        case MicroMesoMacroScreen.route:
+          final args = settings.arguments as MicroMesoMacroScreen;
+          return MicroMesoMacroScreen(
             city: args.city,
           );
 
