@@ -255,7 +255,6 @@ class Scaffold2222 extends StatelessWidget {
     required String route,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
-        this.route = route,
         this.showBottomNavigationBar = true,
         this.backgroundColor = city.color,
         super(key: key);
@@ -268,7 +267,6 @@ class Scaffold2222 extends StatelessWidget {
     Color? color = Colors2222.red,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
-        this.route = route,
         this.showBottomNavigationBar = true,
         this.backgroundColor = color ?? city.color,
         super(key: key);
@@ -276,10 +274,8 @@ class Scaffold2222 extends StatelessWidget {
   Scaffold2222.empty({
     Key? key,
     required this.body,
-    required String route,
     this.backgrounds = const [],
   })  : this._nextRoute = null,
-        this.route = route,
         this.showBottomNavigationBar = false,
         this.backgroundColor = Colors2222.red,
         super(key: key);
@@ -287,20 +283,18 @@ class Scaffold2222 extends StatelessWidget {
   Scaffold2222.navigation({
     Key? key,
     required this.body,
-    required String route,
     this.backgrounds = const [],
   })  : this._nextRoute = null,
-        this.route = route,
         this.showBottomNavigationBar = true,
         this.backgroundColor = Colors2222.red,
         super(key: key);
 
   final Widget body;
-  final String route;
   final List<BackgroundDecorationStyle> backgrounds;
   final _ScaffoldRouteBuilder? _nextRoute;
   final bool showBottomNavigationBar;
   final Color backgroundColor;
+  
   @override
   Widget build(BuildContext context) {
     /// back button

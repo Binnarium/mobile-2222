@@ -7,7 +7,6 @@ import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,8 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Lab2222BottomNavigationBar(),
+    return Scaffold2222.navigation(
       body: (this.cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
