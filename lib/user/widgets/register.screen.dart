@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -158,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (this._formKey.currentState!.validate()) {
       this._formKey.currentState!.save();
       try {
-        final PlayerDto createdPlayer =
+        final PlayerModel createdPlayer =
             await this.registerService.register(this._formValue);
 
         /// complete navigation and notify user

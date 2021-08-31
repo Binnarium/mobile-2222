@@ -5,11 +5,11 @@ import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/online-resources-grid-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/reading-item.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ResourcesScreen extends StatefulWidget {
@@ -63,9 +63,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: ChapterHeadWidget(
-            showStageLogo: true,
-            city: this.widget.city,
+          child: LogosHeader(
+            showStageLogoCity: this.widget.city,
           ),
         ),
         if (this.resourcesDto == null)

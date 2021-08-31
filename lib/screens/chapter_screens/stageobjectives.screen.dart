@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/Competence.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/chapter-title-section.dart';
 import 'package:lab_movil_2222/shared/widgets/compe-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/idea-resources-list-item_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
@@ -58,9 +58,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       height: double.infinity,
       child: ListView(
         children: <Widget>[
-          ChapterHeadWidget(
-            showStageLogo: true,
-            city: this.widget.chapterSettings,
+          LogosHeader(
+            showStageLogoCity: this.widget.chapterSettings,
           ),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(

@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
@@ -31,7 +31,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   String? userUID;
   File? file;
   String? fileName;
-  PlayerDto? player;
+  PlayerModel? player;
 
   @override
   void initState() {
@@ -123,8 +123,8 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     final snapshot = await task!.whenComplete(
       () => {
         /// seeks for all medals in the medals array
-        player!.medals.asMap().forEach((key, value) {
-          if (value.cityRef == this.widget.cityName) {
+        player!.projectAwards.asMap().forEach((key, value) {
+          if (value.cityId == this.widget.cityName) {
             medalFound = true;
             print('hay medalla');
           }

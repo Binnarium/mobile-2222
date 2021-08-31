@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/user/models/register-form.model.dart';
 import 'package:lab_movil_2222/user/models/registered-player.model.dart';
 
@@ -22,7 +22,7 @@ abstract class IRegisterService {
   /// function to register a player to the application
   ///
   /// A [RegisterException] maybe thrown
-  Future<PlayerDto> register(RegisterFormModel formModel);
+  Future<PlayerModel> register(RegisterFormModel formModel);
 }
 
 /// register implementation using firebase services
@@ -31,7 +31,7 @@ class RegisterService extends IRegisterService {
   final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
 
   @override
-  Future<PlayerDto> register(RegisterFormModel formModel) async {
+  Future<PlayerModel> register(RegisterFormModel formModel) async {
     /// get player inscription information
     final PlayerInscription playerInscribed =
         await this._getInscription(formModel.email);
@@ -41,8 +41,7 @@ class RegisterService extends IRegisterService {
         await this._createAccount(formModel.email, formModel.password);
 
     /// create new player account
-    final PlayerDto newPlayer = PlayerDto(
-      
+    final PlayerModel newPlayer = PlayerModel.empty(
       uid: user.uid,
       displayName: '${playerInscribed.name} ${playerInscribed.lastName}',
       email: formModel.email,
@@ -71,7 +70,7 @@ class RegisterService extends IRegisterService {
   }
 
   /// add player to database
-  Future<void> _createPlayer(PlayerDto player) async {
+  Future<void> _createPlayer(PlayerModel player) async {
     try {
       await this
           ._fFirestore

@@ -9,14 +9,16 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/micro_meso_macro.screen..dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 
-import '../../shared/widgets/custom_navigation_bar.dart';
+import 'bottom-navigation-bar-widget.dart';
 
 class _ScaffoldRouteBuilder {
   final String route;
@@ -211,6 +213,19 @@ class CityNavigator {
               ),
             ),
           ),
+
+        /// mcrso-meso-macro
+        if (enabledPagesDto.microMesoMacro)
+          _ScaffoldRouteBuilder(
+            route: MicroMesoMacroScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              MicroMesoMacroScreen.route,
+              arguments: MicroMesoMacroScreen(
+                city: city,
+              ),
+            ),
+          ),
       ];
 
   ///
@@ -246,6 +261,7 @@ class CityNavigator {
 }
 
 class Scaffold2222 extends StatelessWidget {
+  @Deprecated('use a proper constructor instead')
   Scaffold2222({
     Key? key,
     required this.body,
@@ -253,20 +269,55 @@ class Scaffold2222 extends StatelessWidget {
     required String route,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
-        this.city = city,
-        this.route = route,
+        this._showBottomNavigationBar = true,
+        this._backgroundColor = city.color,
+        this._backButton = true,
+        super(key: key);
+
+  Scaffold2222.city({
+    Key? key,
+    required this.body,
+    required CityDto city,
+    required String route,
+    Color? color = Colors2222.red,
+    this.backgrounds = const [],
+  })  : this._nextRoute = CityNavigator.getNextPage(route, city),
+        this._showBottomNavigationBar = true,
+        this._backButton = true,
+        this._backgroundColor = color ?? city.color,
+        super(key: key);
+
+  Scaffold2222.empty({
+    Key? key,
+    required this.body,
+    this.backgrounds = const [],
+  })  : this._nextRoute = null,
+        this._backButton = false,
+        this._showBottomNavigationBar = false,
+        this._backgroundColor = Colors2222.red,
+        super(key: key);
+
+  Scaffold2222.navigation({
+    Key? key,
+    required this.body,
+    this.backgrounds = const [],
+  })  : this._nextRoute = null,
+        this._backButton = false,
+        this._showBottomNavigationBar = true,
+        this._backgroundColor = Colors2222.red,
         super(key: key);
 
   final Widget body;
-  final String route;
   final List<BackgroundDecorationStyle> backgrounds;
-  final CityDto city;
   final _ScaffoldRouteBuilder? _nextRoute;
+  final bool _backButton;
+  final bool _showBottomNavigationBar;
+  final Color _backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     /// back button
-    VoidCallback prevPage = () => Navigator.pop(context);
+    VoidCallback? prevPage = _backButton ? () => Navigator.pop(context) : null;
 
     /// next page button
     VoidCallback? nextPage = this._nextRoute == null
@@ -275,19 +326,21 @@ class Scaffold2222 extends StatelessWidget {
 
     /// page layout
     return Scaffold(
-      backgroundColor: this.city.color,
+      backgroundColor: this._backgroundColor,
 
-      /// add bottom navigation
-      bottomNavigationBar: CustomNavigationBar(
-        nextPage: nextPage,
-        prevPage: prevPage,
-      ),
+      /// add bottom navigation if enabled
+      bottomNavigationBar: (this._showBottomNavigationBar)
+          ? Lab2222BottomNavigationBar(
+              nextPage: nextPage,
+              prevPage: prevPage,
+            )
+          : null,
 
       /// wrap everything in a gesture detector to move across cities
       body: GestureDetector(
         onPanUpdate: (details) {
           /// left
-          if (details.delta.dx > 5) prevPage();
+          if (prevPage != null && details.delta.dx > 5) prevPage();
 
           /// right
           if (nextPage != null && details.delta.dx < -5) nextPage();

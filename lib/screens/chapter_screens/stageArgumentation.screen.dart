@@ -5,9 +5,9 @@ import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageArgumentationScreen extends StatefulWidget {
@@ -48,9 +48,8 @@ class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
       route: StageArgumentationScreen.route,
       body: ListView(
         children: [
-          ChapterHeadWidget(
-            showStageLogo: true,
-            city: this.widget.chapterSettings,
+          LogosHeader(
+            showStageLogoCity: this.widget.chapterSettings,
           ),
           if (this.questions != null)
             Padding(

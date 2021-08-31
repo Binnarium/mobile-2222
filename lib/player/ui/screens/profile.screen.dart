@@ -5,19 +5,21 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/models/player.dto.dart';
+import 'package:lab_movil_2222/player/models/award.model.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/ui/widgets/points-explanation.widget.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom_navigation_bar.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/medals-list-item_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
@@ -29,7 +31,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _signOutSub;
   StreamSubscription? _loadPlayerSub;
-  PlayerDto? player;
+  PlayerModel? player;
   ImageDto? avatarImage;
 
   @override
@@ -37,19 +39,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     /// load player data
-    this._loadPlayerSub = UserService.instance.player$().listen((player) {
+    this._loadPlayerSub = GetCurrentPlayerService.player$().listen((player) {
       this.setState(() {
         this.player = player;
       });
     });
-    print('Player information: ${this.player?.avatarImage.url}');
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     this._signOutSub?.cancel();
     this._loadPlayerSub?.cancel();
-    super.deactivate();
+    super.dispose();
   }
 
   File? file;
@@ -59,13 +60,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     avatarImage = this.player?.avatarImage;
-    Size size = MediaQuery.of(context).size;
-    double sideSpacing = size.width * 0.08;
-    return Scaffold(
-      backgroundColor: Colors2222.red,
-      bottomNavigationBar: CustomNavigationBar(
-        activePage: NavigationBarPages.page3,
-      ),
+
+    final double sideSpacing = MediaQuery.of(context).size.width * 0.08;
+
+    return Scaffold2222.navigation(
       body: BackgroundDecoration(
         backgroundDecorationsStyles: [
           BackgroundDecorationStyle.path,
@@ -85,8 +83,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Text(
                   'Mi viaje al día'.toUpperCase(),
                   style: Theme.of(context).textTheme.headline4,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -184,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                   padding: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    'NIVELES COMPLETADOS',
+                    'NIVEL DE PROACTIVIDAD',
                     style: Theme.of(context).textTheme.headline5,
                     textAlign: TextAlign.center,
                   )),
@@ -201,73 +197,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  'CONSUMO DE CONTENIDOS',
-                  style: Theme.of(context).textTheme.headline6,
+                  'Premios Obtenidos',
+                  style: Theme.of(context).textTheme.headline5,
                   textAlign: TextAlign.center,
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.only(bottom: 30),
-                child: Text(
-                  '22%',
-                  style: Theme.of(context).textTheme.headline4,
-                  textAlign: TextAlign.center,
+              for (AwardModel medal in this.player!.projectAwards)
+                MedalsListItem(
+                  cityName: medal.cityId,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: sideSpacing, right: sideSpacing, bottom: 10),
-                child: Text(
-                  'PROXIMA ETAPA',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4
-                      ?.apply(fontSizeFactor: 0.60),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: sideSpacing, right: sideSpacing, bottom: 35),
-                child: Text(
-                  'ATLÁNTIDA',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      ?.apply(fontSizeFactor: 0.80, fontWeightDelta: 2),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                  textAlign: TextAlign.center,
-                ),
+
+              MedalsListItem(
+                cityName: 'Quitu',
               ),
 
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
-                child: WorkloadMarkdown(
-                  workload:
-                      'Premios mínimos necesarios para aspirar a seguir en Sharngri-la: 17 puntos!',
-                ),
+                child: ApproveText(),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 25),
                 child: DaysLeftWidget(),
               ),
-
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text(
-                  'Medallas Obtenidas',
-                  style: Theme.of(context).textTheme.headline6,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              for (Medal medal in this.player!.medals)
-                MedalsListItem(
-                  cityName: medal.cityRef,
-                ),
             ],
             _logoutButton(context),
           ],
@@ -356,3 +308,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+

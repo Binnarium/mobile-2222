@@ -11,11 +11,11 @@ import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/club-resources-grid-i
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ClubhouseScreen extends StatefulWidget {
@@ -69,9 +69,8 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           /// icon item
           Padding(
             padding: const EdgeInsets.only(bottom: 50.0),
-            child: ChapterHeadWidget(
-              showStageLogo: true,
-              city: this.widget.city,
+            child: LogosHeader(
+              showStageLogoCity: this.widget.city,
             ),
           ),
 

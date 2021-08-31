@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/chapter-head-banner_widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageMonsterScreen extends StatefulWidget {
@@ -36,10 +36,9 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ChapterHeadWidget(
+        LogosHeader(
           showAppLogo: false,
-          showStageLogo: true,
-          city: this.widget.city,
+          showStageLogoCity: this.widget.city,
         ),
         Expanded(
           child: Center(
