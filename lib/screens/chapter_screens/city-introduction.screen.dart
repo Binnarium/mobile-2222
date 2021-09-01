@@ -59,7 +59,6 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
             padding: EdgeInsets.only(bottom: 64),
             child: LogosHeader(
               showAppLogo: true,
-              showStageLogoCity: widget.city,
             ),
           ),
 
