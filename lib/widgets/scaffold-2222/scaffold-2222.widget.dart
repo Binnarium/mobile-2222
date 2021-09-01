@@ -270,6 +270,7 @@ class Scaffold2222 extends StatelessWidget {
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
         this._showBottomNavigationBar = true,
+        this.appBar = null,
         this._backgroundColor = city.color,
         this._backButton = true,
         super(key: key);
@@ -285,27 +286,34 @@ class Scaffold2222 extends StatelessWidget {
         this._showBottomNavigationBar = true,
         this._backButton = true,
         this._backgroundColor = color ?? city.color,
+        this.appBar = null,
         super(key: key);
 
   Scaffold2222.empty({
     Key? key,
     required this.body,
+    Color backgroundColor = Colors2222.red,
+    this.appBar,
     this.backgrounds = const [],
   })  : this._nextRoute = null,
         this._backButton = false,
         this._showBottomNavigationBar = false,
-        this._backgroundColor = Colors2222.red,
+        this._backgroundColor = backgroundColor,
         super(key: key);
 
   Scaffold2222.navigation({
     Key? key,
     required this.body,
     this.backgrounds = const [],
+    this.appBar,
   })  : this._nextRoute = null,
         this._backButton = false,
         this._showBottomNavigationBar = true,
         this._backgroundColor = Colors2222.red,
         super(key: key);
+
+  /// An app bar to display at the top of the scaffold.
+  final PreferredSizeWidget? appBar;
 
   final Widget body;
   final List<BackgroundDecorationStyle> backgrounds;
@@ -335,6 +343,8 @@ class Scaffold2222 extends StatelessWidget {
               prevPage: prevPage,
             )
           : null,
+
+      appBar: this.appBar,
 
       /// wrap everything in a gesture detector to move across cities
       body: GestureDetector(

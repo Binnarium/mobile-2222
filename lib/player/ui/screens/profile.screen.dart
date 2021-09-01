@@ -39,7 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     /// load player data
-    this._loadPlayerSub = GetCurrentPlayerService.player$().listen((player) {
+    this._loadPlayerSub =
+        CurrentPlayerService.instance.player$.listen((player) {
       this.setState(() {
         this.player = player;
       });

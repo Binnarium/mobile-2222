@@ -5,28 +5,28 @@ import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/search-chat-response.model.dart';
 import 'package:lab_movil_2222/chat/services/list-player-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/search-chats.service.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-list-title.widget.dart';
-import 'package:lab_movil_2222/chat/ui/widgets/list-chat-item.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 
-class ListChatsScreen extends StatefulWidget {
-  static const route = "/list-chats";
+class ChatsScreen extends StatefulWidget {
+  static const route = "/chats";
 
   final Stream<List<ChatModel>> userChats;
 
-  ListChatsScreen({Key? key})
+  ChatsScreen({Key? key})
       : this.userChats = ListPlayerChatsService().getChats,
         super(key: key);
 
   @override
-  _ListChatsScreenState createState() => _ListChatsScreenState();
+  _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-class _ListChatsScreenState extends State<ListChatsScreen> {
+class _ChatsScreenState extends State<ChatsScreen> {
   final SearchChatsService _searchChatsService = SearchChatsService();
   StreamSubscription? _chatsSub;
 

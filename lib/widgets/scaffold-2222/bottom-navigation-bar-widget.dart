@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/ui/screens/list-chats.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
@@ -55,7 +55,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
               active: this.activePage == Lab2222NavigationBarPages.information,
             ),
             Lab2222BottomNavigationBarItem(
-              onTap: () => Navigator.pushNamed(context, ListChatsScreen.route),
+              onTap: () => Navigator.pushNamed(context, ChatsScreen.route),
               icon: AssetImage('assets/navbar/message-square.png'),
               active: this.activePage == Lab2222NavigationBarPages.chat,
             ),
