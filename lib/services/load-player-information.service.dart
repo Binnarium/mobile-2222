@@ -15,11 +15,17 @@ class LoadPlayerInformationService {
 
       final playerProjects =
           _fFirestore.collection('players').doc(userUID).collection('project');
+      // LoadPlayerInformationService._projectsStream = playerProjects
+      //     .snapshots()
+      //     .map((snapshot) => snapshot.docs)
+      //     .map((projects) => projects
+      //         .map((data) => PlayerProject.fromMap(data.data()))
+      //         .toList());
       LoadPlayerInformationService._projectsStream = playerProjects
           .snapshots()
           .map((snapshot) => snapshot.docs)
           .map((projects) => projects
-              .map((data) => PlayerProject.fromMap(data.data(), data.id))
+              .map((data) => PlayerProject.fromMap(data.data()))
               .toList());
     }
     return _projectsStream;
@@ -32,12 +38,8 @@ class LoadPlayerInformationService {
         .collection('project')
         .get();
     if (payload.docs.isNotEmpty) {
-      List<PlayerProject> projects = payload.docs
-          .map((e) => PlayerProject.fromMap(e.data(), e.id))
-          .toList();
-      projects.forEach((element) {
-        // print("USER PROJECTS: ${element.cityName}");
-      });
+      List<PlayerProject> projects =
+          payload.docs.map((e) => PlayerProject.fromMap(e.data())).toList();
       return projects;
     } else
       return [];

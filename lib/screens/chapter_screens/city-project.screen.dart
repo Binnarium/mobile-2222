@@ -101,7 +101,6 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   _projectSheet(BuildContext context, Size size, Color color, String userUID,
       List<PlayerProject> playerProjects) {
-    final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListView(
       padding:
@@ -365,9 +364,16 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     );
     final urlDownload = await snapshot.ref.getDownloadURL();
 
+    /// creates a playerProject instance for this project
+    PlayerProject currentProject = PlayerProject.fromMap({
+      "file": {"path": destination, "url": urlDownload},
+      "cityID": this.widget.cityName,
+      "kind": (this.widget.cityName != "Angkor") ? "PROJECT#PDF" : "PROJECT#MP3"
+    });
+
     /// to write the project in the users project collection
     UploadFileToFirebaseService.writePlayerProjectFile(
-        userUID!, this.widget.cityName, destination, urlDownload);
+        userUID!, currentProject);
     print('Download link: $urlDownload');
   }
 

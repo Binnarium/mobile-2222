@@ -25,17 +25,17 @@ class ProjectGalleryWidget extends StatefulWidget {
 class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
   @override
   Widget build(BuildContext context) {
-    PlayerProject? project;
+    List<PlayerProject> cityProjects = [];
     List<Widget> items = [];
     this.widget.projects.forEach((element) {
       // print(element.cityName);
-      if (element.cityName == this.widget.city.name) {
-        project = element;
+      if (element.cityID == this.widget.city.name) {
+        cityProjects.add(element);
       }
       // print("PROJECT: $project");
     });
-    if (project != null) {
-      items = _gridItemsList(project!);
+    if (cityProjects != []) {
+      items = _gridItemsList(cityProjects);
     }
     return Column(
       children: [
@@ -49,7 +49,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
             ),
           ),
         ),
-        (project == null && items.length == 0)
+        (items.length == 0)
             ? Center(child: Text('Aún no tienes proyectos subidos'))
             : StaggeredGridView.countBuilder(
                 crossAxisCount: 3,
@@ -69,19 +69,17 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
     );
   }
 
-  List<Widget> _gridItemsList(PlayerProject project) {
-    List<ProjectFile> files = [];
+  List<Widget> _gridItemsList(List<PlayerProject> projects) {
     List<Widget> items = [];
-    if (project.cityName == this.widget.city.name) {
-      project.files.forEach((element) {
-        files.add(element);
-        items.add(_gridItem(element));
-      });
-    }
+    projects.forEach((project) {
+      if (project.cityID == this.widget.city.name) {
+        items.add(_gridItem(project));
+      }
+    });
     return items;
   }
 
-  Material _gridItem(ProjectFile file) {
+  Material _gridItem(PlayerProject project) {
     return Material(
       type: MaterialType.transparency,
       child: InkWell(
@@ -89,7 +87,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
           return await showDialog(
               context: context,
               builder: (context) {
-                return fileDialog(file);
+                return fileDialog(project);
               });
         },
         child: Wrap(
@@ -97,17 +95,19 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
           runSpacing: 10,
           children: [
             Icon(
-              Icons.description_rounded,
+              (project.kind == "PROJECT#PDF")
+                  ? Icons.description_outlined
+                  : Icons.headphones_outlined,
               size: 50,
             ),
-            Text(file.path.split("/").last)
+            Text(project.file.path.split("/").last)
           ],
         ),
       ),
     );
   }
 
-  fileDialog(ProjectFile file) {
+  fileDialog(PlayerProject project) {
     return AlertDialog(
       backgroundColor: Colors.black,
       content: Column(
@@ -117,7 +117,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Center(
-                child: Text(file.path.split("/").last),
+                child: Text(project.file.path.split("/").last),
               ),
             ),
             ButtonWidget(
@@ -126,7 +126,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
               text: 'Descargar',
               iconColor: Colors.white,
               onClicked: () {
-                launch(file.url);
+                launch(project.file.url);
               },
             ),
             ButtonWidget(
@@ -136,10 +136,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
               text: 'Eliminar',
               onClicked: () {
                 UploadFileToFirebaseService.deletePlayerProjectFile(
-                    this.widget.userUID,
-                    this.widget.city.name,
-                    file.path,
-                    file);
+                    this.widget.userUID, this.widget.city.name, project);
                 setState(() {});
                 Navigator.pop(context);
               },
