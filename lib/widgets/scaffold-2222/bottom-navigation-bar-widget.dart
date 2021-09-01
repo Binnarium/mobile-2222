@@ -20,7 +20,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
     this.prevPage,
   });
 
-  final Lab2222NavigationBarPages activePage;
+  final Lab2222NavigationBarPages? activePage;
 
   final VoidCallback? nextPage;
   final VoidCallback? prevPage;

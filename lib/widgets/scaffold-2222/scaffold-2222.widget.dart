@@ -273,6 +273,7 @@ class Scaffold2222 extends StatelessWidget {
         this.appBar = null,
         this._backgroundColor = city.color,
         this._backButton = true,
+        this.activePage = null,
         super(key: key);
 
   Scaffold2222.city({
@@ -287,6 +288,7 @@ class Scaffold2222 extends StatelessWidget {
         this._backButton = true,
         this._backgroundColor = color ?? city.color,
         this.appBar = null,
+        this.activePage = null,
         super(key: key);
 
   Scaffold2222.empty({
@@ -299,6 +301,7 @@ class Scaffold2222 extends StatelessWidget {
         this._backButton = false,
         this._showBottomNavigationBar = false,
         this._backgroundColor = backgroundColor,
+        this.activePage = null,
         super(key: key);
 
   Scaffold2222.navigation({
@@ -306,6 +309,7 @@ class Scaffold2222 extends StatelessWidget {
     required this.body,
     this.backgrounds = const [],
     this.appBar,
+    required this.activePage,
   })  : this._nextRoute = null,
         this._backButton = false,
         this._showBottomNavigationBar = true,
@@ -321,7 +325,7 @@ class Scaffold2222 extends StatelessWidget {
   final bool _backButton;
   final bool _showBottomNavigationBar;
   final Color _backgroundColor;
-
+  final Lab2222NavigationBarPages? activePage;
   @override
   Widget build(BuildContext context) {
     /// back button
@@ -341,6 +345,7 @@ class Scaffold2222 extends StatelessWidget {
           ? Lab2222BottomNavigationBar(
               nextPage: nextPage,
               prevPage: prevPage,
+              activePage: activePage,
             )
           : null,
 
