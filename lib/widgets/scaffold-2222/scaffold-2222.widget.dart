@@ -280,7 +280,7 @@ class Scaffold2222 extends StatelessWidget {
     required this.body,
     required CityDto city,
     required String route,
-    Color? color = Colors2222.red,
+    Color? color,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
         this._showBottomNavigationBar = true,
