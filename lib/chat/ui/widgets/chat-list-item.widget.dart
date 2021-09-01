@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
-import 'package:lab_movil_2222/chat/ui/screens/chat.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 
 class ChatListItem extends ListTile {
   ChatListItem({
@@ -43,8 +43,8 @@ class ChatListItem extends ListTile {
 
           /// when pressed then navigate to chats screens
           onTap: () => Navigator.of(context).pushNamed(
-            ChatScreen.route,
-            arguments: ChatScreen(
+            MessagesScreen.route,
+            arguments: MessagesScreen(
               chat: chat,
             ),
           ),
