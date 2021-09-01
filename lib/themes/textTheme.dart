@@ -29,13 +29,13 @@ class KorolevFont extends TextTheme {
             fontFamily: fontFamily,
             fontSize: 44,
             color: textColor,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w300,
           ),
           headline4: TextStyle(
             fontFamily: fontFamily,
             fontSize: 34,
             color: textColor,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w300,
           ),
           headline5: TextStyle(
             fontFamily: fontFamily,
@@ -54,42 +54,49 @@ class KorolevFont extends TextTheme {
             fontSize: 16,
             color: textColor,
             fontWeight: FontWeight.w700,
+            height: 1.1
           ),
           subtitle2: TextStyle(
             fontFamily: fontFamily,
             fontSize: 14,
             color: textColor,
             fontWeight: FontWeight.w700,
+            height: 1.1
           ),
           bodyText1: TextStyle(
             fontFamily: fontFamily,
             fontSize: 16,
             color: textColor,
             fontWeight: FontWeight.w700,
+            height: 1.3,
           ),
           bodyText2: TextStyle(
             fontFamily: fontFamily,
             fontSize: 16,
             color: textColor,
             fontWeight: FontWeight.w500,
+            height: 1.3,
           ),
           caption: TextStyle(
             fontFamily: fontFamily,
             fontSize: 12,
             color: textColor,
             fontWeight: FontWeight.w500,
+            height: 1.2,
           ),
           button: TextStyle(
             fontFamily: fontFamily,
             fontSize: 14,
             color: textColor,
             fontWeight: FontWeight.w600,
+            height: 1.2,
           ),
           overline: TextStyle(
             fontFamily: fontFamily,
             fontSize: 10,
             color: textColor,
             fontWeight: FontWeight.w500,
+            height: 1.2,
           ),
         );
 }

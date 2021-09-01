@@ -78,7 +78,7 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: ContributionContenMarkdown(
+            child: ContributionContentMarkdown(
               contributionContent:
                   '${this.widget.option} DE LA CIUDAD'.toUpperCase(),
             ),
@@ -88,7 +88,7 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: ContributionContenMarkdown(
+            child: ContributionContentMarkdown(
               contributionContent:
                   'EXPLICACIÓN DE LAS CONTRIBUCIONES',
             ),

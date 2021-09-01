@@ -41,7 +41,7 @@ class _ApproveTextState extends State<ApproveText> {
   Widget build(BuildContext context) {
     return this.pointsExplanation == null
         ? AppLoading()
-        : WorkloadMarkdown(
+        : MarkdownCard(
             workload: this.pointsExplanation!.explanation,
           );
   }

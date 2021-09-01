@@ -22,12 +22,14 @@ class Markdown2222 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context).copyWith(
+      textTheme: KorolevFont(textColor: this.color),
+    );
+
     return fmd.MarkdownBody(
       data: this.data,
-      /// TODO: rewrite
-      styleSheet: fmd.MarkdownStyleSheet.fromTheme(Theme.of(context)
-              .copyWith(textTheme: KorolevFont(textColor: this.color)))
-          .copyWith(
+
+      styleSheet: fmd.MarkdownStyleSheet.fromTheme(theme).copyWith(
         h1Align: this.contentAlignment,
         h2Align: this.contentAlignment,
         h3Align: this.contentAlignment,
@@ -35,6 +37,8 @@ class Markdown2222 extends StatelessWidget {
         h5Align: this.contentAlignment,
         h6Align: this.contentAlignment,
         textAlign: this.contentAlignment,
+        blockSpacing: 20
+        
       ),
     );
   }
@@ -58,15 +62,15 @@ class TeamContentMarkdown extends StatelessWidget {
       data: this.teamContent,
       builders: {
         'h2': _MarkdownCenterText(),
-        'h3': _MarkdownCenterText(padding: EdgeInsets.only(top: 35)),
-        'h4': _MarkdownCenterText(padding: EdgeInsets.only(top: 10)),
+        'h3': _MarkdownCenterText(padding: EdgeInsets.only(top: 36)),
+        'h4': _MarkdownCenterText(padding: EdgeInsets.only(top: 16)),
         'p': _MarkdownCustomCreators(),
       },
       styleSheet: fmd.MarkdownStyleSheet(
-        h2: textTheme.headline4!.apply(fontWeightDelta: 10),
-        h3: textTheme.headline6,
-        h4: textTheme.caption,
-        p: textTheme.subtitle1,
+        h2: textTheme.headline4!.copyWith(fontWeight: FontWeight.w500),
+        h3: textTheme.headline5!.copyWith(fontWeight: FontWeight.w500),
+        h4: textTheme.bodyText2!.copyWith(fontWeight: FontWeight.w400),
+        p: textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w700),
       ),
     );
   }
@@ -75,8 +79,8 @@ class TeamContentMarkdown extends StatelessWidget {
 ///
 ///
 ///
-class ContributionContenMarkdown extends StatelessWidget {
-  const ContributionContenMarkdown({
+class ContributionContentMarkdown extends StatelessWidget {
+  const ContributionContentMarkdown({
     Key? key,
     required this.contributionContent,
   }) : super(key: key);
@@ -96,21 +100,22 @@ class ContributionContenMarkdown extends StatelessWidget {
         'p': _MarkdownCustomCreators(),
       },
       styleSheet: fmd.MarkdownStyleSheet(
-        h2: textTheme.headline4!.apply(fontWeightDelta: 10),
-        h3: textTheme.headline6,
+        h2: textTheme.headline3!.apply(fontWeightDelta: 10),
+        h3: textTheme.headline5,
         h4: textTheme.caption,
         p: textTheme.subtitle1,
       ),
     );
   }
 }
+
 ///
 ///
 ///
-class WorkloadMarkdown extends StatelessWidget {
+class MarkdownCard extends StatelessWidget {
   final String workload;
 
-  const WorkloadMarkdown({
+  const MarkdownCard({
     Key? key,
     required this.workload,
   }) : super(key: key);
@@ -128,45 +133,6 @@ class WorkloadMarkdown extends StatelessWidget {
       padding: EdgeInsets.all(size.width * 0.1),
       child: fmd.MarkdownBody(
         data: this.workload,
-        builders: {
-          'h2': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 8)),
-          'h3': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 4)),
-          'p': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 4)),
-        },
-        styleSheet: fmd.MarkdownStyleSheet(
-          h2: textTheme.subtitle1,
-          h3: textTheme.subtitle1!.apply(color: Colors2222.red),
-          p: textTheme.bodyText2,
-        ),
-      ),
-    );
-  }
-}
-
-///
-///
-///
-class ratingsMarkdown extends StatelessWidget {
-  final String ratings;
-
-  const ratingsMarkdown({
-    Key? key,
-    required this.ratings,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).primaryTextTheme;
-    final Size size = MediaQuery.of(context).size;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors2222.white,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: EdgeInsets.all(size.width * 0.1),
-      child: fmd.MarkdownBody(
-        data: this.ratings,
         builders: {
           'h2': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 8)),
           'h3': _MarkdownCenterText(padding: EdgeInsets.symmetric(vertical: 4)),

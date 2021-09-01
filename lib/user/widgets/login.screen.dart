@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 /// profundity text
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: WorkloadMarkdown(
+                  child: MarkdownCard(
                     workload: this.loginPayload!.workloadText,
                   ),
                 ),
