@@ -19,6 +19,7 @@ import 'package:lab_movil_2222/shared/widgets/medals-list-item_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -39,7 +40,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     /// load player data
-    this._loadPlayerSub = GetCurrentPlayerService.player$().listen((player) {
+    this._loadPlayerSub =
+        CurrentPlayerService.instance.player$.listen((player) {
       this.setState(() {
         this.player = player;
       });
@@ -64,11 +66,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final double sideSpacing = MediaQuery.of(context).size.width * 0.08;
 
     return Scaffold2222.navigation(
+      activePage: Lab2222NavigationBarPages.profile,
       body: BackgroundDecoration(
         backgroundDecorationsStyles: [
           BackgroundDecorationStyle.path,
           BackgroundDecorationStyle.topLeft
         ],
+        
 
         /// page content
         child: ListView(

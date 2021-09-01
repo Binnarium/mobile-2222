@@ -46,8 +46,7 @@ class ChatModel {
             .toList(),
         this.lastMessage = map['lastMessage'] == null
             ? null
-            : MessageModel.fromMap(map['lastMessage']);
-
+            : MessageModel.fromMap(map['lastMessage'], currentUid: '');
 
   String get chatName => this.name != null
       ? this.name!

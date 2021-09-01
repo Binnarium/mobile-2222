@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lab_movil_2222/chat/ui/screens/chat.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/list-chats.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
@@ -70,12 +71,17 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           );
 
         /// all chats screens
-        case ListChatsScreen.route:
-          return ListChatsScreen();
+        case ChatsScreen.route:
+          return ChatsScreen();
 
-        case ChatScreen.route:
-          final args = settings.arguments as ChatScreen;
-          return ChatScreen(
+        case MessagesScreen.route:
+          final args = settings.arguments as MessagesScreen;
+          return MessagesScreen(
+            chat: args.chat,
+          );
+        case ChatParticipantsScreen.route:
+          final args = settings.arguments as ChatParticipantsScreen;
+          return ChatParticipantsScreen(
             chat: args.chat,
           );
 

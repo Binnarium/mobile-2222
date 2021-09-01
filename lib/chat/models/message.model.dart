@@ -27,6 +27,7 @@ abstract class MessageModel {
   final DateTime sendedDate;
   final String senderId;
   final ChatParticipantModel sender;
+  final bool sendedByMe;
 
   MessageModel({
     required this.id,
@@ -37,17 +38,21 @@ abstract class MessageModel {
     required this.sendedDate,
     required this.senderId,
     required this.sender,
+    required this.sendedByMe,
     this.asset,
   });
 
-  factory MessageModel.fromMap(Map<String, dynamic> data) {
+  factory MessageModel.fromMap(
+    Map<String, dynamic> data, {
+    required String currentUid,
+  }) {
     final String kind = data['kind'];
     final String id = data['id'];
     final String senderId = data['senderId'];
     final ChatParticipantModel sender =
         ChatParticipantModel.fromMap(data['sender']);
     final DateTime sendedDate = (data['sendedDate'] as Timestamp).toDate();
-
+    final bool sendedByMe = currentUid == sender.uid;
     if (kind == 'MESSAGE#TEXT') {
       final String text = data['text'];
       return TextMessageModel(
@@ -57,6 +62,7 @@ abstract class MessageModel {
         sendedDate: sendedDate,
         sender: sender,
         kind: kind,
+        sendedByMe: sendedByMe,
       );
     }
 
@@ -69,6 +75,7 @@ abstract class MessageModel {
         sender: sender,
         kind: kind,
         image: image,
+        sendedByMe: sendedByMe,
       );
     }
 
@@ -81,6 +88,7 @@ abstract class MessageModel {
         sender: sender,
         kind: kind,
         video: video,
+        sendedByMe: sendedByMe,
       );
     }
 
@@ -91,6 +99,7 @@ abstract class MessageModel {
         sendedDate: sendedDate,
         sender: sender,
         kind: kind,
+        sendedByMe: sendedByMe,
       );
     }
 
@@ -120,7 +129,9 @@ class VideoMessageModel extends MessageModel {
     required ChatParticipantModel sender,
     required VideoDto video,
     required String kind,
+    bool sendedByMe = false,
   }) : super(
+          sendedByMe: sendedByMe,
           id: id,
           kind: kind,
           messageKind: MessageKind.video,
@@ -142,7 +153,9 @@ class ImageMessageModel extends MessageModel {
     required DateTime sendedDate,
     required ChatParticipantModel sender,
     required ImageDto image,
+    bool sendedByMe = false,
   }) : super(
+          sendedByMe: sendedByMe,
           id: id,
           kind: kind,
           messageKind: MessageKind.image,
@@ -164,7 +177,9 @@ class TextMessageModel extends MessageModel {
     required DateTime sendedDate,
     required ChatParticipantModel sender,
     required String kind,
+    bool sendedByMe = false,
   }) : super(
+          sendedByMe: sendedByMe,
           kind: kind,
           id: id,
           messageKind: MessageKind.text,
@@ -184,8 +199,10 @@ class BannedMessageModel extends MessageModel {
     required String senderId,
     required DateTime sendedDate,
     required ChatParticipantModel sender,
+    bool sendedByMe = false,
     required String kind,
   }) : super(
+          sendedByMe: sendedByMe,
           kind: kind,
           id: id,
           messageKind: MessageKind.banned,

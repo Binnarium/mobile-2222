@@ -11,12 +11,12 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
     required this.icon,
     required VoidCallback? onTap,
     bool active = false,
-  })  : this.onTap = onTap,
+  })  : this.onTap = active ? (() {}) : onTap,
         this.iconColor = onTap == null
             ? Colors2222.black
             : active
                 ? Colors2222.white
-                : Colors2222.white.withOpacity(0.8),
+                : Colors2222.white.withOpacity(0.5),
         super(key: key);
 
   @override
