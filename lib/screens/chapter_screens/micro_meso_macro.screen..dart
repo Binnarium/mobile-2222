@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -39,73 +41,63 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+
+    final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: this.widget.city,
       route: MicroMesoMacroScreen.route,
       color: Colors2222.red,
       body: (this.microMesoMacroDto == null)
           ? AppLoading()
-          : LayoutBuilder(
-              builder: (context, constraints) {
-                double maxWidth = constraints.maxWidth;
-                double maxHeight = constraints.maxHeight;
+          : Container(
+              width: size.width * 0.9,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  /// app logo
+                  AppLogo(
+                    kind: AppImage.animatedAppLogo,
+                    width: min(size.width * 0.5, 400),
+                  ),
 
-                return Padding(
-                  padding: EdgeInsets.only(
-                    left: maxWidth * 0.04,
-                    right: maxWidth * 0.04,
-                    top: maxHeight * 0.04,
+                  /// title
+                  Text(
+                    microMesoMacroDto!.title.toUpperCase(),
+                    style: textTheme.headline3!.copyWith(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 52,
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      Flexible(
-                        child: AppLogo(kind: AppImage.animatedAppLogo),
-                        flex: 6,
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.1,
-                      ),
-                      Flexible(
-                        child: Text(
-                          microMesoMacroDto!.title.toUpperCase(),
-                          style: textTheme.headline3!.copyWith(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 52,
-                          ),
-                        ),
-                        flex: 3,
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.075,
-                      ),
-                      Flexible(
-                        flex: 5,
-                        child: Image.network(microMesoMacroDto!.image.url),
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.1,
-                      ),
-                      for (String text in this
-                          .microMesoMacroDto!
-                          .subtitle
-                          .toLowerCase()
-                          .split('\\n')
-                          .map((e) => e.trim()))
-                        Flexible(
-                          flex: 3,
-                          child: Text(
-                            text.toUpperCase(),
-                            textAlign: TextAlign.center,
-                            style: textTheme.headline4!.copyWith(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 28,
-                            ),
-                          ),
-                        ),
-                    ],
+
+                  /// image
+                  Image.network(
+                    microMesoMacroDto!.image.url,
+                    width: min(size.width * 0.4, 350),
                   ),
-                );
-              },
+
+                  /// text
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: textTheme.headline4!.copyWith(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 28,
+                      ),
+                      children: [
+                        for (String text in this
+                            .microMesoMacroDto!
+                            .subtitle
+                            .toLowerCase()
+                            .split('\\n')
+                            .map((e) => e.trim()))
+                          TextSpan(
+                            text: '${text.toUpperCase()}\n',
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
     );
   }
