@@ -169,11 +169,11 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             SizedBox(
               height: 40,
             ),
-            ProjectGalleryWidget(
-                city: this.widget.city,
-                userUID: userUID,
-                projects: playerProjects),
           ],
+          ProjectGalleryWidget(
+              city: this.widget.city,
+              userUID: userUID,
+              projects: playerProjects),
 
           _taskButton(
             context,
