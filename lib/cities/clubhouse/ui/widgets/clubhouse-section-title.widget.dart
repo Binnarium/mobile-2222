@@ -24,7 +24,7 @@ class ClubhouseSectionTitle extends StatelessWidget {
         padding: EdgeInsets.all(5),
         child: Text(
           title.toUpperCase(),
-          style: textTheme.headline5,
+          style: textTheme.subtitle1,
           textAlign: TextAlign.center,
         ),
       ),

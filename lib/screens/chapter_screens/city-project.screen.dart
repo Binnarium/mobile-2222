@@ -119,11 +119,11 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
         Center(
           child: Container(
-            width: min(300, size.width * 0.7),
+            width: min(300, size.width * 0.9),
             child: Text(
               "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
-              style: textTheme.headline4!.copyWith(
-                fontWeight: FontWeight.w300,
+              style: textTheme.headline5!.copyWith(
+                fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,
             ),

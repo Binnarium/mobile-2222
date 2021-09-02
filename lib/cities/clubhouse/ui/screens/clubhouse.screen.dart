@@ -75,12 +75,17 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           ),
 
           /// page header
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: Text(
-              'CLUBHOUSE',
-              style: textTheme.headline2,
-              textAlign: TextAlign.center,
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 24.0),
+              width: min(300, size.width * 0.8),
+              child: Text(
+                "CLUBHOUSE",
+                style: textTheme.headline3!.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
 
