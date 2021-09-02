@@ -8,14 +8,23 @@ class ProjectFile {
 }
 
 class PlayerProject {
-  final bool completed;
-  final List<ProjectFile> files;
-  final String cityName;
+  final String cityID;
+  final ProjectFile file;
+  final String kind;
+  final String id;
 
-  PlayerProject.fromMap(final Map<String, dynamic> payload, String cityName)
-      : this.completed = payload['completed'],
-        this.cityName = cityName,
-        this.files = ((payload['files'] ?? []) as List)
-            .map((e) => ProjectFile.fromMap(e))
-            .toList();
+  PlayerProject.fromMap(final Map<String, dynamic> payload)
+      : this.kind = payload['kind'] ?? "",
+        this.cityID = payload['cityID'] ?? "",
+        this.id = payload['id'] ?? "",
+        this.file = ProjectFile.fromMap(payload['file'] ?? []);
+
+  Map<String, dynamic> toMap() {
+    return {
+      "file": {"path": file.path, "url": file.url},
+      "id": this.id,
+      "cityID": this.cityID,
+      "kind": this.kind
+    };
+  }
 }

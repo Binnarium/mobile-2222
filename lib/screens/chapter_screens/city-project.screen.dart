@@ -24,6 +24,7 @@ import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class CityProjectScreen extends StatefulWidget {
@@ -101,18 +102,29 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   _projectSheet(BuildContext context, Size size, Color color, String userUID,
       List<PlayerProject> playerProjects) {
-    final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final horizontalPadding =
+        EdgeInsets.symmetric(horizontal: size.width * 0.08);
     return ListView(
-      padding:
-          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 50),
       children: [
+        /// icon item
+        Padding(
+          padding: EdgeInsets.only(
+            bottom: 32.0,
+          ),
+          child: LogosHeader(
+            showStageLogoCity: this.widget.city,
+          ),
+        ),
+
         Center(
           child: Container(
             width: min(300, size.width * 0.7),
             child: Text(
               "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
-              style: textTheme.headline6!.copyWith(fontWeight: FontWeight.w300),
+              style: textTheme.headline4!.copyWith(
+                fontWeight: FontWeight.w300,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -127,13 +139,16 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         if (this.project == null)
           AppLoading()
         else ...[
-          Text(
-            this.project!.activity,
-            style: textTheme.headline5!.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 32,
+          Padding(
+            padding: horizontalPadding,
+            child: Text(
+              this.project!.activity,
+              style: textTheme.headline5!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 32,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
 
           ///
@@ -153,9 +168,12 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ),
 
           ///
-          Markdown2222(
-            data: this.project!.explanation,
-            contentAlignment: WrapAlignment.center,
+          Padding(
+            padding: horizontalPadding,
+            child: Markdown2222(
+              data: this.project!.explanation,
+              contentAlignment: WrapAlignment.start,
+            ),
           ),
 
           SizedBox(
@@ -166,6 +184,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           if (this.project!.audio != null) ...[
             Container(
               alignment: Alignment.center,
+              padding: horizontalPadding,
               child: PodcastAudioPlayer(
                 audio: this.project!.audio!,
                 color: this.widget.city.color,
@@ -175,15 +194,21 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               height: 40,
             ),
           ],
-          ProjectGalleryWidget(
-              city: this.widget.city,
-              userUID: userUID,
-              projects: playerProjects),
+          Padding(
+            padding: horizontalPadding,
+            child: ProjectGalleryWidget(
+                city: this.widget.city,
+                userUID: userUID,
+                projects: playerProjects),
+          ),
 
-          _taskButton(
-            context,
-            color,
-            this.widget.city.name,
+          Padding(
+            padding: EdgeInsets.only(bottom: 50),
+            child: _taskButton(
+              context,
+              color,
+              this.widget.city.name,
+            ),
           )
         ],
       ],
@@ -365,9 +390,16 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     );
     final urlDownload = await snapshot.ref.getDownloadURL();
 
+    /// creates a playerProject instance for this project
+    PlayerProject currentProject = PlayerProject.fromMap({
+      "file": {"path": destination, "url": urlDownload},
+      "cityID": this.widget.cityName,
+      "kind": (this.widget.cityName != "Angkor") ? "PROJECT#PDF" : "PROJECT#MP3"
+    });
+
     /// to write the project in the users project collection
     UploadFileToFirebaseService.writePlayerProjectFile(
-        userUID!, this.widget.cityName, destination, urlDownload);
+        userUID!, currentProject);
     print('Download link: $urlDownload');
   }
 
