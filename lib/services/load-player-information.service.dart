@@ -80,8 +80,13 @@ class LoadPlayerInformationService {
       'url': url,
     };
     if (oldImageURL != "") {
-      await FirebaseStorage.instance.refFromURL(oldImageURL).delete();
-      print('Succesfully deleted avatar from storage');
+      try {
+        await FirebaseStorage.instance.refFromURL(oldImageURL).delete();
+        print('Succesfully deleted avatar from storage');
+      } catch (e) {
+        print('Error, no se pudo borrar desde storage (puede que no exista el'
+            'archivo) $e');
+      }
     }
     await FirebaseFirestore.instance.collection('players').doc(userUID).update(
       {'avatarImage': imageMap},
