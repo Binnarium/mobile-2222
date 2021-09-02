@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -12,19 +14,20 @@ class ClubhouseSectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          color: Colors2222.black,
-          padding: EdgeInsets.all(5),
-          child: Text(
-            title.toUpperCase(),
-            style: textTheme.headline5,
-            textAlign: TextAlign.center,
-          ),
+    final Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: min(300, size.width * 0.9),
         ),
-      ],
+        color: Colors2222.black,
+        padding: EdgeInsets.all(5),
+        child: Text(
+          title.toUpperCase(),
+          style: textTheme.headline5,
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

@@ -60,7 +60,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
 
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ClubhouseScreen.route,
@@ -101,7 +101,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           Padding(
             padding: const EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
-              title: 'Próximos EVENTOS',
+              title: 'Eventos en las próximas 24 horas',
             ),
           ),
 
