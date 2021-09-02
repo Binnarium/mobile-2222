@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/models/player-projects.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
@@ -141,9 +142,17 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     );
     final urlDownload = await snapshot.ref.getDownloadURL();
 
+    /// creates a project instance
+
+    PlayerProject currentProject = PlayerProject.fromMap({
+      "asset": {"path": destination, "url": urlDownload},
+      "cityID": this.widget.cityName,
+      "kind": (this.widget.cityName != "Angkor") ? "PROJECT#PDF" : "PROJECT#MP3"
+    });
+
     /// to write the project in the users project collection
     UploadFileToFirebaseService.writePlayerProjectFile(
-        userUID!, this.widget.cityName, destination, urlDownload);
+        userUID!, currentProject);
     print('Download link: $urlDownload');
   }
 

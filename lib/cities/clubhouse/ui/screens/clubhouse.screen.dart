@@ -101,7 +101,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           Padding(
             padding: const EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
-              title: 'PRÓXIMOS ENCUENTROS',
+              title: 'Próximos EVENTOS',
             ),
           ),
 
@@ -132,7 +132,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           Padding(
             padding: const EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
-              title: 'Agrega tu encuentro',
+              title: 'Agrega tu evento',
             ),
           ),
 
