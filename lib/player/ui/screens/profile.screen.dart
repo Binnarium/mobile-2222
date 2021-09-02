@@ -85,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.only(bottom: 32),
                 child: Text(
                   'Mi viaje al día'.toUpperCase(),
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -98,55 +98,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     /// player icon
                     Material(
                       type: MaterialType.transparency,
-                      color: Colors.black,
                       child: InkWell(
                           borderRadius: BorderRadius.circular(40),
-                          focusColor: Colors.black,
-                          hoverColor: Colors.black,
-                          splashColor: Colors.black,
-                          child: (this.player?.avatarImage.url == "")
-                              ? Image(
-                                  image: AssetImage(
-                                      'assets/backgrounds/decorations/elipse_profile.png'),
-                                  height: 80,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    this.player!.avatarImage.url,
-                                  ),
-                                  maxRadius: 40,
-                                ),
-                          onTap: () async {
-                            return await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Center(
-                                      child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.7,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        (this.player?.avatarImage.url == "")
-                                            ? Image(
-                                                image: AssetImage(
-                                                    'assets/backgrounds/decorations/elipse_profile.png'),
-                                              )
-                                            : Image.network(
-                                                this.player!.avatarImage.url,
-                                              ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        ButtonWidget(
-                                          color: Colors2222.black,
-                                          onClicked: uploadAvatar,
-                                          text: 'Cambiar imagen',
-                                        )
-                                      ],
+                          child: Container(
+                            height: 80,
+                            child: Stack(children: [
+                              (this.player?.avatarImage.url == "")
+                                  ? CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'assets/backgrounds/decorations/elipse_profile.png'),
+                                      maxRadius: 40,
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        this.player!.avatarImage.url,
+                                      ),
+                                      maxRadius: 40,
                                     ),
-                                  ));
-                                });
+                              Positioned(
+                                bottom: -6,
+                                right: -14,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    return await uploadAvatar();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: CircleBorder(),
+                                      primary: Colors.black,
+                                      onPrimary: Colors.white,
+                                      elevation: 0),
+                                  child: Icon(Icons.photo_camera_rounded),
+                                ),
+                              ),
+                            ]),
+                          ),
+                          onTap: () async {
+                            return await changeAvatarDialog(context);
                           }),
                     ),
 
@@ -247,10 +234,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Future<void> changeAvatarDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+              child: Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                (this.player?.avatarImage.url == "")
+                    ? Image(
+                        image: AssetImage(
+                            'assets/backgrounds/decorations/elipse_profile.png'),
+                      )
+                    : Image.network(
+                        this.player!.avatarImage.url,
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
+                // ButtonWidget(
+                //   color: Colors2222.black,
+                //   onClicked: uploadAvatar,
+                //   text: 'Cambiar avatar',
+                // )
+              ],
+            ),
+          ));
+        });
+  }
+
   ElevatedButton _logoutButton(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
-    double buttonWidth = MediaQuery.of(context).size.width;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors2222.backgroundBottomBar,
@@ -282,13 +300,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future selectAvatar() async {
+  Future<File?> selectAvatar() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.image,
       allowMultiple: false,
     );
 
-    if (result == null) return;
+    if (result == null) return null;
 
     /// to get the path of the file
     final path = result.files.single.path!;
@@ -297,33 +315,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
       file = File(path);
       fileName = result.files.single.name;
     });
+    return File(path);
   }
 
   /// to upload a file
   Future uploadAvatar() async {
-    await selectAvatar().whenComplete(
-      () async {
-        print('User UID: ${this.player!.uid}');
-        if (file == null) return;
+    File? avatarImage = await selectAvatar();
+    if (avatarImage != null) {
+      print('el archivito no es null: $avatarImage');
 
-        final destination = 'players/${this.player!.uid}/assets/$fileName';
-        print("LOCATION: $destination");
+      final destination = 'players/${this.player!.uid}/assets/$fileName';
+      print("LOCATION: $destination");
 
-        task = UploadFileToFirebaseService.uploadFile(
-            destination, file!, this.player!.uid);
-        setState(() {});
+      task = UploadFileToFirebaseService.uploadFile(
+          destination, file!, this.player!.uid);
 
-        if (task == null) return;
+      if (task == null) return;
 
-        final snapshot = await task!;
+      final snapshot = await task!;
 
-        final urlDownload = await snapshot.ref.getDownloadURL();
+      final urlDownload = await snapshot.ref.getDownloadURL();
 
-        LoadPlayerInformationService.updateAvatar(this.player!.uid, fileName!,
-            destination, urlDownload, this.player!.avatarImage.url);
-        print('Download link: $urlDownload');
-        Navigator.pop(context);
-      },
-    );
+      LoadPlayerInformationService.updateAvatar(this.player!.uid, fileName!,
+          destination, urlDownload, this.player!.avatarImage.url);
+      print('Download link: $urlDownload');
+    }
   }
 }

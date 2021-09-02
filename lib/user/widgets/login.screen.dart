@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
@@ -111,20 +110,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// video container
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: (!kIsWeb)
-                      ? VideoPlayer(
-                          video: this.loginPayload!.welcomeVideo,
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image(
-                              image: this
-                                  .loginPayload!
-                                  .welcomeVideo
-                                  .placeholderImage),
-                        ),
-                ),
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: VideoPlayer(
+                      video: this.loginPayload!.welcomeVideo,
+                    )),
 
                 /// profundity text
                 Padding(
@@ -142,11 +131,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: () =>
                           Navigator.pushNamed(context, TeamScreen.route),
-                      child: Text(
-                        'Equipo 2222',
-                        style: textTheme.headline5?.apply(
-                            decoration: TextDecoration.underline,
-                            fontSizeFactor: 0.7),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          color: Colors.white,
+                          child: Text(
+                            'Equipo 2222',
+                            style: textTheme.headline5
+                                ?.apply(
+                                    decoration: TextDecoration.underline,
+                                    fontSizeFactor: 0.7,
+                                    color: Colors.black)
+                                .copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ),
                       ),
                     ),
                   ),
