@@ -35,7 +35,7 @@ class UploadFileToFirebaseService {
 
     await FirebaseFirestore.instance.collection('players').doc(userUID).update(
       {
-        'medals': FieldValue.arrayUnion([medal])
+        'projectAwards': FieldValue.arrayUnion([medal])
       },
     );
   }

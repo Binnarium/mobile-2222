@@ -59,7 +59,9 @@ class PlayerModel {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'medals': this.awards,
+      'projectAwards': this.projectAwards,
+      'contributionsAwards': this.contributionsAwards,
+      'clubhouseAwards': this.clubhouseAwards,
       'uid': this.uid,
       'displayName': this.displayName,
       'email': this.email,
