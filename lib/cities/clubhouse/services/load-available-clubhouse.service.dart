@@ -20,6 +20,7 @@ Stream<List<ClubhouseModel>> LoadAvailableClubhouseService(CityDto city) {
             .map((doc) => doc.data())
             .map((doc) => ClubhouseModel(
                   clubhouseUrl: doc['clubhouseUrl'],
+                  uploaderDisplayName: doc['uploaderDisplayName'] ?? null,
                   clubhouseId: doc['clubhouseId'],
                   date: (doc['date'] as Timestamp).toDate(),
                   name: doc['name'],

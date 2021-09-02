@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/create-clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhouse.service.dart';
-import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/club-resources-grid-item_widget.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -128,7 +128,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: this.clubhouses!.length,
-                    itemBuilder: (context, index) => ClubResourcesGridItem(
+                    itemBuilder: (context, index) => ClubhouseCard(
                       clubhouseModel: this.clubhouses![index],
                     ),
                   ),

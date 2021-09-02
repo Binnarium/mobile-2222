@@ -7,6 +7,7 @@ class ClubhouseModel {
   final String uploaderId;
   final DateTime scraped;
   final String id;
+  final String? uploaderDisplayName;
 
   ClubhouseModel({
     required this.clubhouseUrl,
@@ -17,5 +18,6 @@ class ClubhouseModel {
     required this.uploaderId,
     required this.scraped,
     required this.id,
+    required this.uploaderDisplayName,
   });
 }

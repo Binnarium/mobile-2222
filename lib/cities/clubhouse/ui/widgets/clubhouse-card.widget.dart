@@ -4,16 +4,17 @@ import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ClubResourcesGridItem extends StatelessWidget {
+class ClubhouseCard extends StatelessWidget {
   final ClubhouseModel clubhouseModel;
 
-  const ClubResourcesGridItem({
+  const ClubhouseCard({
     Key? key,
     required this.clubhouseModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(this.clubhouseModel.uploaderDisplayName);
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,6 +47,16 @@ class ClubResourcesGridItem extends StatelessWidget {
           maxLines: 1,
           textAlign: TextAlign.center,
         ),
+
+        /// date
+        if (this.clubhouseModel.uploaderDisplayName != null)
+          Text(
+            this.clubhouseModel.uploaderDisplayName!,
+            style: textTheme.button,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
+          ),
 
         /// open button
 
