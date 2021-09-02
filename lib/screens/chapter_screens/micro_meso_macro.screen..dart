@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -40,70 +42,59 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
-    double maxWidth = size.width;
-    double maxHeight = size.height;
     return Scaffold2222.city(
       city: this.widget.city,
       route: MicroMesoMacroScreen.route,
       color: Colors2222.red,
       body: (this.microMesoMacroDto == null)
           ? AppLoading()
-
-          /// added container color otherwise won't detect the
-          /// horizontal gesture detector
           : Container(
-              padding: EdgeInsets.only(
-                left: maxWidth * 0.04,
-                right: maxWidth * 0.04,
-                top: maxHeight * 0.04,
-              ),
-              color: Colors2222.red,
+              width: size.width * 0.9,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Flexible(
-                    child: AppLogo(kind: AppImage.animatedAppLogo),
-                    flex: 6,
+                  /// app logo
+                  AppLogo(
+                    kind: AppImage.animatedAppLogo,
+                    width: min(size.width * 0.5, 400),
                   ),
-                  SizedBox(
-                    height: maxHeight * 0.1,
+
+                  /// title
+                  Text(
+                    microMesoMacroDto!.title.toUpperCase(),
+                    style: textTheme.headline3!.copyWith(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 52,
+                    ),
                   ),
-                  Flexible(
-                    child: Text(
-                      microMesoMacroDto!.title.toUpperCase(),
-                      style: textTheme.headline3!.copyWith(
+
+                  /// image
+                  Image.network(
+                    microMesoMacroDto!.image.url,
+                    width: min(size.width * 0.4, 350),
+                  ),
+
+                  /// text
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: textTheme.headline4!.copyWith(
                         fontWeight: FontWeight.w300,
-                        fontSize: 52,
+                        fontSize: 28,
                       ),
+                      children: [
+                        for (String text in this
+                            .microMesoMacroDto!
+                            .subtitle
+                            .toLowerCase()
+                            .split('\\n')
+                            .map((e) => e.trim()))
+                          TextSpan(
+                            text: '${text.toUpperCase()}\n',
+                          ),
+                      ],
                     ),
-                    flex: 3,
                   ),
-                  SizedBox(
-                    height: maxHeight * 0.075,
-                  ),
-                  Flexible(
-                    flex: 5,
-                    child: Image.network(microMesoMacroDto!.image.url),
-                  ),
-                  SizedBox(
-                    height: maxHeight * 0.1,
-                  ),
-                  for (String text in this
-                      .microMesoMacroDto!
-                      .subtitle
-                      .toLowerCase()
-                      .split('\\n')
-                      .map((e) => e.trim()))
-                    Flexible(
-                      flex: 3,
-                      child: Text(
-                        text.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: textTheme.headline4!.copyWith(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 28,
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ),
