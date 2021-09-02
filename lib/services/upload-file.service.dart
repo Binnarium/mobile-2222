@@ -28,7 +28,7 @@ class UploadFileToFirebaseService {
 
   static void writeMedal(String userUID, String cityRef) async {
     Map<String, dynamic> medal = {
-      'cityRef': cityRef,
+      'cityId': cityRef,
       'obtained': true,
       'obtainedDate': Timestamp.now()
     };
