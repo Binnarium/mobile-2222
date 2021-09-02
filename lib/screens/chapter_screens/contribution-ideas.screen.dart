@@ -52,10 +52,6 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-
-  
-
     return Scaffold(
         backgroundColor: this.widget.city.color,
         body: _contributionBody(context));
@@ -63,7 +59,6 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
 
   _contributionBody(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    
 
     return SingleChildScrollView(
       child: Column(
@@ -78,7 +73,7 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: ContributionContenMarkdown(
+            child: ContributionContentMarkdown(
               contributionContent:
                   '${this.widget.option} DE LA CIUDAD'.toUpperCase(),
             ),
@@ -88,9 +83,8 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: ContributionContenMarkdown(
-              contributionContent:
-                  'EXPLICACIÓN DE LAS CONTRIBUCIONES',
+            child: ContributionContentMarkdown(
+              contributionContent: 'EXPLICACIÓN DE LAS CONTRIBUCIONES',
             ),
           ),
 
@@ -161,9 +155,8 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
   Future uploadContribution(String userUID, String cityRef, String option,
       String contributionText) async {
     /// to write the project in the users contribution collection
-    
-    
-        
-    UploadContributionToFirebaseService.writePlayerContribution(userUID, cityRef, option, contributionText);
+
+    UploadContributionToFirebaseService.writePlayerContribution(
+        userUID, cityRef, option, contributionText);
   }
 }

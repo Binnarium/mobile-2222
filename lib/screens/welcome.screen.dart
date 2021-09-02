@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/screens/team.screen.dart';
@@ -162,7 +161,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           /// white container text
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: WorkloadMarkdown(
+            child: MarkdownCard(
               workload: this.loginPayload!.workloadText,
             ),
           ),

@@ -72,7 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           BackgroundDecorationStyle.path,
           BackgroundDecorationStyle.topLeft
         ],
-        
 
         /// page content
         child: ListView(
@@ -216,6 +215,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 cityName: 'Quitu',
               ),
 
+              /// project medals
+              if (this.player!.clubhouseAwards.length > 0) ...[
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    'Medallas clubhouse',
+                    style: Theme.of(context).textTheme.headline5,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                for (AwardModel medal in this.player!.clubhouseAwards)
+                  MedalsListItem(
+                    cityName: medal.cityId,
+                  ),
+              ],
+
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: ApproveText(),
@@ -312,5 +327,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-

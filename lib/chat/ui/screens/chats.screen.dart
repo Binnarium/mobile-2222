@@ -19,7 +19,7 @@ class ChatsScreen extends StatefulWidget {
   final Stream<List<ChatModel>> userChats;
 
   ChatsScreen({Key? key})
-      : this.userChats = ListPlayerChatsService().getChats,
+      : this.userChats = ListPlayerChatsService.instance.chats$,
         super(key: key);
 
   @override

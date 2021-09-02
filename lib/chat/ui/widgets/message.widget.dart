@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
-class ChatMessageWidget extends StatelessWidget {
+class MessageWidget extends StatelessWidget {
   final MessageModel message;
-  const ChatMessageWidget({
+  const MessageWidget({
     Key? key,
     required this.message,
   }) : super(key: key);
@@ -15,10 +17,7 @@ class ChatMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    final _TextMessageCard messageCard =
-        (this.message.runtimeType == TextMessageModel)
-            ? _TextMessageCard(message: this.message as TextMessageModel)
-            : _TextMessageCard(message: this.message as TextMessageModel);
+    final _MessageCard messageCard = _MessageCard.fromMessage(message: message);
 
     final List<Widget> children = [
       Flexible(child: Container(), flex: 1),
@@ -49,6 +48,7 @@ class ChatMessageWidget extends StatelessWidget {
   }
 }
 
+/// base clase to create a card with content for the message
 abstract class _MessageCard<T extends MessageModel> extends StatelessWidget {
   final T message;
 
@@ -65,8 +65,24 @@ abstract class _MessageCard<T extends MessageModel> extends StatelessWidget {
           color: message.sendedByMe ? Colors2222.grey : Colors2222.red,
         ),
         super(key: key);
+
+  static _MessageCard fromMessage({
+    required MessageModel message,
+  }) {
+    if (message.runtimeType == TextMessageModel)
+      return _TextMessageCard(message: message as TextMessageModel);
+
+    if (message.runtimeType == ImageMessageModel)
+      return _ImageMessageCard(message: message as ImageMessageModel);
+
+    if (message.runtimeType == VideoMessageModel)
+      return _VideoMessageCard(message: message as VideoMessageModel);
+
+    return _TextMessageCard(message: message as TextMessageModel);
+  }
 }
 
+/// text message card
 class _TextMessageCard extends _MessageCard<TextMessageModel> {
   _TextMessageCard({
     Key? key,
@@ -87,6 +103,50 @@ class _TextMessageCard extends _MessageCard<TextMessageModel> {
         contentAlignment:
             this.message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
         color: Colors2222.black,
+      ),
+    );
+  }
+}
+
+/// image message card
+class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
+  _ImageMessageCard({
+    Key? key,
+    required ImageMessageModel message,
+  }) : super(
+          key: key,
+          message: message,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: this.padding,
+      decoration: this.decoration,
+      width: double.infinity,
+      child: Image.network(this.message.asset!.url),
+    );
+  }
+}
+
+/// image message card
+class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
+  _VideoMessageCard({
+    Key? key,
+    required VideoMessageModel message,
+  }) : super(
+          key: key,
+          message: message,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: this.padding,
+      decoration: this.decoration,
+      width: double.infinity,
+      child: VideoPlayer(
+        video: this.message.asset as VideoDto,
       ),
     );
   }
