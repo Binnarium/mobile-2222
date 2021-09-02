@@ -41,7 +41,6 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-
     final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: this.widget.city,
