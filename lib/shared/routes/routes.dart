@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
@@ -109,6 +110,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return StageMonsterScreen(
             city: args.city,
           );
+
         case StageArgumentationScreen.route:
           final args = settings.arguments as StageArgumentationScreen;
           return StageArgumentationScreen(
@@ -177,6 +179,11 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ManualVideoScreen.route:
           final args = settings.arguments as ManualVideoScreen;
           return ManualVideoScreen(
+            city: args.city,
+          );
+        case FinalVideoScreen.route:
+          final args = settings.arguments as FinalVideoScreen;
+          return FinalVideoScreen(
             city: args.city,
           );
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -222,6 +223,29 @@ class CityNavigator {
               context,
               MicroMesoMacroScreen.route,
               arguments: MicroMesoMacroScreen(
+                city: city,
+              ),
+            ),
+          ),
+        /// mcrso-meso-macro
+        if (enabledPagesDto.microMesoMacro)
+          _ScaffoldRouteBuilder(
+            route: MicroMesoMacroScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              MicroMesoMacroScreen.route,
+              arguments: MicroMesoMacroScreen(
+                city: city,
+              ),
+            ),
+          ),
+        if (enabledPagesDto.finalVideo)
+          _ScaffoldRouteBuilder(
+            route: FinalVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              FinalVideoScreen.route,
+              arguments: FinalVideoScreen(
                 city: city,
               ),
             ),
