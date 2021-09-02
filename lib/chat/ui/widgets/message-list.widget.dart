@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
-import 'package:lab_movil_2222/chat/ui/widgets/chat-message.widget.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/message.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 
 class MessagesList extends StatefulWidget {
@@ -67,7 +67,7 @@ class _MessagesListState extends State<MessagesList> {
                 horizontal: size.width * 0.04,
                 vertical: 16,
               ),
-              child: ChatMessageWidget(message: message),
+              child: MessageWidget(message: message),
             ),
       ],
     );
