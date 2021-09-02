@@ -15,12 +15,6 @@ class LoadPlayerInformationService {
 
       final playerProjects =
           _fFirestore.collection('players').doc(userUID).collection('project');
-      // LoadPlayerInformationService._projectsStream = playerProjects
-      //     .snapshots()
-      //     .map((snapshot) => snapshot.docs)
-      //     .map((projects) => projects
-      //         .map((data) => PlayerProject.fromMap(data.data()))
-      //         .toList());
       LoadPlayerInformationService._projectsStream = playerProjects
           .snapshots()
           .map((snapshot) => snapshot.docs)

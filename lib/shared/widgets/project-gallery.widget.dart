@@ -25,6 +25,8 @@ class ProjectGalleryWidget extends StatefulWidget {
 class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final Size size = MediaQuery.of(context).size;
     List<PlayerProject> cityProjects = [];
     List<Widget> items = [];
     this.widget.projects.forEach((element) {
@@ -44,13 +46,33 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
           child: Center(
             child: Text(
               'Tus proyectos en ${this.widget.city.name}'.toUpperCase(),
-              style: Theme.of(context).textTheme.headline5,
+              style: textTheme.headline4!.copyWith(
+                fontWeight: FontWeight.w300,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
         ),
         (items.length == 0)
-            ? Center(child: Text('Aún no tienes proyectos subidos'))
+            ? Padding(
+                padding: EdgeInsets.symmetric(vertical: 32),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/empty-projects.png',
+                      width: size.width * 0.6,
+                    ),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Text(
+                      'Aún no tienes ningún proyecto.',
+                      style: textTheme.headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              )
             : StaggeredGridView.countBuilder(
                 crossAxisCount: 3,
                 staggeredTileBuilder: (index) => StaggeredTile.fit(1),
