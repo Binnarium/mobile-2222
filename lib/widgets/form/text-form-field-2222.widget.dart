@@ -25,6 +25,8 @@ class TextFormField222 extends StatelessWidget {
   /// TODO: add docs
   final TextEditingController? controller;
 
+  final bool showEnabledBorder;
+
   TextFormField222({
     Key? key,
     this.obscureText = false,
@@ -35,6 +37,7 @@ class TextFormField222 extends StatelessWidget {
     this.prefixIcon,
     this.controller,
     this.primaryColor = Colors2222.red,
+    this.showEnabledBorder = false,
   }) : super(key: key);
 
   TextFormField222.password({
@@ -46,6 +49,7 @@ class TextFormField222 extends StatelessWidget {
     this.validator,
     this.primaryColor = Colors2222.red,
   })  : this.keyboardType = TextInputType.name,
+        this.showEnabledBorder = false,
         this.obscureText = true,
         super(key: key);
 
@@ -87,6 +91,7 @@ class TextFormField222 extends StatelessWidget {
         /// style background
         fillColor: Colors2222.white,
         filled: true,
+        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
 
         /// style info
         errorStyle: overlineStyle.copyWith(color: Colors2222.white),
@@ -100,6 +105,14 @@ class TextFormField222 extends StatelessWidget {
           borderRadius: borderRadius,
           borderSide: BorderSide(color: Colors2222.black),
         ),
+
+        /// show border when not focused
+        enabledBorder: (this.showEnabledBorder)
+            ? OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide(color: Colors2222.black),
+              )
+            : null,
       ),
     );
   }

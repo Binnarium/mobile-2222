@@ -11,7 +11,7 @@ class ListPlayerChatsService {
 
   ListPlayerChatsService._();
 
- static ListPlayerChatsService get instance {
+  static ListPlayerChatsService get instance {
     if (ListPlayerChatsService._instance == null)
       ListPlayerChatsService._instance = ListPlayerChatsService._();
     return ListPlayerChatsService._instance!;
@@ -29,7 +29,8 @@ class ListPlayerChatsService {
         final chatsCollection = this
             ._fFirestore
             .collection('chats')
-            .where('participantsUids', arrayContains: user.uid);
+            .where('participantsUids', arrayContains: user.uid)
+            .orderBy('lastActivity', descending: true);
         return chatsCollection
             .snapshots()
 
