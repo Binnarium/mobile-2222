@@ -19,24 +19,32 @@ class MessageWidget extends StatelessWidget {
 
     final _MessageCard messageCard = _MessageCard.fromMessage(message: message);
 
+    final String prefix = message.sendedByMe
+        ? ''
+        : message.sender.displayName.split(' ').first + ' - ';
+
     final List<Widget> children = [
       Flexible(child: Container(), flex: 1),
-      Flexible(
+      Expanded(
         flex: 4,
-        child: Column(
-          crossAxisAlignment: message.sendedByMe
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
-          children: [
-            /// date
-            Text(
-              '${DateFormat('MM-dd HH:mm').format(this.message.sendedDate)}',
-              style: textTheme.caption!.copyWith(color: Colors2222.black),
-            ),
+        child: Align(
+          alignment:
+              message.sendedByMe ? Alignment.centerRight : Alignment.centerLeft,
+          child: Column(
+            crossAxisAlignment: message.sendedByMe
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: [
+              /// date
+              Text(
+                '$prefix${DateFormat('HH:mm').format(this.message.sendedDate)}',
+                style: textTheme.caption!.copyWith(color: Colors2222.black),
+              ),
 
-            /// ard content
-            messageCard,
-          ],
+              /// ard content
+              messageCard,
+            ],
+          ),
         ),
       ),
     ];
@@ -97,12 +105,11 @@ class _TextMessageCard extends _MessageCard<TextMessageModel> {
     return Container(
       padding: this.padding,
       decoration: this.decoration,
-      width: double.infinity,
       child: Markdown2222(
         data: this.message.text!,
         contentAlignment:
             this.message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
-        color: Colors2222.black,
+        color: this.message.sendedByMe ? Colors2222.black : Colors2222.white,
       ),
     );
   }

@@ -1,8 +1,11 @@
-import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'package:better_player/better_player.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/providers/videoPlayer_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Class that creates a video player depending on video URL and the description of the video
 class VideoPlayer extends StatefulWidget {
@@ -53,12 +56,15 @@ class _VideoPlayerState extends State<VideoPlayer> {
             onTap: () {
               setState(() {
                 videoProvider.setVideo(this.widget.video);
-                showVideo = true;
+                if (!kIsWeb) {
+                  showVideo = true;
+                } else {
+                  launch(this.widget.video.url);
+                }
               });
             },
             child: (showVideo)
-                ? new BetterPlayer(
-                    controller: videoProvider.betterPlayerController)
+                ? BetterPlayer(controller: videoProvider.betterPlayerController)
                 : Stack(
                     children: [
                       Image(

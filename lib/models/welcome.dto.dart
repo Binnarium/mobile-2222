@@ -15,10 +15,3 @@ class WelcomeDto {
         this.welcomeVideo = VideoDto.fromMap(payload['welcomeVideo']);
 }
 
-class TeamDto {
-  final String teamText;
-
-  TeamDto.fromMap(Map<String, dynamic> payload)
-      : this.teamText =
-            payload['teamText'] ?? 'No hay texto de la ficha de equipo';
-}

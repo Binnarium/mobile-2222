@@ -55,9 +55,8 @@ class ChatListItem extends ListTile {
 String _getSubtitle(ChatModel chat) {
   if (chat.lastMessage == null) return 'No hay mensajes';
   print(chat.lastMessage!.sender.displayName);
-  final String prefix = chat.lastMessage!.sendedByMe
-      ? ''
-      : '${chat.lastMessage!.sender.displayName.split(' ').first}: ';
+  final String prefix =
+      '${chat.lastMessage!.sender.displayName.split(' ').first}: ';
 
   final String suffix = (chat.lastMessage.runtimeType == TextMessageModel)
       ? chat.lastMessage!.text!
