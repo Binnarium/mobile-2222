@@ -66,7 +66,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
                       height: 18,
                     ),
                     Text(
-                      'Aún no tienes ningún proyecto.',
+                      'Aún no tienes ningún proyecto',
                       style: textTheme.headline5,
                       textAlign: TextAlign.center,
                     ),
@@ -116,12 +116,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
           alignment: WrapAlignment.center,
           runSpacing: 10,
           children: [
-            Icon(
-              (project.kind == "PROJECT#PDF")
-                  ? Icons.description_outlined
-                  : Icons.headphones_outlined,
-              size: 50,
-            ),
+            Image.asset('assets/icons/upload_project_icon.png'),
             Text(project.file.path.split("/").last)
           ],
         ),
