@@ -6,7 +6,7 @@ Stream<List<ClubhouseModel>> LoadAvailableClubhouseService(CityDto city) {
   final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
 
   final DateTime today = DateTime.now();
-  final DateTime tomorrow = today.add(new Duration(days: 1));
+  final DateTime tomorrow = today.add(new Duration(days: 1, hours: 1));
 
   final Query<Map<String, dynamic>> query = _fFirestore
       .collection('clubhouse')
