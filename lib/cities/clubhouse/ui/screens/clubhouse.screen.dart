@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/create-clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhouse.service.dart';
-import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/club-resources-grid-item_widget.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -17,6 +17,14 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+
+const String description = """Agenda de eventos según temáticas de cada ciudad. 
+
+1. Ve a Clubhouse y organiza un evento;
+2. Copia el enlace, pégalo aquí, lo agregas a la agenda y obtienes un premio; 
+3. Disfruta y aprende con tus colegas docentes.
+
+    """;
 
 class ClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
@@ -29,10 +37,6 @@ class ClubhouseScreen extends StatefulWidget {
 }
 
 class _ClubhouseScreenState extends State<ClubhouseScreen> {
-  final String description =
-      """Sed ut *perspiciatis* unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.""";
-
   StreamSubscription? clubhousesSub;
 
   List<ClubhouseModel>? clubhouses;
@@ -60,7 +64,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
 
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ClubhouseScreen.route,
@@ -75,12 +79,17 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           ),
 
           /// page header
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: Text(
-              'CLUBHOUSE',
-              style: textTheme.headline2,
-              textAlign: TextAlign.center,
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 24.0),
+              width: min(300, size.width * 0.8),
+              child: Text(
+                "CLUBHOUSE",
+                style: textTheme.headline3!.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
 
@@ -101,7 +110,7 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
           Padding(
             padding: const EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
-              title: 'PRÓXIMOS ENCUENTROS',
+              title: 'Eventos en las próximas 24 horas',
             ),
           ),
 
@@ -114,25 +123,30 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
                     left: size.width * 0.04,
                     right: size.width * 0.04,
                   ),
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: size.width * 0.04,
-                      mainAxisSpacing: size.width * 0.04,
-                    ),
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: this.clubhouses!.length,
-                    itemBuilder: (context, index) => ClubResourcesGridItem(
-                      clubhouseModel: this.clubhouses![index],
-                    ),
-                  ),
+                  child: (this.clubhouses!.length == 0)
+                      ? Center(
+                          child: Text('No hay clubhouse creados'),
+                        )
+                      : GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: size.width * 0.04,
+                            mainAxisSpacing: size.width * 0.04,
+                          ),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: this.clubhouses!.length,
+                          itemBuilder: (context, index) => ClubhouseCard(
+                            clubhouseModel: this.clubhouses![index],
+                          ),
+                        ),
                 ),
 
           Padding(
             padding: const EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
-              title: 'Agrega tu encuentro',
+              title: 'Agrega tu evento',
             ),
           ),
 

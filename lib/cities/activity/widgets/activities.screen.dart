@@ -57,18 +57,18 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       body: ListView(
         children: [
           /// dead widget
-          LogosHeader(
-            showStageLogoCity: this.widget.city,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 50.0),
+            child: LogosHeader(
+              showStageLogoCity: this.widget.city,
+            ),
           ),
 
           /// title
-          Padding(
-            padding: EdgeInsets.only(top: 36),
-            child: Text(
-              'Actividades'.toUpperCase(),
-              style: Theme.of(context).textTheme.headline3,
-              textAlign: TextAlign.center,
-            ),
+          Text(
+            'Actividades'.toUpperCase(),
+            style: Theme.of(context).textTheme.headline2,
+            textAlign: TextAlign.center,
           ),
 
           /// activities card
@@ -79,7 +79,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             if (this.widget.city.enabledPages.contribution)
               Padding(
                 padding: EdgeInsets.only(
-                  top: 24,
+                  top: 12,
                   left: sidePadding,
                   right: sidePadding,
                 ),

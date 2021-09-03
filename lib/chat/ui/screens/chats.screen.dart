@@ -5,28 +5,28 @@ import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/search-chat-response.model.dart';
 import 'package:lab_movil_2222/chat/services/list-player-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/search-chats.service.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-list-title.widget.dart';
-import 'package:lab_movil_2222/chat/ui/widgets/list-chat-item.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
-class ListChatsScreen extends StatefulWidget {
-  static const route = "/list-chats";
+class ChatsScreen extends StatefulWidget {
+  static const route = "/chats";
 
   final Stream<List<ChatModel>> userChats;
 
-  ListChatsScreen({Key? key})
-      : this.userChats = ListPlayerChatsService().getChats,
+  ChatsScreen({Key? key})
+      : this.userChats = ListPlayerChatsService.instance.chats$,
         super(key: key);
 
   @override
-  _ListChatsScreenState createState() => _ListChatsScreenState();
+  _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-class _ListChatsScreenState extends State<ListChatsScreen> {
+class _ChatsScreenState extends State<ChatsScreen> {
   final SearchChatsService _searchChatsService = SearchChatsService();
   StreamSubscription? _chatsSub;
 
@@ -58,11 +58,8 @@ class _ListChatsScreenState extends State<ListChatsScreen> {
     final Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
 
-    return Scaffold(
-      bottomNavigationBar: Lab2222BottomNavigationBar(
-        activePage: Lab2222NavigationBarPages.chat,
-      ),
-      backgroundColor: Colors2222.primary,
+    return Scaffold2222.navigation(
+      activePage: Lab2222NavigationBarPages.chat,
       body: ListView(
         children: [
           Padding(

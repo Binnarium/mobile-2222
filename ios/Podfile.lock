@@ -353,6 +353,10 @@ PODS:
     - Firebase/Firestore (= 8.5.0)
     - firebase_core
     - Flutter
+  - cloud_functions (3.0.1):
+    - Firebase/Functions (= 8.5.0)
+    - firebase_core
+    - Flutter
   - CocoaAsyncSocket (7.6.5)
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
@@ -401,6 +405,9 @@ PODS:
   - Firebase/Firestore (8.5.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.5.0)
+  - Firebase/Functions (8.5.0):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 8.5.0)
   - Firebase/Storage (8.5.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.5.0)
@@ -464,6 +471,9 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
+  - FirebaseFunctions (8.5.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - FirebaseInstallations (8.5.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
@@ -564,6 +574,7 @@ DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - better_player (from `.symlinks/plugins/better_player/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -589,6 +600,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FirebaseFunctions
     - FirebaseInstallations
     - FirebaseStorage
     - GoogleAppMeasurement
@@ -612,6 +624,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/better_player/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  cloud_functions:
+    :path: ".symlinks/plugins/cloud_functions/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_analytics:
@@ -641,6 +655,7 @@ SPEC CHECKSUMS:
   better_player: a4383402f457e53720525888c0fc5d337ef6ba11
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: 6c39ac9ddba0365bb45a6a45425f48ad2eef9c58
+  cloud_functions: a1bf1d4336ceafa98935ebbddff583e54ccd7261
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -655,6 +670,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 1c1ca72483b59b17050f5b4cec4fb748425a3901
   FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
   FirebaseFirestore: 9aa10de35bb76a5fe40fdf5c858669f0eac88a99
+  FirebaseFunctions: eb1fedf8eb25c144ef72ff68d78259d79eb29ae5
   FirebaseInstallations: f2bc590b291d25fb40a9a05b8281c02a881b5117
   FirebaseStorage: 2c176ca64a68b45bddc3c7d4d2c0c839927ad92c
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c

@@ -38,8 +38,6 @@ class PlayerModel {
         this.clubhouseAwards = const [];
 
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
-    // this.awards = ,
-    //     this.displayName = ,
     return PlayerModel._(
       avatarImage: ImageDto.fromMap(payload['avatarImage'] ?? {}),
       uid: payload['uid'],
@@ -59,7 +57,9 @@ class PlayerModel {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'medals': this.awards,
+      'projectAwards': this.projectAwards,
+      'contributionsAwards': this.contributionsAwards,
+      'clubhouseAwards': this.clubhouseAwards,
       'uid': this.uid,
       'displayName': this.displayName,
       'email': this.email,

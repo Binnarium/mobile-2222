@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -241,6 +242,29 @@ class CityNavigator {
               ),
             ),
           ),
+        /// mcrso-meso-macro
+        if (enabledPagesDto.microMesoMacro)
+          _ScaffoldRouteBuilder(
+            route: MicroMesoMacroScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              MicroMesoMacroScreen.route,
+              arguments: MicroMesoMacroScreen(
+                city: city,
+              ),
+            ),
+          ),
+        if (enabledPagesDto.finalVideo)
+          _ScaffoldRouteBuilder(
+            route: FinalVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              FinalVideoScreen.route,
+              arguments: FinalVideoScreen(
+                city: city,
+              ),
+            ),
+          ),
       ];
 
   ///
@@ -285,8 +309,10 @@ class Scaffold2222 extends StatelessWidget {
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
         this._showBottomNavigationBar = true,
+        this.appBar = null,
         this._backgroundColor = city.color,
         this._backButton = true,
+        this.activePage = null,
         super(key: key);
 
   Scaffold2222.city({
@@ -294,33 +320,43 @@ class Scaffold2222 extends StatelessWidget {
     required this.body,
     required CityDto city,
     required String route,
-    Color? color = Colors2222.red,
+    Color? color,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
         this._showBottomNavigationBar = true,
         this._backButton = true,
         this._backgroundColor = color ?? city.color,
+        this.appBar = null,
+        this.activePage = null,
         super(key: key);
 
   Scaffold2222.empty({
     Key? key,
     required this.body,
+    Color backgroundColor = Colors2222.red,
+    this.appBar,
     this.backgrounds = const [],
   })  : this._nextRoute = null,
         this._backButton = false,
         this._showBottomNavigationBar = false,
-        this._backgroundColor = Colors2222.red,
+        this._backgroundColor = backgroundColor,
+        this.activePage = null,
         super(key: key);
 
   Scaffold2222.navigation({
     Key? key,
     required this.body,
     this.backgrounds = const [],
+    this.appBar,
+    required this.activePage,
   })  : this._nextRoute = null,
         this._backButton = false,
         this._showBottomNavigationBar = true,
         this._backgroundColor = Colors2222.red,
         super(key: key);
+
+  /// An app bar to display at the top of the scaffold.
+  final PreferredSizeWidget? appBar;
 
   final Widget body;
   final List<BackgroundDecorationStyle> backgrounds;
@@ -328,7 +364,7 @@ class Scaffold2222 extends StatelessWidget {
   final bool _backButton;
   final bool _showBottomNavigationBar;
   final Color _backgroundColor;
-
+  final Lab2222NavigationBarPages? activePage;
   @override
   Widget build(BuildContext context) {
     /// back button
@@ -348,8 +384,11 @@ class Scaffold2222 extends StatelessWidget {
           ? Lab2222BottomNavigationBar(
               nextPage: nextPage,
               prevPage: prevPage,
+              activePage: activePage,
             )
           : null,
+
+      appBar: this.appBar,
 
       /// wrap everything in a gesture detector to move across cities
       body: GestureDetector(

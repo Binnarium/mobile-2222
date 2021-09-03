@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -19,10 +19,12 @@ import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class CityProjectScreen extends StatefulWidget {
@@ -48,10 +50,14 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   AudioPlayerProvider audioProvider = AudioPlayerProvider();
   List<PlayerProject>? playerProjects = [];
   ProjectDto? project;
+
+  StreamSubscription? _userProjectsSub;
   String? userUID;
   @override
   void initState() {
     super.initState();
+
+    userUID = FirebaseAuth.instance.currentUser!.uid;
 
     /// called service to load the next chapter
     ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
@@ -62,27 +68,30 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         .projectLoader
         .load()
         .then((value) => this.setState(() => this.project = value));
-    loadPlayerProjects();
+
+    /// stream of projects
+    this._userProjectsSub =
+        LoadPlayerInformationService.loadProjects$(userUID!)!
+            .listen((projects) {
+      this.setState(() {
+        this.playerProjects = projects;
+      });
+    });
   }
 
-  /// to load the projects of the player and set to this screen
-  void loadPlayerProjects() async {
-    this.userUID = FirebaseAuth.instance.currentUser!.uid;
-    LoadPlayerInformationService playerLoader = LoadPlayerInformationService();
-    await playerLoader
-        .loadProjects(this.userUID!)
-        .then((value) => this.setState(() {
-              this.playerProjects = value;
-            }));
+  @override
+  void dispose() {
+    _userProjectsSub?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [
-        BackgroundDecorationStyle.bottomRight,
+        BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
@@ -93,63 +102,77 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   _projectSheet(BuildContext context, Size size, Color color, String userUID,
       List<PlayerProject> playerProjects) {
-    final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
-    setState(() {});
+    final horizontalPadding =
+        EdgeInsets.symmetric(horizontal: size.width * 0.08);
     return ListView(
-      padding:
-          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 50),
       children: [
-        Text(
-          "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
-          style: textTheme.headline5,
-          textAlign: TextAlign.center,
+        /// icon item
+        Padding(
+          padding: EdgeInsets.only(
+            bottom: 32.0,
+          ),
+          child: LogosHeader(
+            showStageLogoCity: this.widget.city,
+          ),
         ),
+
+        Center(
+          child: Container(
+            width: min(300, size.width * 0.9),
+            child: Text(
+              "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
+              style: textTheme.headline5!.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+
+        ///
         SizedBox(
           height: 16,
         ),
+
+        ///
         if (this.project == null)
           AppLoading()
         else ...[
-          LayoutBuilder(
-            builder: (context, constraints) => Container(
-              width: constraints.maxWidth * 0.7,
-              padding: EdgeInsets.only(bottom: 16),
-              child: Stack(
-                children: [
-                  /// text
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 16,
-                      bottom: 80,
-                      right: constraints.maxWidth * 0.35,
-                      left: constraints.maxWidth * 0.05,
-                    ),
-                    child: Text(
-                      this.project!.activity,
-                      style: textTheme.headline6,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  /// path background
-                  Positioned.fill(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) => Image.asset(
-                        'assets/images/path-project.png',
-                        alignment: Alignment.bottomRight,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ],
+          Padding(
+            padding: horizontalPadding,
+            child: Text(
+              this.project!.activity,
+              style: textTheme.headline5!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 32,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
-          MarkdownBody(
-            data: this.project!.explanation,
-            styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
-              textAlign: WrapAlignment.center,
+
+          ///
+          SizedBox(
+            height: 28,
+          ),
+          Center(
+            child: Image.asset(
+              'assets/images/reto.png',
+              alignment: Alignment.bottomRight,
+              fit: BoxFit.contain,
+              width: min(160, size.width * 0.4),
+            ),
+          ),
+          SizedBox(
+            height: 32,
+          ),
+
+          ///
+          Padding(
+            padding: horizontalPadding,
+            child: Markdown2222(
+              data: this.project!.explanation,
+              contentAlignment: WrapAlignment.start,
             ),
           ),
 
@@ -161,6 +184,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           if (this.project!.audio != null) ...[
             Container(
               alignment: Alignment.center,
+              padding: horizontalPadding,
               child: PodcastAudioPlayer(
                 audio: this.project!.audio!,
                 color: this.widget.city.color,
@@ -169,16 +193,22 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             SizedBox(
               height: 40,
             ),
-            ProjectGalleryWidget(
+          ],
+          Padding(
+            padding: horizontalPadding,
+            child: ProjectGalleryWidget(
                 city: this.widget.city,
                 userUID: userUID,
                 projects: playerProjects),
-          ],
+          ),
 
-          _taskButton(
-            context,
-            color,
-            this.widget.city.name,
+          Padding(
+            padding: EdgeInsets.only(bottom: 50),
+            child: _taskButton(
+              context,
+              color,
+              this.widget.city.name,
+            ),
           )
         ],
       ],
@@ -236,7 +266,7 @@ class UploadFileDialog extends StatefulWidget {
 }
 
 class _UploadFileDialogState extends State<UploadFileDialog> {
-  StreamSubscription? userService;
+  StreamSubscription? _userServiceSub;
   UploadTask? task;
   String? userUID;
   File? file;
@@ -246,15 +276,20 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   @override
   void initState() {
     super.initState();
-    this.userService = UserService.instance.user$().listen((event) {
+    this._userServiceSub = UserService.instance.user$().listen((event) {
       userUID = event!.uid;
       LoadPlayerInformationService playerLoader =
           LoadPlayerInformationService();
       playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
             this.player = value;
           }));
-      playerLoader.loadProjects(event.uid);
     });
+  }
+
+  @override
+  void dispose() {
+    _userServiceSub?.cancel();
+    super.dispose();
   }
 
   @override
@@ -303,9 +338,6 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
   Future selectFile() async {
     print('User UID: $userUID');
-
-    print('playerdto: ${player?.projectAwards.first.obtained}');
-    print('playerdto: ${player?.uid}');
 
     final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -358,9 +390,16 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
     );
     final urlDownload = await snapshot.ref.getDownloadURL();
 
+    /// creates a playerProject instance for this project
+    PlayerProject currentProject = PlayerProject.fromMap({
+      "file": {"path": destination, "url": urlDownload},
+      "cityID": this.widget.cityName,
+      "kind": (this.widget.cityName != "Angkor") ? "PROJECT#PDF" : "PROJECT#MP3"
+    });
+
     /// to write the project in the users project collection
     UploadFileToFirebaseService.writePlayerProjectFile(
-        userUID!, this.widget.cityName, destination, urlDownload);
+        userUID!, currentProject);
     print('Download link: $urlDownload');
   }
 

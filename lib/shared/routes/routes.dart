@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lab_movil_2222/chat/ui/screens/chat.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/list-chats.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
@@ -24,9 +26,9 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.da
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
-import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
+import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 
@@ -71,12 +73,17 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           );
 
         /// all chats screens
-        case ListChatsScreen.route:
-          return ListChatsScreen();
+        case ChatsScreen.route:
+          return ChatsScreen();
 
-        case ChatScreen.route:
-          final args = settings.arguments as ChatScreen;
-          return ChatScreen(
+        case MessagesScreen.route:
+          final args = settings.arguments as MessagesScreen;
+          return MessagesScreen(
+            chat: args.chat,
+          );
+        case ChatParticipantsScreen.route:
+          final args = settings.arguments as ChatParticipantsScreen;
+          return ChatParticipantsScreen(
             chat: args.chat,
           );
 
@@ -104,6 +111,7 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return StageMonsterScreen(
             city: args.city,
           );
+
         case StageArgumentationScreen.route:
           final args = settings.arguments as StageArgumentationScreen;
           return StageArgumentationScreen(
@@ -178,6 +186,11 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
         case ManualVideoScreen.route:
           final args = settings.arguments as ManualVideoScreen;
           return ManualVideoScreen(
+            city: args.city,
+          );
+        case FinalVideoScreen.route:
+          final args = settings.arguments as FinalVideoScreen;
+          return FinalVideoScreen(
             city: args.city,
           );
 
