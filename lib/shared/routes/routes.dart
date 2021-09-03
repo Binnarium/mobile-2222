@@ -25,9 +25,9 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.da
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
-import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
+import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 

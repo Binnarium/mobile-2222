@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
-import 'package:lab_movil_2222/screens/team.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
+import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -133,30 +133,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
 
           /// team button
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: TextButton(
-                onPressed: () => Navigator.pushNamed(context, TeamScreen.route),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Colors.white,
-                    child: Text(
-                      'Equipo 2222',
-                      style: textTheme.headline5
-                          ?.apply(
-                              decoration: TextDecoration.underline,
-                              fontSizeFactor: 0.7,
-                              color: Colors.black)
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: GotoTeamButton(),
           ),
 
           /// white container text
