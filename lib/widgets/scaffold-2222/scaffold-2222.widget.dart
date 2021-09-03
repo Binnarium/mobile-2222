@@ -38,19 +38,6 @@ class CityNavigator {
     CityDto city,
   ) =>
       [
-        /// video introduction screen
-        if (enabledPagesDto.introductoryVideo)
-          _ScaffoldRouteBuilder(
-            route: IntroductoryVideoScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              IntroductoryVideoScreen.route,
-              arguments: IntroductoryVideoScreen(
-                city: city,
-              ),
-            ),
-          ),
-
         /// introduction screen
         _ScaffoldRouteBuilder(
           route: CityIntroductionScreen.route,
@@ -74,6 +61,19 @@ class CityNavigator {
             ),
           ),
         ),
+
+        /// video introduction screen
+        if (enabledPagesDto.introductoryVideo)
+          _ScaffoldRouteBuilder(
+            route: IntroductoryVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              IntroductoryVideoScreen.route,
+              arguments: IntroductoryVideoScreen(
+                city: city,
+              ),
+            ),
+          ),
 
         /// Monster screen
         _ScaffoldRouteBuilder(
@@ -230,7 +230,7 @@ class CityNavigator {
             ),
           ),
 
-        /// mcrso-meso-macro
+        /// micro-meso-macro
         if (enabledPagesDto.microMesoMacro)
           _ScaffoldRouteBuilder(
             route: MicroMesoMacroScreen.route,
@@ -242,18 +242,7 @@ class CityNavigator {
               ),
             ),
           ),
-        /// mcrso-meso-macro
-        if (enabledPagesDto.microMesoMacro)
-          _ScaffoldRouteBuilder(
-            route: MicroMesoMacroScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              MicroMesoMacroScreen.route,
-              arguments: MicroMesoMacroScreen(
-                city: city,
-              ),
-            ),
-          ),
+
         if (enabledPagesDto.finalVideo)
           _ScaffoldRouteBuilder(
             route: FinalVideoScreen.route,
