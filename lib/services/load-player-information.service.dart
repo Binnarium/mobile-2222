@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lab_movil_2222/models/player-contributions.dto.dart';
+
 import 'package:lab_movil_2222/models/player-projects.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 
@@ -23,28 +23,8 @@ class LoadPlayerInformationService {
     } else
       return [];
   }
-
-  Future<List<PlayerContribution>> loadContributions(String userUID) async {
-    final payload = await FirebaseFirestore.instance
-        .collection('players')
-        .doc(userUID)
-        .collection('contribution')
-        .get();
-    if (payload.docs.isNotEmpty) {
-      List<PlayerContribution> contributions = payload.docs
-          .map((e) => PlayerContribution.fromMap(e.data(), e.id))
-          .toList();
-      contributions.forEach((element) {
-        print("USER CONTRIBUTIONS: ${element.cityName}");
-      });
-      return contributions;
-    }else{
-      return [];
-    }
-
-    
-  }
-
+  
+ 
   
 @Deprecated('do not use this implementation')
   Future<PlayerModel> loadInformation(String userUID) async {

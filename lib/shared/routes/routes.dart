@@ -13,6 +13,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/micro_meso_macro.screen..dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
@@ -127,6 +128,12 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             city: args.city,
           );
 
+        case YourContributionScreen.route:
+          final args = settings.arguments as YourContributionScreen;
+          return YourContributionScreen(
+            city: args.city,
+          );
+
         case ActivitiesScreen.route:
           final args = settings.arguments as ActivitiesScreen;
           return ActivitiesScreen(
@@ -156,9 +163,9 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
             city: args.city,
           );
 
-        case CityContributionScreen.route:
-          final args = settings.arguments as CityContributionScreen;
-          return CityContributionScreen(
+        case ContributionScreen.route:
+          final args = settings.arguments as ContributionScreen;
+          return ContributionScreen(
             city: args.city,
           );
 

@@ -89,8 +89,8 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   iconPath: "assets/icons/multiple_choice_activity_icon.png",
                   onTap: () => Navigator.pushNamed(
                     context,
-                    CityContributionScreen.route,
-                    arguments: CityContributionScreen(
+                    YourContributionScreen.route,
+                    arguments: YourContributionScreen(
                       city: this.widget.city,
                     ),
                   ),

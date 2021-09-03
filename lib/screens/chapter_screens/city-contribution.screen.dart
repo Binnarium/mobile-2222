@@ -9,22 +9,22 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
-class CityContributionScreen extends StatefulWidget {
-  static const String route = '/contribution';
+class YourContributionScreen extends StatefulWidget {
+  static const String route = '/your_contribution';
 
   final CityDto city;
 
-  CityContributionScreen({
+  YourContributionScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
         super(key: key);
 
   @override
-  _CityColaborationScreenState createState() => _CityColaborationScreenState();
+  _YourContributionScreenState createState() => _YourContributionScreenState();
 }
 
-class _CityColaborationScreenState extends State<CityContributionScreen> {
+class _YourContributionScreenState extends State<YourContributionScreen> {
   late List<CityDto> chapters;
 
   @override
@@ -43,7 +43,7 @@ class _CityColaborationScreenState extends State<CityContributionScreen> {
         BackgroundDecorationStyle.bottomRight,
         BackgroundDecorationStyle.path
       ],
-      route: CityContributionScreen.route,
+      route: YourContributionScreen.route,
       body: _projectSheet(context, size, this.widget.city.color),
     );
   }

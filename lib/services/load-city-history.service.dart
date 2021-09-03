@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/models/city-history.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 
 class LoadCityHistoryService extends ILoadOptions<CityHistoryDto, CityDto> {
+  
   const LoadCityHistoryService({
     required final CityDto city,
   }) : super(options: city);
