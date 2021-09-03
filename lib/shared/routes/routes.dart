@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
@@ -153,6 +154,13 @@ MaterialPageRoute<dynamic> buildMaterialPageRoute(RouteSettings settings) {
           return ClubhouseScreen(
             city: args.city,
           );
+
+        case AddClubhouseScreen.route:
+          final args = settings.arguments as AddClubhouseScreen;
+          return AddClubhouseScreen(
+            city: args.city,
+          );
+
         case MicroMesoMacroScreen.route:
           final args = settings.arguments as MicroMesoMacroScreen;
           return MicroMesoMacroScreen(

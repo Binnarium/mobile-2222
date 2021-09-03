@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
-import 'package:lab_movil_2222/cities/clubhouse/models/create-clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhouse.service.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
@@ -14,7 +12,6 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
@@ -40,7 +37,6 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
   StreamSubscription? clubhousesSub;
 
   List<ClubhouseModel>? clubhouses;
-  final TextEditingController _addClubhouseController = TextEditingController();
 
   @override
   void initState() {
@@ -125,7 +121,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                   ),
                   child: (this.clubhouses!.length == 0)
                       ? Center(
-                          child: Text('No hay clubhouse creados'),
+                          child: Text('No hay clubhouse programados'),
                         )
                       : GridView.builder(
                           gridDelegate:
@@ -144,57 +140,22 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                 ),
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 34.0),
-            child: ClubhouseSectionTitle(
-              title: 'Agrega tu evento',
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 20,
-              left: size.width * 0.08,
-              right: size.width * 0.08,
-            ),
-            child: TextFormField222(
-              primaryColor: this.widget.city.color,
-              controller: this._addClubhouseController,
-              label: 'Enlace clubhouse',
-              keyboardType: TextInputType.url,
-              prefixIcon: Icons.search,
-              onValueChanged: (value) => this.clubhouseUrl = value,
-            ),
-          ),
-          Padding(
             padding: EdgeInsets.only(bottom: 20),
             child: Center(
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
-                child: Text('Agregar clubhouse'),
-                onPressed: () async {
-                  if (this.clubhouseUrl == null) return;
-                  final FirebaseFirestore _fFirestore =
-                      FirebaseFirestore.instance;
-                  final FirebaseAuth _fAuth = FirebaseAuth.instance;
-                  final CreateClubhouseModel createClubhouseModel =
-                      CreateClubhouseModel(
-                    cityId: this.widget.city.id,
-                    clubhouseUrl: this.clubhouseUrl!,
-                    id: this._generateId(size: 15),
-                    uploaderId: _fAuth.currentUser!.uid,
-                  );
-
-                  await _fFirestore
-                      .collection('clubhouse')
-                      .doc(createClubhouseModel.id)
-                      .set(createClubhouseModel.toMap());
-
-                  this.clubhouseUrl = null;
-                  this._addClubhouseController.clear();
-                },
+                icon: Icon(Icons.add_rounded),
+                label: Text('Agrega tu evento Clubhouse'),
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  AddClubhouseScreen.route,
+                  arguments: AddClubhouseScreen(
+                    city: this.widget.city,
+                  ),
+                ),
               ),
             ),
           ),
@@ -202,20 +163,4 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
       ),
     );
   }
-
-  String _generateId({int size = 10}) {
-    const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    Random _rnd = Random();
-
-    String id = String.fromCharCodes(
-      Iterable.generate(
-        size,
-        (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)),
-      ),
-    );
-    return id;
-  }
-
-  String? clubhouseUrl;
 }
