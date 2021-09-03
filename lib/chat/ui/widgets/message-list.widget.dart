@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
+import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/message.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 
 class MessagesList extends StatefulWidget {
   final Stream<List<MessageModel>> messagesStream;
@@ -60,15 +64,32 @@ class _MessagesListState extends State<MessagesList> {
       children: [
         if (this.messages == null)
           AppLoading()
-        else
+        else ...[
+          /// about chats
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Center(
+              child: Container(
+                width: min(400, size.width * 0.8),
+                child: Markdown2222(
+                  data: chatsInfo,
+                  color: Colors2222.black.withOpacity(0.5),
+                  contentAlignment: WrapAlignment.center,
+                ),
+              ),
+            ),
+          ),
+
+          /// chats
           for (MessageModel message in this.messages!)
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.04,
-                vertical: 16,
+                vertical: 8,
               ),
               child: MessageWidget(message: message),
             ),
+        ]
       ],
     );
   }

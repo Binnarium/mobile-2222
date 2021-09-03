@@ -61,7 +61,6 @@ abstract class MessageModel {
         text: text,
         sendedDate: sendedDate,
         sender: sender,
-        kind: kind,
         sendedByMe: sendedByMe,
       );
     }
@@ -176,11 +175,10 @@ class TextMessageModel extends MessageModel {
     required String text,
     required DateTime sendedDate,
     required ChatParticipantModel sender,
-    required String kind,
     bool sendedByMe = false,
   }) : super(
           sendedByMe: sendedByMe,
-          kind: kind,
+          kind: 'MESSAGE#TEXT',
           id: id,
           messageKind: MessageKind.text,
           asset: null,
