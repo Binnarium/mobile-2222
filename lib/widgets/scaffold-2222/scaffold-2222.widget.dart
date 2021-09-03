@@ -242,18 +242,6 @@ class CityNavigator {
               ),
             ),
           ),
-        /// mcrso-meso-macro
-        if (enabledPagesDto.microMesoMacro)
-          _ScaffoldRouteBuilder(
-            route: MicroMesoMacroScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              MicroMesoMacroScreen.route,
-              arguments: MicroMesoMacroScreen(
-                city: city,
-              ),
-            ),
-          ),
         if (enabledPagesDto.finalVideo)
           _ScaffoldRouteBuilder(
             route: FinalVideoScreen.route,
