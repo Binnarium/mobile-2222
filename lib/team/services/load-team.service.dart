@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/models/welcome.dto.dart';
+import 'package:lab_movil_2222/team/models/team.model.dart';
 
-class LoadTeamService extends ILoadInformationService<TeamDto> {
+class LoadTeamService extends ILoadInformationService<TeamModel> {
   @override
-  Future<TeamDto> load() async {
+  Future<TeamModel> load() async {
     final snap = await FirebaseFirestore.instance
         .collection('application')
         .doc('team')
@@ -15,7 +15,7 @@ class LoadTeamService extends ILoadInformationService<TeamDto> {
 
     final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
 
-    final result = TeamDto.fromMap(payload);
+    final result = TeamModel.fromMap(payload);
     return result;
   }
 }

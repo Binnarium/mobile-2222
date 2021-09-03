@@ -18,6 +18,14 @@ import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
+const String description = """Agenda de eventos según temáticas de cada ciudad. 
+
+1. Ve a Clubhouse y organiza un evento;
+2. Copia el enlace, pégalo aquí, lo agregas a la agenda y obtienes un premio; 
+3. Disfruta y aprende con tus colegas docentes.
+
+    """;
+
 class ClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
   final CityDto city;
@@ -29,10 +37,6 @@ class ClubhouseScreen extends StatefulWidget {
 }
 
 class _ClubhouseScreenState extends State<ClubhouseScreen> {
-  final String description =
-      """Sed ut *perspiciatis* unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.""";
-
   StreamSubscription? clubhousesSub;
 
   List<ClubhouseModel>? clubhouses;
@@ -119,19 +123,24 @@ totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architec
                     left: size.width * 0.04,
                     right: size.width * 0.04,
                   ),
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: size.width * 0.04,
-                      mainAxisSpacing: size.width * 0.04,
-                    ),
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: this.clubhouses!.length,
-                    itemBuilder: (context, index) => ClubhouseCard(
-                      clubhouseModel: this.clubhouses![index],
-                    ),
-                  ),
+                  child: (this.clubhouses!.length == 0)
+                      ? Center(
+                          child: Text('No hay clubhouse creados'),
+                        )
+                      : GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: size.width * 0.04,
+                            mainAxisSpacing: size.width * 0.04,
+                          ),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: this.clubhouses!.length,
+                          itemBuilder: (context, index) => ClubhouseCard(
+                            clubhouseModel: this.clubhouses![index],
+                          ),
+                        ),
                 ),
 
           Padding(

@@ -20,6 +20,7 @@ class CityEnabledPagesDto {
   final bool manualVideo;
   final bool projectVideo;
   final bool microMesoMacro;
+  final bool finalVideo;
   final bool content;
 
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
@@ -33,6 +34,7 @@ class CityEnabledPagesDto {
         this.projectVideo = payload['projectVideo'] == true,
         this.content = payload['content'] == true,
         this.microMesoMacro = payload['microMesoMacro'] == true,
+        this.finalVideo = payload['finalVideo'] == true,
         this.project = payload['project'] == true;
 }
 

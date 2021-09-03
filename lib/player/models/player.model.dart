@@ -38,8 +38,6 @@ class PlayerModel {
         this.clubhouseAwards = const [];
 
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
-    // this.awards = ,
-    //     this.displayName = ,
     return PlayerModel._(
       avatarImage: ImageDto.fromMap(payload['avatarImage'] ?? {}),
       uid: payload['uid'],
