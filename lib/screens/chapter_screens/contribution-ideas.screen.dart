@@ -60,6 +60,14 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
 
   _contributionBody(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    String contributionExplanation = '';
+    if (this.widget.option == 'Idea') {
+      contributionExplanation =
+          'Escribe una idea que no hayas encontrado en tu viaje por la ciudad. Hazlo en un máximo de 20 líneas de texto y una recomendación de lectura.';
+    } else {
+      contributionExplanation =
+          'Comparte con la comunidad una buena práctica que conozcas, propia o de algún colega o equipo. Hazlo en un máximo de 10 líneas de texto y un enlace de referencia.';
+    }
 
     return SingleChildScrollView(
       child: Column(
@@ -84,8 +92,8 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: ContributionContentMarkdown(
-              contributionContent: 'EXPLICACIÓN DE LAS CONTRIBUCIONES',
+            child: Text(
+               contributionExplanation,
             ),
           ),
 
@@ -116,7 +124,7 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
                       borderSide: BorderSide(color: Colors2222.black))),
             ),
           ),
-          
+
           _ideaButton(context),
 
           Padding(
