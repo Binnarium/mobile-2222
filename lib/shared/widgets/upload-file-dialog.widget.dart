@@ -115,7 +115,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
     final destination = 'players/$userUID/${this.widget.cityName}/$fileName';
     print("LOCATION: $destination");
-    task = UploadFileToFirebaseService.uploadFile(destination, file!, userUID!);
+    task = UploadFileToFirebaseService.uploadFile(destination, file!);
     setState(() {});
 
     if (task == null) return;

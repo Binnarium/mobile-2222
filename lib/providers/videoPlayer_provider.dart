@@ -25,8 +25,6 @@ class VideoPlayerProvider with ChangeNotifier {
       autoDispose: true,
       allowedScreenSleep: false,
       looping: false,
-      placeholder:
-          Center(child: Image.asset('assets/images/video-placeholder.png')),
       deviceOrientationsAfterFullScreen: [
         DeviceOrientation.portraitUp,
       ],

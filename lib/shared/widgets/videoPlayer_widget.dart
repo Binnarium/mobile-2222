@@ -10,12 +10,13 @@ import 'package:url_launcher/url_launcher.dart';
 /// Class that creates a video player depending on video URL and the description of the video
 class VideoPlayer extends StatefulWidget {
   final VideoDto video;
-
+  final bool isDetailedScreen;
   VideoPlayer({
     Key? key,
 
     /// videoDTO
     required this.video,
+    this.isDetailedScreen = false,
   }) : super(key: key);
 
   @override
@@ -36,6 +37,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void initState() {
     super.initState();
+    if (this.widget.isDetailedScreen) {
+      print('es detailedScreen');
+      videoProvider.setVideo(this.widget.video);
+      showVideo = true;
+    }
+
     // videoProvider.setVideo(this.widget.video);
   }
 
@@ -55,11 +62,13 @@ class _VideoPlayerState extends State<VideoPlayer> {
         child: InkWell(
             onTap: () {
               setState(() {
-                videoProvider.setVideo(this.widget.video);
-                if (!kIsWeb) {
-                  showVideo = true;
-                } else {
-                  launch(this.widget.video.url);
+                if (this.widget.isDetailedScreen == false) {
+                  videoProvider.setVideo(this.widget.video);
+                  if (!kIsWeb) {
+                    showVideo = true;
+                  } else {
+                    launch(this.widget.video.url);
+                  }
                 }
               });
             },
