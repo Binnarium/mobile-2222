@@ -92,26 +92,16 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
                   padding: EdgeInsets.only(
                     top: 16,
                     bottom: 80,
-                    right: constraints.maxWidth * 0.35,
-                    left: constraints.maxWidth * 0.05,
+                    
                   ),
                   child: Text(
-                    'Deja tu contribución de ${this.widget.city.name}',
+                    'A través de la experiencia propia, el docente expande los contenidos y agrega valor a la conversación de la comunidad 2222. Para ganar premios, se deben hacer aportes sobre la temática de la ciudad en una o ambas consignas.',
                     style: textTheme.headline6,
                     textAlign: TextAlign.center,
                   ),
                 ),
 
-                /// path background
-                Positioned.fill(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => Image.asset(
-                      'assets/images/path-project.png',
-                      alignment: Alignment.bottomRight,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
+                
               ],
             ),
           ),
@@ -119,10 +109,10 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
       ),
       Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 50),
+            EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 30),
         child: MarkdownBody(
           data:
-              'Las contribuciones son el pilar fundamental de nuestro viaje mítico donde dejaremos nuestras experiencias y expectativas para la siguiente etapa',
+              'a)Escribe una idea que no hayas encontrado en tu viaje por la ciudad. Hazlo en un máximo de 20 líneas de texto y una recomendación de lectura.        \nb) Comparte con la comunidad una buena práctica que conozcas, propia o de algún colega o equipo. Hazlo en un máximo de 10 líneas de texto y un enlace de referencia.',
           styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
             textAlign: WrapAlignment.center,
           ),
@@ -132,8 +122,9 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
         height: 16,
       ),
       _contributionButton(context, color, 'Idea', this.widget.city),
-      _contributionButton(context, color, 'Lecture', this.widget.city),
-      _contributionButton(context, color, 'Project', this.widget.city),
+      
+      _contributionButton(context, color, 'Práctica', this.widget.city),
+      
     ]);
   }
 }
@@ -142,12 +133,10 @@ _contributionButton(BuildContext context, color, String option, CityDto city) {
   double buttonWidth = MediaQuery.of(context).size.width;
   String name = '';
   if (option == 'Idea') {
-    name = 'Idea';
-  } else if (option == 'Lecture') {
-    name = 'Lectura';
-  } else {
-    name = 'Proyecto';
-  }
+    name = 'Sube tu idea y enlace';
+  } else if (option == 'Práctica') {
+    name = 'Sube tu buena práctica';
+  } 
   return Container(
     width: buttonWidth,
     margin: EdgeInsets.symmetric(horizontal: 40),
@@ -166,7 +155,7 @@ _contributionButton(BuildContext context, color, String option, CityDto city) {
         ),
       ),
       child: Text(
-        'Contribucción de ${name}',
+        name,
         style: Theme.of(context)
             .textTheme
             .bodyText1!
