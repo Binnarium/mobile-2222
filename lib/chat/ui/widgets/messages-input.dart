@@ -1,8 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 
@@ -88,14 +93,14 @@ class _MessageTextInputState extends State<MessageTextInput> {
                     color: Colors2222.white,
                     icon: Icon(Icons.image_rounded),
                     onPressed: () {
-                      print('object');
+                      _sendMultimediaMessage("MESSAGE#IMAGE");
                     },
                   ),
                   IconButton(
                     color: Colors2222.white,
                     icon: Icon(Icons.videocam_rounded),
                     onPressed: () {
-                      print('object');
+                      _sendMultimediaMessage("MESSAGE#VIDEO");
                     },
                   ),
 
@@ -120,13 +125,13 @@ class _MessageTextInputState extends State<MessageTextInput> {
     if (this.widget.messageInput.text == "") return;
     print(this.widget.messageInput.text);
     print(this._sendMessageSub);
-
+    print('antes del servicio');
     if (this._sendMessageSub != null) return;
-
+    print('entró al servicio');
     this._sendMessageSub = this
         .widget
         ._sendMessagesService
-        .text$(this.widget.chat, this.widget.messageInput.text)
+        .text$(this.widget.chat, this.widget.messageInput.text, "MESSAGE#TEXT")
         .listen((sended) {
       if (!sended)
         ScaffoldMessenger.of(context)
@@ -136,6 +141,129 @@ class _MessageTextInputState extends State<MessageTextInput> {
       this._sendMessageSub = null;
       this.widget.messageInput.clear();
     });
+  }
+
+  void _sendMultimediaMessage(String kind) async {
+    File file = File('');
+    String urlDownload = "";
+    dynamic message;
+
+    /// check message kind
+    if (kind == "MESSAGE#IMAGE") {
+      /// user picks file
+      file = await selectMultimediaFile(kind);
+      if (file.path != "") {
+        /// method to upload to firebase storage
+        urlDownload = await uploadMultimediaFile(file, kind);
+
+        /// checks if urlDownload isn't null
+        if (urlDownload != "") {
+          /// builds the image Map
+          Map<String, dynamic> imageMap = {
+            'width': 0,
+            'height': 0,
+            'name': file.path.split("/").last,
+            'path': file.path,
+            'url': urlDownload,
+          };
+
+          /// creates the imageDto based on map above
+
+          message = ImageDto.fromMap(imageMap);
+          print('mensaje : ${message.name}');
+        } else {
+          print('url vacía');
+          return;
+        }
+      } else {
+        print('usuario no seleccionó imagen');
+        return;
+      }
+    } else if (kind == "MESSAGE#VIDEO") {
+      /// user picks file
+      file = await selectMultimediaFile(kind);
+      if (file.path != "") {
+        /// method to upload to firebase storage
+        urlDownload = await uploadMultimediaFile(file, kind);
+
+        /// checks if urlDownload isn't null
+        if (urlDownload != "") {
+          Map<String, dynamic> videoMap = {
+            'format': '',
+            'duration': 0,
+            'name': file.path.split("/").last,
+            'path': file.path,
+            'url': urlDownload,
+          };
+
+          message = VideoDto.fromMap(videoMap);
+        } else {
+          print('url vacía');
+          return;
+        }
+      } else {
+        print('usuario no seleccionó video');
+        return;
+      }
+    }
+
+    /// checks if there is a _sendMessageSub
+    if (this._sendMessageSub != null) return;
+
+    print('mensaje : ${message.toString()}');
+    if (message != null) {
+      print('entró a que message!= null del servicio');
+
+      /// begins the stream to upload message
+      await this
+          .widget
+          ._sendMessagesService
+          .multimedia(this.widget.chat, message, kind);
+
+      this._sendMessageSub?.cancel();
+      this._sendMessageSub = null;
+      this.widget.messageInput.clear();
+    }
+  }
+
+  Future<File> selectMultimediaFile(String kind) async {
+    /// allowed extensions depending on file kind
+    Map<String, List<String>> allowedExtensions = {
+      'MESSAGE#IMAGE': ['png', 'svg', 'jpg', 'jpeg'],
+      'MESSAGE#VIDEO': ['mp4', 'avi', 'wmv', 'amv', 'm4v', 'gif']
+    };
+    final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowMultiple: false,
+        allowedExtensions: allowedExtensions[kind]);
+
+    if (result == null) return File('');
+
+    /// to get the path of the file
+    final path = result.files.single.path!;
+
+    return File(path);
+  }
+
+  /// to upload a file
+  Future<String> uploadMultimediaFile(File file, String kind) async {
+    String urlDownload = "";
+
+    final destination =
+        'chats/${this.widget.chat.id}/files/${file.path.split("/").last}';
+    print("LOCATION: $destination");
+
+    UploadTask? task =
+        UploadFileToFirebaseService.uploadFile(destination, file);
+
+    if (task == null) return "";
+
+    final snapshot = await task;
+
+    urlDownload = await snapshot.ref.getDownloadURL();
+
+    print('Download link: $urlDownload');
+    return urlDownload;
   }
 }
 

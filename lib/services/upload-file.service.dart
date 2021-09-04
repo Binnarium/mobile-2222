@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:lab_movil_2222/models/player-projects.dto.dart';
 
 class UploadFileToFirebaseService {
-  static UploadTask? uploadFile(destination, File file, String userUID) {
+  static UploadTask? uploadFile(destination, File file) {
     try {
       final ref = FirebaseStorage.instance.ref(destination);
 
