@@ -11,10 +11,10 @@ import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 const String description = """

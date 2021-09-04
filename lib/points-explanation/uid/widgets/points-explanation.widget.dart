@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/player/models/points-explanation.model.dart';
-import 'package:lab_movil_2222/player/services/get-points-explanation.service.dart';
+import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
+import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 
 class ApproveText extends StatefulWidget {
   const ApproveText({
@@ -42,7 +42,7 @@ class _ApproveTextState extends State<ApproveText> {
     return this.pointsExplanation == null
         ? AppLoading()
         : MarkdownCard(
-            workload: this.pointsExplanation!.explanation,
+            content: this.pointsExplanation!.explanation,
           );
   }
 }

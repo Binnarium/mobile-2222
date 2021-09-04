@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class ActivityCardWidget extends StatelessWidget {
   const ActivityCardWidget({

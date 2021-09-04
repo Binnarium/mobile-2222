@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 enum BubbleKind {
   TopRight,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class IdeaResourcesListItem extends StatelessWidget {
   final String? description;
