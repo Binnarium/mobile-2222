@@ -34,7 +34,6 @@ class _PlayButtonState extends State<PlayButton> {
   void initState() {
     super.initState();
     this._iconSub = this.widget.state$.listen((event) {
-      print(event);
       this.setState(() => this.icon = PlayerStateIcons[event]!);
     });
   }

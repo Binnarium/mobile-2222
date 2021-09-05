@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:lab_movil_2222/assets/audio/model/audio-player.extension.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-controls.widget.dart';
@@ -16,7 +19,7 @@ class AudioPlayerWidget extends StatefulWidget {
 
   AudioPlayerWidget({
     Key? key,
-    required this.audio,
+    required this.audio, 
     this.color = Colors2222.primary,
   }) : super(key: key);
 
@@ -25,41 +28,47 @@ class AudioPlayerWidget extends StatefulWidget {
 }
 
 class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
-  // AudioPlayer? audioPlayer;
+  StreamSubscription? _currentPlayerSub;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(Duration(seconds: 2), () {
-  //     CurrentAudioProvider audioProvider =
-  //         Provider.of<CurrentAudioProvider>(context, listen: false);
-  //     if (audioProvider.currentAudio?.path == this.widget.audio.path)
-  //       this.setState(() {
-  //         audioProvider.player = audioProvider.player;
-  //       });
-  //   });
-  // }
+  CurrentAudioProvider get audioProvider =>
+      Provider.of<CurrentAudioProvider>(context, listen: false);
+
+  AudioPlayer? player;
+
+  @override
+  void initState() {
+    super.initState();
+    this._currentPlayerSub = this.audioProvider.currentAudio$.listen(
+      (currentAudio) {
+        print(currentAudio);
+        this.setState(() {
+          if (currentAudio?.path == this.widget.audio.path)
+            this.player = audioProvider.player;
+          else
+            this.player = null;
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._currentPlayerSub?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // print(audioProvider.player);
-    CurrentAudioProvider audioProvider =
-        Provider.of<CurrentAudioProvider>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
         /// progress indicator
-        if (audioProvider.currentAudio?.path == this.widget.audio.path)
+        if (this.player != null) ...[
           AudioSlider(
-            moveTo: audioProvider.player.changeToSecond,
-            positionData$: audioProvider.player.positionData$,
-          )
-        else
-          FakeAudioSlider(),
-
-        /// controls when player connected
-        if (audioProvider.currentAudio?.path == this.widget.audio.path)
+            moveTo: this.player!.changeToSecond,
+            positionData$: this.player!.positionData$,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -67,38 +76,32 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
               PlayerControlIcon(
                 color: this.widget.color,
                 icon: Icons.replay_5_rounded,
-                onPressed: () =>
-                    audioProvider.player.rewind(Duration(seconds: 5)),
+                onPressed: () => this.player!.rewind(Duration(seconds: 5)),
               ),
 
               /// play button
               PlayButton(
-                state$: audioProvider.player.playing$,
+                state$: this.player!.playing$,
                 color: this.widget.color,
-                onPressed: () => audioProvider.player.playOrPause(),
+                onPressed: () => this.player!.playOrPause(),
               ),
 
               /// forward button
               PlayerControlIcon(
                 color: this.widget.color,
                 icon: Icons.forward_5_rounded,
-                onPressed: () =>
-                    audioProvider.player.forward(Duration(seconds: 5)),
+                onPressed: () => this.player!.forward(Duration(seconds: 5)),
               ),
             ],
           )
-
-        /// to initialize the audio
-        else
+        ] else ...[
+          FakeAudioSlider(),
           PlayerControlIcon(
-              color: this.widget.color,
-              icon: Icons.play_arrow,
-              onPressed: () async {
-                // final AudioPlayer? player =
-                //     await audioProvider.setAudio(this.widget.audio);
-                this.setState(() {});
-                audioProvider.setAudio(this.widget.audio).then((value) {});
-              }),
+            color: this.widget.color,
+            icon: Icons.play_arrow,
+            onPressed: () => audioProvider.setAudio(this.widget.audio),
+          ),
+        ],
       ],
     );
   }
