@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -135,7 +135,7 @@ class _ContentScreenState extends State<ContentScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: sidePadding),
-                child: PodcastAudioPlayer(
+                child: AudioPlayerWidget(
                   audio: c.content,
                   color: widget.city.color,
                 ),
