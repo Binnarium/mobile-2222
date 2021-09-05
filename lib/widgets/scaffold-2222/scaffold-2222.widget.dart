@@ -7,10 +7,15 @@ import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-ma
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/contribution.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -33,67 +38,67 @@ class CityNavigator {
     CityDto city,
   ) =>
       [
-        // /// video introduction screen
-        // if (enabledPagesDto.introductoryVideo)
-        //   _ScaffoldRouteBuilder(
-        //     route: IntroductoryVideoScreen.route,
-        //     builder: (context) => Navigator.pushNamed(
-        //       context,
-        //       IntroductoryVideoScreen.route,
-        //       arguments: IntroductoryVideoScreen(
-        //         city: city,
-        //       ),
-        //     ),
-        //   ),
+        /// video introduction screen
+        if (enabledPagesDto.introductoryVideo)
+          _ScaffoldRouteBuilder(
+            route: IntroductoryVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              IntroductoryVideoScreen.route,
+              arguments: IntroductoryVideoScreen(
+                city: city,
+              ),
+            ),
+          ),
 
-        // /// introduction screen
-        // _ScaffoldRouteBuilder(
-        //   route: CityIntroductionScreen.route,
-        //   builder: (context) => Navigator.pushNamed(
-        //     context,
-        //     CityIntroductionScreen.route,
-        //     arguments: CityIntroductionScreen(
-        //       city: city,
-        //     ),
-        //   ),
-        // ),
+        /// introduction screen
+        _ScaffoldRouteBuilder(
+          route: CityIntroductionScreen.route,
+          builder: (context) => Navigator.pushNamed(
+            context,
+            CityIntroductionScreen.route,
+            arguments: CityIntroductionScreen(
+              city: city,
+            ),
+          ),
+        ),
 
-        // /// history screen
-        // _ScaffoldRouteBuilder(
-        //   route: StageHistoryScreen.route,
-        //   builder: (context) => Navigator.pushNamed(
-        //     context,
-        //     StageHistoryScreen.route,
-        //     arguments: StageHistoryScreen(
-        //       city: city,
-        //     ),
-        //   ),
-        // ),
+        /// history screen
+        _ScaffoldRouteBuilder(
+          route: StageHistoryScreen.route,
+          builder: (context) => Navigator.pushNamed(
+            context,
+            StageHistoryScreen.route,
+            arguments: StageHistoryScreen(
+              city: city,
+            ),
+          ),
+        ),
 
-        // /// Monster screen
-        // _ScaffoldRouteBuilder(
-        //   route: StageMonsterScreen.route,
-        //   builder: (context) => Navigator.pushNamed(
-        //     context,
-        //     StageMonsterScreen.route,
-        //     arguments: StageMonsterScreen(
-        //       city: city,
-        //     ),
-        //   ),
-        // ),
+        /// Monster screen
+        _ScaffoldRouteBuilder(
+          route: StageMonsterScreen.route,
+          builder: (context) => Navigator.pushNamed(
+            context,
+            StageMonsterScreen.route,
+            arguments: StageMonsterScreen(
+              city: city,
+            ),
+          ),
+        ),
 
-        // /// ideas
-        // if (enabledPagesDto.argumentation)
-        //   _ScaffoldRouteBuilder(
-        //     route: StageArgumentationScreen.route,
-        //     builder: (context) => Navigator.pushNamed(
-        //       context,
-        //       StageArgumentationScreen.route,
-        //       arguments: StageArgumentationScreen(
-        //         chapterSettings: city,
-        //       ),
-        //     ),
-        //   ),
+        /// ideas
+        if (enabledPagesDto.argumentation)
+          _ScaffoldRouteBuilder(
+            route: StageArgumentationScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              StageArgumentationScreen.route,
+              arguments: StageArgumentationScreen(
+                chapterSettings: city,
+              ),
+            ),
+          ),
 
         /// objectives
         _ScaffoldRouteBuilder(
