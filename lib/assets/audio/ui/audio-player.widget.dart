@@ -40,13 +40,13 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     super.initState();
     this._currentPlayerSub = this.audioProvider.currentAudio$.listen(
       (currentAudio) {
-        print(currentAudio);
-        this.setState(() {
-          if (currentAudio?.path == this.widget.audio.path)
-            this.player = audioProvider.player;
-          else
-            this.player = null;
-        });
+        if (this.mounted)
+          this.setState(() {
+            if (currentAudio?.path == this.widget.audio.path)
+              this.player = audioProvider.player;
+            else
+              this.player = null;
+          });
       },
     );
   }
