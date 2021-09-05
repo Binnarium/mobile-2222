@@ -134,7 +134,11 @@ class _ContentScreenState extends State<ContentScreen> {
                     : Markdown2222(data: c.description),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                padding: EdgeInsets.only(
+                  right: sidePadding,
+                  left: sidePadding,
+                  bottom: 32,
+                ),
                 child: AudioPlayerWidget(
                   audio: c.content,
                   color: widget.city.color,

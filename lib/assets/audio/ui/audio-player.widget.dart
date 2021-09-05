@@ -19,7 +19,7 @@ class AudioPlayerWidget extends StatefulWidget {
 
   AudioPlayerWidget({
     Key? key,
-    required this.audio, 
+    required this.audio,
     this.color = Colors2222.primary,
   }) : super(key: key);
 
@@ -66,8 +66,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         /// progress indicator
         if (this.player != null) ...[
           AudioSlider(
-            moveTo: this.player!.changeToSecond,
-            positionData$: this.player!.positionData$,
+            player: this.player!,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

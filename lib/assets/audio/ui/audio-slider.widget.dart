@@ -1,24 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:lab_movil_2222/assets/audio/model/audio-player.extension.dart';
 import 'package:lab_movil_2222/assets/audio/model/audio-position.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class FakeAudioSlider extends AudioSlider {
-  FakeAudioSlider()
-      : super(
-          positionData$: null,
-          moveTo: null,
-        );
+  FakeAudioSlider() : super();
 }
 
 class AudioSlider extends StatefulWidget {
-  final Stream<AudioPositionData>? positionData$;
-  final Function(int)? moveTo;
+  final AudioPlayer? player;
+
   const AudioSlider({
     Key? key,
-    this.positionData$,
-    this.moveTo,
+    this.player,
   }) : super(key: key);
 
   @override
@@ -32,10 +29,8 @@ class _AudioSliderState extends State<AudioSlider> {
   @override
   void initState() {
     super.initState();
-    if (this.widget.positionData$ != null)
-      this.positionDataSub = this.widget.positionData$!.listen((event) {
+      this.positionDataSub = this.widget.player?.positionData$.listen((event) {
         this.setState(() => this.positionData = event);
-        print(event);
       });
   }
 
@@ -63,8 +58,7 @@ class _AudioSliderState extends State<AudioSlider> {
             max: this.positionData.duration.inSeconds.toDouble(),
             value: this.positionData.position.inSeconds.toDouble(),
             onChanged: (value) {
-              if (this.widget.moveTo != null)
-                this.widget.moveTo!(value.toInt());
+                this.widget.player?.changeToSecond(value.toInt());
             },
           ),
         ),
