@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse-activity.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhouse.service.dart';
+import 'package:lab_movil_2222/cities/clubhouse/services/load-clubhouse-activity.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
@@ -15,11 +17,7 @@ import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
-const String description = """Agenda de eventos según temáticas de cada ciudad. 
-
-1. Ve a Clubhouse y organiza un evento;
-2. Copia el enlace, pégalo aquí, lo agregas a la agenda y obtienes un premio; 
-3. Disfruta y aprende con tus colegas docentes.
+const String description = """
 
     """;
 
@@ -37,6 +35,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
   StreamSubscription? clubhousesSub;
 
   List<ClubhouseModel>? clubhouses;
+  ClubhouseActivityModel? clubhouseActivity;
 
   @override
   void initState() {
@@ -45,6 +44,12 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
         LoadAvailableClubhouseService(this.widget.city).listen((event) {
       this.setState(() {
         this.clubhouses = event;
+      });
+    });
+
+    LoadClubhouseService(city: this.widget.city).load().then((event) {
+      this.setState(() {
+        this.clubhouseActivity = event;
       });
     });
   }
@@ -90,17 +95,28 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
           ),
 
           /// page content
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 30.0,
-              left: size.width * 0.08,
-              right: size.width * 0.08,
+          if (this.clubhouseActivity == null)
+            AppLoading()
+          else ...[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 34.0),
+              child: Text(
+                this.clubhouseActivity!.theme,
+                style: textTheme.headline5,
+                textAlign: TextAlign.center,
+              ),
             ),
-            child: Markdown2222(
-              data: description,
-              contentAlignment: WrapAlignment.center,
-            ),
-          ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 30.0,
+                left: size.width * 0.08,
+                right: size.width * 0.08,
+              ),
+              child: Markdown2222(
+                data: this.clubhouseActivity!.explanation,
+              ),
+            )
+          ],
 
           /// next clubhouse title
           Padding(
