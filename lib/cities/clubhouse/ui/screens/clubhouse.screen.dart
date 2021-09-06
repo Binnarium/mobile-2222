@@ -7,7 +7,7 @@ import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-clubhouse-activity.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
-import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';

@@ -7,26 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/create-clubhouse.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.service.dart';
-import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-card.widget.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-explanation.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
-import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
-
-const String description = """
-## Como agregar tu evento clubhouse?
-
-Agenda de eventos según temáticas de cada ciudad. 
-
-1. Ve a Clubhouse y organiza un evento;
-2. Copia el enlace, pégalo aquí, lo agregas a la agenda y obtienes un premio; 
-3. Disfruta y aprende con tus colegas docentes.
-
-    """;
 
 class AddClubhouseScreen extends StatefulWidget {
   static const String route = '/add-clubhouse';
@@ -139,23 +128,12 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
           ),
 
           /// page content
-          Container(
-            decoration: BoxDecoration(
-              color: Colors2222.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            margin: EdgeInsets.symmetric(
-              vertical: 30.0,
-              horizontal: size.width * 0.08,
-            ),
+          Padding(
             padding: EdgeInsets.symmetric(
               vertical: 30.0,
               horizontal: size.width * 0.08,
             ),
-            child: Markdown2222(
-              data: description,
-              color: Colors2222.black,
-            ),
+            child: ClubhouseExplanationWidget(),
           ),
 
           /// next clubhouse title
