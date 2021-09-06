@@ -26,7 +26,6 @@ class _DetailedMultimediaScreenState extends State<DetailedMultimediaScreen> {
         child: (this.widget.message.kind == "MESSAGE#VIDEO")
             ? VideoPlayer(
                 video: this.widget.message.asset as VideoDto,
-                isDetailedScreen: true,
               )
             : Center(child: Image.network(this.widget.message.asset!.url)),
       ),
