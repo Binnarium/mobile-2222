@@ -3,14 +3,15 @@ import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
+import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-macro.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/micro_meso_macro.screen..dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
@@ -137,6 +138,18 @@ class CityNavigator {
             ),
           ),
 
+        if (enabledPagesDto.contribution)
+          _ScaffoldRouteBuilder(
+            route: ContributionScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ContributionScreen.route,
+              arguments: ContributionScreen(
+                city: city,
+              ),
+            ),
+          ),
+
         /// activities
         if (enabledPagesDto.activities)
           _ScaffoldRouteBuilder(
@@ -150,14 +163,16 @@ class CityNavigator {
             ),
           ),
 
+        ///Contribution Screen
+
         ///Contribution
         if (enabledPagesDto.activities && enabledPagesDto.contribution)
           _ScaffoldRouteBuilder(
-            route: CityContributionScreen.route,
+            route: YourContributionScreen.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              CityContributionScreen.route,
-              arguments: CityContributionScreen(
+              YourContributionScreen.route,
+              arguments: YourContributionScreen(
                 city: city,
               ),
             ),
@@ -215,18 +230,6 @@ class CityNavigator {
             ),
           ),
 
-        /// mcrso-meso-macro
-        if (enabledPagesDto.microMesoMacro)
-          _ScaffoldRouteBuilder(
-            route: MicroMesoMacroScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              MicroMesoMacroScreen.route,
-              arguments: MicroMesoMacroScreen(
-                city: city,
-              ),
-            ),
-          ),
         /// mcrso-meso-macro
         if (enabledPagesDto.microMesoMacro)
           _ScaffoldRouteBuilder(

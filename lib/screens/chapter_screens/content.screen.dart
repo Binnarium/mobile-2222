@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
+import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/podcast_audioPlayer_widget.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ContentScreen extends StatefulWidget {
@@ -135,8 +134,12 @@ class _ContentScreenState extends State<ContentScreen> {
                     : Markdown2222(data: c.description),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: sidePadding),
-                child: PodcastAudioPlayer(
+                padding: EdgeInsets.only(
+                  right: sidePadding,
+                  left: sidePadding,
+                  bottom: 32,
+                ),
+                child: AudioPlayerWidget(
                   audio: c.content,
                   color: widget.city.color,
                 ),

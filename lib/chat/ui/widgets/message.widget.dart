@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class MessageWidget extends StatelessWidget {
   final MessageModel message;

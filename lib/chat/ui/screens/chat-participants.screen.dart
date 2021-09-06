@@ -5,8 +5,8 @@ import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-title.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 const String chatsInfo = """

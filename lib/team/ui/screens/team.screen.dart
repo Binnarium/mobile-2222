@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/team/models/team.model.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
+import 'package:lab_movil_2222/team/ui/widgets/team-content-markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';

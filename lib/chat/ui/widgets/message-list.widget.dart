@@ -8,8 +8,8 @@ import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/message.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class MessagesList extends StatefulWidget {
   final Stream<List<MessageModel>> messagesStream;

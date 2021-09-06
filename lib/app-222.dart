@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
-import 'package:lab_movil_2222/providers/videoPlayer_provider.dart';
+import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
+import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/shared/routes/routes.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -16,12 +16,8 @@ class App2222 extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => AudioPlayerProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => VideoPlayerProvider(),
-        )
+        Provider(create: (_) => CurrentAudioProvider()),
+        Provider(create: (_) => CurrentVideoProvider())
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',
