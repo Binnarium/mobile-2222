@@ -7,8 +7,8 @@ import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/services/load-contributions-screen.dart';
 import 'package:lab_movil_2222/services/upload-contribution.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class ContributionIdeasScreen extends StatefulWidget {
   static const String route = '/contribution_idea';
@@ -82,9 +82,8 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: ContributionContentMarkdown(
-              contributionContent:
-                  '${this.widget.option} DE LA CIUDAD'.toUpperCase(),
+            child: Markdown2222(
+              data: '${this.widget.option} DE LA CIUDAD'.toUpperCase(),
             ),
           ),
           Padding(
@@ -92,8 +91,8 @@ class _ContributionIdeaScreenState extends State<ContributionIdeasScreen> {
               horizontal: size.width * 0.1,
               vertical: 24,
             ),
-            child: Text(
-               contributionExplanation,
+            child: Markdown2222(
+              data: 'EXPLICACIÓN DE LAS CONTRIBUCIONES',
             ),
           ),
 

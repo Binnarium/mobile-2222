@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/player/models/points-explanation.model.dart';
+import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 
 class GetPointsExplanationService {
   static Stream<PointsExplanationModel?>? _pointsExplanationStream;
