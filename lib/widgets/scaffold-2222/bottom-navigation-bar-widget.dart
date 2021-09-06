@@ -37,6 +37,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
             Lab2222BottomNavigationBarItem(
               onTap: prevPage,
               icon: AssetImage('assets/navbar/chevron-left.png'),
+              active: true,
             ),
             Lab2222BottomNavigationBarItem(
               onTap: () =>
