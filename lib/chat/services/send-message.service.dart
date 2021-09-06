@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
@@ -23,63 +22,81 @@ class SendMessagesService {
 
   Stream<PlayerModel?> _player$ = CurrentPlayerService.instance.player$;
 
-  Stream<bool> text$(ChatModel chat, dynamic content, String kind) {
-    print('entró al servicio text');
-    dynamic message;
-    print('content: $content');
+  Stream<bool> text$(ChatModel chat, String content) {
+    return this._sendMessage(
+      chat: chat,
+      createMessageCallback: (user) => TextMessageModel(
+        id: _generateId(),
+        senderId: user.uid,
+        text: content,
+
+        /// TODO: use FieldValue.serverTimestamp()
+        sendedDate: DateTime.now(),
+        sender: ChatParticipantModel(
+          displayName: user.displayName,
+          uid: user.uid,
+        ),
+      ),
+    );
+  }
+
+  Stream<bool> image$(ChatModel chat, ImageDto image) {
+    return this._sendMessage(
+      chat: chat,
+      createMessageCallback: (user) => ImageMessageModel(
+        id: _generateId(),
+        senderId: user.uid,
+        image: image,
+
+        /// TODO: use FieldValue.serverTimestamp()
+        sendedDate: DateTime.now(),
+        sender: ChatParticipantModel(
+          displayName: user.displayName,
+          uid: user.uid,
+        ),
+      ),
+    );
+  }
+
+  Stream<bool> video$(ChatModel chat, VideoDto videoDto) {
+    return this._sendMessage(
+      chat: chat,
+      createMessageCallback: (user) => VideoMessageModel(
+        id: _generateId(),
+        senderId: user.uid,
+        video: videoDto,
+
+        /// TODO: use FieldValue.serverTimestamp()
+        sendedDate: DateTime.now(),
+        sender: ChatParticipantModel(
+          displayName: user.displayName,
+          uid: user.uid,
+        ),
+      ),
+    );
+  }
+
+  /// function that add a message to a specific chat
+  Stream<bool> _sendMessage({
+    required ChatModel chat,
+    required MessageModel Function(PlayerModel) createMessageCallback,
+  }) {
     return this._player$.take(1).asyncMap<bool>(
       (user) async {
-        print('user null? : $user');
         if (user == null) return false;
-        print('user no es null');
-        if (kind == "MESSAGE#TEXT") {
-          print("ES MENSAJE: $content");
 
-          message = TextMessageModel(
-            id: _generateId(),
-            senderId: user.uid,
-            text: content,
-
-            /// TODO: use FieldValue.serverTimestamp()
-            sendedDate: DateTime.now(),
-            sender: ChatParticipantModel(
-              displayName: user.displayName,
-              uid: user.uid,
-            ),
-          );
-        }
-        if (kind == "MESSAGE#IMAGE") {
-          print("ES IMAGEDTO $content");
-          ImageDto imageDto = content;
-
-          /// send image message
-          message = ImageMessageModel(
-              id: _generateId(),
-              senderId: user.uid,
-              sendedDate: DateTime.now(),
-              sender: ChatParticipantModel(
-                displayName:
-                    (user.displayName != '') ? user.displayName : user.email,
-                uid: user.uid,
-              ),
-              kind: "MESSAGE#IMAGE",
-              image: imageDto);
-          print(message.toMap());
-        }
-        if (content is VideoDto) {
-          print('Es VIDEODTO $content');
-        }
-
+        /// create message to send
+        MessageModel newMessage = createMessageCallback(user);
         final DocumentReference<Map<String, dynamic>> messagesDoc = this
             ._fFirestore
             .collection('chats')
             .doc(chat.id)
             .collection('messages')
-            .doc(message.id);
+            .doc(newMessage.id);
 
         /// send message
         try {
-          await messagesDoc.set(message.toMap());
+          await messagesDoc.set(newMessage.toMap());
           return true;
         } catch (e) {
           print(e);
@@ -87,96 +104,6 @@ class SendMessagesService {
         }
       },
     );
-  }
-
-  /// a testing using streams, doesn't reach the return line code, only reaches
-  /// the print('image name: ${image.name}');
-
-  // Stream<bool> image$(ChatModel chat, ImageDto image, String kind) {
-  //   print('entró al servicio image');
-  //   print('image name: ${image.name}');
-  //   return this._player$.take(1).asyncMap<bool>(
-  //     (user) async {
-  //       print('user null? : $user');
-  //       if (user == null) return false;
-  //       print('user no es null');
-
-  //       /// send image message
-  //       ImageMessageModel message = ImageMessageModel(
-  //           id: _generateId(),
-  //           senderId: user.uid,
-  //           sendedDate: DateTime.now(),
-  //           sender: ChatParticipantModel(
-  //             displayName:
-  //                 (user.displayName != '') ? user.displayName : user.email,
-  //             uid: user.uid,
-  //           ),
-  //           kind: "MESSAGE#IMAGE",
-  //           image: image);
-  //       final DocumentReference<Map<String, dynamic>> messagesDoc = this
-  //           ._fFirestore
-  //           .collection('chats')
-  //           .doc(chat.id)
-  //           .collection('messages')
-  //           .doc(message.id);
-
-  //       /// send message
-  //       try {
-  //         await messagesDoc.set(message.toMap());
-  //         return true;
-  //       } catch (e) {
-  //         print(e);
-  //         return false;
-  //       }
-  //     },
-  //   );
-  // }
-  /// a method to upload multimedia to the chat
-  Future<void> multimedia(ChatModel chat, dynamic content, String kind) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    String displayName = FirebaseAuth.instance.currentUser!.displayName!;
-    String email = FirebaseAuth.instance.currentUser!.email!;
-    dynamic message;
-
-    if (kind == "MESSAGE#IMAGE") {
-      /// send image message
-      message = ImageMessageModel(
-          id: _generateId(),
-          senderId: uid,
-          sendedDate: DateTime.now(),
-          sender: ChatParticipantModel(
-            displayName: (displayName != '') ? displayName : email,
-            uid: uid,
-          ),
-          kind: kind,
-          image: content);
-    } else if (kind == "MESSAGE#VIDEO") {
-      /// send video message
-      message = VideoMessageModel(
-          id: _generateId(),
-          senderId: uid,
-          sendedDate: DateTime.now(),
-          sender: ChatParticipantModel(
-            displayName: (displayName != '') ? displayName : email,
-            uid: uid,
-          ),
-          kind: kind,
-          video: content);
-    }
-
-    final DocumentReference<Map<String, dynamic>> messagesDoc = this
-        ._fFirestore
-        .collection('chats')
-        .doc(chat.id)
-        .collection('messages')
-        .doc(message.id);
-
-    /// send message
-    try {
-      await messagesDoc.set(message.toMap());
-    } catch (e) {
-      print(e);
-    }
   }
 
   String _generateId({int size = 10}) {

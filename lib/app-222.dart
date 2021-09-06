@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/providers/audioPlayer_provider.dart';
 import 'package:lab_movil_2222/providers/videoPlayer_provider.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
@@ -21,7 +22,8 @@ class App2222 extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => VideoPlayerProvider(),
-        )
+        ),
+        Provider(create: (context) => UploadImageService())
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',

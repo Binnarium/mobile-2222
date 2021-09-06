@@ -2,25 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
-enum MessageKind {
-  /// message only including text
-  text,
-
-  /// message that has been banned
-  banned,
-
-  /// message including an image
-  image,
-
-  /// message containing a video
-  video,
-}
-
 /// base model of a chat message
 abstract class MessageModel {
   final String id;
   final String kind;
-  final MessageKind messageKind;
   final AssetDto? asset;
   final String? text;
   final bool banned;
@@ -32,7 +17,6 @@ abstract class MessageModel {
   MessageModel({
     required this.id,
     required this.kind,
-    required this.messageKind,
     required this.text,
     required this.banned,
     required this.sendedDate,
@@ -72,7 +56,6 @@ abstract class MessageModel {
         senderId: senderId,
         sendedDate: sendedDate,
         sender: sender,
-        kind: kind,
         image: image,
         sendedByMe: sendedByMe,
       );
@@ -85,7 +68,6 @@ abstract class MessageModel {
         senderId: senderId,
         sendedDate: sendedDate,
         sender: sender,
-        kind: kind,
         video: video,
         sendedByMe: sendedByMe,
       );
@@ -97,7 +79,6 @@ abstract class MessageModel {
         senderId: senderId,
         sendedDate: sendedDate,
         sender: sender,
-        kind: kind,
         sendedByMe: sendedByMe,
       );
     }
@@ -127,13 +108,11 @@ class VideoMessageModel extends MessageModel {
     required DateTime sendedDate,
     required ChatParticipantModel sender,
     required VideoDto video,
-    required String kind,
     bool sendedByMe = false,
   }) : super(
           sendedByMe: sendedByMe,
           id: id,
-          kind: kind,
-          messageKind: MessageKind.video,
+          kind: 'MESSAGE#VIDEO',
           asset: video,
           banned: false,
           sendedDate: sendedDate,
@@ -147,7 +126,6 @@ class VideoMessageModel extends MessageModel {
 class ImageMessageModel extends MessageModel {
   ImageMessageModel({
     required String id,
-    required String kind,
     required String senderId,
     required DateTime sendedDate,
     required ChatParticipantModel sender,
@@ -156,8 +134,7 @@ class ImageMessageModel extends MessageModel {
   }) : super(
           sendedByMe: sendedByMe,
           id: id,
-          kind: kind,
-          messageKind: MessageKind.image,
+          kind: 'MESSAGE#IMAGE',
           asset: image,
           banned: false,
           sendedDate: sendedDate,
@@ -180,7 +157,6 @@ class TextMessageModel extends MessageModel {
           sendedByMe: sendedByMe,
           kind: 'MESSAGE#TEXT',
           id: id,
-          messageKind: MessageKind.text,
           asset: null,
           banned: false,
           sendedDate: sendedDate,
@@ -198,12 +174,10 @@ class BannedMessageModel extends MessageModel {
     required DateTime sendedDate,
     required ChatParticipantModel sender,
     bool sendedByMe = false,
-    required String kind,
   }) : super(
           sendedByMe: sendedByMe,
-          kind: kind,
+          kind: 'MESSAGE#BANNED',
           id: id,
-          messageKind: MessageKind.banned,
           asset: null,
           banned: true,
           sendedDate: sendedDate,
