@@ -10,7 +10,7 @@ class CurrentAudioProvider {
   // TODO: remove comment
   // ignore: close_sinks
   final BehaviorSubject<AudioDto?> _currentAudioSink =
-      BehaviorSubject<AudioDto?>();
+      BehaviorSubject<AudioDto?>.seeded(null);
 
   Stream<AudioDto?> get currentAudio$ => this._currentAudioSink.stream;
 

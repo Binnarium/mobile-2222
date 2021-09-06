@@ -54,6 +54,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   @override
   void dispose() {
     this._currentPlayerSub?.cancel();
+    this.audioProvider.close();
     super.dispose();
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -9,7 +10,6 @@ import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlayer_widget.dart';
 import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/models/login-form.model.dart';
