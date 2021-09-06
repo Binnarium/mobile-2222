@@ -17,10 +17,6 @@ import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
-const String description = """
-
-    """;
-
 class ClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
   final CityDto city;
