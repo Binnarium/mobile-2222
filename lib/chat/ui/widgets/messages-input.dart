@@ -136,16 +136,24 @@ class _MessageTextInputState extends State<MessageTextInput> {
   }
 
   void _sendImageMessage() {
-    /// validate input has text
+    /// checks if the stream is bussy
     if (this._sendMessageSub != null) return;
+
+    /// calls the provider to upload image.
     UploadImageService uploadImageService =
         Provider.of<UploadImageService>(context, listen: false);
+
+    /// use the message sub stream with the upload$ stream
     this._sendMessageSub = uploadImageService
         .upload$('/chats/${this.widget.chat.id}/assets/images')
         .switchMap(
           (image) =>
+
+              /// calls the image$ stream
               this.widget._sendMessagesService.image$(this.widget.chat, image),
         )
+
+        /// checks if the video is sended or not
         .listen((sended) {
       if (!sended)
         ScaffoldMessenger.of(context).showSnackBar(
@@ -166,17 +174,26 @@ class _MessageTextInputState extends State<MessageTextInput> {
     });
   }
 
+  /// method to send a video message
   void _sendVideoMessage() {
-    /// validate input has text
+    /// checks if the stream is bussy
     if (this._sendMessageSub != null) return;
+
+    /// calls the provider to upload image.
     UploadVideoService uploadVideoService =
         Provider.of<UploadVideoService>(context, listen: false);
+
+    /// use the message sub stream with the upload$ stream
     this._sendMessageSub = uploadVideoService
         .upload$('/chats/${this.widget.chat.id}/assets/videos')
         .switchMap(
           (video) =>
+
+              /// calls the video$ stream
               this.widget._sendMessagesService.video$(this.widget.chat, video),
         )
+
+        /// checks if the video is sended or not
         .listen((sended) {
       if (!sended)
         ScaffoldMessenger.of(context).showSnackBar(
