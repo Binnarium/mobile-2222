@@ -50,7 +50,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ActivitiesScreen.route,
@@ -94,7 +94,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                       city: this.widget.city,
                     ),
                   ),
-                  title: "Tu Contribución",
+                  title: "Manifiesto por la Educación",
                 ),
               ),
 

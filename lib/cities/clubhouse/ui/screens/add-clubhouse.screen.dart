@@ -59,7 +59,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
       backgrounds: [BackgroundDecorationStyle.topRight],
       appBar: AppBar(
         title: Text(
-          'Agrega tu clubhouse',
+          'Agrega tu Evento Clubhouse',
           style: textTheme.subtitle1!.copyWith(
             color: Colors2222.white,
           ),
@@ -72,14 +72,8 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
         children: [
           /// add event input
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 34.0),
-            child: ClubhouseSectionTitle(
-              title: 'Agrega tu evento',
-            ),
-          ),
-
-          Padding(
             padding: EdgeInsets.only(
+              top: 34,
               bottom: 20,
               left: size.width * 0.08,
               right: size.width * 0.08,
@@ -87,7 +81,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
             child: TextFormField222(
               primaryColor: this.widget.city.color,
               controller: this._addClubhouseController,
-              label: 'Enlace clubhouse',
+              label: 'Enlace de evento clubhouse',
               keyboardType: TextInputType.url,
               prefixIcon: Icons.search,
               onValueChanged: (value) => this.clubhouseUrl = value,
@@ -101,7 +95,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
-                child: Text('Agregar clubhouse'),
+                child: Text('Agregar Evento'),
                 onPressed: () async {
                   if (this.clubhouseUrl == null) return;
                   final FirebaseFirestore _fFirestore =

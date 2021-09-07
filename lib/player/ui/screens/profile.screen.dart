@@ -326,8 +326,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final destination = 'players/${this.player!.uid}/assets/$fileName';
       print("LOCATION: $destination");
 
-      task = UploadFileToFirebaseService.uploadFile(
-          destination, file!, this.player!.uid);
+      task = UploadFileToFirebaseService.uploadFile(destination, file!);
 
       if (task == null) return;
 

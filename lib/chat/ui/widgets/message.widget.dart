@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
@@ -131,7 +130,20 @@ class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
       padding: this.padding,
       decoration: this.decoration,
       width: double.infinity,
-      child: Image.network(this.message.asset!.url),
+      child: InkWell(
+        child: Image.network(
+          this.message.asset!.url,
+          height: 140,
+          fit: BoxFit.cover,
+        ),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      DetailedMultimediaScreen(message: message)));
+        },
+      ),
     );
   }
 }
@@ -152,8 +164,31 @@ class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
       padding: this.padding,
       decoration: this.decoration,
       width: double.infinity,
-      child: VideoPlayer(
-        video: this.message.asset as VideoDto,
+      child: InkWell(
+        child: Container(
+          height: 140,
+          child: Stack(
+            children: [
+              Image.asset(
+                'assets/images/video-placeholder.png',
+              ),
+              Center(
+                child: Icon(
+                  Icons.play_arrow_rounded,
+                  size: 120,
+                  color: Colors.black54,
+                ),
+              )
+            ],
+          ),
+        ),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      DetailedMultimediaScreen(message: message)));
+        },
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 
@@ -21,14 +22,13 @@ class SendMessagesService {
 
   Stream<PlayerModel?> _player$ = CurrentPlayerService.instance.player$;
 
-  Stream<bool> text$(ChatModel chat, String text) {
-    return this._player$.take(1).asyncMap<bool>((user) async {
-      if (user == null) return false;
-
-      final TextMessageModel message = TextMessageModel(
+  Stream<bool> text$(ChatModel chat, String content) {
+    return this._sendMessage(
+      chat: chat,
+      createMessageCallback: (user) => TextMessageModel(
         id: _generateId(),
         senderId: user.uid,
-        text: text,
+        text: content,
 
         /// TODO: use FieldValue.serverTimestamp()
         sendedDate: DateTime.now(),
@@ -36,23 +36,74 @@ class SendMessagesService {
           displayName: user.displayName,
           uid: user.uid,
         ),
-      );
-      final DocumentReference<Map<String, dynamic>> messagesDoc = this
-          ._fFirestore
-          .collection('chats')
-          .doc(chat.id)
-          .collection('messages')
-          .doc(message.id);
+      ),
+    );
+  }
 
-      /// send message
-      try {
-        await messagesDoc.set(message.toMap());
-        return true;
-      } catch (e) {
-        print(e);
-        return false;
-      }
-    });
+  Stream<bool> image$(ChatModel chat, ImageDto image) {
+    return this._sendMessage(
+      chat: chat,
+      createMessageCallback: (user) => ImageMessageModel(
+        id: _generateId(),
+        senderId: user.uid,
+        image: image,
+
+        /// TODO: use FieldValue.serverTimestamp()
+        sendedDate: DateTime.now(),
+        sender: ChatParticipantModel(
+          displayName: user.displayName,
+          uid: user.uid,
+        ),
+      ),
+    );
+  }
+
+  Stream<bool> video$(ChatModel chat, VideoDto videoDto) {
+    return this._sendMessage(
+      chat: chat,
+      createMessageCallback: (user) => VideoMessageModel(
+        id: _generateId(),
+        senderId: user.uid,
+        video: videoDto,
+
+        /// TODO: use FieldValue.serverTimestamp()
+        sendedDate: DateTime.now(),
+        sender: ChatParticipantModel(
+          displayName: user.displayName,
+          uid: user.uid,
+        ),
+      ),
+    );
+  }
+
+  /// function that add a message to a specific chat
+  Stream<bool> _sendMessage({
+    required ChatModel chat,
+    required MessageModel Function(PlayerModel) createMessageCallback,
+  }) {
+    return this._player$.take(1).asyncMap<bool>(
+      (user) async {
+        if (user == null) return false;
+
+        /// create message to send
+        MessageModel newMessage = createMessageCallback(user);
+        final DocumentReference<Map<String, dynamic>> messagesDoc = this
+            ._fFirestore
+            .collection('chats')
+            .doc(chat.id)
+            .collection('messages')
+            .doc(newMessage.id);
+
+        /// send message
+        try {
+          await messagesDoc.set(newMessage.toMap());
+          return true;
+        } catch (e) {
+          print(e);
+          return false;
+        }
+      },
+    );
   }
 
   String _generateId({int size = 10}) {

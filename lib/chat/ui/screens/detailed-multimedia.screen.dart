@@ -20,18 +20,15 @@ class DetailedMultimediaScreen extends StatefulWidget {
 class _DetailedMultimediaScreenState extends State<DetailedMultimediaScreen> {
   @override
   Widget build(BuildContext context) {
-    if (this.widget.message.kind == "MESSAGE#VIDEO") {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: VideoPlayer(video: this.widget.message.asset as VideoDto),
-        ),
-      );
-    } else {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(child: Image.network(this.widget.message.asset!.url)),
-      );
-    }
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: (this.widget.message.kind == "MESSAGE#VIDEO")
+            ? VideoPlayer(
+                video: this.widget.message.asset as VideoDto,
+              )
+            : Center(child: Image.network(this.widget.message.asset!.url)),
+      ),
+    );
   }
 }

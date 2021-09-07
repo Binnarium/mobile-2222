@@ -6,6 +6,9 @@ class ChatModel {
   /// unique identifier of the chat
   final String id;
 
+  /// type of chat
+  final String kind;
+
   /// unique identifier of the chat
   final String? name;
 
@@ -40,6 +43,7 @@ class ChatModel {
     required this.lastMessage,
     required this.participants,
     required this.participantsUids,
+    required this.kind,
   });
 
   String get chatName => this.name != null
@@ -49,4 +53,8 @@ class ChatModel {
           .map((e) => e.displayName)
           .map((name) => name.split(' ').sublist(0, 2).join(' '))
           .join(', ');
+
+  bool get isGeneralChat => this.kind == 'CHAT#GENERAL';
+  bool get isGroupChat => this.kind == 'CHAT#GROUP';
+  bool get isPersonalChat => this.kind == 'CHAT#PERSONAL';
 }

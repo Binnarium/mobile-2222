@@ -88,7 +88,7 @@ class KorolevFont extends TextTheme {
             fontFamily: fontFamily,
             fontSize: 14,
             color: textColor,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
             height: 1.2,
           ),
           overline: TextStyle(

@@ -50,6 +50,7 @@ class ActivityCardWidget extends StatelessWidget {
                           .textTheme
                           .headline6!
                           .copyWith(color: this.color),
+                      textAlign: TextAlign.center,
                     ),
 
                     /// card content

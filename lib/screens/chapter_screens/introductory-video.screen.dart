@@ -43,7 +43,7 @@ class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: IntroductoryVideoScreen.route,

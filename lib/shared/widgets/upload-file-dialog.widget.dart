@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/player-projects.dto.dart';
+import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
@@ -115,7 +115,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 
     final destination = 'players/$userUID/${this.widget.cityName}/$fileName';
     print("LOCATION: $destination");
-    task = UploadFileToFirebaseService.uploadFile(destination, file!, userUID!);
+    task = UploadFileToFirebaseService.uploadFile(destination, file!);
     setState(() {});
 
     if (task == null) return;

@@ -42,6 +42,7 @@ class ListPlayerChatsService {
               (docs) => docs
                   .map((data) => ChatModel(
                         id: data['id'],
+                        kind: data['kind'],
                         disabled: data['disabled'],
                         participantsCompleted:
                             data['participantsCompleted'] == true,
