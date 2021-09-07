@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
@@ -145,6 +146,12 @@ class Lab2222Routes extends MaterialPageRoute {
               case ActivitiesScreen.route:
                 final args = settings.arguments as ActivitiesScreen;
                 return ActivitiesScreen(
+                  city: args.city,
+                );
+
+              case ClubhouseExplanationScreen.route:
+                final args = settings.arguments as ClubhouseExplanationScreen;
+                return ClubhouseExplanationScreen(
                   city: args.city,
                 );
 
