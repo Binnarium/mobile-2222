@@ -59,7 +59,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
       backgrounds: [BackgroundDecorationStyle.topRight],
       appBar: AppBar(
         title: Text(
-          'Agrega tu clubhouse',
+          'Agrega tu Evento Clubhouse',
           style: textTheme.subtitle1!.copyWith(
             color: Colors2222.white,
           ),
@@ -72,14 +72,8 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
         children: [
           /// add event input
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 34.0),
-            child: ClubhouseSectionTitle(
-              title: 'Agrega tu evento',
-            ),
-          ),
-
-          Padding(
             padding: EdgeInsets.only(
+              top: 34,
               bottom: 20,
               left: size.width * 0.08,
               right: size.width * 0.08,
