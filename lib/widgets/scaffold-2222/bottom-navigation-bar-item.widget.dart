@@ -9,10 +9,9 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
   Lab2222BottomNavigationBarItem({
     Key? key,
     required this.icon,
-    required VoidCallback? onTap,
+    required this.onTap,
     bool active = false,
-  })  : this.onTap = active ? (() {}) : onTap,
-        this.iconColor = onTap == null
+  })  : this.iconColor = onTap == null
             ? Colors2222.black
             : active
                 ? Colors2222.white
