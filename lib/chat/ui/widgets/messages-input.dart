@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
+import 'package:lab_movil_2222/assets/video/services/upload-video.service.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -95,7 +96,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
                   IconButton(
                       color: Colors2222.white,
                       icon: Icon(Icons.videocam_rounded),
-                      onPressed: () {}),
+                      onPressed: this._sendVideoMessage),
 
                   /// space items away from each other
                   Expanded(child: Container()),
@@ -165,88 +166,36 @@ class _MessageTextInputState extends State<MessageTextInput> {
     });
   }
 
-  // void _sendMultimediaMessage(String kind) async {
-  //   File file = File('');
-  //   String urlDownload = "";
-  //   dynamic message;
-
-  //   /// check message kind
-  //   if (kind == "MESSAGE#IMAGE") {
-  //     /// user picks file
-  //     file = await selectMultimediaFile(kind);
-  //     if (file.path != "") {
-  //       /// method to upload to firebase storage
-  //       urlDownload = await uploadMultimediaFile(file, kind);
-
-  //       /// checks if urlDownload isn't null
-  //       if (urlDownload != "") {
-  //         /// builds the image Map
-  //         Map<String, dynamic> imageMap = {
-  //           'width': 0,
-  //           'height': 0,
-  //           'name': file.path.split("/").last,
-  //           'path': file.path,
-  //           'url': urlDownload,
-  //         };
-
-  //         /// creates the imageDto based on map above
-
-  //         message = ImageDto.fromMap(imageMap);
-  //         print('mensaje : ${message.name}');
-  //       } else {
-  //         print('url vacía');
-  //         return;
-  //       }
-  //     } else {
-  //       print('usuario no seleccionó imagen');
-  //       return;
-  //     }
-  //   } else if (kind == "MESSAGE#VIDEO") {
-  //     /// user picks file
-  //     file = await selectMultimediaFile(kind);
-  //     if (file.path != "") {
-  //       /// method to upload to firebase storage
-  //       urlDownload = await uploadMultimediaFile(file, kind);
-
-  //       /// checks if urlDownload isn't null
-  //       if (urlDownload != "") {
-  //         Map<String, dynamic> videoMap = {
-  //           'format': '',
-  //           'duration': 0,
-  //           'name': file.path.split("/").last,
-  //           'path': file.path,
-  //           'url': urlDownload,
-  //         };
-
-  //         message = VideoDto.fromMap(videoMap);
-  //       } else {
-  //         print('url vacía');
-  //         return;
-  //       }
-  //     } else {
-  //       print('usuario no seleccionó video');
-  //       return;
-  //     }
-  //   }
-
-  //   // /// checks if there is a _sendMessageSub
-  //   // if (this._sendMessageSub != null) return;
-
-  //   // print('mensaje : ${message.toString()}');
-  //   // if (message != null) {
-  //   //   print('entró a que message!= null del servicio');
-
-  //   //   /// begins the stream to upload message
-  //   //   await this
-  //   //       .widget
-  //   //       ._sendMessagesService
-  //   //       .multimedia(this.widget.chat, message, kind);
-
-  //   //   this._sendMessageSub?.cancel();
-  //   //   this._sendMessageSub = null;
-  //   //   this.widget.messageInput.clear();
-  //   // }
-  // }
+  void _sendVideoMessage() {
+    /// validate input has text
+    if (this._sendMessageSub != null) return;
+    UploadVideoService uploadVideoService =
+        Provider.of<UploadVideoService>(context, listen: false);
+    this._sendMessageSub = uploadVideoService
+        .upload$('/chats/${this.widget.chat.id}/assets/videos')
+        .switchMap(
+          (video) =>
+              this.widget._sendMessagesService.video$(this.widget.chat, video),
+        )
+        .listen((sended) {
+      if (!sended)
+        ScaffoldMessenger.of(context).showSnackBar(
+          ChatSnackbarMessages.textNotSended(),
+        );
+    }, onError: (error) {
+      if (error.runtimeType == VideoNotLoaded)
+        ScaffoldMessenger.of(context).showSnackBar(
+          ChatSnackbarMessages.videoNotLoaded(),
+        );
+      ScaffoldMessenger.of(context).showSnackBar(
+        ChatSnackbarMessages.videoNotSended(),
+      );
+    }, onDone: () {
+      this._sendMessageSub?.cancel();
+      this._sendMessageSub = null;
+      this.widget.messageInput.clear();
+    });
+  }
 }
 
 class ChatSnackbarMessages extends SnackBar {
@@ -266,5 +215,15 @@ class ChatSnackbarMessages extends SnackBar {
       : super(
           key: key,
           content: Text('No se pudo enviar la imagen'),
+        );
+  ChatSnackbarMessages.videoNotLoaded({Key? key})
+      : super(
+          key: key,
+          content: Text('No se pudo cargar el video a enviar'),
+        );
+  ChatSnackbarMessages.videoNotSended({Key? key})
+      : super(
+          key: key,
+          content: Text('No se pudo enviar el video'),
         );
 }
