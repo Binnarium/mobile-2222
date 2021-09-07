@@ -43,12 +43,12 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
       children: [
         (items.length == 0)
             ? Padding(
-                padding: EdgeInsets.symmetric(vertical: 32),
+                padding: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: [
                     Image.asset(
                       'assets/images/empty-projects.png',
-                      width: size.width * 0.6,
+                      width: size.width * 0.4,
                     ),
                     SizedBox(
                       height: 18,

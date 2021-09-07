@@ -197,20 +197,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             SizedBox(
               height: 40,
             ),
-          ],
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Center(
-              child: Text(
-                'Tus proyectos en ${this.widget.city.name}'.toUpperCase(),
-                style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w300,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
+          ],          
 
           Padding(
             padding: horizontalPadding,
