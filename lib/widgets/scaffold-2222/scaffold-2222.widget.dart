@@ -125,7 +125,11 @@ class Scaffold2222 extends StatelessWidget {
         },
         child: BackgroundDecoration(
           backgroundDecorationsStyles: backgrounds,
-          child: body,
+          child: SafeArea(
+            top: this.appBar == null,
+            child: body,
+            bottom: !this._showBottomNavigationBar,
+          ),
         ),
       ),
     );

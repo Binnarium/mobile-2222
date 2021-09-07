@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/app-routes.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
+import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
@@ -17,6 +18,7 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => CurrentAudioProvider()),
         Provider(create: (_) => CurrentVideoProvider()),
         Provider(create: (_) => UploadImageService()),
+        Provider(create: (_) => LoadMonsterService()),
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',

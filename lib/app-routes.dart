@@ -10,6 +10,7 @@ import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-macro.screen.dart';
+import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
@@ -22,7 +23,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
