@@ -17,8 +17,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
@@ -68,15 +66,15 @@ class Lab2222Routes extends MaterialPageRoute {
               case ProfileScreen.route:
                 return ProfileScreen();
 
+              /// all chats screens
+              case ChatsScreen.route:
+                return ChatsScreen();
+
               case CityIntroductionScreen.route:
                 final args = settings.arguments as CityIntroductionScreen;
                 return CityIntroductionScreen(
                   city: args.city,
                 );
-
-              /// all chats screens
-              case ChatsScreen.route:
-                return ChatsScreen();
 
               case MessagesScreen.route:
                 final args = settings.arguments as MessagesScreen;
@@ -177,18 +175,6 @@ class Lab2222Routes extends MaterialPageRoute {
               case CityProjectScreen.route:
                 final args = settings.arguments as CityProjectScreen;
                 return CityProjectScreen(
-                  city: args.city,
-                );
-
-              case ContributionScreen.route:
-                final args = settings.arguments as ContributionScreen;
-                return ContributionScreen(
-                  city: args.city,
-                );
-
-              case ContributionIdeasScreen.route:
-                final args = settings.arguments as ContributionIdeasScreen;
-                return ContributionIdeasScreen(
                   city: args.city,
                 );
 

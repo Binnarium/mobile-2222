@@ -3,17 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-title.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
-
-const String chatsInfo = """
-Este chart sirve para las primeras interacciones entre docentes y grupos. 
-
-Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp** y **Telegram**.
-""";
 
 class ChatParticipantsScreen extends StatelessWidget {
   static const route = '/chat-participants';
@@ -64,10 +58,9 @@ class ChatParticipantsScreen extends StatelessWidget {
             child: Center(
               child: Container(
                 width: min(400, size.width * 0.8),
-                child: Markdown2222(
-                  data: chatsInfo,
+                child: ChatTextDescription.getChatText(
+                  chat: this.chat,
                   color: Colors2222.black.withOpacity(0.5),
-                  contentAlignment: WrapAlignment.center,
                 ),
               ),
             ),

@@ -81,8 +81,8 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
               padding: const EdgeInsets.only(bottom: 24.0),
               width: min(300, size.width * 0.8),
               child: Text(
-                "CLUBHOUSE",
-                style: textTheme.headline3!.copyWith(
+                "CLUBHOUSE".toUpperCase(),
+                style: textTheme.headline4!.copyWith(
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.center,

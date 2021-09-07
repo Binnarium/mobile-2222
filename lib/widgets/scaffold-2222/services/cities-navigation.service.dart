@@ -11,7 +11,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
@@ -122,16 +121,6 @@ class CityNavigator {
               context,
               ResourcesScreen.route,
               arguments: ResourcesScreen(city: city),
-            ),
-          ),
-
-        if (enabledPagesDto.contribution)
-          ScaffoldRouteBuilder(
-            route: ContributionScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ContributionScreen.route,
-              arguments: ContributionScreen(city: city),
             ),
           ),
 

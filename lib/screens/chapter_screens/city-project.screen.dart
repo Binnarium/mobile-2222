@@ -7,10 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
+import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
+import 'package:lab_movil_2222/cities/project/services/load-project-files.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/models/player-projects.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
@@ -25,6 +26,7 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class CityProjectScreen extends StatefulWidget {
   static const String route = '/project';
@@ -68,13 +70,16 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         .then((value) => this.setState(() => this.project = value));
 
     /// stream of projects
-    this._userProjectsSub =
-        LoadPlayerInformationService.loadProjects$(userUID!)!
-            .listen((projects) {
-      this.setState(() {
-        this.playerProjects = projects;
-      });
-    });
+    LoadProjectFiles loadProjectFiles =
+        Provider.of<LoadProjectFiles>(context, listen: false);
+    this._userProjectsSub = loadProjectFiles.load$(this.widget.city).listen(
+      (projects) {
+        if (this.mounted)
+          this.setState(() {
+            this.playerProjects = projects;
+          });
+      },
+    );
   }
 
   @override
@@ -119,8 +124,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           child: Container(
             width: min(300, size.width * 0.9),
             child: Text(
-              "PROYECTO PERSONAL DE INNOVACIÓN DOCENTE",
-              style: textTheme.headline5!.copyWith(
+              "PROYECTO DOCENTE".toUpperCase(),
+              style: textTheme.headline4!.copyWith(
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,
@@ -130,13 +135,26 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
         ///
         SizedBox(
-          height: 16,
+          height: 20,
         ),
 
         ///
         if (this.project == null)
           AppLoading()
         else ...[
+          Center(
+            child: Image.asset(
+              'assets/images/reto.png',
+              alignment: Alignment.bottomRight,
+              fit: BoxFit.contain,
+              width: min(160, size.width * 0.4),
+            ),
+          ),
+
+          ///
+          SizedBox(
+            height: 32,
+          ),
           Padding(
             padding: horizontalPadding,
             child: Text(
@@ -149,20 +167,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             ),
           ),
 
-          ///
           SizedBox(
             height: 28,
-          ),
-          Center(
-            child: Image.asset(
-              'assets/images/reto.png',
-              alignment: Alignment.bottomRight,
-              fit: BoxFit.contain,
-              width: min(160, size.width * 0.4),
-            ),
-          ),
-          SizedBox(
-            height: 32,
           ),
 
           ///
@@ -192,6 +198,20 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               height: 40,
             ),
           ],
+
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Center(
+              child: Text(
+                'Tus proyectos en ${this.widget.city.name}'.toUpperCase(),
+                style: textTheme.headline4!.copyWith(
+                  fontWeight: FontWeight.w300,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+
           Padding(
             padding: horizontalPadding,
             child: ProjectGalleryWidget(

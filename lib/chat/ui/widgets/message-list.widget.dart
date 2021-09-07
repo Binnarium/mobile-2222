@@ -5,20 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
-import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/message.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
+
+import 'chat-text-description.widget.dart';
 
 class MessagesList extends StatefulWidget {
   final Stream<List<MessageModel>> messagesStream;
   final ScrollController scrollController;
+  final ChatModel chatModel;
 
   MessagesList({
     Key? key,
     required ChatModel chatModel,
-  })  : this.messagesStream = ListMessagesService.instance.list$(chatModel),
+  })  : this.chatModel = chatModel,
+        this.messagesStream = ListMessagesService.instance.list$(chatModel),
         this.scrollController = ScrollController(),
         super(key: key);
 
@@ -71,10 +73,9 @@ class _MessagesListState extends State<MessagesList> {
             child: Center(
               child: Container(
                 width: min(400, size.width * 0.8),
-                child: Markdown2222(
-                  data: chatsInfo,
+                child: ChatTextDescription.getChatText(
+                  chat: this.widget.chatModel,
                   color: Colors2222.black.withOpacity(0.5),
-                  contentAlignment: WrapAlignment.center,
                 ),
               ),
             ),

@@ -7,7 +7,6 @@ import 'package:lab_movil_2222/cities/collaborations/models/collaborations-activ
 import 'package:lab_movil_2222/cities/collaborations/services/get-collaboration-explanation.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/contribution-ideas.screen.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -88,7 +87,7 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
             padding: const EdgeInsets.only(bottom: 24.0),
             width: min(300, size.width * 0.8),
             child: Text(
-              "TU CONTRIBUCIÓN",
+              "Manifiesto por la Educación".toUpperCase(),
               style: textTheme.headline4!.copyWith(
                 fontWeight: FontWeight.w400,
               ),
@@ -153,13 +152,7 @@ _contributionButton(BuildContext context, color, String option, CityDto city) {
       ),
 
       ///Navigates to main screen
-      onPressed: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ContributionIdeasScreen(city: city, option: option),
-        ),
-      ),
+      onPressed: () {},
       child: Text(
         name,
         style: Theme.of(context)

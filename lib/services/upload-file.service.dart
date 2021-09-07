@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:lab_movil_2222/models/player-projects.dto.dart';
+import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 
 class UploadFileToFirebaseService {
   static UploadTask? uploadFile(destination, File file) {

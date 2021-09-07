@@ -7,7 +7,9 @@ import 'package:lab_movil_2222/chat/services/list-player-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/search-chats.service.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-list-title.widget.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
@@ -74,7 +76,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
             padding: const EdgeInsets.only(bottom: 40),
             child: Center(
               child: Text(
-                'EL CHAT DE 2222',
+                'CHAT DE VIAJEROS',
                 style: textTheme.headline5,
               ),
             ),
@@ -83,9 +85,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
           /// search input
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+            child: ChatTextDescription.informationText(
+              color: Colors2222.white.withOpacity(0.8),
+            ),
+          ),
+
+          /// search input
+          Padding(
+            padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
             child: TextFormField222(
               controller: this._searchController,
-              label: 'Buscar Chat',
+              label: 'Buscar viajeros',
               prefixIcon: Icons.search,
               onValueChanged: (value) async {
                 if (value!.isEmpty) {

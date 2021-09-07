@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/models/player-projects.dto.dart';
 import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -11,12 +11,12 @@ class ProjectGalleryWidget extends StatefulWidget {
   final CityDto city;
   final String userUID;
   final List<PlayerProject> projects;
-  const ProjectGalleryWidget(
-      {Key? key,
-      required this.city,
-      required this.userUID,
-      required this.projects})
-      : super(key: key);
+  const ProjectGalleryWidget({
+    Key? key,
+    required this.city,
+    required this.userUID,
+    required this.projects,
+  }) : super(key: key);
 
   @override
   _ProjectGalleryWidgetState createState() => _ProjectGalleryWidgetState();
@@ -41,18 +41,6 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
     }
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Center(
-            child: Text(
-              'Tus proyectos en ${this.widget.city.name}'.toUpperCase(),
-              style: textTheme.headline4!.copyWith(
-                fontWeight: FontWeight.w300,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
         (items.length == 0)
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 32),

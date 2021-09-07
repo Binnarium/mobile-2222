@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 /// with the city color, [text] is the string of the button, [icon] is the icon
 /// at the head of the button, [onClicked] is the function that will be
 /// executed on pressed
+@Deprecated('use [ElevatedButton.icon(...)] instead')
 class ButtonWidget extends StatelessWidget {
   final Color color;
   final String? text;

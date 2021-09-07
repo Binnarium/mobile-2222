@@ -81,7 +81,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
             child: TextFormField222(
               primaryColor: this.widget.city.color,
               controller: this._addClubhouseController,
-              label: 'Enlace clubhouse',
+              label: 'Enlace de evento clubhouse',
               keyboardType: TextInputType.url,
               prefixIcon: Icons.search,
               onValueChanged: (value) => this.clubhouseUrl = value,
@@ -95,7 +95,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
-                child: Text('Agregar clubhouse'),
+                child: Text('Agregar Evento'),
                 onPressed: () async {
                   if (this.clubhouseUrl == null) return;
                   final FirebaseFirestore _fFirestore =
