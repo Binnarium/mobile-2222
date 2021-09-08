@@ -221,17 +221,6 @@ class CityNavigator {
             ),
           ),
 
-        ///Contribution
-        if (enabledPagesDto.activities && enabledPagesDto.contribution)
-          ScaffoldRouteBuilder(
-            route: YourContributionScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              YourContributionScreen.route,
-              arguments: YourContributionScreen(city: city),
-            ),
-          ),
-
         /// clubhouse pages
         ...CityNavigator._contributionActivities(enabledPagesDto, city),
 
