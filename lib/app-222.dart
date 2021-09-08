@@ -11,6 +11,7 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 import 'package:provider/provider.dart';
 
+import 'assets/video/services/upload-video.service.dart';
 import 'cities/project/services/load-project-files.service.dart';
 
 class App2222 extends StatelessWidget {
@@ -21,6 +22,7 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => CurrentAudioProvider()),
         Provider(create: (_) => CurrentVideoProvider()),
         Provider(create: (_) => UploadImageService()),
+        Provider(create: (_) => UploadVideoService()),
         Provider(create: (_) => GetClubhouseExplanationService()),
         Provider(create: (_) => LoadMonsterService()),
         Provider(create: (_) => LoadProjectFiles()),
