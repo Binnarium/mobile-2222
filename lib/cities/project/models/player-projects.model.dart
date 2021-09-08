@@ -1,23 +1,23 @@
-class ProjectFile {
-  final String path;
-  final String url;
-
-  ProjectFile.fromMap(final Map<String, dynamic> payload)
-      : this.path = payload['path'],
-        this.url = payload['url'];
-}
+import 'package:lab_movil_2222/models/asset.dto.dart';
 
 class PlayerProject {
   final String cityID;
-  final ProjectFile file;
+  final ProjectFileDto file;
   final String kind;
   final String id;
+
+  PlayerProject({
+    required this.cityID,
+    required this.file,
+    required this.kind,
+    required this.id,
+  });
 
   PlayerProject.fromMap(final Map<String, dynamic> payload)
       : this.kind = payload['kind'] ?? "",
         this.cityID = payload['cityID'] ?? "",
         this.id = payload['id'] ?? "",
-        this.file = ProjectFile.fromMap(payload['file'] ?? []);
+        this.file = ProjectFileDto.fromMap(payload['file'] ?? []);
 
   Map<String, dynamic> toMap() {
     return {

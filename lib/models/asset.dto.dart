@@ -106,3 +106,23 @@ class AudioDto extends AssetDto {
           url: payload['url'],
         );
 }
+
+/// Project File asset
+class ProjectFileDto extends AssetDto {
+  ProjectFileDto({
+    required String name,
+    required String path,
+    required String url,
+  }) : super(
+          name: name,
+          path: path,
+          url: url,
+        );
+
+  ProjectFileDto.fromMap(final Map<String, dynamic> payload)
+      : super(
+          name: payload['name'] ?? '',
+          path: payload['path'] ?? '',
+          url: payload['url'] ?? '',
+        );
+}
