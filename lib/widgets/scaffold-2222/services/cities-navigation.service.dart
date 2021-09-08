@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
@@ -143,6 +144,16 @@ class CityNavigator {
               context,
               YourContributionScreen.route,
               arguments: YourContributionScreen(city: city),
+            ),
+          ),
+        ///clubhouseExplanation
+        if (enabledPagesDto.activities && enabledPagesDto.clubhouse)
+          ScaffoldRouteBuilder(
+            route: ClubhouseExplanationScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ClubhouseExplanationScreen.route,
+              arguments: ClubhouseExplanationScreen(city: city),
             ),
           ),
 
