@@ -10,10 +10,6 @@ class _CityConfigurationDto {
 }
 
 class CityEnabledPagesDto {
-  final bool activities;
-  final bool contribution;
-  final bool clubhouse;
-  final bool project;
   final bool resources;
   final bool introductoryVideo;
   final bool argumentation;
@@ -23,9 +19,20 @@ class CityEnabledPagesDto {
   final bool finalVideo;
   final bool content;
 
+  /// activities
+  final bool activities;
+  final bool contribution;
+  final bool contributionExplanation;
+  final bool clubhouse;
+  final bool clubhouseExplanation;
+  final bool project;
+
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] == true,
         this.contribution = payload['contribution'] == true,
+        this.contributionExplanation =
+            payload['contributionExplanation'] == true,
+        this.clubhouseExplanation = payload['clubhouseExplanation'] == true,
         this.clubhouse = payload['clubhouse'] == true,
         this.resources = payload['resources'] == true,
         this.introductoryVideo = payload['introductoryVideo'] == true,
@@ -36,6 +43,11 @@ class CityEnabledPagesDto {
         this.microMesoMacro = payload['microMesoMacro'] == true,
         this.finalVideo = payload['finalVideo'] == true,
         this.project = payload['project'] == true;
+
+  bool get enableClubhouseRoutes => this.clubhouse || this.clubhouseExplanation;
+  bool get enableContributionRoutes =>
+      this.contribution || this.contributionExplanation;
+  bool get enableProjectRoutes => this.project || this.projectVideo;
 }
 
 class CityDto {

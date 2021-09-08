@@ -29,6 +29,91 @@ class ScaffoldRouteBuilder {
 }
 
 class CityNavigator {
+  /// get pages for the clubhouse
+  static List<ScaffoldRouteBuilder> _clubhouseActivities(
+    /// enabled pages configuration
+    CityEnabledPagesDto enabledPagesDto,
+
+    /// required city argument to load data
+    CityDto city,
+  ) =>
+      [
+        ///clubhouseExplanation
+        if (enabledPagesDto.activities && enabledPagesDto.clubhouseExplanation)
+          ScaffoldRouteBuilder(
+            route: ClubhouseExplanationScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ClubhouseExplanationScreen.route,
+              arguments: ClubhouseExplanationScreen(city: city),
+            ),
+          ),
+
+        /// clubhouse
+        if (enabledPagesDto.activities && enabledPagesDto.clubhouse)
+          ScaffoldRouteBuilder(
+            route: ClubhouseScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ClubhouseScreen.route,
+              arguments: ClubhouseScreen(city: city),
+            ),
+          ),
+      ];
+
+  /// get pages for the clubhouse
+  static List<ScaffoldRouteBuilder> _contributionActivities(
+    /// enabled pages configuration
+    CityEnabledPagesDto enabledPagesDto,
+
+    /// required city argument to load data
+    CityDto city,
+  ) =>
+      [
+        ///Contribution
+        if (enabledPagesDto.activities && enabledPagesDto.contribution)
+          ScaffoldRouteBuilder(
+            route: YourContributionScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              YourContributionScreen.route,
+              arguments: YourContributionScreen(city: city),
+            ),
+          ),
+      ];
+
+  /// get pages for the clubhouse
+  static List<ScaffoldRouteBuilder> _projectActivities(
+    /// enabled pages configuration
+    CityEnabledPagesDto enabledPagesDto,
+
+    /// required city argument to load data
+    CityDto city,
+  ) =>
+      [
+        /// project
+        if (enabledPagesDto.activities && enabledPagesDto.project)
+          ScaffoldRouteBuilder(
+            route: CityProjectScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              CityProjectScreen.route,
+              arguments: CityProjectScreen(city: city),
+            ),
+          ),
+
+        /// project video
+        if (enabledPagesDto.projectVideo)
+          ScaffoldRouteBuilder(
+            route: ProjectVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ProjectVideoScreen.route,
+              arguments: ProjectVideoScreen(city: city),
+            ),
+          ),
+      ];
+
   static List<ScaffoldRouteBuilder> _routes(
     /// enabled pages configuration
     CityEnabledPagesDto enabledPagesDto,
@@ -146,49 +231,15 @@ class CityNavigator {
               arguments: YourContributionScreen(city: city),
             ),
           ),
-        ///clubhouseExplanation
-        if (enabledPagesDto.activities && enabledPagesDto.clubhouse)
-          ScaffoldRouteBuilder(
-            route: ClubhouseExplanationScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ClubhouseExplanationScreen.route,
-              arguments: ClubhouseExplanationScreen(city: city),
-            ),
-          ),
 
-        /// clubhouse
-        if (enabledPagesDto.activities && enabledPagesDto.clubhouse)
-          ScaffoldRouteBuilder(
-            route: ClubhouseScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ClubhouseScreen.route,
-              arguments: ClubhouseScreen(city: city),
-            ),
-          ),
+        /// clubhouse pages
+        ...CityNavigator._contributionActivities(enabledPagesDto, city),
 
-        /// project
-        if (enabledPagesDto.activities && enabledPagesDto.project)
-          ScaffoldRouteBuilder(
-            route: CityProjectScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              CityProjectScreen.route,
-              arguments: CityProjectScreen(city: city),
-            ),
-          ),
+        /// clubhouse pages
+        ...CityNavigator._clubhouseActivities(enabledPagesDto, city),
 
-        /// project video
-        if (enabledPagesDto.projectVideo)
-          ScaffoldRouteBuilder(
-            route: ProjectVideoScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ProjectVideoScreen.route,
-              arguments: ProjectVideoScreen(city: city),
-            ),
-          ),
+        /// clubhouse pages
+        ...CityNavigator._projectActivities(enabledPagesDto, city),
 
         /// manual video
         if (enabledPagesDto.manualVideo)
@@ -252,6 +303,30 @@ class CityNavigator {
   static ScaffoldRouteBuilder getFirsScreen(CityDto cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._routes(cityDto.enabledPages, cityDto);
+
+    return availableRoutes.first;
+  }
+
+  /// get first route of clubhouse
+  static ScaffoldRouteBuilder getCLubhouseNextScreen(CityDto cityDto) {
+    final List<ScaffoldRouteBuilder> availableRoutes =
+        CityNavigator._clubhouseActivities(cityDto.enabledPages, cityDto);
+
+    return availableRoutes.first;
+  }
+
+  /// get first route contribution
+  static ScaffoldRouteBuilder getContributionNextScreen(CityDto cityDto) {
+    final List<ScaffoldRouteBuilder> availableRoutes =
+        CityNavigator._contributionActivities(cityDto.enabledPages, cityDto);
+
+    return availableRoutes.first;
+  }
+
+  /// get first route of a project
+  static ScaffoldRouteBuilder getProjectNextScreen(CityDto cityDto) {
+    final List<ScaffoldRouteBuilder> availableRoutes =
+        CityNavigator._projectActivities(cityDto.enabledPages, cityDto);
 
     return availableRoutes.first;
   }
