@@ -31,6 +31,19 @@ class VideoDto extends AssetDto {
   final int duration;
   final String format;
 
+  /// defaault constructor
+  VideoDto({
+    required this.duration,
+    required this.format,
+    required String name,
+    required String path,
+    required String url,
+  }) : super(
+          name: name,
+          path: path,
+          url: url,
+        );
+
   VideoDto.fromMap(final Map<String, dynamic> payload)
       : this.format = payload['format'] ?? '',
         this.duration = payload['duration'] ?? '',
@@ -104,5 +117,25 @@ class AudioDto extends AssetDto {
           name: payload['name'],
           path: payload['path'],
           url: payload['url'],
+        );
+}
+
+/// Project File asset
+class ProjectFileDto extends AssetDto {
+  ProjectFileDto({
+    required String name,
+    required String path,
+    required String url,
+  }) : super(
+          name: name,
+          path: path,
+          url: url,
+        );
+
+  ProjectFileDto.fromMap(final Map<String, dynamic> payload)
+      : super(
+          name: payload['name'] ?? '',
+          path: payload['path'] ?? '',
+          url: payload['url'] ?? '',
         );
 }

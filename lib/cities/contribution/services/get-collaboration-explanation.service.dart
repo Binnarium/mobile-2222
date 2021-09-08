@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/cities/collaborations/models/collaborations-activity.model.dart';
+import 'package:lab_movil_2222/cities/contribution/models/collaborations-activity.model.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 
-class GetCollaborationActivityService {
+class GetContributionActivityService {
   static Stream<CollaborationActivityModel?>? _collaborationExplanationStream;
 
   static Stream<CollaborationActivityModel?> explanation$(CityDto city) {
-    if (GetCollaborationActivityService._collaborationExplanationStream ==
+    if (GetContributionActivityService._collaborationExplanationStream ==
         null) {
       /// build player stream
       final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
@@ -17,7 +17,7 @@ class GetCollaborationActivityService {
           .collection('pages')
           .doc('contribution');
 
-      GetCollaborationActivityService._collaborationExplanationStream =
+      GetContributionActivityService._collaborationExplanationStream =
           explanationRef
               .snapshots()
 

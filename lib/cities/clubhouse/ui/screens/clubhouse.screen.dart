@@ -102,16 +102,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 30.0,
-                left: size.width * 0.08,
-                right: size.width * 0.08,
-              ),
-              child: Markdown2222(
-                data: this.clubhouseActivity!.explanation,
-              ),
-            )
+            
           ],
 
           /// next clubhouse title

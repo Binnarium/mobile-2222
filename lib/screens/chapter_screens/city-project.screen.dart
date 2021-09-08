@@ -1,24 +1,21 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/cities/project/services/load-project-files.service.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/services/current-user.service.dart';
+import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
-import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
-import 'package:lab_movil_2222/services/upload-file.service.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -27,6 +24,8 @@ import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
+
+import 'package:rxdart/rxdart.dart';
 
 class CityProjectScreen extends StatefulWidget {
   static const String route = '/project';
@@ -91,6 +90,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [
@@ -200,19 +200,6 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ],
 
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Center(
-              child: Text(
-                'Tus proyectos en ${this.widget.city.name}'.toUpperCase(),
-                style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w300,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-
-          Padding(
             padding: horizontalPadding,
             child: ProjectGalleryWidget(
                 city: this.widget.city,
@@ -225,7 +212,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             child: _taskButton(
               context,
               color,
-              this.widget.city.name,
+              this.widget.city,
             ),
           )
         ],
@@ -234,7 +221,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   }
 }
 
-_taskButton(BuildContext context, color, String cityName) {
+_taskButton(BuildContext context, color, CityDto city) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -252,7 +239,7 @@ _taskButton(BuildContext context, color, String cityName) {
             builder: (context) {
               /// creates the alert dialog to upload file
               return UploadFileDialog(
-                cityName: cityName,
+                city: city,
                 color: color,
               );
             });
@@ -272,12 +259,16 @@ _taskButton(BuildContext context, color, String cityName) {
 /// with the city color
 class UploadFileDialog extends StatefulWidget {
   final Color color;
-  final String cityName;
-  const UploadFileDialog({
+  final CityDto city;
+
+  final UploadProjectService _uploadProjectService;
+
+  UploadFileDialog({
     Key? key,
     required this.color,
-    required this.cityName,
-  }) : super(key: key);
+    required this.city,
+  })  : this._uploadProjectService = UploadProjectService(),
+        super(key: key);
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
@@ -285,28 +276,24 @@ class UploadFileDialog extends StatefulWidget {
 
 class _UploadFileDialogState extends State<UploadFileDialog> {
   StreamSubscription? _userServiceSub;
-  UploadTask? task;
-  String? userUID;
-  File? file;
-  String? fileName;
+  StreamSubscription? _uploadFileSub;
   PlayerModel? player;
 
   @override
   void initState() {
     super.initState();
-    this._userServiceSub = UserService.instance.user$().listen((event) {
-      userUID = event!.uid;
-      LoadPlayerInformationService playerLoader =
-          LoadPlayerInformationService();
-      playerLoader.loadInformation(event.uid).then((value) => this.setState(() {
-            this.player = value;
-          }));
+    this._userServiceSub =
+        CurrentPlayerService.instance.player$.listen((event) {
+      this.player = event;
+      setState(() {});
+      print('PLAYER ES: ${player!.displayName} ${player!.uid}');
     });
   }
 
   @override
   void dispose() {
-    _userServiceSub?.cancel();
+    this._userServiceSub?.cancel();
+    this._uploadFileSub?.cancel();
     super.dispose();
   }
 
@@ -319,23 +306,13 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            (file == null) ? 'Elige tu proyecto' : 'Sube tu proyecto',
+            'Elige tu proyecto',
             style: Theme.of(context).textTheme.headline6,
           ),
           SizedBox(
             height: 16,
           ),
-          ButtonWidget(
-            color: this.widget.color,
-            text: 'Elegir archivo',
-            icon: Icons.attach_file_rounded,
-            onClicked: selectFile,
-          ),
           SizedBox(height: 8),
-          Text(
-            fileName ?? 'No se ha seleccionado el archivo',
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
           SizedBox(
             height: 10,
           ),
@@ -343,102 +320,72 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             color: this.widget.color,
             icon: Icons.upload_file_rounded,
             text: 'Subir archivo',
-            onClicked: uploadFile,
+            onClicked: _uploadFile,
           ),
           SizedBox(
             height: 10,
           ),
-          task != null ? buildUploadStatus(task!) : Container(),
         ],
       ),
     );
   }
 
-  Future selectFile() async {
-    print('User UID: $userUID');
+  void _uploadFile() {
+    if (this._uploadFileSub != null) return;
 
-    final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowMultiple: false,
-        allowedExtensions: (this.widget.cityName != "Angkor")
-            ? ['pdf']
-            : ['mp3', 'wav', 'm4p', 'ogg', 'wma', '3gp']);
-    if (result == null) return;
+    UploadFileService uploadFileService =
+        Provider.of<UploadFileService>(context, listen: false);
 
-    /// to get the path of the file
-    final path = result.files.single.path!;
+    this._uploadFileSub = uploadFileService
+        .uploadFile$('players/${player!.uid}/${this.widget.city.name}/',
+            this.widget.city)
+        .switchMap((projectFile) => this
+            .widget
+            ._uploadProjectService
+            .project$(this.widget.city, projectFile))
+        .listen((sended) {
+      if (sended) {
+        bool medalFound = false;
 
-    setState(() {
-      file = File(path);
-      fileName = result.files.single.name;
-    });
-  }
-
-  /// to upload a file
-  Future uploadFile() async {
-    print('User UID: $userUID');
-    if (file == null) return;
-
-    final destination = 'players/$userUID/${this.widget.cityName}/$fileName';
-    print("LOCATION: $destination");
-    task = UploadFileToFirebaseService.uploadFile(destination, file!);
-    setState(() {});
-
-    if (task == null) return;
-
-    bool medalFound = false;
-    final snapshot = await task!.whenComplete(
-      () => {
         /// seeks for all medals in the medals array
         player!.projectAwards.asMap().forEach((key, value) {
-          if (value.cityId == this.widget.cityName) {
+          if (value.cityId == this.widget.city.name) {
             medalFound = true;
             print('hay medalla');
           }
-        }),
+        });
 
         /// if there is no medal with the city name, creates new one
-        if (!medalFound)
-          {
-            print('no hay medalla'),
-            UploadFileToFirebaseService.writeMedal(
-                userUID!, this.widget.cityName),
-          }
-      },
-    );
-    final urlDownload = await snapshot.ref.getDownloadURL();
-
-    /// creates a playerProject instance for this project
-    PlayerProject currentProject = PlayerProject.fromMap({
-      "file": {"path": destination, "url": urlDownload},
-      "cityID": this.widget.cityName,
-      "kind": (this.widget.cityName != "Angkor") ? "PROJECT#PDF" : "PROJECT#MP3"
+        if (!medalFound) {
+          print('no hay medalla');
+          UploadProjectService.writeMedal(player!.uid, this.widget.city.name);
+        }
+      }
+    }, onDone: () {
+      this._uploadFileSub?.cancel();
+      this._uploadFileSub = null;
+      Navigator.pop(context);
     });
-
-    /// to write the project in the users project collection
-    UploadFileToFirebaseService.writePlayerProjectFile(
-        userUID!, currentProject);
-    print('Download link: $urlDownload');
   }
 
-  Widget buildUploadStatus(UploadTask uploadTask) =>
-      StreamBuilder<TaskSnapshot>(
-          stream: task!.snapshotEvents,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final snap = snapshot.data!;
-              final progress = snap.bytesTransferred / snap.totalBytes;
-              final percentage = (progress * 100).toStringAsFixed(1);
-              return Text(
-                (progress == 1.0)
-                    ? '¡Subido con éxito!'
-                    : 'Subiendo: $percentage %',
-                style: Theme.of(context).textTheme.bodyText2,
-              );
-            } else {
-              return Container();
-            }
-          });
+  // Widget buildUploadStatus(UploadTask uploadTask) =>
+  //     StreamBuilder<TaskSnapshot>(
+  //         stream: task!.snapshotEvents,
+  //         builder: (context, snapshot) {
+  //           if (snapshot.hasData) {
+  //             final snap = snapshot.data!;
+  //             final progress = snap.bytesTransferred / snap.totalBytes;
+  //             final percentage = (progress * 100).toStringAsFixed(1);
+  //             return Text(
+  //               (progress == 1.0)
+  //                   ? '¡Subido con éxito!'
+  //                   : 'Subiendo: $percentage %',
+  //               style: Theme.of(context).textTheme.bodyText2,
+  //             );
+  //           } else {
+  //             return Container();
+  //           }
+  //         });
 }
 
 /// creates a custom elevated button [color] is needed to create the button

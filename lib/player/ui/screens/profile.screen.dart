@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
-import 'package:lab_movil_2222/services/load-player-information.service.dart';
-import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/shared/widgets/medals-list-item_widget.dart';
@@ -20,9 +20,18 @@ import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
+
+  final UpdateAvatarService _updateAvatarService;
+
+  ProfileScreen({
+    Key? key,
+  })  : this._updateAvatarService = UpdateAvatarService(),
+        super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -31,6 +40,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _signOutSub;
   StreamSubscription? _loadPlayerSub;
+  StreamSubscription? _uploadFileSub;
   PlayerModel? player;
   ImageDto? avatarImage;
 
@@ -118,9 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 bottom: -6,
                                 right: -14,
                                 child: ElevatedButton(
-                                  onPressed: () async {
-                                    return await uploadAvatar();
-                                  },
+                                  onPressed: _uploadAvatar,
                                   style: ElevatedButton.styleFrom(
                                       shape: CircleBorder(),
                                       primary: Colors.black,
@@ -254,11 +262,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                // ButtonWidget(
-                //   color: Colors2222.black,
-                //   onClicked: uploadAvatar,
-                //   text: 'Cambiar avatar',
-                // )
               ],
             ),
           ));
@@ -318,25 +321,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   /// to upload a file
-  Future uploadAvatar() async {
-    File? avatarImage = await selectAvatar();
-    if (avatarImage != null) {
-      print('el archivito no es null: $avatarImage');
+  void _uploadAvatar() async {
+    if (this._uploadFileSub != null) return;
+    String oldUrl = this.player!.avatarImage.url;
+    print('old image url');
+    UploadImageService uploadImageService =
+        Provider.of<UploadImageService>(context, listen: false);
 
-      final destination = 'players/${this.player!.uid}/assets/$fileName';
-      print("LOCATION: $destination");
-
-      task = UploadFileToFirebaseService.uploadFile(destination, file!);
-
-      if (task == null) return;
-
-      final snapshot = await task!;
-
-      final urlDownload = await snapshot.ref.getDownloadURL();
-
-      LoadPlayerInformationService.updateAvatar(this.player!.uid, fileName!,
-          destination, urlDownload, this.player!.avatarImage.url);
-      print('Download link: $urlDownload');
-    }
+    this._uploadFileSub = uploadImageService
+        .upload$('players/${this.player!.uid}/assets')
+        .switchMap((image) =>
+            this.widget._updateAvatarService.updateAvatar$(image, oldUrl))
+        .listen((sended) {
+      if (sended) print('Imagen cambiada correctamente');
+    }, onDone: () {
+      this._uploadFileSub?.cancel();
+      this._uploadFileSub = null;
+    });
   }
 }

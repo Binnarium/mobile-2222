@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -43,12 +43,12 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
       children: [
         (items.length == 0)
             ? Padding(
-                padding: EdgeInsets.symmetric(vertical: 32),
+                padding: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: [
                     Image.asset(
                       'assets/images/empty-projects.png',
-                      width: size.width * 0.6,
+                      width: size.width * 0.4,
                     ),
                     SizedBox(
                       height: 18,
@@ -140,8 +140,8 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
               iconColor: Colors.white,
               text: 'Eliminar',
               onClicked: () {
-                UploadFileToFirebaseService.deletePlayerProjectFile(
-                    this.widget.userUID, this.widget.city.name, project);
+                UploadProjectService.deletePlayerProjectFile(
+                    this.widget.userUID, project);
                 setState(() {});
                 Navigator.pop(context);
               },

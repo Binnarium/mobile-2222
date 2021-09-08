@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
-import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
-import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
 
 import 'activity-card.widget.dart';
 
@@ -76,7 +73,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             AppLoading()
           else ...[
             /// contribution card
-            if (this.widget.city.enabledPages.contribution)
+            if (this.widget.city.enabledPages.enableContributionRoutes)
               Padding(
                 padding: EdgeInsets.only(
                   top: 12,
@@ -87,19 +84,15 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   color: this.widget.city.color,
                   content: this.activity!.contribution,
                   iconPath: "assets/icons/multiple_choice_activity_icon.png",
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    YourContributionScreen.route,
-                    arguments: YourContributionScreen(
-                      city: this.widget.city,
-                    ),
-                  ),
+                  onTap: () =>
+                      CityNavigator.getContributionNextScreen(this.widget.city)
+                          .builder(context),
                   title: "Manifiesto por la Educación",
                 ),
               ),
 
             /// clubhouse event
-            if (this.widget.city.enabledPages.clubhouse)
+            if (this.widget.city.enabledPages.enableClubhouseRoutes)
               Padding(
                 padding: EdgeInsets.only(
                   top: 24,
@@ -110,19 +103,15 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   color: this.widget.city.color,
                   content: this.activity!.clubhouse,
                   iconPath: "assets/icons/clubhouse_activity_icon.png",
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    ClubhouseScreen.route,
-                    arguments: ClubhouseScreen(
-                      city: this.widget.city,
-                    ),
-                  ),
+                  onTap: () =>
+                      CityNavigator.getCLubhouseNextScreen(this.widget.city)
+                          .builder(context),
                   title: "Eventos Clubhouse",
                 ),
               ),
 
             /// project
-            if (this.widget.city.enabledPages.project)
+            if (this.widget.city.enabledPages.enableProjectRoutes)
               Padding(
                 padding: EdgeInsets.only(
                   top: 24,
@@ -133,34 +122,9 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   color: this.widget.city.color,
                   content: this.activity!.project,
                   iconPath: "assets/icons/project_activity_icon.png",
-                  onTap: () {
-                    final List<Function> actions = [
-                      /// TODO: THIS MIGHT NOT BE NECESSARY
-                      /// navigate to project screen if enabled
-                      if (this.widget.city.enabledPages.project)
-                        () => Navigator.pushNamed(
-                              context,
-                              CityProjectScreen.route,
-                              arguments: CityProjectScreen(
-                                city: this.widget.city,
-                              ),
-                            ),
-
-                      /// navigate to project video screen if enabled
-                      if (this.widget.city.enabledPages.projectVideo)
-                        () => Navigator.pushNamed(
-                              context,
-                              ProjectVideoScreen.route,
-                              arguments: ProjectVideoScreen(
-                                city: this.widget.city,
-                              ),
-                            ),
-
-                      /// default void function
-                      () {}
-                    ];
-                    actions.first();
-                  },
+                  onTap: () =>
+                      CityNavigator.getProjectNextScreen(this.widget.city)
+                          .builder(context),
                   title: "Proyecto Docente",
                 ),
               ),

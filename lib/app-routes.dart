@@ -6,14 +6,16 @@ import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
+import 'package:lab_movil_2222/cities/contribution/ui/screens/city-contribution.screen.dart';
+import 'package:lab_movil_2222/cities/contribution/ui/screens/contribution-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-macro.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-contribution.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -136,15 +138,30 @@ class Lab2222Routes extends MaterialPageRoute {
                   city: args.city,
                 );
 
+              case ActivitiesScreen.route:
+                final args = settings.arguments as ActivitiesScreen;
+                return ActivitiesScreen(
+                  city: args.city,
+                );
+
+              ///
+              case ContributionExplanationScreen.route:
+                final args =
+                    settings.arguments as ContributionExplanationScreen;
+                return ContributionExplanationScreen(
+                  city: args.city,
+                );
+
+              ///
               case YourContributionScreen.route:
                 final args = settings.arguments as YourContributionScreen;
                 return YourContributionScreen(
                   city: args.city,
                 );
 
-              case ActivitiesScreen.route:
-                final args = settings.arguments as ActivitiesScreen;
-                return ActivitiesScreen(
+              case ClubhouseExplanationScreen.route:
+                final args = settings.arguments as ClubhouseExplanationScreen;
+                return ClubhouseExplanationScreen(
                   city: args.city,
                 );
 

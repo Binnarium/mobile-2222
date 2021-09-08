@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:lab_movil_2222/cities/collaborations/models/collaborations-activity.model.dart';
-import 'package:lab_movil_2222/cities/collaborations/services/get-collaboration-explanation.service.dart';
+import 'package:lab_movil_2222/cities/contribution/models/collaborations-activity.model.dart';
+import 'package:lab_movil_2222/cities/contribution/services/get-collaboration-explanation.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
@@ -40,7 +40,7 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
     ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
     loader.load().then((value) => this.setState(() => this.chapters = value));
     this.collabActivitySub =
-        GetCollaborationActivityService.explanation$(this.widget.city)
+        GetContributionActivityService.explanation$(this.widget.city)
             .listen((event) {
       this.setState(() {
         this.collaborationActivityModel = event;
