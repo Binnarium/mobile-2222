@@ -10,6 +10,7 @@ import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
+import 'package:lab_movil_2222/player/widgets/user-gamification.widget.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -64,13 +65,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  File? file;
-  String? fileName;
-  UploadTask? task;
-
   @override
   Widget build(BuildContext context) {
     avatarImage = this.player?.avatarImage;
+    int numberProjects = this.player!.projectAwards.length;
+    int numberClubhouses = this.player!.clubhouseAwards.length;
+    int numberProactivity = numberProjects + numberClubhouses;
+    // int numberContributions = this.player!.contributionsAwards.length;
 
     final double sideSpacing = MediaQuery.of(context).size.width * 0.08;
 
@@ -101,7 +102,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               /// player profile
               Padding(
-                padding: EdgeInsets.only(bottom: 64),
+                padding: EdgeInsets.only(
+                  bottom: 64,
+                ),
                 child: Row(
                   children: [
                     /// player icon
@@ -128,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 bottom: -6,
                                 right: -14,
                                 child: ElevatedButton(
-                                  onPressed: _uploadAvatar,
+                                  onPressed: _changeAvatar,
                                   style: ElevatedButton.styleFrom(
                                       shape: CircleBorder(),
                                       primary: Colors.black,
@@ -173,57 +176,75 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
 
-              /// completed levels
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    'NIVEL DE PROACTIVIDAD',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  )),
-
-              Padding(
-                padding: EdgeInsets.only(bottom: 32),
-                child: Text(
-                  '4',
-                  style: Theme.of(context).textTheme.headline4,
-                  textAlign: TextAlign.center,
-                ),
+              /// player's gammification
+              GammificationWidget(
+                number: numberProactivity,
+                kind: GammificationKind.proactivity,
               ),
 
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text(
-                  'Premios Obtenidos',
-                  style: Theme.of(context).textTheme.headline5,
-                  textAlign: TextAlign.center,
-                ),
+              SizedBox(
+                height: 32,
+              ),
+              Container(
+                height: 1,
+                color: Colors2222.white.withOpacity(0.5),
+              ),
+              SizedBox(
+                height: 32,
               ),
 
-              for (AwardModel medal in this.player!.projectAwards)
-                MedalsListItem(
-                  cityName: medal.cityId,
-                ),
-
-              MedalsListItem(
-                cityName: 'Quitu',
+              GammificationWidget(
+                number: numberProjects,
+                kind: GammificationKind.prizes,
+                image: AssetImage('assets/gamification/2222_monedas.png'),
+              ),
+              SizedBox(
+                height: 40,
               ),
 
-              /// project medals
-              if (this.player!.clubhouseAwards.length > 0) ...[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    'Medallas clubhouse',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                for (AwardModel medal in this.player!.clubhouseAwards)
-                  MedalsListItem(
-                    cityName: medal.cityId,
-                  ),
-              ],
+              GammificationWidget(
+                number: numberClubhouses,
+                kind: GammificationKind.clubhouse,
+                image: AssetImage(
+                    'assets/gamification/2222_medalla-clubhouse.png'),
+              ),
+              SizedBox(
+                height: 64,
+              ),
+
+              // Padding(
+              //   padding: EdgeInsets.only(bottom: 10),
+              //   child: Text(
+              //     'Premios Obtenidos',
+              //     style: Theme.of(context).textTheme.headline5,
+              //     textAlign: TextAlign.center,
+              //   ),
+              // ),
+
+              // for (AwardModel medal in this.player!.projectAwards)
+              //   MedalsListItem(
+              //     cityName: medal.cityId,
+              //   ),
+
+              // MedalsListItem(
+              //   cityName: 'Quitu',
+              // ),
+
+              // /// project medals
+              // if (this.player!.clubhouseAwards.length > 0) ...[
+              //   Padding(
+              //     padding: EdgeInsets.only(bottom: 10),
+              //     child: Text(
+              //       'Medallas clubhouse',
+              //       style: Theme.of(context).textTheme.headline5,
+              //       textAlign: TextAlign.center,
+              //     ),
+              //   ),
+              //   for (AwardModel medal in this.player!.clubhouseAwards)
+              //     MedalsListItem(
+              //       cityName: medal.cityId,
+              //     ),
+              // ],
 
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
@@ -302,26 +323,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<File?> selectAvatar() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: false,
-    );
-
-    if (result == null) return null;
-
-    /// to get the path of the file
-    final path = result.files.single.path!;
-
-    setState(() {
-      file = File(path);
-      fileName = result.files.single.name;
-    });
-    return File(path);
-  }
-
-  /// to upload a file
-  void _uploadAvatar() async {
+  /// method to change the avatarImage
+  void _changeAvatar() async {
     if (this._uploadFileSub != null) return;
     String oldUrl = this.player!.avatarImage.url;
     print('old image url');
