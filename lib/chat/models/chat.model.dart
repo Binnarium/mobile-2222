@@ -48,11 +48,13 @@ class ChatModel {
 
   String get chatName => this.name != null
       ? this.name!
-      : this
-          .participants
-          .map((e) => e.displayName)
-          .map((name) => name.split(' ').sublist(0, 2).join(' '))
-          .join(', ');
+      : (this.isGroupChat)
+          ? 'Chat Grupal'
+          : this
+              .participants
+              .map((e) => e.displayName)
+              .map((name) => name.split(' ').sublist(0, 1).join(' '))
+              .join(', ');
 
   bool get isGeneralChat => this.kind == 'CHAT#GENERAL';
   bool get isGroupChat => this.kind == 'CHAT#GROUP';

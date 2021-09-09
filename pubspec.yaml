@@ -66,8 +66,10 @@ flutter:
   assets:
     - assets/icons/
     - assets/backgrounds/
+    - assets/gamification/
     - assets/gifs/
     - assets/images/
+    - assets/images/chat/
     - assets/backgrounds/decorations/
     - assets/backgrounds/background-decorations/
     - assets/videos/
