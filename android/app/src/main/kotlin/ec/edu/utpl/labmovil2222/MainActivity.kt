@@ -1,4 +1,4 @@
-package com.example.lab_movil_2222
+package ec.edu.utpl.labmovil2222
 
 import io.flutter.embedding.android.FlutterActivity
 
