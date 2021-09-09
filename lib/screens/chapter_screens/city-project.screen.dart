@@ -126,7 +126,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             child: Text(
               "PROYECTO DOCENTE".toUpperCase(),
               style: textTheme.headline4!.copyWith(
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
             ),
@@ -159,7 +159,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             padding: horizontalPadding,
             child: Text(
               this.project!.activity,
-              style: textTheme.headline5!.copyWith(
+              style: textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
               ),

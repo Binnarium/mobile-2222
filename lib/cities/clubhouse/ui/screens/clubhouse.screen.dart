@@ -14,7 +14,6 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
-import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class ClubhouseScreen extends StatefulWidget {
@@ -83,7 +82,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
               child: Text(
                 "CLUBHOUSE".toUpperCase(),
                 style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -98,11 +97,11 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
               padding: const EdgeInsets.only(bottom: 34.0),
               child: Text(
                 this.clubhouseActivity!.theme,
-                style: textTheme.headline5,
+                style:
+                    textTheme.headline5!.copyWith(fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
             ),
-            
           ],
 
           /// next clubhouse title
@@ -124,7 +123,11 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                   ),
                   child: (this.clubhouses!.length == 0)
                       ? Center(
-                          child: Text('No hay clubhouse programados'),
+                          child: Text(
+                            'No hay clubhouse programados',
+                            style: textTheme.headline6!
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
                         )
                       : GridView.builder(
                           gridDelegate:

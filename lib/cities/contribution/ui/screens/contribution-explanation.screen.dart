@@ -80,7 +80,7 @@ class _ContributionExplanationScreenState
               child: Text(
                 "Manifiesto por la Educación".toUpperCase(),
                 style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -125,6 +125,8 @@ class _ContributionExplanationScreenState
                     launch(this.contributionExplanation!.manifestUrl),
                 child: Text(
                   'Lee nuestro manifiesto'.toUpperCase(),
+                  style: textTheme.headline6!
+                      .copyWith(fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
                 style: TextButton.styleFrom(
