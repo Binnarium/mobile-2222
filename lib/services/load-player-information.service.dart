@@ -1,17 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 
-class LoadPlayerInformationService {
-  @Deprecated('do not use this implementation')
-  Future<PlayerModel> loadInformation(String userUID) async {
-    final payload = await FirebaseFirestore.instance
+class LoadPlayerService {
+  /// services
+  final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
+
+  Stream<PlayerModel?> load$(String userUID) {
+    return this
+        ._fFirestore
         .collection('players')
         .doc(userUID)
-        .get();
+        .snapshots()
 
-    if (!payload.exists)
-      throw new ErrorDescription('Player information not found');
-    return PlayerModel.fromMap(payload.data()!);
+        /// turn snapshot into document data or null
+        .map((snapshot) => snapshot.data())
+
+        /// turn snapshot data into player object, if props found
+        .map((objet) => objet == null ? null : PlayerModel.fromMap(objet));
   }
 }

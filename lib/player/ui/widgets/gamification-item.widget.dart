@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
-import 'package:lab_movil_2222/player/widgets/gammification-number.widget.dart';
+import 'package:lab_movil_2222/player/ui/widgets/gammification-number.widget.dart';
 
 class GammificationKind {
   GammificationKind._();

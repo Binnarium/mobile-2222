@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -8,6 +7,8 @@ class ParticipantsListItem extends ListTile {
     Function(BuildContext)? createChatCallback,
     required ChatParticipantModel participant,
     required BuildContext context,
+    Color color = Colors2222.black,
+    Color primaryColor = Colors2222.red,
   }) : super(
           contentPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,
@@ -16,7 +17,7 @@ class ParticipantsListItem extends ListTile {
             '${participant.displayName}',
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  color: Colors2222.black.withOpacity(0.7),
+                  color: color.withOpacity(0.7),
                 ),
           ),
 
@@ -29,8 +30,8 @@ class ParticipantsListItem extends ListTile {
             label: Text('Chat'),
             style: TextButton.styleFrom(
               primary: createChatCallback == null
-                  ? Colors2222.black.withOpacity(0.5)
-                  : Colors2222.red.withOpacity(0.7),
+                  ? color.withOpacity(0.5)
+                  : primaryColor.withOpacity(0.7),
             ),
           ),
         );
