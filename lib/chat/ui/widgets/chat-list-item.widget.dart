@@ -3,15 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
 
 class ChatListItem extends ListTile {
   ChatListItem({
     required ChatModel chat,
     required BuildContext context,
   }) : super(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage('assets/icons/avatar_icon.png'),
-          ),
+          leading: ChatImageWidget.fromChat(chat),
           contentPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,
           ),

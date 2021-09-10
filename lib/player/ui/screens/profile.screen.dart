@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/player/widgets/changeAvatarButton.widget.dart';
-import 'package:lab_movil_2222/player/widgets/gamification-item.widget.dart';
 import 'package:lab_movil_2222/player/widgets/player-gammification.widget.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';

@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// profundity text
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 28),
                   child: Markdown2222(
                     data: this.loginPayload!.profundityText,
                   ),
@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// team button
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 24),
                   child: GotoTeamButton(),
                 ),
 
