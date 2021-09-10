@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
-class GammificationNumber extends StatefulWidget {
+class GamificationNumber extends StatefulWidget {
   final int number;
-  const GammificationNumber({Key? key, required this.number}) : super(key: key);
+  const GamificationNumber({Key? key, required this.number}) : super(key: key);
 
   @override
-  _GammificationNumberState createState() => _GammificationNumberState();
+  _GamificationNumberState createState() => _GamificationNumberState();
 }
 
-class _GammificationNumberState extends State<GammificationNumber> {
+class _GamificationNumberState extends State<GamificationNumber> {
   @override
   Widget build(BuildContext context) {
     return Container(

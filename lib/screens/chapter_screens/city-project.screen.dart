@@ -6,16 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/cities/project/services/load-project-files.service.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
+import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
-import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -24,7 +25,6 @@ import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
-
 import 'package:rxdart/rxdart.dart';
 
 class CityProjectScreen extends StatefulWidget {
@@ -135,26 +135,27 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
         ///
         SizedBox(
-          height: 20,
+          height: 24,
+        ),
+
+        Center(
+          child: Image(
+            image: CoinsImages.project(),
+            alignment: Alignment.bottomRight,
+            fit: BoxFit.contain,
+            width: min(160, size.width * 0.4),
+          ),
+        ),
+
+        ///
+        SizedBox(
+          height: 32,
         ),
 
         ///
         if (this.project == null)
           AppLoading()
         else ...[
-          Center(
-            child: Image.asset(
-              'assets/images/reto.png',
-              alignment: Alignment.bottomRight,
-              fit: BoxFit.contain,
-              width: min(160, size.width * 0.4),
-            ),
-          ),
-
-          ///
-          SizedBox(
-            height: 32,
-          ),
           Padding(
             padding: horizontalPadding,
             child: Text(

@@ -150,7 +150,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               /// widget that contains a list of the player's gammification
-              PlayerGammification(player: this.player!),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: PlayerGamification(player: this.player!),
+              ),
 
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),

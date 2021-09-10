@@ -10,6 +10,7 @@ import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -85,6 +86,18 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                   fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 32),
+            child: Center(
+              child: Image(
+                image: CoinsImages.clubhouse(),
+                alignment: Alignment.bottomRight,
+                fit: BoxFit.contain,
+                width: min(160, size.width * 0.4),
               ),
             ),
           ),
