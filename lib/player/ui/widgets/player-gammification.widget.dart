@@ -33,28 +33,35 @@ class PlayerGamification extends StatelessWidget {
 
         Divider(
           thickness: 1,
-          height: 64,
+          height: 25,
           color: Colors2222.white.withOpacity(0.5),
         ),
 
         GamificationWidget(
           numberOfMedals: this.player.contributionsAwards.length,
-          label: 'Premios Obtenidos'.toUpperCase(),
+          label: 'Manifiesto-Wiki'.toUpperCase(),
           image: CoinsImages.contribution(),
         ),
 
-        SizedBox(height: 40),
+        SizedBox(height: 25),
 
         GamificationWidget(
           numberOfMedals: this.player.clubhouseAwards.length,
-          label: 'Medallas Clubhouse'.toUpperCase(),
+          label: 'Eventos Clubhouse'.toUpperCase(),
           image: CoinsImages.clubhouse(),
         ),
-        SizedBox(height: 40),
+        SizedBox(height: 25),
 
         GamificationWidget(
           numberOfMedals: this.player.projectAwards.length,
-          label: 'Medallas Proyectos'.toUpperCase(),
+          label: 'Proyecto Personal'.toUpperCase(),
+          image: CoinsImages.project(),
+        ),
+        SizedBox(height: 25),
+
+        GamificationWidget(
+          numberOfMedals: this.player.hackatonAwards.length,
+          label: 'Maratón Proyectos'.toUpperCase(),
           image: CoinsImages.project(),
         ),
       ],

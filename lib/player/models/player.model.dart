@@ -11,6 +11,7 @@ class PlayerModel {
   final List<AwardModel> projectAwards;
   final List<AwardModel> contributionsAwards;
   final List<AwardModel> clubhouseAwards;
+  final List<AwardModel> hackatonAwards;
 
   PlayerModel._({
     required this.uid,
@@ -19,6 +20,7 @@ class PlayerModel {
     required this.projectAwards,
     required this.contributionsAwards,
     required this.clubhouseAwards,
+    required this.hackatonAwards,
     required this.avatarImage,
   });
 
@@ -35,6 +37,7 @@ class PlayerModel {
         ),
         this.projectAwards = const [],
         this.contributionsAwards = const [],
+        this.hackatonAwards = const [],
         this.clubhouseAwards = const [];
 
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
@@ -47,6 +50,8 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:
           PlayerModel._getAwardsFromPayload(payload['contributionsAwards']),
+      hackatonAwards:
+          PlayerModel._getAwardsFromPayload(payload['hackatonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
     );
@@ -60,6 +65,7 @@ class PlayerModel {
       'projectAwards': this.projectAwards,
       'contributionsAwards': this.contributionsAwards,
       'clubhouseAwards': this.clubhouseAwards,
+      'hackatonAwards': this.hackatonAwards,
       'uid': this.uid,
       'displayName': this.displayName,
       'email': this.email,
