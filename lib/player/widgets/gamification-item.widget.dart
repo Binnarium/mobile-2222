@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
+import 'package:lab_movil_2222/player/widgets/gammification-number.widget.dart';
 
 class GammificationKind {
   GammificationKind._();
@@ -84,56 +85,4 @@ class _GammificationWidgetState extends State<GammificationWidget> {
       ),
     );
   }
-}
-
-class GammificationNumber extends StatefulWidget {
-  final int number;
-  const GammificationNumber({Key? key, required this.number}) : super(key: key);
-
-  @override
-  _GammificationNumberState createState() => _GammificationNumberState();
-}
-
-class _GammificationNumberState extends State<GammificationNumber> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 50,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors2222.red,
-      ),
-      child: Text(
-        this.widget.number.toString(),
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1
-            ?.copyWith(fontWeight: FontWeight.w700, fontSize: 32),
-      ),
-    );
-  }
-}
-
-class CoinsImages extends Image {
-  CoinsImages.redCoin({Key? key})
-      : super(
-          image: AssetImage('assets/gamification/2222_proactivo_rojo.png'),
-          fit: BoxFit.contain,
-          height: 50,
-        );
-
-  CoinsImages.yellowCoin({Key? key})
-      : super(
-          image: AssetImage('assets/gamification/2222_proactivo_amarillo.png'),
-          fit: BoxFit.contain,
-          height: 50,
-        );
-  CoinsImages.greenCoin({Key? key})
-      : super(
-          image: AssetImage('assets/gamification/2222_proactivo_verde.png'),
-          fit: BoxFit.contain,
-          height: 50,
-        );
 }
