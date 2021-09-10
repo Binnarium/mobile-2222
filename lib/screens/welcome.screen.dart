@@ -12,6 +12,8 @@ import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String route = '/welcome';
@@ -44,12 +46,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     ///safeArea para dispositivos con pantalla notch
     return SafeArea(
-      child: Scaffold(
-        // extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          elevation: 1.0,
-          backgroundColor: Colors2222.red,
-        ),
+      child: Scaffold2222.navigation(
+        activePage: Lab2222NavigationBarPages.information,
 
         ///Stack para apilar el background y luego el cuerpo de la pantalla
         body: Stack(

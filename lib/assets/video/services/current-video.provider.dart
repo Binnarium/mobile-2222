@@ -21,13 +21,6 @@ class CurrentVideoProvider {
 
   /// method to stop and close VideoPlayer
   void close() async {
-    print('==========cleaning===========');
-    print('==========cleaning===========');
-    print('==========cleaning===========');
-    print('==========cleaning===========');
-    print('==========cleaning===========');
-    print('==========cleaning===========');
-    print('==========cleaning===========');
     this._currentVideoSink.add(null);
   }
 }

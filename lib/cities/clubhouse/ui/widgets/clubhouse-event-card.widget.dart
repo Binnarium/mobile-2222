@@ -14,7 +14,6 @@ class ClubhouseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.clubhouseModel.uploaderDisplayName);
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

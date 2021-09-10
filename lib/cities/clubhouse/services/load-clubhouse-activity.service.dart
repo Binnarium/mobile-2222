@@ -20,7 +20,6 @@ class LoadClubhouseService
         .get();
 
     if (!payload.exists) throw new ErrorDescription('City history not found');
-    print(payload.data());
     return ClubhouseActivityModel(
       explanation: payload.data()!['explanation'] ?? 'Texto de ejemplo',
       theme: payload.data()!['theme'] ?? 'Texto de ejemplo',

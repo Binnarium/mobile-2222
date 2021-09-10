@@ -7,6 +7,7 @@ import 'package:lab_movil_2222/cities/contribution/models/collaborations-activit
 import 'package:lab_movil_2222/cities/contribution/services/get-collaboration-explanation.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -89,15 +90,24 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
             child: Text(
               "Manifiesto por la Educación".toUpperCase(),
               style: textTheme.headline4!.copyWith(
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
             ),
           ),
         ),
-        SizedBox(
-          height: 16,
+                  Padding(
+          padding: const EdgeInsets.only(bottom: 32),
+          child: Center(
+            child: Image(
+              image: CoinsImages.contribution(),
+              alignment: Alignment.bottomRight,
+              fit: BoxFit.contain,
+              width: min(160, size.width * 0.4),
+            ),
+            ),
         ),
+
         if (this.collaborationActivityModel == null) ...[
           AppLoading(),
         ] else ...[
