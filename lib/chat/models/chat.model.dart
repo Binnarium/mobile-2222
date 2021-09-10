@@ -49,7 +49,7 @@ class ChatModel {
   String get chatName => this.name != null
       ? this.name!
       : (this.isGroupChat)
-          ? 'Chat Grupal'
+          ? 'Grupo de 10'
           : this
               .participants
               .map((e) => e.displayName)
