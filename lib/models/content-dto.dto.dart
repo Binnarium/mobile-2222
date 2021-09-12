@@ -20,9 +20,9 @@ abstract class ContentDto<T> {
     if (kind == 'CONTENT#VIDEO')
       return VideoContentDto(
         kind: kind,
-        title: payload['title'],
-        author: payload['author'],
-        description: payload['description'],
+        title: payload['title'] ?? "Title not available",
+        author: payload['author'] ?? "Author not available",
+        description: payload['description'] ?? "Description not available",
         video: VideoDto.fromMap(payload),
       );
     else

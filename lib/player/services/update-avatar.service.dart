@@ -32,7 +32,7 @@ class UpdateAvatarService {
       (user) async {
         if (user == null) return false;
 
-        /// create project to upload
+        /// create image to upload
         ImageDto image = createMessageCallback(user);
 
         if (oldImageUrl != "") {

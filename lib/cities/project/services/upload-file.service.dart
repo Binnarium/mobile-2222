@@ -25,9 +25,9 @@ class UploadFileService {
     return FilePicker.platform
         .pickFiles(
           /// TESTING
-          type: (city.stage == 12) ? FileType.audio : FileType.custom,
+          type: (city.stage == 10) ? FileType.audio : FileType.custom,
           allowMultiple: false,
-          allowedExtensions: (city.stage == 12) ? [] : ['pdf'],
+          allowedExtensions: (city.stage == 10) ? [] : ['pdf'],
         )
         .asStream()
         .asyncMap<ProjectFileDto>(

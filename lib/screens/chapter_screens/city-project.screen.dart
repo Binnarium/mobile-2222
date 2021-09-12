@@ -368,25 +368,6 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
       Navigator.pop(context);
     });
   }
-
-  // Widget buildUploadStatus(UploadTask uploadTask) =>
-  //     StreamBuilder<TaskSnapshot>(
-  //         stream: task!.snapshotEvents,
-  //         builder: (context, snapshot) {
-  //           if (snapshot.hasData) {
-  //             final snap = snapshot.data!;
-  //             final progress = snap.bytesTransferred / snap.totalBytes;
-  //             final percentage = (progress * 100).toStringAsFixed(1);
-  //             return Text(
-  //               (progress == 1.0)
-  //                   ? '¡Subido con éxito!'
-  //                   : 'Subiendo: $percentage %',
-  //               style: Theme.of(context).textTheme.bodyText2,
-  //             );
-  //           } else {
-  //             return Container();
-  //           }
-  //         });
 }
 
 /// creates a custom elevated button [color] is needed to create the button

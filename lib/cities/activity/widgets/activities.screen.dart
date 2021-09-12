@@ -1,21 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
+import 'package:provider/provider.dart';
 
 import 'activity-card.widget.dart';
 
 class ActivitiesScreen extends StatefulWidget {
   static const String route = '/activities';
-
-  final ILoadInformationService<CityActivityModel> manualLoader;
 
   final CityDto city;
 
@@ -23,7 +23,6 @@ class ActivitiesScreen extends StatefulWidget {
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.manualLoader = LoadCityService(),
         super(key: key);
 
   @override
@@ -31,16 +30,31 @@ class ActivitiesScreen extends StatefulWidget {
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
-  CityActivityModel? activity;
-
+  CityActivityModel? _activity;
+  StreamSubscription? _loadActivitiesSub;
   @override
   void initState() {
     super.initState();
-    this
-        .widget
-        .manualLoader
-        .load()
-        .then((value) => this.setState(() => this.activity = value));
+
+    /// to load activities using provider
+    LoadCityActivitiesService loadActivitiesService =
+        Provider.of<LoadCityActivitiesService>(this.context, listen: false);
+
+    /// loading stream
+    this._loadActivitiesSub = loadActivitiesService.load$().listen(
+      (cityActivityModel) {
+        if (this.mounted)
+          this.setState(() {
+            this._activity = cityActivityModel;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadActivitiesSub?.cancel();
+    super.dispose();
   }
 
   @override
@@ -69,7 +83,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           ),
 
           /// activities card
-          if (this.activity == null)
+          if (this._activity == null)
             AppLoading()
           else ...[
             /// contribution card
@@ -82,7 +96,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                 ),
                 child: ActivityCardWidget(
                   color: this.widget.city.color,
-                  content: this.activity!.contribution,
+                  content: this._activity!.contribution,
                   iconPath: "assets/icons/multiple_choice_activity_icon.png",
                   onTap: () =>
                       CityNavigator.getContributionNextScreen(this.widget.city)
@@ -101,7 +115,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                 ),
                 child: ActivityCardWidget(
                   color: this.widget.city.color,
-                  content: this.activity!.clubhouse,
+                  content: this._activity!.clubhouse,
                   iconPath: "assets/icons/clubhouse_activity_icon.png",
                   onTap: () =>
                       CityNavigator.getCLubhouseNextScreen(this.widget.city)
@@ -120,7 +134,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                 ),
                 child: ActivityCardWidget(
                   color: this.widget.city.color,
-                  content: this.activity!.project,
+                  content: this._activity!.project,
                   iconPath: "assets/icons/project_activity_icon.png",
                   onTap: () =>
                       CityNavigator.getProjectNextScreen(this.widget.city)

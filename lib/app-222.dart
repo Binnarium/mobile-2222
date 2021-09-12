@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
 import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
+import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/get-clubhouse-explanation.service.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-clubhouse-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
@@ -38,6 +39,9 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => CreatePersonalChatService()),
         Provider(create: (_) => SearchPlayersService()),
         Provider(create: (_) => LoadPlayerService()),
+
+        ///cities loaders
+        Provider(create: (_) => LoadCityActivitiesService()),
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',
