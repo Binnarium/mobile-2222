@@ -23,6 +23,7 @@ import 'cities/clubhouse/services/load-clubhouse-activity.service.dart';
 import 'cities/final-video/services/load-final-video.service.dart';
 import 'cities/manual-video/services/load-manual-video.service.dart';
 import 'cities/micro-meso-macro/services/load-micro-meso-macro.service.dart';
+import 'cities/project-video/services/load-project-video.service.dart';
 import 'cities/project/services/load-project-files.service.dart';
 
 class App2222 extends StatelessWidget {
@@ -51,6 +52,7 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => LoadFinalVideoService()),
         Provider(create: (_) => LoadManualVideoService()),
         Provider(create: (_) => LoadMicroMesoMacroService()),
+        Provider(create: (_) => LoadProjectVideoService()),
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',
