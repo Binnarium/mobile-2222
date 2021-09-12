@@ -29,7 +29,7 @@ class FinalVideoScreen extends StatefulWidget {
 
 class _FinalVideoScreenState extends State<FinalVideoScreen> {
   CityFinalVideoModel? manualVideo;
-  StreamSubscription? _loadManualVideoSub;
+  StreamSubscription? _loadFinalVideoSub;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
     LoadFinalVideoService loadFinalVideoService =
         Provider.of<LoadFinalVideoService>(this.context, listen: false);
 
-    this._loadManualVideoSub =
+    this._loadFinalVideoSub =
         loadFinalVideoService.load$(this.widget.city).listen(
       (finalVideoModel) {
         if (this.mounted)
@@ -51,7 +51,7 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
 
   @override
   void dispose() {
-    this._loadManualVideoSub?.cancel();
+    this._loadFinalVideoSub?.cancel();
     super.dispose();
   }
 

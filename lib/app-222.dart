@@ -21,6 +21,7 @@ import 'package:provider/provider.dart';
 import 'assets/video/services/upload-video.service.dart';
 import 'cities/clubhouse/services/load-clubhouse-activity.service.dart';
 import 'cities/final-video/services/load-final-video.service.dart';
+import 'cities/manual-video/services/load-manual-video.service.dart';
 import 'cities/project/services/load-project-files.service.dart';
 
 class App2222 extends StatelessWidget {
@@ -46,6 +47,7 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => LoadCityActivitiesService()),
         Provider(create: (_) => LoadClubhouseService()),
         Provider(create: (_) => LoadFinalVideoService()),
+        Provider(create: (_) => LoadManualVideoService()),
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',
