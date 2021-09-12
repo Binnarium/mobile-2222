@@ -6,7 +6,7 @@ import 'package:lab_movil_2222/cities/contribution/ui/screens/city-contribution.
 import 'package:lab_movil_2222/cities/contribution/ui/screens/contribution-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
-import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-macro.screen.dart';
+import 'package:lab_movil_2222/cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
