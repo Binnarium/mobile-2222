@@ -16,6 +16,7 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class ClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
@@ -29,6 +30,7 @@ class ClubhouseScreen extends StatefulWidget {
 
 class _ClubhouseScreenState extends State<ClubhouseScreen> {
   StreamSubscription? clubhousesSub;
+  StreamSubscription? _loadClubhousesActivitiesSub;
 
   List<ClubhouseModel>? clubhouses;
   ClubhouseActivityModel? clubhouseActivity;
@@ -43,17 +45,33 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
       });
     });
 
-    LoadClubhouseService(city: this.widget.city).load().then((event) {
-      this.setState(() {
-        this.clubhouseActivity = event;
-      });
-    });
+    /// loads clubhouse
+    LoadClubhouseService loadClubhouseActivityService =
+        Provider.of<LoadClubhouseService>(this.context, listen: false);
+
+    this._loadClubhousesActivitiesSub =
+        loadClubhouseActivityService.load$(this.widget.city).listen(
+      (clubhouseActivityModel) {
+        if (this.mounted)
+          this.setState(() {
+            this.clubhouseActivity = clubhouseActivityModel;
+          });
+      },
+    );
   }
 
   @override
   void deactivate() {
     this.clubhousesSub?.cancel();
+    this._loadClubhousesActivitiesSub?.cancel();
     super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    this.clubhousesSub?.cancel();
+    this._loadClubhousesActivitiesSub?.cancel();
+    super.dispose();
   }
 
   @override
