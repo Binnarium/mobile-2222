@@ -11,6 +11,7 @@ import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dar
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
@@ -112,6 +113,17 @@ class CityNavigator {
               context,
               CityProjectScreen.route,
               arguments: CityProjectScreen(city: city),
+            ),
+          ),
+
+        ///medals Hackaton
+        if (enabledPagesDto.activities && enabledPagesDto.hackatonMedals)
+          ScaffoldRouteBuilder(
+            route: MedalsHackatonScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              MedalsHackatonScreen.route,
+              arguments: MedalsHackatonScreen(city: city),
             ),
           ),
 

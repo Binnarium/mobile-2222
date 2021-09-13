@@ -17,6 +17,7 @@ import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dar
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
@@ -192,6 +193,12 @@ class Lab2222Routes extends MaterialPageRoute {
               case CityProjectScreen.route:
                 final args = settings.arguments as CityProjectScreen;
                 return CityProjectScreen(
+                  city: args.city,
+                );
+
+              case MedalsHackatonScreen.route:
+                final args = settings.arguments as MedalsHackatonScreen;
+                return MedalsHackatonScreen(
                   city: args.city,
                 );
 
