@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
@@ -9,19 +10,17 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
 
   final CityDto city;
 
-  final ILoadOptions<CityIntroductionDto, CityDto> introductionLoader;
-
   CityIntroductionScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.introductionLoader = LoadCityIntroductionService(city: city),
         super(key: key);
 
   @override
@@ -31,14 +30,29 @@ class CityIntroductionScreen extends StatefulWidget {
 class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
   CityIntroductionDto? introductionDto;
 
+  StreamSubscription? _loadIntroductionSub;
+
   @override
   void initState() {
-    this
-        .widget
-        .introductionLoader
-        .load()
-        .then((value) => this.setState(() => this.introductionDto = value));
     super.initState();
+    LoadCityIntroductionService loadIntroductionService =
+        Provider.of<LoadCityIntroductionService>(this.context, listen: false);
+
+    this._loadIntroductionSub =
+        loadIntroductionService.load$(this.widget.city).listen(
+      (cityIntroductionDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.introductionDto = cityIntroductionDto;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadIntroductionSub?.cancel();
+    super.dispose();
   }
 
   @override

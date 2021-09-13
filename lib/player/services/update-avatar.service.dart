@@ -5,14 +5,14 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 
 class UpdateAvatarService {
-  /// singleton
-  static UpdateAvatarService? _instance;
+  // /// singleton
+  // static UpdateAvatarService? _instance;
 
-  static UpdateAvatarService get instance {
-    if (UpdateAvatarService._instance == null)
-      UpdateAvatarService._instance = UpdateAvatarService();
-    return UpdateAvatarService._instance!;
-  }
+  // static UpdateAvatarService get instance {
+  //   if (UpdateAvatarService._instance == null)
+  //     UpdateAvatarService._instance = UpdateAvatarService();
+  //   return UpdateAvatarService._instance!;
+  // }
 
   Stream<PlayerModel?> _player$ = CurrentPlayerService.instance.player$;
 

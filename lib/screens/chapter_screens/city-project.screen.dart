@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
@@ -32,13 +31,10 @@ class CityProjectScreen extends StatefulWidget {
 
   final CityDto city;
 
-  final ILoadInformationWithOptions<ProjectDto, CityDto> projectLoader;
-
   CityProjectScreen({
     Key? key,
     required this.city,
-  })  : this.projectLoader = LoadProject(city: city),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _CityProjectScreenState createState() => _CityProjectScreenState();
@@ -51,7 +47,9 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   ProjectDto? project;
 
   StreamSubscription? _userProjectsSub;
+  StreamSubscription? _loadProjectDtoSub;
   String? userUID;
+
   @override
   void initState() {
     super.initState();
@@ -62,11 +60,20 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
     loader.load().then((value) => this.setState(() => this.chapters = value));
 
-    this
-        .widget
-        .projectLoader
-        .load()
-        .then((value) => this.setState(() => this.project = value));
+    /// load the provider to load the projectDTO
+    LoadProjectDtoService loadProjectDtoService =
+        Provider.of<LoadProjectDtoService>(this.context, listen: false);
+
+    /// calls the service to load the projectDTO
+    this._loadProjectDtoSub =
+        loadProjectDtoService.load$(this.widget.city).listen(
+      (projectDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.project = projectDto;
+          });
+      },
+    );
 
     /// stream of projects
     LoadProjectFiles loadProjectFiles =
@@ -84,6 +91,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   @override
   void dispose() {
     _userProjectsSub?.cancel();
+    _loadProjectDtoSub?.cancel();
     super.dispose();
   }
 
