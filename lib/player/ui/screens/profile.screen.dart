@@ -116,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ]),
                           ),
                           onTap: () async {
-                            return await changeAvatarDialog(context);
+                            return await showAvatarImage(context);
                           }),
                     ),
 
@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<void> changeAvatarDialog(BuildContext context) {
+  Future<void> showAvatarImage(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {

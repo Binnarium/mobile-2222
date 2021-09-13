@@ -5,12 +5,14 @@ class GamificationWidget extends StatefulWidget {
   final int numberOfMedals;
   final ImageProvider image;
   final String label;
+  final Color? numberColor;
 
   const GamificationWidget({
     Key? key,
     required this.numberOfMedals,
     required this.image,
     required this.label,
+    this.numberColor,
   }) : super(key: key);
 
   @override
@@ -57,6 +59,7 @@ class _GamificationWidgetState extends State<GamificationWidget> {
           /// number of medals
           GamificationNumber(
             number: this.widget.numberOfMedals,
+            color: this.widget.numberColor,
           ),
         ],
       ),
