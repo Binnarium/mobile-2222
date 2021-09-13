@@ -12,6 +12,8 @@ class CoinsImages extends AssetImage {
 
   CoinsImages.project({Key? key})
       : super('assets/gamification/2222_monedas.png');
+  CoinsImages.hackaton({Key? key})
+      : super('assets/gamification/2222_monedas.png');
 
   CoinsImages.clubhouse({Key? key})
       : super('assets/gamification/2222_medalla-clubhouse.png');

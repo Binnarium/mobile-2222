@@ -105,6 +105,17 @@ class CityNavigator {
     CityDto city,
   ) =>
       [
+        /// project video
+        if (enabledPagesDto.projectVideo)
+          ScaffoldRouteBuilder(
+            route: ProjectVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ProjectVideoScreen.route,
+              arguments: ProjectVideoScreen(city: city),
+            ),
+          ),
+
         /// project
         if (enabledPagesDto.activities && enabledPagesDto.project)
           ScaffoldRouteBuilder(
@@ -124,17 +135,6 @@ class CityNavigator {
               context,
               MedalsHackatonScreen.route,
               arguments: MedalsHackatonScreen(city: city),
-            ),
-          ),
-
-        /// project video
-        if (enabledPagesDto.projectVideo)
-          ScaffoldRouteBuilder(
-            route: ProjectVideoScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              ProjectVideoScreen.route,
-              arguments: ProjectVideoScreen(city: city),
             ),
           ),
       ];
