@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -14,12 +15,10 @@ import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String route = '/welcome';
-
-  final ILoadInformationService<WelcomeDto> loader =
-      LoadLoginInformationService();
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -28,15 +27,29 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   WelcomeDto? loginPayload;
 
+  StreamSubscription? _loadLoginPayload;
+
   @override
   void initState() {
     super.initState();
 
-    this
-        .widget
-        .loader
-        .load()
-        .then((value) => this.setState(() => this.loginPayload = value));
+    LoadLoginInformationService loadLoginInfoService =
+        Provider.of<LoadLoginInformationService>(this.context, listen: false);
+
+    this._loadLoginPayload = loadLoginInfoService.load$().listen(
+      (welcomeDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.loginPayload = welcomeDto;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadLoginPayload?.cancel();
+    super.dispose();
   }
 
   ///página de login donde pide usuario y contraseña

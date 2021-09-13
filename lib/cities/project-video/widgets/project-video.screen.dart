@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/project-video/model/city-project-video.model.dart';
 import 'package:lab_movil_2222/cities/project-video/services/load-project-video.service.dart';
@@ -7,6 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class ProjectVideoScreen extends StatefulWidget {
@@ -14,13 +17,10 @@ class ProjectVideoScreen extends StatefulWidget {
 
   final CityDto city;
 
-  final ILoadOptions<CityProjectVideoModel, CityDto> manualLoader;
-
   ProjectVideoScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.manualLoader = LoadProjectVideoService(city: city),
         super(key: key);
 
   @override
@@ -29,15 +29,30 @@ class ProjectVideoScreen extends StatefulWidget {
 
 class _ProjectVideoScreenState extends State<ProjectVideoScreen> {
   CityProjectVideoModel? projectVideo;
+  StreamSubscription? _loadProjectVideoSub;
 
   @override
   void initState() {
     super.initState();
-    this
-        .widget
-        .manualLoader
-        .load()
-        .then((value) => this.setState(() => this.projectVideo = value));
+
+    LoadProjectVideoService loadProjectVideoService =
+        Provider.of<LoadProjectVideoService>(this.context, listen: false);
+
+    this._loadProjectVideoSub =
+        loadProjectVideoService.load$(this.widget.city).listen(
+      (projectVideoModel) {
+        if (this.mounted)
+          this.setState(() {
+            this.projectVideo = projectVideoModel;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadProjectVideoSub?.cancel();
+    super.dispose();
   }
 
   @override

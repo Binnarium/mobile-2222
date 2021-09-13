@@ -1,28 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 
-class LoadProject extends ILoadInformationWithOptions<ProjectDto, CityDto> {
-  const LoadProject({
-    required final CityDto city,
-  }) : super(options: city);
+class LoadProjectDtoService {
+  final FirebaseFirestore _firestore;
+  LoadProjectDtoService() : this._firestore = FirebaseFirestore.instance;
 
-  @override
-  Future<ProjectDto> load() async {
-    final snap = await FirebaseFirestore.instance
+  Stream<ProjectDto?> load$(CityDto city) {
+    return this
+        ._firestore
         .collection('cities')
-        .doc(this.options.id)
+        .doc(city.id)
         .collection('pages')
         .doc('project')
-        .get();
-
-    if (!snap.exists)
-      throw new ErrorDescription('Document history does not exists');
-
-    final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
-    final project = ProjectDto.fromJson(payload);
-    return project;
+        .snapshots()
+        .map((snapshot) => snapshot.data() ?? null)
+        .map((data) => data == null ? null : ProjectDto.fromJson(data));
   }
 }

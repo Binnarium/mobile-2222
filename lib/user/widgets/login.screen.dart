@@ -20,19 +20,18 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
-
-  final ILoadInformationService<WelcomeDto> loader =
-      LoadLoginInformationService();
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   WelcomeDto? loginPayload;
+
+  StreamSubscription? _loadLoginPayload;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final LoginFormModel _formValue = LoginFormModel.empty();
@@ -42,12 +41,23 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    LoadLoginInformationService loadLoginInfoService =
+        Provider.of<LoadLoginInformationService>(this.context, listen: false);
 
-    this
-        .widget
-        .loader
-        .load()
-        .then((value) => this.setState(() => this.loginPayload = value));
+    this._loadLoginPayload = loadLoginInfoService.load$().listen(
+      (welcomeDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.loginPayload = welcomeDto;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadLoginPayload?.cancel();
+    super.dispose();
   }
 
   ///página de login donde pide usuario y contraseña
@@ -259,4 +269,3 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
-

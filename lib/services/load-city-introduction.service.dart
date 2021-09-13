@@ -1,27 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 
-class LoadCityIntroductionService
-    extends ILoadOptions<CityIntroductionDto, CityDto> {
-  const LoadCityIntroductionService({
-    required final CityDto city,
-  }) : super(options: city);
+class LoadCityIntroductionService {
+  final FirebaseFirestore _firestore;
+  LoadCityIntroductionService() : this._firestore = FirebaseFirestore.instance;
 
-  @override
-  Future<CityIntroductionDto> load() async {
-    final payload = await FirebaseFirestore.instance
+  Stream<CityIntroductionDto?> load$(CityDto city) {
+    return this
+        ._firestore
         .collection('cities')
-        .doc(this.options.id)
+        .doc(city.id)
         .collection('pages')
         .doc('introduction')
-        .get();
-
-    if (!payload.exists)
-      throw new ErrorDescription('City introduction not found');
-
-    return CityIntroductionDto.fromMap(payload.data()!);
+        .snapshots()
+        .map((snapshot) => snapshot.data() ?? null)
+        .map((data) => data == null ? null : CityIntroductionDto.fromMap(data));
   }
 }
