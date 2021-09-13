@@ -1,25 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/project-video/model/city-project-video.model.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 
-class LoadProjectVideoService
-    extends ILoadOptions<CityProjectVideoModel, CityDto> {
-  const LoadProjectVideoService({
-    required final CityDto city,
-  }) : super(options: city);
+class LoadProjectVideoService {
+  final FirebaseFirestore _firestore;
+  LoadProjectVideoService() : this._firestore = FirebaseFirestore.instance;
 
-  @override
-  Future<CityProjectVideoModel> load() async {
-    final payload = await FirebaseFirestore.instance
+  Stream<CityProjectVideoModel?> load$(CityDto city) {
+    return this
+        ._firestore
         .collection('cities')
-        .doc(this.options.id)
+        .doc(city.id)
         .collection('pages')
         .doc('project-video')
-        .get();
-
-    if (!payload.exists) throw new ErrorDescription('project video not found');
-    return CityProjectVideoModel.fromMap(payload.data()!);
+        .snapshots()
+        .map((snapshot) => snapshot.data() ?? null)
+        .map((data) =>
+            data == null ? null : CityProjectVideoModel.fromMap(data));
   }
 }

@@ -26,6 +26,7 @@ class CityEnabledPagesDto {
   final bool clubhouse;
   final bool clubhouseExplanation;
   final bool project;
+  final bool hackatonMedals;
 
   CityEnabledPagesDto.fromMap(final Map<String, dynamic> payload)
       : this.activities = payload['activities'] == true,
@@ -42,7 +43,8 @@ class CityEnabledPagesDto {
         this.content = payload['content'] == true,
         this.microMesoMacro = payload['microMesoMacro'] == true,
         this.finalVideo = payload['finalVideo'] == true,
-        this.project = payload['project'] == true;
+        this.project = payload['project'] == true,
+        this.hackatonMedals = payload['hackatonMedals'] == true;
 
   bool get enableClubhouseRoutes => this.clubhouse || this.clubhouseExplanation;
   bool get enableContributionRoutes =>

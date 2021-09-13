@@ -1,25 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-history.dto.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 
-class LoadCityHistoryService extends ILoadOptions<CityHistoryDto, CityDto> {
-  
-  const LoadCityHistoryService({
-    required final CityDto city,
-  }) : super(options: city);
+class LoadCityHistoryService {
+  final FirebaseFirestore _firestore;
+  LoadCityHistoryService() : this._firestore = FirebaseFirestore.instance;
 
-  @override
-  Future<CityHistoryDto> load() async {
-    final payload = await FirebaseFirestore.instance
+  Stream<CityHistoryDto?> load$(CityDto city) {
+    return this
+        ._firestore
         .collection('cities')
-        .doc(this.options.id)
+        .doc(city.id)
         .collection('pages')
         .doc('history')
-        .get();
-
-    if (!payload.exists) throw new ErrorDescription('City history not found');
-    return CityHistoryDto.fromMap(payload.data()!);
+        .snapshots()
+        .map((snapshot) => snapshot.data() ?? null)
+        .map((data) => data == null ? null : CityHistoryDto.fromMap(data));
   }
 }

@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
-import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 
-class LoadCityService extends ILoadInformationService<CityActivityModel> {
-  @override
-  Future<CityActivityModel> load() async {
-    final payload = await FirebaseFirestore.instance
+class LoadCityActivitiesService {
+  final FirebaseFirestore _firestore;
+  LoadCityActivitiesService() : this._firestore = FirebaseFirestore.instance;
+
+  Stream<CityActivityModel?> load$() {
+    return this
+        ._firestore
         .collection('application')
         .doc('activities')
-        .get();
-
-    if (!payload.exists) throw new ErrorDescription('activities not found');
-    return CityActivityModel.fromMap(payload.data()!);
+        .snapshots()
+        .map((snapshot) => snapshot.data() ?? null)
+        .map((data) => data == null ? null : CityActivityModel.fromMap(data));
   }
 }

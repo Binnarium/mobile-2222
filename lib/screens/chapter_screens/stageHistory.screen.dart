@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -10,18 +11,16 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class StageHistoryScreen extends StatefulWidget {
   static const String route = '/history';
   final CityDto city;
 
-  final LoadCityHistoryService historyLoader;
-
   StageHistoryScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.historyLoader = LoadCityHistoryService(city: city),
         super(key: key);
 
   @override
@@ -30,16 +29,29 @@ class StageHistoryScreen extends StatefulWidget {
 
 class _StageHistoryScreenState extends State<StageHistoryScreen> {
   CityHistoryDto? historyDto;
+  StreamSubscription? _loadHistorySub;
 
   @override
   void initState() {
     super.initState();
 
-    this
-        .widget
-        .historyLoader
-        .load()
-        .then((value) => this.setState(() => this.historyDto = value));
+    LoadCityHistoryService loadHistoryService =
+        Provider.of<LoadCityHistoryService>(this.context, listen: false);
+
+    this._loadHistorySub = loadHistoryService.load$(this.widget.city).listen(
+      (cityHistoryDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.historyDto = cityHistoryDto;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadHistorySub?.cancel();
+    super.dispose();
   }
 
   @override

@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
@@ -32,26 +31,24 @@ class CityProjectScreen extends StatefulWidget {
 
   final CityDto city;
 
-  final ILoadInformationWithOptions<ProjectDto, CityDto> projectLoader;
-
   CityProjectScreen({
     Key? key,
     required this.city,
-  })  : this.projectLoader = LoadProject(city: city),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _CityProjectScreenState createState() => _CityProjectScreenState();
 }
 
 class _CityProjectScreenState extends State<CityProjectScreen> {
-  late List<CityDto> chapters;
 
   List<PlayerProject>? playerProjects = [];
   ProjectDto? project;
 
   StreamSubscription? _userProjectsSub;
+  StreamSubscription? _loadProjectDtoSub;
   String? userUID;
+
   @override
   void initState() {
     super.initState();
@@ -60,13 +57,21 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     /// called service to load the next chapter
     ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
-    loader.load().then((value) => this.setState(() => this.chapters = value));
 
-    this
-        .widget
-        .projectLoader
-        .load()
-        .then((value) => this.setState(() => this.project = value));
+    /// load the provider to load the projectDTO
+    LoadProjectDtoService loadProjectDtoService =
+        Provider.of<LoadProjectDtoService>(this.context, listen: false);
+
+    /// calls the service to load the projectDTO
+    this._loadProjectDtoSub =
+        loadProjectDtoService.load$(this.widget.city).listen(
+      (projectDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.project = projectDto;
+          });
+      },
+    );
 
     /// stream of projects
     LoadProjectFiles loadProjectFiles =
@@ -84,6 +89,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   @override
   void dispose() {
     _userProjectsSub?.cancel();
+    _loadProjectDtoSub?.cancel();
     super.dispose();
   }
 
@@ -200,22 +206,24 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             ),
           ],
 
-          Padding(
-            padding: horizontalPadding,
-            child: ProjectGalleryWidget(
-                city: this.widget.city,
-                userUID: userUID,
-                projects: playerProjects),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(bottom: 50),
-            child: _taskButton(
-              context,
-              color,
-              this.widget.city,
+          /// upload files
+          if (this.project!.allowAudio || this.project!.allowAudio) ...[
+            Padding(
+              padding: horizontalPadding,
+              child: ProjectGalleryWidget(
+                  city: this.widget.city,
+                  userUID: userUID,
+                  projects: playerProjects),
             ),
-          )
+            Padding(
+              padding: EdgeInsets.only(bottom: 50),
+              child: _taskButton(
+                context,
+                color,
+                this.widget.city,
+              ),
+            )
+          ],
         ],
       ],
     );
@@ -368,25 +376,6 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
       Navigator.pop(context);
     });
   }
-
-  // Widget buildUploadStatus(UploadTask uploadTask) =>
-  //     StreamBuilder<TaskSnapshot>(
-  //         stream: task!.snapshotEvents,
-  //         builder: (context, snapshot) {
-  //           if (snapshot.hasData) {
-  //             final snap = snapshot.data!;
-  //             final progress = snap.bytesTransferred / snap.totalBytes;
-  //             final percentage = (progress * 100).toStringAsFixed(1);
-  //             return Text(
-  //               (progress == 1.0)
-  //                   ? '¡Subido con éxito!'
-  //                   : 'Subiendo: $percentage %',
-  //               style: Theme.of(context).textTheme.bodyText2,
-  //             );
-  //           } else {
-  //             return Container();
-  //           }
-  //         });
 }
 
 /// creates a custom elevated button [color] is needed to create the button

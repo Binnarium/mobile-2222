@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-introductory-video.dto.dart';
@@ -7,6 +9,7 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class IntroductoryVideoScreen extends StatefulWidget {
@@ -14,13 +17,10 @@ class IntroductoryVideoScreen extends StatefulWidget {
 
   final CityDto city;
 
-  final ILoadOptions<CityIntroductoryVideoDto, CityDto> introductoryVideoLoader;
-
   IntroductoryVideoScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.introductoryVideoLoader = LoadCityIntroductoryVideo(city: city),
         super(key: key);
 
   @override
@@ -31,14 +31,31 @@ class IntroductoryVideoScreen extends StatefulWidget {
 class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
   CityIntroductoryVideoDto? introductoryVideo;
 
+  StreamSubscription? _loadIntroductoryVideoSub;
+
   @override
   void initState() {
     super.initState();
-    this
-        .widget
-        .introductoryVideoLoader
-        .load()
-        .then((value) => this.setState(() => this.introductoryVideo = value));
+
+    LoadCityIntroductoryVideoService loadIntroductoryVideoService =
+        Provider.of<LoadCityIntroductoryVideoService>(this.context,
+            listen: false);
+
+    this._loadIntroductoryVideoSub =
+        loadIntroductoryVideoService.load$(this.widget.city).listen(
+      (introductoryVideoDto) {
+        if (this.mounted)
+          this.setState(() {
+            this.introductoryVideo = introductoryVideoDto;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadIntroductoryVideoSub?.cancel();
+    super.dispose();
   }
 
   @override

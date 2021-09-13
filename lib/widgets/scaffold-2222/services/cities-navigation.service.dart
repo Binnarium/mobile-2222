@@ -6,11 +6,12 @@ import 'package:lab_movil_2222/cities/contribution/ui/screens/city-contribution.
 import 'package:lab_movil_2222/cities/contribution/ui/screens/contribution-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
-import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-macro.screen.dart';
+import 'package:lab_movil_2222/cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
@@ -104,6 +105,17 @@ class CityNavigator {
     CityDto city,
   ) =>
       [
+        /// project video
+        if (enabledPagesDto.projectVideo)
+          ScaffoldRouteBuilder(
+            route: ProjectVideoScreen.route,
+            builder: (context) => Navigator.pushNamed(
+              context,
+              ProjectVideoScreen.route,
+              arguments: ProjectVideoScreen(city: city),
+            ),
+          ),
+
         /// project
         if (enabledPagesDto.activities && enabledPagesDto.project)
           ScaffoldRouteBuilder(
@@ -115,14 +127,14 @@ class CityNavigator {
             ),
           ),
 
-        /// project video
-        if (enabledPagesDto.projectVideo)
+        ///medals Hackaton
+        if (enabledPagesDto.activities && enabledPagesDto.hackatonMedals)
           ScaffoldRouteBuilder(
-            route: ProjectVideoScreen.route,
+            route: MedalsHackatonScreen.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              ProjectVideoScreen.route,
-              arguments: ProjectVideoScreen(city: city),
+              MedalsHackatonScreen.route,
+              arguments: MedalsHackatonScreen(city: city),
             ),
           ),
       ];

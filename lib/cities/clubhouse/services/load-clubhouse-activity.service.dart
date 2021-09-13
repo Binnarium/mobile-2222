@@ -1,28 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse-activity.model.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 
-class LoadClubhouseService
-    extends ILoadOptions<ClubhouseActivityModel, CityDto> {
-  const LoadClubhouseService({
-    required final CityDto city,
-  }) : super(options: city);
+class LoadClubhouseService {
+  final FirebaseFirestore _firestore;
+  LoadClubhouseService() : this._firestore = FirebaseFirestore.instance;
 
-  @override
-  Future<ClubhouseActivityModel> load() async {
-    final payload = await FirebaseFirestore.instance
+  Stream<ClubhouseActivityModel?> load$(CityDto city) {
+    return this
+        ._firestore
         .collection('cities')
-        .doc(this.options.id)
+        .doc(city.id)
         .collection('pages')
         .doc('clubhouse')
-        .get();
-
-    if (!payload.exists) throw new ErrorDescription('City history not found');
-    return ClubhouseActivityModel(
-      explanation: payload.data()!['explanation'] ?? 'Texto de ejemplo',
-      theme: payload.data()!['theme'] ?? 'Texto de ejemplo',
-    );
+        .snapshots()
+        .map((snapshot) => snapshot.data() ?? null)
+        .map(
+          (data) => data == null
+              ? null
+              : ClubhouseActivityModel(
+                  explanation: data['explanation'] ?? 'Texto de ejemplo',
+                  theme: data['theme'] ?? 'Texto de ejemplo',
+                ),
+        );
   }
 }

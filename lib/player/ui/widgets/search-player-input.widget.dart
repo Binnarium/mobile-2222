@@ -11,9 +11,11 @@ import 'package:rxdart/rxdart.dart';
 class SearchPlayersWidget extends StatefulWidget {
   final Function(List<PlayerModel>?) onValueChange;
 
+  final Color? color;
   SearchPlayersWidget({
     Key? key,
     required this.onValueChange,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -65,6 +67,7 @@ class _SearchPlayersWidgetState extends State<SearchPlayersWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField222(
+      primaryColor: this.widget.color ?? null,
       controller: this._searchController,
       label: 'Buscar viajeros',
       prefixIcon: Icons.search,

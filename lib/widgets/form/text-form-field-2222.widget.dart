@@ -31,14 +31,15 @@ class TextFormField222 extends StatelessWidget {
     Key? key,
     this.obscureText = false,
     this.keyboardType,
-     this.onValueChanged,
+    this.onValueChanged,
     required this.label,
     this.validator,
     this.prefixIcon,
     this.controller,
-    this.primaryColor = Colors2222.red,
+    Color? primaryColor,
     this.showEnabledBorder = false,
-  }) : super(key: key);
+  })  : this.primaryColor = primaryColor ?? Colors2222.red,
+        super(key: key);
 
   TextFormField222.password({
     Key? key,

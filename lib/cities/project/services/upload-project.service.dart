@@ -25,7 +25,7 @@ class UploadProjectService {
       createMessageCallback: (user) => PlayerProject(
         cityID: city.name,
         file: file,
-        kind: (city.stage == 12) ? 'Project#MP3' : 'PROJECT#PDF',
+        kind: (city.stage == 10) ? 'Project#MP3' : 'PROJECT#PDF',
         id: '',
       ),
     );

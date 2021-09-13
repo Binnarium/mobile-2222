@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
@@ -11,18 +13,16 @@ import 'package:lab_movil_2222/shared/widgets/reading-item.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class ResourcesScreen extends StatefulWidget {
   static const String route = '/resources';
   final CityDto city;
 
-  final ILoadOptions<CityResourcesDto, CityDto> resourcesLoader;
-
   ResourcesScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.resourcesLoader = LoadCityResourcesService(city: city),
         super(key: key);
 
   @override
@@ -31,16 +31,30 @@ class ResourcesScreen extends StatefulWidget {
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
   CityResourcesDto? resourcesDto;
+  StreamSubscription? _loadResourcesSub;
 
   @override
   void initState() {
     super.initState();
 
-    this
-        .widget
-        .resourcesLoader
-        .load()
-        .then((value) => this.setState(() => this.resourcesDto = value));
+    LoadCityResourcesService loadResourcesService =
+        Provider.of<LoadCityResourcesService>(this.context, listen: false);
+
+    this._loadResourcesSub =
+        loadResourcesService.load$(this.widget.city).listen(
+      (cityResources) {
+        if (this.mounted)
+          this.setState(() {
+            this.resourcesDto = cityResources;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadResourcesSub?.cancel();
+    super.dispose();
   }
 
   @override

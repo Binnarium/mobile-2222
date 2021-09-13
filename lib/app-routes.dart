@@ -12,11 +12,11 @@ import 'package:lab_movil_2222/cities/contribution/ui/screens/city-contribution.
 import 'package:lab_movil_2222/cities/contribution/ui/screens/contribution-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
-import 'package:lab_movil_2222/cities/micro-meso-macro/uid/screens/micro-meso-macro.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
+import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
@@ -32,6 +32,8 @@ import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
+
+import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 
 class Lab2222Routes extends MaterialPageRoute {
   Lab2222Routes(RouteSettings settings)
@@ -192,6 +194,12 @@ class Lab2222Routes extends MaterialPageRoute {
               case CityProjectScreen.route:
                 final args = settings.arguments as CityProjectScreen;
                 return CityProjectScreen(
+                  city: args.city,
+                );
+
+              case MedalsHackatonScreen.route:
+                final args = settings.arguments as MedalsHackatonScreen;
+                return MedalsHackatonScreen(
                   city: args.city,
                 );
 
