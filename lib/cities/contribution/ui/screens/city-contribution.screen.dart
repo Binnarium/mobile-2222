@@ -96,7 +96,7 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
             ),
           ),
         ),
-                  Padding(
+        Padding(
           padding: const EdgeInsets.only(bottom: 32),
           child: Center(
             child: Image(
@@ -105,7 +105,7 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
               fit: BoxFit.contain,
               width: min(160, size.width * 0.4),
             ),
-            ),
+          ),
         ),
 
         if (this.collaborationActivityModel == null) ...[
@@ -133,25 +133,35 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
             height: 16,
           ),
           if (this.collaborationActivityModel!.allowIdea)
-            _contributionButton(context, color, 'Idea', this.widget.city),
+            _contributionButton(
+              context,
+              'Sube una idea',
+              this.widget.city,
+              () {},
+            ),
           if (this.collaborationActivityModel!.allowLecture)
-            _contributionButton(context, color, 'Lecture', this.widget.city),
+            _contributionButton(
+              context,
+              'Comparte una lectura',
+              this.widget.city,
+              () {},
+            ),
           if (this.collaborationActivityModel!.allowProject)
-            _contributionButton(context, color, 'Project', this.widget.city),
+            _contributionButton(
+              context,
+              'Agrega un proyecto',
+              this.widget.city,
+              () {},
+            ),
         ],
       ],
     );
   }
 }
 
-_contributionButton(BuildContext context, color, String option, CityDto city) {
+_contributionButton(
+    BuildContext context, String name, CityDto city, void Function() goto) {
   double buttonWidth = MediaQuery.of(context).size.width;
-  String name = '';
-  if (option == 'Idea') {
-    name = 'Sube tu idea y enlace';
-  } else if (option == 'Práctica') {
-    name = 'Sube tu buena práctica';
-  }
   return Container(
     width: buttonWidth,
     margin: EdgeInsets.symmetric(horizontal: 40),
@@ -162,7 +172,7 @@ _contributionButton(BuildContext context, color, String option, CityDto city) {
       ),
 
       ///Navigates to main screen
-      onPressed: () {},
+      onPressed: goto,
       child: Text(
         name,
         style: Theme.of(context)

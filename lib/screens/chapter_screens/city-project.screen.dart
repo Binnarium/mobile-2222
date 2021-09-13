@@ -41,7 +41,6 @@ class CityProjectScreen extends StatefulWidget {
 }
 
 class _CityProjectScreenState extends State<CityProjectScreen> {
-  late List<CityDto> chapters;
 
   List<PlayerProject>? playerProjects = [];
   ProjectDto? project;
@@ -58,7 +57,6 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     /// called service to load the next chapter
     ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
-    loader.load().then((value) => this.setState(() => this.chapters = value));
 
     /// load the provider to load the projectDTO
     LoadProjectDtoService loadProjectDtoService =
@@ -208,22 +206,24 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             ),
           ],
 
-          Padding(
-            padding: horizontalPadding,
-            child: ProjectGalleryWidget(
-                city: this.widget.city,
-                userUID: userUID,
-                projects: playerProjects),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(bottom: 50),
-            child: _taskButton(
-              context,
-              color,
-              this.widget.city,
+          /// upload files
+          if (this.project!.allowAudio || this.project!.allowAudio) ...[
+            Padding(
+              padding: horizontalPadding,
+              child: ProjectGalleryWidget(
+                  city: this.widget.city,
+                  userUID: userUID,
+                  projects: playerProjects),
             ),
-          )
+            Padding(
+              padding: EdgeInsets.only(bottom: 50),
+              child: _taskButton(
+                context,
+                color,
+                this.widget.city,
+              ),
+            )
+          ],
         ],
       ],
     );
