@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/screens/home.screen.dart';
+import 'package:lab_movil_2222/home/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';

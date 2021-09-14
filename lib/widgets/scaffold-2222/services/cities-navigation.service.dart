@@ -314,7 +314,7 @@ class CityNavigator {
   }
 
   /// get first route of a city
-  static ScaffoldRouteBuilder getFirsScreen(CityDto cityDto) {
+  static ScaffoldRouteBuilder getFirsScreenOfCity(CityDto cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._routes(cityDto.enabledPages, cityDto);
 

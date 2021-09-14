@@ -8,13 +8,12 @@ import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart'
 import 'package:lab_movil_2222/cities/project/services/load-project-files.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
+import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
-import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
@@ -55,7 +54,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     userUID = FirebaseAuth.instance.currentUser!.uid;
 
     /// called service to load the next chapter
-    ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
+   CitiesService loader = CitiesService();
 
     /// load the provider to load the projectDTO
     LoadProjectDtoService loadProjectDtoService =
