@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class StageArgumentationScreen extends StatefulWidget {
   static const String route = '/argumentation';
@@ -28,14 +30,32 @@ class StageArgumentationScreen extends StatefulWidget {
 class _StageArgumentationScreenState extends State<StageArgumentationScreen> {
   List<String>? questions;
 
+  StreamSubscription? _loadQuestionsSub;
+
   @override
   void initState() {
     super.initState();
-    ILoadInformationWithOptions<List<String>, CityDto> loader =
-        LoadArgumentScreenInformationService(
-      chapterSettings: this.widget.chapterSettings,
+
+    LoadArgumentScreenInformationService loadQuestionsService =
+        Provider.of<LoadArgumentScreenInformationService>(this.context,
+            listen: false);
+
+    // loadContentsService.load$(this.widget.city);
+    this._loadQuestionsSub =
+        loadQuestionsService.load$(this.widget.chapterSettings).listen(
+      (cityQuestions) {
+        if (this.mounted)
+          this.setState(() {
+            this.questions = cityQuestions;
+          });
+      },
     );
-    loader.load().then((value) => this.setState(() => questions = value));
+  }
+
+  @override
+  void dispose() {
+    this._loadQuestionsSub?.cancel();
+    super.dispose();
   }
 
   @override
