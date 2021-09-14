@@ -11,6 +11,7 @@ class GotoTeamButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).primaryTextTheme;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
           child: Text(

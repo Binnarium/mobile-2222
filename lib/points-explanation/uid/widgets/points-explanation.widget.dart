@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/points-explanation/models/points-explanation.mode
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
+import 'package:provider/provider.dart';
 
 class ApproveText extends StatefulWidget {
   const ApproveText({
@@ -23,12 +24,18 @@ class _ApproveTextState extends State<ApproveText> {
   @override
   void initState() {
     super.initState();
-    this._explanationSub =
-        GetPointsExplanationService.explanation$().listen((event) {
-      this.setState(() {
-        this.pointsExplanation = event;
-      });
-    });
+
+    GetPointsExplanationService loadExplanationService =
+        Provider.of<GetPointsExplanationService>(this.context, listen: false);
+
+    this._explanationSub = loadExplanationService.explanation$().listen(
+      (pointsExplanationModel) {
+        if (this.mounted)
+          this.setState(() {
+            this.pointsExplanation = pointsExplanationModel;
+          });
+      },
+    );
   }
 
   @override

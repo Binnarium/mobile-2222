@@ -29,17 +29,18 @@ class PlayerGamification extends StatelessWidget {
               : (numberProactivity < 20)
                   ? CoinsImages.yellowCoin()
                   : CoinsImages.greenCoin(),
+          numberColor: Colors.black,
         ),
 
         Divider(
-          thickness: 1,
-          height: 25,
+          thickness: 2,
+          height: 75,
           color: Colors2222.white.withOpacity(0.5),
         ),
 
         GamificationWidget(
           numberOfMedals: this.player.contributionsAwards.length,
-          label: 'Manifiesto-Wiki'.toUpperCase(),
+          label: 'Manifiesto -\nWiki'.toUpperCase(),
           image: CoinsImages.contribution(),
         ),
 
