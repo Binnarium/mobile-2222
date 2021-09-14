@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/city/ui/widgets/cities-map.dart';
 import 'package:lab_movil_2222/city/ui/widgets/home-background.dart';
-import 'package:lab_movil_2222/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<CitiesMapPositionsService>(context);
 
   /// list of cities with their position in the map
-  List<CityWithMapPositionDto>? _cities;
+  List<CityWithMapPositionModel>? _cities;
 
   final ScrollController _scrollController = ScrollController();
 

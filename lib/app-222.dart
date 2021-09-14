@@ -11,8 +11,8 @@ import 'package:lab_movil_2222/cities/clubhouse/services/get-clubhouse-explanati
 import 'package:lab_movil_2222/cities/contribution/services/get-clubhouse-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
-import 'package:lab_movil_2222/home/services/cities.service.dart';
-import 'package:lab_movil_2222/home/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/city/services/cities.service.dart';
+import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
 
 class CityMapButton extends StatelessWidget {
-  final CityDto city;
+  final CityModel city;
   final double size;
   final bool textOnTop;
 

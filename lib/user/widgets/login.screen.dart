@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
-import 'package:lab_movil_2222/home/ui/screen/home.screen.dart';
+import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';

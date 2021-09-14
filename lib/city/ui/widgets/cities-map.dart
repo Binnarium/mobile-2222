@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/home/ui/widgets/city-map-button.dart';
-import 'package:lab_movil_2222/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/city/ui/widgets/city-map-button.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class CitiesMap extends StatelessWidget {
@@ -10,7 +10,7 @@ class CitiesMap extends StatelessWidget {
   }) : super(key: key);
 
   /// items to be displayed on top of map
-  final List<CityWithMapPositionDto> citiesWithPositions;
+  final List<CityWithMapPositionModel> citiesWithPositions;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class CitiesMap extends StatelessWidget {
               return Stack(
                 children: [
                   /// draw all cities with positions
-                  for (CityWithMapPositionDto cityPos
+                  for (CityWithMapPositionModel cityPos
                       in this.citiesWithPositions)
                     Positioned(
                       top: cityPos.top * vh,

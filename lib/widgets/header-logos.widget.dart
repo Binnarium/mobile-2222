@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 
 class LogosHeader extends StatelessWidget {
   final bool showAppLogo;
-  final CityDto? showStageLogoCity;
+  final CityModel? showStageLogoCity;
 
   const LogosHeader({
     this.showAppLogo = false,
@@ -39,7 +39,7 @@ class LogosHeader extends StatelessWidget {
 }
 
 class _CityStageWidget extends StatelessWidget {
-  final CityDto cityDto;
+  final CityModel cityDto;
 
   const _CityStageWidget({
     Key? key,

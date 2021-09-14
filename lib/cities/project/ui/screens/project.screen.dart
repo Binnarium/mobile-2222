@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -28,7 +28,7 @@ import 'package:rxdart/rxdart.dart';
 class CityProjectScreen extends StatefulWidget {
   static const String route = '/project';
 
-  final CityDto city;
+  final CityModel city;
 
   CityProjectScreen({
     Key? key,
@@ -226,7 +226,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   }
 }
 
-_taskButton(BuildContext context, color, CityDto city) {
+_taskButton(BuildContext context, color, CityModel city) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -264,7 +264,7 @@ _taskButton(BuildContext context, color, CityDto city) {
 /// with the city color
 class UploadFileDialog extends StatefulWidget {
   final Color color;
-  final CityDto city;
+  final CityModel city;
 
   final UploadProjectService _uploadProjectService;
 

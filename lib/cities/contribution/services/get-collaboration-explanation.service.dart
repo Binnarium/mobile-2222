@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/cities/contribution/models/collaborations-activity.model.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class GetContributionActivityService {
   static Stream<CollaborationActivityModel?>? _collaborationExplanationStream;
 
-  static Stream<CollaborationActivityModel?> explanation$(CityDto city) {
+  static Stream<CollaborationActivityModel?> explanation$(CityModel city) {
     if (GetContributionActivityService._collaborationExplanationStream ==
         null) {
       /// build player stream

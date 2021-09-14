@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
@@ -11,7 +11,7 @@ class Scaffold2222 extends StatelessWidget {
   Scaffold2222({
     Key? key,
     required this.body,
-    required CityDto city,
+    required CityModel city,
     required String route,
     this.backgrounds = const [],
   })  : this._nextRoute = CityNavigator.getNextPage(route, city),
@@ -26,7 +26,7 @@ class Scaffold2222 extends StatelessWidget {
   Scaffold2222.city({
     Key? key,
     required this.body,
-    required CityDto city,
+    required CityModel city,
     required String route,
     Color? color,
     this.backgrounds = const [],

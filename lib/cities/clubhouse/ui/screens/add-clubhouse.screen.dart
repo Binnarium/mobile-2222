@@ -10,7 +10,7 @@ import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.ser
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-explanation.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -19,7 +19,7 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class AddClubhouseScreen extends StatefulWidget {
   static const String route = '/add-clubhouse';
-  final CityDto city;
+  final CityModel city;
 
   const AddClubhouseScreen({Key? key, required this.city}) : super(key: key);
 

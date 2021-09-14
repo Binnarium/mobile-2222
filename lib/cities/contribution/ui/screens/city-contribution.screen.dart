@@ -6,8 +6,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lab_movil_2222/cities/contribution/models/collaborations-activity.model.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-collaboration-explanation.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
-import 'package:lab_movil_2222/home/services/cities.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -18,11 +17,11 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 class YourContributionScreen extends StatefulWidget {
   static const String route = '/contribution-activity';
 
-  final CityDto city;
+  final CityModel city;
 
   YourContributionScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 
@@ -31,7 +30,7 @@ class YourContributionScreen extends StatefulWidget {
 }
 
 class _YourContributionScreenState extends State<YourContributionScreen> {
-  late List<CityDto> chapters;
+  late List<CityModel> chapters;
   CollaborationActivityModel? collaborationActivityModel;
   StreamSubscription? collabActivitySub;
 
@@ -158,7 +157,7 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
 }
 
 _contributionButton(
-    BuildContext context, String name, CityDto city, void Function() goto) {
+    BuildContext context, String name, CityModel city, void Function() goto) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,

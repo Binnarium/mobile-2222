@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 
 class LoadProjectDtoService {
   final FirebaseFirestore _firestore;
   LoadProjectDtoService() : this._firestore = FirebaseFirestore.instance;
 
-  Stream<ProjectDto?> load$(CityDto city) {
+  Stream<ProjectDto?> load$(CityModel city) {
     return this
         ._firestore
         .collection('cities')

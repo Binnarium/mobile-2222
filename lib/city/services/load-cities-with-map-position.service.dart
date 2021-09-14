@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/home/services/cities.service.dart';
-import 'package:lab_movil_2222/models/city-with-map-position.model.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -12,13 +12,13 @@ class CitiesMapPositionsService {
       : this._citiesService =
             Provider.of<CitiesService>(context, listen: false);
 
-  Stream<List<CityWithMapPositionDto>> get load$ => this
+  Stream<List<CityWithMapPositionModel>> get load$ => this
       ._citiesService
       .allCities$
       .map((event) => this._addCitiesPositions(event))
       .shareReplay();
 
-  List<CityWithMapPositionDto> _addCitiesPositions(List<CityDto> cities) {
+  List<CityWithMapPositionModel> _addCitiesPositions(List<CityModel> cities) {
     return cities
         .asMap()
         .map((index, city) {
@@ -67,8 +67,8 @@ class CitiesMapPositionsService {
             left = 45;
           }
 
-          final CityWithMapPositionDto cityWithPosition =
-              CityWithMapPositionDto(
+          final CityWithMapPositionModel cityWithPosition =
+              CityWithMapPositionModel(
             city: city,
             top: top,
             left: left,

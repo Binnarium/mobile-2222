@@ -10,7 +10,8 @@ import 'package:lab_movil_2222/cities/micro-meso-macro/ui/screens/micro-meso-mac
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -34,10 +35,10 @@ class CityNavigator {
   /// get pages for the clubhouse
   static List<ScaffoldRouteBuilder> _clubhouseActivities(
     /// enabled pages configuration
-    CityEnabledPagesDto enabledPagesDto,
+    CityEnabledPagesModel enabledPagesDto,
 
     /// required city argument to load data
-    CityDto city,
+    CityModel city,
   ) =>
       [
         ///clubhouseExplanation
@@ -66,10 +67,10 @@ class CityNavigator {
   /// get pages for the clubhouse
   static List<ScaffoldRouteBuilder> _contributionActivities(
     /// enabled pages configuration
-    CityEnabledPagesDto enabledPagesDto,
+    CityEnabledPagesModel enabledPagesDto,
 
     /// required city argument to load data
-    CityDto city,
+    CityModel city,
   ) =>
       [
         ///Contribution
@@ -99,10 +100,10 @@ class CityNavigator {
   /// get pages for the clubhouse
   static List<ScaffoldRouteBuilder> _projectActivities(
     /// enabled pages configuration
-    CityEnabledPagesDto enabledPagesDto,
+    CityEnabledPagesModel enabledPagesDto,
 
     /// required city argument to load data
-    CityDto city,
+    CityModel city,
   ) =>
       [
         /// project video
@@ -141,10 +142,10 @@ class CityNavigator {
 
   static List<ScaffoldRouteBuilder> _routes(
     /// enabled pages configuration
-    CityEnabledPagesDto enabledPagesDto,
+    CityEnabledPagesModel enabledPagesDto,
 
     /// required city argument to load data
-    CityDto city,
+    CityModel city,
   ) =>
       [
         /// introduction screen
@@ -291,7 +292,7 @@ class CityNavigator {
 
   /// get next page to navigate to
   static ScaffoldRouteBuilder? getNextPage(
-      String currentRoute, CityDto cityDto) {
+      String currentRoute, CityModel cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._routes(cityDto.enabledPages, cityDto);
 
@@ -314,7 +315,7 @@ class CityNavigator {
   }
 
   /// get first route of a city
-  static ScaffoldRouteBuilder getFirsScreenOfCity(CityDto cityDto) {
+  static ScaffoldRouteBuilder getFirsScreenOfCity(CityModel cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._routes(cityDto.enabledPages, cityDto);
 
@@ -322,7 +323,7 @@ class CityNavigator {
   }
 
   /// get first route of clubhouse
-  static ScaffoldRouteBuilder getCLubhouseNextScreen(CityDto cityDto) {
+  static ScaffoldRouteBuilder getCLubhouseNextScreen(CityModel cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._clubhouseActivities(cityDto.enabledPages, cityDto);
 
@@ -330,7 +331,7 @@ class CityNavigator {
   }
 
   /// get first route contribution
-  static ScaffoldRouteBuilder getContributionNextScreen(CityDto cityDto) {
+  static ScaffoldRouteBuilder getContributionNextScreen(CityModel cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._contributionActivities(cityDto.enabledPages, cityDto);
 
@@ -338,7 +339,7 @@ class CityNavigator {
   }
 
   /// get first route of a project
-  static ScaffoldRouteBuilder getProjectNextScreen(CityDto cityDto) {
+  static ScaffoldRouteBuilder getProjectNextScreen(CityModel cityDto) {
     final List<ScaffoldRouteBuilder> availableRoutes =
         CityNavigator._projectActivities(cityDto.enabledPages, cityDto);
 

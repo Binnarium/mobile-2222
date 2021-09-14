@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 
@@ -20,7 +20,7 @@ class UploadProjectService {
 
   FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
 
-  Stream<bool> project$(CityDto city, ProjectFileDto file) {
+  Stream<bool> project$(CityModel city, ProjectFileDto file) {
     return this._uploadProject(
       createMessageCallback: (user) => PlayerProject(
         cityID: city.name,

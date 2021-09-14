@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -12,7 +12,7 @@ class LoadProjectFiles {
       : this._currentPlayerService = CurrentPlayerService.instance,
         this._firestore = FirebaseFirestore.instance;
 
-  Stream<List<PlayerProject>> load$(CityDto city) {
+  Stream<List<PlayerProject>> load$(CityModel city) {
     return this._currentPlayerService.player$.switchMap((user) {
       if (user == null) return Stream.value([]);
 
