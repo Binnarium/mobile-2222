@@ -41,7 +41,6 @@ class CityProjectScreen extends StatefulWidget {
 }
 
 class _CityProjectScreenState extends State<CityProjectScreen> {
-
   List<PlayerProject>? playerProjects = [];
   ProjectDto? project;
 
@@ -104,13 +103,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
-      body: _projectSheet(context, size, this.widget.city.color, userUID!,
-          this.playerProjects!),
+      body: _projectSheet(
+          context, size, this.widget.city.color, userUID, this.playerProjects),
     );
   }
 
-  _projectSheet(BuildContext context, Size size, Color color, String userUID,
-      List<PlayerProject> playerProjects) {
+  _projectSheet(BuildContext context, Size size, Color color, String? userUID,
+      List<PlayerProject>? playerProjects) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final horizontalPadding =
         EdgeInsets.symmetric(horizontal: size.width * 0.08);
@@ -212,8 +211,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               padding: horizontalPadding,
               child: ProjectGalleryWidget(
                   city: this.widget.city,
-                  userUID: userUID,
-                  projects: playerProjects),
+                  userUID: userUID ?? '',
+                  projects: playerProjects!),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 50),

@@ -29,7 +29,7 @@ class PlayerGamification extends StatelessWidget {
               : (numberProactivity < 20)
                   ? CoinsImages.yellowCoin()
                   : CoinsImages.greenCoin(),
-          numberColor: Colors.black,
+          numberColor: Colors2222.black,
         ),
 
         Divider(
@@ -42,6 +42,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: this.player.contributionsAwards.length,
           label: 'Manifiesto -\nWiki'.toUpperCase(),
           image: CoinsImages.contribution(),
+          numberColor: Colors2222.grey,
         ),
 
         SizedBox(height: 25),
@@ -50,6 +51,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: this.player.clubhouseAwards.length,
           label: 'Eventos Clubhouse'.toUpperCase(),
           image: CoinsImages.clubhouse(),
+          numberColor: Colors2222.grey,
         ),
         SizedBox(height: 25),
 
@@ -57,6 +59,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: this.player.projectAwards.length,
           label: 'Proyecto Personal'.toUpperCase(),
           image: CoinsImages.project(),
+          numberColor: Colors2222.grey,
         ),
         SizedBox(height: 25),
 
@@ -64,6 +67,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: this.player.hackatonAwards.length,
           label: 'Maratón Proyectos'.toUpperCase(),
           image: CoinsImages.project(),
+          numberColor: Colors2222.grey,
         ),
       ],
     );
