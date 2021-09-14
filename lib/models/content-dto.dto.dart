@@ -29,9 +29,9 @@ abstract class ContentDto<T> {
       return PodcastContentDto(
         kind: kind,
         podcast: AudioDto.fromMap(payload),
-        author: payload['author'],
-        title: payload['title'],
-        description: payload['description'],
+        author: payload['author'] ?? "Falta autor",
+        title: payload['title'] ?? 'Falta agregar titulo',
+        description: payload['description'] ?? 'Falta agregar descripción',
       );
   }
 }

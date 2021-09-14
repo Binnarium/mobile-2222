@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
@@ -11,19 +13,16 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class ContentScreen extends StatefulWidget {
   static const String route = '/contenido';
   final CityDto city;
-  final ILoadOptions<List<ContentDto>, CityDto> loader;
 
   ContentScreen({
     Key? key,
     required CityDto city,
   })  : this.city = city,
-        this.loader = LoadContentsScreenInformationService(
-          chapterSettings: city,
-        ),
         super(key: key);
 
   @override
@@ -32,21 +31,37 @@ class ContentScreen extends StatefulWidget {
 
 class _ContentScreenState extends State<ContentScreen> {
   List<ContentDto>? contents;
+  StreamSubscription? _loadContentsSub;
+
   @override
   void initState() {
     super.initState();
 
-    this
-        .widget
-        .loader
-        .load()
-        .then((value) => this.setState(() => contents = value));
+    LoadContentsScreenInformationService loadContentsService =
+        Provider.of<LoadContentsScreenInformationService>(this.context,
+            listen: false);
+
+    // loadContentsService.load$(this.widget.city);
+    this._loadContentsSub = loadContentsService.load$(this.widget.city).listen(
+      (cityContents) {
+        if (this.mounted)
+          this.setState(() {
+            this.contents = cityContents;
+          });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    this._loadContentsSub?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ContentScreen.route,

@@ -21,7 +21,7 @@ Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colega
 2. Otórgale el premio a esa persona.
 3. Ese premio se visualizará en la página personal del viajero.
 """;
-
+/// TODO: rename to premiation
 class MedalsHackatonScreen extends StatefulWidget {
   static const route = '/medals-hackaton';
 
@@ -70,7 +70,7 @@ class _MedalsHackatonScreenState extends State<MedalsHackatonScreen> {
             padding: const EdgeInsets.only(bottom: 24),
             child: Center(
               child: Text(
-                "Hackaton de Proyectos",
+                "Premiación de Proyectos",
                 style: textTheme.headline4!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
