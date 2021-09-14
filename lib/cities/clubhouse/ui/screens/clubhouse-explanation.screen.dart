@@ -79,9 +79,7 @@ class _ClubhouseExplanationScreenState
               width: min(300, size.width * 0.8),
               child: Text(
                 "CLUBHOUSE".toUpperCase(),
-                style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
+                style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -123,7 +121,7 @@ class _ClubhouseExplanationScreenState
               child: ElevatedButton(
                 onPressed: () => launch(this.clubhouseExplanation!.clubUrl),
                 child: Text(
-                  'Únete a nuestro room de clubhouse'.toUpperCase(),
+                  'Únete a nuestro room de clubhouse',
                   textAlign: TextAlign.center,
                 ),
                 style: TextButton.styleFrom(

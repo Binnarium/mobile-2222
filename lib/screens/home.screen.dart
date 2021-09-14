@@ -11,6 +11,8 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widge
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
 
+final bool ENABLE_AUTO_SCROLL = false;
+
 class HomeScreen extends StatefulWidget {
   static const String route = '/';
 
@@ -35,18 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
       this.setState(() => this.cities = cities);
 
       /// once all cities have loaded make map scroll automatically
-      Timer(
-        Duration(seconds: 1),
-        () {
-          try {
-            this.scrollController.animateTo(
-                  this.scrollController.position.maxScrollExtent,
-                  curve: Curves.ease,
-                  duration: const Duration(milliseconds: 500),
-                );
-          } catch (e) {}
-        },
-      );
+      if (ENABLE_AUTO_SCROLL)
+        Timer(
+          Duration(microseconds: 0),
+          () {
+            try {
+              this.scrollController.animateTo(
+                    this.scrollController.position.maxScrollExtent,
+                    curve: Curves.ease,
+                    duration: const Duration(milliseconds: 500),
+                  );
+            } catch (e) {}
+          },
+        );
     });
   }
 

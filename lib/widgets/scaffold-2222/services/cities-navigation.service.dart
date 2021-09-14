@@ -9,10 +9,10 @@ import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.d
 import 'package:lab_movil_2222/cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
+import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-project.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';

@@ -79,9 +79,7 @@ class _ContributionExplanationScreenState
               width: min(300, size.width * 0.8),
               child: Text(
                 "Manifiesto por la Educación".toUpperCase(),
-                style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+                style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -124,9 +122,7 @@ class _ContributionExplanationScreenState
                 onPressed: () =>
                     launch(this.contributionExplanation!.manifestUrl),
                 child: Text(
-                  'Lee nuestro manifiesto'.toUpperCase(),
-                  style: textTheme.headline6!
-                      .copyWith(fontWeight: FontWeight.w600),
+                  'Lee nuestro manifiesto',
                   textAlign: TextAlign.center,
                 ),
                 style: TextButton.styleFrom(

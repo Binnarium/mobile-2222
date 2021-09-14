@@ -89,9 +89,7 @@ class _YourContributionScreenState extends State<YourContributionScreen> {
             width: min(300, size.width * 0.8),
             child: Text(
               "Manifiesto por la Educación".toUpperCase(),
-              style: textTheme.headline4!.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+              style: textTheme.headline4,
               textAlign: TextAlign.center,
             ),
           ),

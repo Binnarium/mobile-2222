@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
 /// available background decorations
 enum BackgroundDecorationStyle {
@@ -107,7 +106,6 @@ class BackgroundDecoration extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.contain,
                 alignment: Alignment.bottomCenter,
-                color: Colors2222.white.withOpacity(0.2),
               ),
             ),
 

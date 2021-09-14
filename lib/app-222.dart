@@ -12,11 +12,14 @@ import 'package:lab_movil_2222/cities/contribution/services/get-clubhouse-explan
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
+import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
+import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
 import 'package:lab_movil_2222/services/load-city-resources.service.dart';
+import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
@@ -55,6 +58,7 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => LoadLoginInformationService()),
         Provider(create: (_) => LoadStartVideoService()),
         Provider(create: (_) => LoadTeamService()),
+        Provider(create: (_) => GetPointsExplanationService()),
 
         ///cities screens loaders
         Provider(create: (_) => LoadCityActivitiesService()),
@@ -68,6 +72,8 @@ class App2222 extends StatelessWidget {
         Provider(create: (_) => LoadCityIntroductoryVideoService()),
         Provider(create: (_) => LoadCityResourcesService()),
         Provider(create: (_) => LoadCityHistoryService()),
+        Provider(create: (_) => LoadContentsScreenInformationService()),
+        Provider(create: (_) => LoadArgumentScreenInformationService()),
       ],
       child: MaterialApp(
         title: 'Lab Móvil 2222',

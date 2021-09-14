@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -12,10 +13,18 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
     required this.onTap,
     bool active = false,
   })  : this.iconColor = onTap == null
+
+            /// when inactive color should be back
             ? Colors2222.black
-            : active
+
+
+            : kIsWeb
+
+                /// by default on web, colors are white
                 ? Colors2222.white
-                : Colors2222.white.withOpacity(0.5),
+                : active
+                    ? Colors2222.white
+                    : Colors2222.white.withOpacity(0.5),
         super(key: key);
 
   @override

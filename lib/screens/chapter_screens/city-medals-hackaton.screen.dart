@@ -20,8 +20,10 @@ Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colega
 3. Ese premio se visualizará en la página personal del viajero.
 """;
 
+
 class MedalsMaratonScreen extends StatefulWidget {
   static const route = '/medals-maraton';
+
 
   final CityDto city;
   final Stream<List<PlayerModel>> playerGroup;
@@ -83,7 +85,9 @@ class _MedalsMaratonScreenState extends State<MedalsMaratonScreen> {
             padding: const EdgeInsets.only(bottom: 24),
             child: Center(
               child: Text(
+
                 "Maraton de Proyectos",
+
                 style: textTheme.headline4!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
