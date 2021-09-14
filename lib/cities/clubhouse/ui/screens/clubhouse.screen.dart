@@ -100,9 +100,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
               width: min(300, size.width * 0.8),
               child: Text(
                 "CLUBHOUSE".toUpperCase(),
-                style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+                style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
             ),

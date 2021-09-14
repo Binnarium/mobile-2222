@@ -130,9 +130,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             width: min(300, size.width * 0.9),
             child: Text(
               "PROYECTO DOCENTE".toUpperCase(),
-              style: textTheme.headline4!.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+              style: textTheme.headline4,
               textAlign: TextAlign.center,
             ),
           ),
@@ -206,7 +204,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ],
 
           /// upload files
-          if (this.project!.allowAudio || this.project!.allowAudio) ...[
+          if (this.project!.allowFile || this.project!.allowAudio) ...[
             Padding(
               padding: horizontalPadding,
               child: ProjectGalleryWidget(

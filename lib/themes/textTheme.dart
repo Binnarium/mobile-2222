@@ -29,13 +29,13 @@ class KorolevFont extends TextTheme {
             fontFamily: fontFamily,
             fontSize: 44,
             color: textColor,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w500,
           ),
           headline4: TextStyle(
             fontFamily: fontFamily,
             fontSize: 34,
             color: textColor,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w500,
           ),
           headline5: TextStyle(
             fontFamily: fontFamily,
