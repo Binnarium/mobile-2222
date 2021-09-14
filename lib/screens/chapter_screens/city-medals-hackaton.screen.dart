@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/chat/ui/widgets/participants-list-medals.widget.dart';
+import 'package:lab_movil_2222/player/ui/widgets/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/ui/widgets/search-player-input.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/player/services/list-player-group.service.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -22,24 +20,39 @@ Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colega
 3. Ese premio se visualizará en la página personal del viajero.
 """;
 
-class MedalsHackatonScreen extends StatefulWidget {
-  static const route = '/medals-hackaton';
+class MedalsMaratonScreen extends StatefulWidget {
+  static const route = '/medals-maraton';
 
   final CityDto city;
+  final Stream<List<PlayerModel>> playerGroup;
 
-  const MedalsHackatonScreen({Key? key, required this.city}) : super(key: key);
+  MedalsMaratonScreen({Key? key, required this.city})
+      : this.playerGroup = ListPlayerGroupService.instance.players$,
+        super(key: key);
 
   @override
-  _MedalsHackatonScreenState createState() => _MedalsHackatonScreenState();
+  _MedalsMaratonScreenState createState() => _MedalsMaratonScreenState();
 }
 
-class _MedalsHackatonScreenState extends State<MedalsHackatonScreen> {
-  StreamSubscription? _createChatSub;
+class _MedalsMaratonScreenState extends State<MedalsMaratonScreen> {
   List<PlayerModel>? foundPlayers;
+
+  StreamSubscription? _groupSub;
+
+  List<PlayerModel>? allPlayers;
+
+  @override
+  void initState() {
+    super.initState();
+    _groupSub = this
+        .widget
+        .playerGroup
+        .listen((event) => this.setState(() => this.allPlayers = event));
+  }
 
   @override
   void dispose() {
-    this._createChatSub?.cancel();
+    this._groupSub?.cancel();
     super.dispose();
   }
 
@@ -52,7 +65,7 @@ class _MedalsHackatonScreenState extends State<MedalsHackatonScreen> {
     return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
-      route: MedalsHackatonScreen.route,
+      route: MedalsMaratonScreen.route,
       body: ListView(
         children: [
           /// icon item
@@ -70,7 +83,7 @@ class _MedalsHackatonScreenState extends State<MedalsHackatonScreen> {
             padding: const EdgeInsets.only(bottom: 24),
             child: Center(
               child: Text(
-                "Hackaton de Proyectos",
+                "Maraton de Proyectos",
                 style: textTheme.headline4!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -91,7 +104,7 @@ class _MedalsHackatonScreenState extends State<MedalsHackatonScreen> {
             ),
           ),
 
-          /// search input
+          /// explanation
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
             child: Markdown2222(
@@ -99,28 +112,15 @@ class _MedalsHackatonScreenState extends State<MedalsHackatonScreen> {
             ),
           ),
 
-          /// search input
-          Padding(
-            padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
-            child: SearchPlayersWidget(
-              color: this.widget.city.color,
-              onValueChange: (text) {
-                this.setState(() => foundPlayers = text);
-              },
-            ),
-          ),
+          ///If players no load
+          if (this.allPlayers == null)
+            AppLoading()
 
-          /// searching results
-          if (this.foundPlayers != null) ...[
-            /// list of found chats
-            for (PlayerModel player in this.foundPlayers!)
-              ParticipantsListMedalsItem(
-                  context: context,
-                  color: Colors2222.white,
-                  primaryColor: Colors2222.white,
-                  participant: ChatParticipantModel(
-                      displayName: player.displayName, uid: player.uid),
-                  createChatCallback: null),
+          /// show a list of all players of group
+          else ...[
+            /// chats items
+            for (PlayerModel player in this.allPlayers!)
+              ParticipantsListMedalsItem(participant: player, context: context),
           ],
         ],
       ),
