@@ -86,7 +86,7 @@ class _MedalsMaratonScreenState extends State<MedalsMaratonScreen> {
             child: Center(
               child: Text(
 
-                "Maraton de Proyectos",
+                "Premiación de Proyectos",
 
                 style: textTheme.headline4!.copyWith(
                   fontWeight: FontWeight.w500,
