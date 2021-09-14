@@ -9,13 +9,10 @@ class CitiesMapPositionsService {
   final CitiesService _citiesService;
 
   CitiesMapPositionsService(BuildContext context)
-      : this._citiesService =
-            Provider.of<CitiesService>(context, listen: false);
+      : _citiesService = Provider.of<CitiesService>(context, listen: false);
 
-  Stream<List<CityWithMapPositionModel>> get load$ => this
-      ._citiesService
-      .allCities$
-      .map((event) => this._addCitiesPositions(event))
+  Stream<List<CityWithMapPositionModel>> get load$ => _citiesService.allCities$
+      .map((event) => _addCitiesPositions(event))
       .shareReplay();
 
   List<CityWithMapPositionModel> _addCitiesPositions(List<CityModel> cities) {

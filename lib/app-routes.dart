@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
@@ -155,9 +154,9 @@ class Lab2222Routes extends MaterialPageRoute {
                 );
 
               ///
-              case YourContributionScreen.route:
-                final args = settings.arguments as YourContributionScreen;
-                return YourContributionScreen(
+              case ContributionScreen.route:
+                final args = settings.arguments as ContributionScreen;
+                return ContributionScreen(
                   city: args.city,
                 );
 
@@ -215,14 +214,7 @@ class Lab2222Routes extends MaterialPageRoute {
                 );
 
               default:
-                print('-----------------');
-                print('ROUTE NOT DEFINED');
-                print('-----------------');
-
-                ///TODO: Fix this bad gateway
-                /// to exit the application (in theory)
-                throw SystemChannels.platform
-                    .invokeMethod('SystemNavigator.pop');
+                return SplashScreen();
             }
           },
         );

@@ -88,11 +88,11 @@ class CityNavigator {
         ///Contribution
         if (enabledPagesDto.activities && enabledPagesDto.contribution)
           ScaffoldRouteBuilder(
-            route: YourContributionScreen.route,
+            route: ContributionScreen.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              YourContributionScreen.route,
-              arguments: YourContributionScreen(city: city),
+              ContributionScreen.route,
+              arguments: ContributionScreen(city: city),
             ),
           ),
       ];

@@ -1,11 +1,11 @@
-class CollaborationActivityModel {
+class CollaborationModel {
   final String explanation;
   final String theme;
   final bool allowIdea;
   final bool allowLecture;
   final bool allowProject;
 
-  CollaborationActivityModel({
+  CollaborationModel({
     required this.theme,
     required this.explanation,
     required this.allowIdea,

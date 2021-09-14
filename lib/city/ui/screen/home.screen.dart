@@ -11,8 +11,9 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 /// flag to enable or disable auto scroll on page load
-const bool _ENABLE_AUTO_SCROLL = false;
+const bool enableAutoScroll = false;
 
+/// main screen of the app to navigate any city or content
 class HomeScreen extends StatefulWidget {
   static const String route = '/home';
 
@@ -23,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   /// all cities positions loader
   CitiesMapPositionsService get _allCitiesLoader =>
-      Provider.of<CitiesMapPositionsService>(context);
+      Provider.of<CitiesMapPositionsService>(context, listen: false);
 
   /// list of cities with their position in the map
   List<CityWithMapPositionModel>? _cities;
@@ -36,19 +37,21 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    this._citiesSub = this._allCitiesLoader.load$.listen((cities) {
-      this.setState(() => this._cities = cities);
+    _citiesSub = _allCitiesLoader.load$.listen((cities) {
+      print(cities);
+      setState(() => _cities = cities);
 
       /// once all cities have loaded make map scroll automatically
       /// if flag has been enabled
-      if (_ENABLE_AUTO_SCROLL)
-        Timer(Duration(microseconds: 0), this._scrollMapBottom);
+      if (enableAutoScroll) {
+        Timer(Duration(microseconds: 0), _scrollMapBottom);
+      }
     });
   }
 
   @override
   void dispose() {
-    this._citiesSub?.cancel();
+    _citiesSub?.cancel();
     super.dispose();
   }
 
@@ -56,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.navigation(
       activePage: Lab2222NavigationBarPages.home,
-      body: (this._cities == null)
+      body: (_cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
           ? Center(
@@ -75,10 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   /// scroll content
                   SingleChildScrollView(
                     clipBehavior: Clip.none,
-                    controller: this._scrollController,
-                    child: CitiesMap(
-                      citiesWithPositions: this._cities!,
-                    ),
+                    controller: _scrollController,
+                    child: CitiesMap(citiesWithPositions: _cities!),
                   ),
                 ],
               ),
@@ -89,11 +90,13 @@ class _HomeScreenState extends State<HomeScreen> {
   /// make listView scroll to bottom
   void _scrollMapBottom() {
     try {
-      this._scrollController.animateTo(
-            this._scrollController.position.maxScrollExtent,
-            curve: Curves.ease,
-            duration: const Duration(milliseconds: 500),
-          );
-    } catch (e) {}
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        curve: Curves.ease,
+        duration: const Duration(milliseconds: 500),
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 }
