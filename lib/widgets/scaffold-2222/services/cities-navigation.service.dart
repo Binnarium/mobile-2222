@@ -131,11 +131,11 @@ class CityNavigator {
         ///medals Hackaton
         if (enabledPagesDto.activities && enabledPagesDto.hackatonMedals)
           ScaffoldRouteBuilder(
-            route: MedalsHackatonScreen.route,
+            route: MedalsMaratonScreen.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              MedalsHackatonScreen.route,
-              arguments: MedalsHackatonScreen(city: city),
+              MedalsMaratonScreen.route,
+              arguments: MedalsMaratonScreen(city: city),
             ),
           ),
       ];

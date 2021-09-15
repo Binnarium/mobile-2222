@@ -196,9 +196,9 @@ class Lab2222Routes extends MaterialPageRoute {
                   city: args.city,
                 );
 
-              case MedalsHackatonScreen.route:
-                final args = settings.arguments as MedalsHackatonScreen;
-                return MedalsHackatonScreen(
+              case MedalsMaratonScreen.route:
+                final args = settings.arguments as MedalsMaratonScreen;
+                return MedalsMaratonScreen(
                   city: args.city,
                 );
 
