@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/cities/contribution/models/contribution-explanation.model.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-clubhouse-explanation.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ContributionExplanationScreen extends StatefulWidget {
   static const String route = '/contribution-explanation';
-  final CityDto city;
+  final CityModel city;
 
   const ContributionExplanationScreen({Key? key, required this.city})
       : super(key: key);

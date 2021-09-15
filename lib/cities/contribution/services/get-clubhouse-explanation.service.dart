@@ -4,11 +4,9 @@ import 'package:lab_movil_2222/cities/contribution/models/contribution-explanati
 class GetContributionExplanationService {
   final FirebaseFirestore _firestore;
 
-  GetContributionExplanationService()
-      : this._firestore = FirebaseFirestore.instance;
+  GetContributionExplanationService() : _firestore = FirebaseFirestore.instance;
 
-  Stream<ContributionExplanationModel?> get explanation$ => this
-      ._firestore
+  Stream<ContributionExplanationModel?> get explanation$ => _firestore
       .collection('application')
       .doc('collaboration-explanation')
       .snapshots()

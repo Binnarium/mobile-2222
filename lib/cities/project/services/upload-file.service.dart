@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class FileNotSelected implements Exception {}
 
@@ -21,7 +21,7 @@ class UploadFileService {
   /// - [FileNotSelected] when an File is not selected
   /// - [FileNotLoaded] when an File could not be loaded
   /// - [FileNotUploaded] when an File could not be uploaded to the cloud
-  Stream<ProjectFileDto> uploadFile$(String path, CityDto city) {
+  Stream<ProjectFileDto> uploadFile$(String path, CityModel city) {
     return FilePicker.platform
         .pickFiles(
           /// TESTING

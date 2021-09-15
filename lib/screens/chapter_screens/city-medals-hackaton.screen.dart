@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-medals.widget.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/ui/widgets/search-player-input.widget.dart';
@@ -25,7 +25,7 @@ Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colega
 class MedalsHackatonScreen extends StatefulWidget {
   static const route = '/medals-hackaton';
 
-  final CityDto city;
+  final CityModel city;
 
   const MedalsHackatonScreen({Key? key, required this.city}) : super(key: key);
 

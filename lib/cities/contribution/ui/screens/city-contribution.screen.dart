@@ -2,163 +2,173 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:lab_movil_2222/cities/contribution/models/collaborations-activity.model.dart';
+import 'package:lab_movil_2222/cities/contribution/models/collaborations.model.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-collaboration-explanation.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
-import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
-class YourContributionScreen extends StatefulWidget {
+/// contribution activity page
+class ContributionScreen extends StatefulWidget {
   static const String route = '/contribution-activity';
 
-  final CityDto city;
+  /// current city
+  final CityModel city;
 
-  YourContributionScreen({
+  ContributionScreen({
     Key? key,
-    required CityDto city,
-  })  : this.city = city,
-        super(key: key);
+    required this.city,
+  }) : super(key: key);
 
   @override
-  _YourContributionScreenState createState() => _YourContributionScreenState();
+  _ContributionScreenState createState() => _ContributionScreenState();
 }
 
-class _YourContributionScreenState extends State<YourContributionScreen> {
-  late List<CityDto> chapters;
-  CollaborationActivityModel? collaborationActivityModel;
-  StreamSubscription? collabActivitySub;
+class _ContributionScreenState extends State<ContributionScreen> {
+  late List<CityModel> chapters;
+  CollaborationModel? collaborationActivityModel;
+  StreamSubscription? collaborationActivitySub;
+
+  ContributionService get _contributionService =>
+      Provider.of<ContributionService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-    ILoadInformationService<List<CityDto>> loader = LoadCitiesSettingService();
-    loader.load().then((value) => this.setState(() => this.chapters = value));
-    this.collabActivitySub =
-        GetContributionActivityService.explanation$(this.widget.city)
-            .listen((event) {
-      this.setState(() {
-        this.collaborationActivityModel = event;
-      });
-    });
+
+    collaborationActivitySub =
+        _contributionService.explanation$(widget.city).listen(
+      (event) {
+        setState(() {
+          collaborationActivityModel = event;
+        });
+      },
+    );
   }
 
   @override
   void deactivate() {
-    this.collabActivitySub?.cancel();
+    collaborationActivitySub?.cancel();
     super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final ThemeData theme = Theme.of(context);
+    final TextTheme textTheme = theme.textTheme;
+    final Size size = MediaQuery.of(context).size;
+
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [
         BackgroundDecorationStyle.bottomRight,
         BackgroundDecorationStyle.path
       ],
-      route: YourContributionScreen.route,
-      body: _projectSheet(context, size, this.widget.city.color),
-    );
-  }
-
-  _projectSheet(BuildContext context, Size size, Color color) {
-    final ThemeData theme = Theme.of(context);
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
-    return ListView(
-      children: [
-        /// icon item
-        Padding(
-          padding: const EdgeInsets.only(bottom: 50.0),
-          child: LogosHeader(
-            showStageLogoCity: this.widget.city,
-          ),
-        ),
-
-        Center(
-          child: Container(
-            padding: const EdgeInsets.only(bottom: 24.0),
-            width: min(300, size.width * 0.8),
-            child: Text(
-              "Manifiesto por la Educación".toUpperCase(),
-              style: textTheme.headline4,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 32),
-          child: Center(
-            child: Image(
-              image: CoinsImages.contribution(),
-              alignment: Alignment.bottomRight,
-              fit: BoxFit.contain,
-              width: min(160, size.width * 0.4),
-            ),
-          ),
-        ),
-
-        if (this.collaborationActivityModel == null) ...[
-          AppLoading(),
-        ] else ...[
+      route: ContributionScreen.route,
+      body: ListView(
+        children: [
+          /// icon item
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
-            child: Text(
-              this.collaborationActivityModel!.theme,
-              style: textTheme.headline5,
-              textAlign: TextAlign.center,
-            ),
+            padding: const EdgeInsets.only(bottom: 50.0),
+            child: LogosHeader(showStageLogoCity: widget.city),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.08, vertical: 50),
-            child: MarkdownBody(
-              data: this.collaborationActivityModel!.explanation,
-              styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
-                textAlign: WrapAlignment.center,
+
+          /// page title
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 24.0),
+              width: min(300, size.width * 0.8),
+              child: Text(
+                'Manifiesto por la Educación'.toUpperCase(),
+                style: textTheme.headline4,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
-          SizedBox(
-            height: 16,
+
+          /// medal icon
+          Padding(
+            padding: const EdgeInsets.only(bottom: 32),
+            child: Center(
+              child: Image(
+                image: CoinsImages.contribution(),
+                alignment: Alignment.bottomRight,
+                fit: BoxFit.contain,
+                width: min(160, size.width * 0.4),
+              ),
+            ),
           ),
-          if (this.collaborationActivityModel!.allowIdea)
-            _contributionButton(
-              context,
-              'Sube una idea',
-              this.widget.city,
-              () {},
+
+          /// collaboration data loading state
+          if (collaborationActivityModel == null) ...[
+            AppLoading(),
+          ]
+
+          /// collaboration data
+          else ...[
+            /// activity title
+            Padding(
+              padding: EdgeInsets.only(
+                left: size.width * 0.08,
+                right: size.width * 0.08,
+                bottom: 40,
+              ),
+              child: Text(
+                collaborationActivityModel!.theme,
+                style: textTheme.headline5,
+                textAlign: TextAlign.center,
+              ),
             ),
-          if (this.collaborationActivityModel!.allowLecture)
-            _contributionButton(
-              context,
-              'Comparte una lectura',
-              this.widget.city,
-              () {},
+
+            /// activity explanation
+            Padding(
+              padding: EdgeInsets.only(
+                left: size.width * 0.08,
+                right: size.width * 0.08,
+                bottom: 28,
+              ),
+              child: Markdown2222(
+                data: collaborationActivityModel!.explanation,
+              ),
             ),
-          if (this.collaborationActivityModel!.allowProject)
-            _contributionButton(
-              context,
-              'Agrega un proyecto',
-              this.widget.city,
-              () {},
-            ),
+
+            ///
+            if (collaborationActivityModel!.allowIdea)
+              _contributionButton(
+                context,
+                'Sube una idea',
+                widget.city,
+                () {},
+              ),
+            if (collaborationActivityModel!.allowLecture)
+              _contributionButton(
+                context,
+                'Comparte una lectura',
+                widget.city,
+                () {},
+              ),
+            if (collaborationActivityModel!.allowProject)
+              _contributionButton(
+                context,
+                'Agrega un proyecto',
+                widget.city,
+                () {},
+              ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
 
-_contributionButton(
-    BuildContext context, String name, CityDto city, void Function() goto) {
+Widget _contributionButton(
+    BuildContext context, String name, CityModel city, void Function() goto) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,

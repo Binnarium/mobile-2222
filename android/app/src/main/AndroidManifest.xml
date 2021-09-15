@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ec.edu.utpl.labmovil2222">
    <application
-        android:label="lab_movil_2222"
+        android:label="Lab Móvil 2222"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
