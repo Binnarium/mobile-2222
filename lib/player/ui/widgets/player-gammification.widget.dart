@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/ui/widgets/gamification-item.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
-import 'gamification-item.widget.dart';
 
-/// widget that contains a list of the player's gammification
+/// widget that contains a list of the player's gamification
 /// - [player] is required to avoid the use of the user stream service
 class PlayerGamification extends StatelessWidget {
   final PlayerModel player;
 
-  PlayerGamification({Key? key, required this.player}) : super(key: key);
+  PlayerGamification({
+    Key? key,
+    required this.player,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int numberProactivity = this.player.clubhouseAwards.length +
-        this.player.projectAwards.length +
-        this.player.contributionsAwards.length;
+    int numberProactivity = player.clubhouseAwards.length +
+        player.projectAwards.length +
+        player.contributionsAwards.length;
 
     return Column(
       children: [
@@ -39,7 +42,7 @@ class PlayerGamification extends StatelessWidget {
         ),
 
         GamificationWidget(
-          numberOfMedals: this.player.contributionsAwards.length,
+          numberOfMedals: player.contributionsAwards.length,
           label: 'Manifiesto -\nWiki'.toUpperCase(),
           image: CoinsImages.contribution(),
           numberColor: Colors2222.grey,
@@ -48,7 +51,7 @@ class PlayerGamification extends StatelessWidget {
         SizedBox(height: 25),
 
         GamificationWidget(
-          numberOfMedals: this.player.clubhouseAwards.length,
+          numberOfMedals: player.clubhouseAwards.length,
           label: 'Eventos Clubhouse'.toUpperCase(),
           image: CoinsImages.clubhouse(),
           numberColor: Colors2222.grey,
@@ -56,7 +59,7 @@ class PlayerGamification extends StatelessWidget {
         SizedBox(height: 25),
 
         GamificationWidget(
-          numberOfMedals: this.player.projectAwards.length,
+          numberOfMedals: player.projectAwards.length,
           label: 'Proyecto Personal'.toUpperCase(),
           image: CoinsImages.project(),
           numberColor: Colors2222.grey,
@@ -64,7 +67,7 @@ class PlayerGamification extends StatelessWidget {
         SizedBox(height: 25),
 
         GamificationWidget(
-          numberOfMedals: this.player.hackatonAwards.length,
+          numberOfMedals: player.hackatonAwards.length,
           label: 'Maratón Proyectos'.toUpperCase(),
           image: CoinsImages.hackaton(),
           numberColor: Colors2222.grey,
