@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city-history.dto.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
@@ -15,11 +15,11 @@ import 'package:provider/provider.dart';
 
 class StageHistoryScreen extends StatefulWidget {
   static const String route = '/history';
-  final CityDto city;
+  final CityModel city;
 
   StageHistoryScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 

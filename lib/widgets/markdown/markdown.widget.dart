@@ -8,7 +8,12 @@ typedef Markdown = Markdown2222;
 
 class Markdown2222 extends StatelessWidget {
   final String data;
+
+  /// color used by text content, by default is set to [Colors2222.white]
   final Color color;
+
+  /// align content to a side
+  final WrapAlignment? contentAlignment;
 
   const Markdown2222({
     Key? key,
@@ -17,24 +22,22 @@ class Markdown2222 extends StatelessWidget {
     this.contentAlignment,
   }) : super(key: key);
 
-  final WrapAlignment? contentAlignment;
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context).copyWith(
-      textTheme: KorolevFont(textColor: this.color),
+      textTheme: KorolevFont(textColor: color),
     );
 
     return fmd.MarkdownBody(
-      data: this.data,
+      data: data,
       styleSheet: fmd.MarkdownStyleSheet.fromTheme(theme).copyWith(
-        h1Align: this.contentAlignment,
-        h2Align: this.contentAlignment,
-        h3Align: this.contentAlignment,
-        h4Align: this.contentAlignment,
-        h5Align: this.contentAlignment,
-        h6Align: this.contentAlignment,
-        textAlign: this.contentAlignment,
+        h1Align: contentAlignment,
+        h2Align: contentAlignment,
+        h3Align: contentAlignment,
+        h4Align: contentAlignment,
+        h5Align: contentAlignment,
+        h6Align: contentAlignment,
+        textAlign: contentAlignment,
         blockSpacing: 20,
       ),
     );

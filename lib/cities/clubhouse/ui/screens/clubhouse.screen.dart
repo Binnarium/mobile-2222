@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/cities/clubhouse/services/load-clubhouse-activity
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 
 class ClubhouseScreen extends StatefulWidget {
   static const String route = '/chapterClubhouse';
-  final CityDto city;
+  final CityModel city;
 
   const ClubhouseScreen({Key? key, required this.city}) : super(key: key);
 

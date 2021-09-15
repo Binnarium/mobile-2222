@@ -1,17 +1,21 @@
-import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
-import 'package:lab_movil_2222/models/city-with-map-position.model.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/services/load-cities-settings.service.dart';
+import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/city/services/cities.service.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
-class LoadCitiesWithMapPositionService
-    extends ILoadInformationService<List<CityWithMapPositionDto>> {
-  final ILoadInformationService<List<CityDto>> allCitiesLoader =
-      LoadCitiesSettingService();
+class CitiesMapPositionsService {
+  final CitiesService _citiesService;
 
-  @override
-  Future<List<CityWithMapPositionDto>> load() async {
-    final List<CityDto> cities = await this.allCitiesLoader.load();
+  CitiesMapPositionsService(BuildContext context)
+      : _citiesService = Provider.of<CitiesService>(context, listen: false);
 
+  Stream<List<CityWithMapPositionModel>> get load$ => _citiesService.allCities$
+      .map((event) => _addCitiesPositions(event))
+      .shareReplay();
+
+  List<CityWithMapPositionModel> _addCitiesPositions(List<CityModel> cities) {
     return cities
         .asMap()
         .map((index, city) {
@@ -60,8 +64,8 @@ class LoadCitiesWithMapPositionService
             left = 45;
           }
 
-          final CityWithMapPositionDto cityWithPosition =
-              CityWithMapPositionDto(
+          final CityWithMapPositionModel cityWithPosition =
+              CityWithMapPositionModel(
             city: city,
             top: top,
             left: left,

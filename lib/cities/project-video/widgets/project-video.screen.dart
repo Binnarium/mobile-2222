@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/project-video/model/city-project-video.model.dart';
 import 'package:lab_movil_2222/cities/project-video/services/load-project-video.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -15,11 +15,11 @@ import 'package:video_player/video_player.dart';
 class ProjectVideoScreen extends StatefulWidget {
   static const String route = '/project-video';
 
-  final CityDto city;
+  final CityModel city;
 
   ProjectVideoScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 

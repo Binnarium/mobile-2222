@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/ui/widgets/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/participants-list-medals.widget.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/list-player-group.service.dart';
@@ -25,8 +28,8 @@ class MedalsMaratonScreen extends StatefulWidget {
   static const route = '/medals-maraton';
 
 
-  final CityDto city;
   final Stream<List<PlayerModel>> playerGroup;
+  final CityModel city;
 
   MedalsMaratonScreen({Key? key, required this.city})
       : this.playerGroup = ListPlayerGroupService.instance.players$,

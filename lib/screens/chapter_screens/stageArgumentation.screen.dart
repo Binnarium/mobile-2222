@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/idea_container_widget.dart';
@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class StageArgumentationScreen extends StatefulWidget {
   static const String route = '/argumentation';
 
-  final CityDto chapterSettings;
+  final CityModel chapterSettings;
 
   const StageArgumentationScreen({
     Key? key,

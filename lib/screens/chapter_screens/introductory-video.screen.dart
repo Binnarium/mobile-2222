@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-introductory-video.dto.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
@@ -15,11 +15,11 @@ import 'package:video_player/video_player.dart';
 class IntroductoryVideoScreen extends StatefulWidget {
   static const String route = '/introductory-video';
 
-  final CityDto city;
+  final CityModel city;
 
   IntroductoryVideoScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 

@@ -1,44 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/cities/contribution/models/collaborations-activity.model.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/cities/contribution/models/collaborations.model.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 
-class GetContributionActivityService {
-  static Stream<CollaborationActivityModel?>? _collaborationExplanationStream;
+class ContributionService {
+  final FirebaseFirestore _firestore;
 
-  static Stream<CollaborationActivityModel?> explanation$(CityDto city) {
-    if (GetContributionActivityService._collaborationExplanationStream ==
-        null) {
-      /// build player stream
-      final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
+  ContributionService() : _firestore = FirebaseFirestore.instance;
 
-      final explanationRef = _fFirestore
-          .collection('cities')
-          .doc(city.id)
-          .collection('pages')
-          .doc('contribution');
+  Stream<CollaborationModel?> explanation$(CityModel city) {
+    return _firestore
+        .collection('cities')
+        .doc(city.id)
+        .collection('pages')
+        .doc('contribution')
+        .snapshots()
 
-      GetContributionActivityService._collaborationExplanationStream =
-          explanationRef
-              .snapshots()
+        /// turn snapshot into document data or null
+        .map((snapshot) => snapshot.data())
 
-              /// turn snapshot into document data or null
-              .map((snapshot) => snapshot.data())
-
-              /// turn snapshot data into explanation object, if props found
-              .map(
-                (data) => data == null
-                    ? null
-                    : CollaborationActivityModel(
-                        theme: data['theme'] ?? 'Tema de ejemplo',
-                        explanation:
-                            data['explanation'] ?? 'Explicación de ejemplo',
-                        allowIdea: data['allowIdea'] == true,
-                        allowLecture: data['allowLecture'] == true,
-                        allowProject: data['allowProject'] == true,
-                      ),
-              );
-    }
-
-    return _collaborationExplanationStream!;
+        /// turn snapshot data into explanation object, if props found
+        .map(
+          (data) => data == null
+              ? null
+              : CollaborationModel(
+                  theme: data['theme'] as String? ?? 'Tema de ejemplo',
+                  explanation: data['explanation'] as String? ??
+                      'Explicación de ejemplo',
+                  allowIdea: data['allowIdea'] == true,
+                  allowLecture: data['allowLecture'] == true,
+                  allowProject: data['allowProject'] == true,
+                ),
+        );
   }
 }
