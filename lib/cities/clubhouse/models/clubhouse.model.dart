@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 class ClubhouseModel {
   final String clubhouseUrl;
   final String clubhouseId;
@@ -20,4 +21,15 @@ class ClubhouseModel {
     required this.id,
     required this.uploaderDisplayName,
   });
+
+  ClubhouseModel.fromMap(Map<String, dynamic> data)
+      : clubhouseUrl = data['clubhouseUrl'] as String,
+        uploaderDisplayName = data['uploaderDisplayName'] as String? ?? null,
+        clubhouseId = data['clubhouseId'] as String,
+        date = (data['date'] as Timestamp).toDate(),
+        name = data['name'] as String,
+        cityId = data['cityId'] as String,
+        uploaderId = data['uploaderId'] as String,
+        scraped = (data['scraped'] as Timestamp).toDate(),
+        id = data['id'] as String;
 }

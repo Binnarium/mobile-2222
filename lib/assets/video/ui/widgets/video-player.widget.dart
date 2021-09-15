@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 
-/// Class that creates a video player depending on video URL and the description of the video
+/// Class that creates a video player depending on video URL and the description
+/// of the video
 class VideoPlayer extends StatefulWidget {
   final VideoDto video;
 
@@ -59,31 +61,41 @@ class _VideoPlayerState extends State<VideoPlayer> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: this.showPlayer
-            ? Lab2222BetterPlayer(video: this.widget.video)
-            : InkWell(
-                onTap: () => videoProvider.setVideo(this.widget.video),
-                child: Stack(
-                  children: [
-                    Image(
-                      image: this.widget.video.placeholderImage,
+            ? _Lab2222BetterPlayer(video: this.widget.video)
+            : Stack(
+                children: [
+                  Image(
+                    image: this.widget.video.placeholderImage,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                  Center(
+                    child: Icon(
+                      Icons.play_arrow_rounded,
+                      size: 150,
+                      color: Colors.black54,
                     ),
-                    Center(
-                      child: Icon(
-                        Icons.play_arrow_rounded,
-                        size: 150,
-                        color: Colors.black54,
+                  ),
+
+                  /// button action
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors2222.transparent,
+                      child: InkWell(
+                        onTap: () => videoProvider.setVideo(this.widget.video),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
       ),
     );
   }
 }
 
-class Lab2222BetterPlayer extends BetterPlayer {
-  Lab2222BetterPlayer({
+class _Lab2222BetterPlayer extends BetterPlayer {
+  _Lab2222BetterPlayer({
     Key? key,
     required VideoDto video,
   }) : super(

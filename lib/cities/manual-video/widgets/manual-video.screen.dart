@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/manual-video/model/city-manual-video.model.dart';
 import 'package:lab_movil_2222/cities/manual-video/services/load-manual-video.service.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -16,11 +16,11 @@ import 'package:video_player/video_player.dart';
 class ManualVideoScreen extends StatefulWidget {
   static const String route = '/manual-video';
 
-  final CityDto city;
+  final CityModel city;
 
   ManualVideoScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 

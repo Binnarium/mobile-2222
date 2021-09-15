@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/city-introduction.dto.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -15,11 +15,11 @@ import 'package:provider/provider.dart';
 class CityIntroductionScreen extends StatefulWidget {
   static const String route = '/introduction';
 
-  final CityDto city;
+  final CityModel city;
 
   CityIntroductionScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 

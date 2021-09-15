@@ -136,7 +136,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
 
           /// load chat
           final ChatModel? chat =
-              await _getChatService.getChat(response.chatId!);
+              await _getChatService.getChatWithId(response.chatId!);
           if (chat == null) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(ChatSnackbar.chatNotFound());

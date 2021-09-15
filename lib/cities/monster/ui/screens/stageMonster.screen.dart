@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/monster/model/monster.model.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class StageMonsterScreen extends StatefulWidget {
   static const String route = '/monster';
-  final CityDto city;
+  final CityModel city;
 
   const StageMonsterScreen({
     Key? key,

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 
 class LoadContentsScreenInformationService {
@@ -7,7 +7,7 @@ class LoadContentsScreenInformationService {
   LoadContentsScreenInformationService()
       : this._firestore = FirebaseFirestore.instance;
 
-  Stream<List<ContentDto>?> load$(CityDto city) {
+  Stream<List<ContentDto>?> load$(CityModel city) {
     return this
         ._firestore
         .collection('cities')

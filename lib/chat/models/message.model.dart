@@ -34,7 +34,7 @@ abstract class MessageModel {
     final String id = data['id'];
     final String senderId = data['senderId'];
     final ChatParticipantModel sender =
-        ChatParticipantModel.fromMap(data['sender']);
+        ChatParticipantModel.fromMap(data['sender'] as Map<String, dynamic>);
     final DateTime sendedDate = (data['sendedDate'] as Timestamp).toDate();
     final bool sendedByMe = currentUid == sender.uid;
     if (kind == 'MESSAGE#TEXT') {

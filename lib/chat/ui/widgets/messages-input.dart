@@ -15,13 +15,10 @@ class MessageTextInput extends StatefulWidget {
 
   final ChatModel chat;
 
-  final SendMessagesService _sendMessagesService;
-
   MessageTextInput({
     Key? key,
     required this.chat,
   })  : this.messageInput = TextEditingController(),
-        this._sendMessagesService = SendMessagesService(),
         super(key: key);
 
   @override
@@ -31,6 +28,9 @@ class MessageTextInput extends StatefulWidget {
 class _MessageTextInputState extends State<MessageTextInput> {
   StreamSubscription? _sendMessageSub;
   bool showOtherSendOptions = false;
+
+  SendMessagesService get _sendMessagesService =>
+      Provider.of<SendMessagesService>(context, listen: false);
 
   @override
   void dispose() {
@@ -119,9 +119,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
     if (this.widget.messageInput.text == "") return;
     if (this._sendMessageSub != null) return;
 
-    this._sendMessageSub = this
-        .widget
-        ._sendMessagesService
+    this._sendMessageSub = _sendMessagesService
         .text$(this.widget.chat, this.widget.messageInput.text)
         .listen((sended) {
       if (!sended)
@@ -150,7 +148,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
           (image) =>
 
               /// calls the image$ stream
-              this.widget._sendMessagesService.image$(this.widget.chat, image),
+              _sendMessagesService.image$(this.widget.chat, image),
         )
 
         /// checks if the video is sended or not
@@ -159,7 +157,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
         ScaffoldMessenger.of(context).showSnackBar(
           ChatSnackbarMessages.textNotSended(),
         );
-    }, onError: (error) {
+    }, onError: (Exception error) {
       if (error.runtimeType == ImageNotLoaded)
         ScaffoldMessenger.of(context).showSnackBar(
           ChatSnackbarMessages.imageNotLoaded(),
@@ -190,7 +188,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
           (video) =>
 
               /// calls the video$ stream
-              this.widget._sendMessagesService.video$(this.widget.chat, video),
+              _sendMessagesService.video$(this.widget.chat, video),
         )
 
         /// checks if the video is sended or not
@@ -199,7 +197,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
         ScaffoldMessenger.of(context).showSnackBar(
           ChatSnackbarMessages.textNotSended(),
         );
-    }, onError: (error) {
+    }, onError: (Exception error) {
       if (error.runtimeType == VideoNotLoaded)
         ScaffoldMessenger.of(context).showSnackBar(
           ChatSnackbarMessages.videoNotLoaded(),

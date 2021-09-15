@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
@@ -69,7 +71,7 @@ abstract class _MessageCard<T extends MessageModel> extends StatelessWidget {
         this.padding = EdgeInsets.all(12),
         this.decoration = BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: message.sendedByMe ? Colors2222.grey : Colors2222.red,
+          color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
         ),
         super(key: key);
 
@@ -164,32 +166,10 @@ class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
       padding: this.padding,
       decoration: this.decoration,
       width: double.infinity,
-      child: InkWell(
-        child: Container(
-          height: 140,
-          child: Stack(
-            children: [
-              Image.asset(
-                'assets/images/video-placeholder.png',
-              ),
-              Center(
-                child: Icon(
-                  Icons.play_arrow_rounded,
-                  size: 120,
-                  color: Colors.black54,
-                ),
-              )
-            ],
-          ),
-        ),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      DetailedMultimediaScreen(message: message)));
-        },
-      ),
+      child: VideoPlayer(video: message.asset as VideoDto),
+
+      /// TODO: implement screen
+      /// DetailedMultimediaScreen(message: message)));
     );
   }
 }

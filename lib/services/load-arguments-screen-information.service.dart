@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadArgumentScreenInformationService {
   final FirebaseFirestore _firestore;
   LoadArgumentScreenInformationService()
       : this._firestore = FirebaseFirestore.instance;
 
-  Stream<List<String>?> load$(CityDto city) {
+  Stream<List<String>?> load$(CityModel city) {
     return this
         ._firestore
         .collection('cities')

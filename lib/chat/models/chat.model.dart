@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 
 import 'chat-participant.model.dart';
@@ -45,6 +46,31 @@ class ChatModel {
     required this.participantsUids,
     required this.kind,
   });
+
+  ChatModel.fromMap(
+    Map<String, dynamic> data, {
+    required String currentUserId,
+  })  : id = data['id'] as String,
+        kind = data['kind'] as String,
+        disabled = data['disabled'] as bool,
+        participantsCompleted = data['participantsCompleted'] == true,
+        name = data['name'] as String? ?? null,
+        lastActivity = (data['lastActivity'] as Timestamp).toDate(),
+        indexedDate = (data['indexedDate'] as Timestamp?)?.toDate(),
+        participants = (data['participants'] as List<dynamic>?)
+                ?.map((dynamic e) =>
+                    ChatParticipantModel.fromMap(e as Map<String, dynamic>))
+                .toList() ??
+            [],
+        participantsUids = (data['participantsUids'] as List<dynamic>)
+            .map((dynamic e) => e.toString())
+            .toList(),
+        lastMessage = data['lastMessage'] == null
+            ? null
+            : MessageModel.fromMap(
+                data['lastMessage'] as Map<String, dynamic>,
+                currentUid: currentUserId,
+              );
 
   String get chatName => this.name != null
       ? this.name!

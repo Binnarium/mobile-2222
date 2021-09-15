@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
@@ -15,16 +14,16 @@ import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.d
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
+import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
+import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/screens/home.screen.dart';
 import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
@@ -35,8 +34,8 @@ import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 
-class Lab2222Routes extends MaterialPageRoute {
-  Lab2222Routes(RouteSettings settings)
+class Lab2222Routing extends MaterialPageRoute<Widget> {
+  Lab2222Routing(RouteSettings settings)
       : super(
           builder: (context) {
             switch (settings.name) {
@@ -155,9 +154,9 @@ class Lab2222Routes extends MaterialPageRoute {
                 );
 
               ///
-              case YourContributionScreen.route:
-                final args = settings.arguments as YourContributionScreen;
-                return YourContributionScreen(
+              case ContributionScreen.route:
+                final args = settings.arguments as ContributionScreen;
+                return ContributionScreen(
                   city: args.city,
                 );
 
@@ -197,9 +196,9 @@ class Lab2222Routes extends MaterialPageRoute {
                   city: args.city,
                 );
 
-              case MedalsHackatonScreen.route:
-                final args = settings.arguments as MedalsHackatonScreen;
-                return MedalsHackatonScreen(
+              case ProjectAwardsProject.route:
+                final args = settings.arguments as ProjectAwardsProject;
+                return ProjectAwardsProject(
                   city: args.city,
                 );
 
@@ -215,14 +214,7 @@ class Lab2222Routes extends MaterialPageRoute {
                 );
 
               default:
-                print('-----------------');
-                print('ROUTE NOT DEFINED');
-                print('-----------------');
-
-                ///TODO: Fix this bad gateway
-                /// to exit the application (in theory)
-                throw SystemChannels.platform
-                    .invokeMethod('SystemNavigator.pop');
+                return SplashScreen();
             }
           },
         );

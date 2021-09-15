@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/buttonDialog.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectGalleryWidget extends StatefulWidget {
-  final CityDto city;
+  final CityModel city;
   final String userUID;
   final List<PlayerProject> projects;
   const ProjectGalleryWidget({

@@ -1,27 +1,37 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/create-personal-chat-query.model.dart';
 import 'package:lab_movil_2222/chat/models/create-personal-chat-response.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:provider/provider.dart';
 
 class CreatePersonalChatService {
-  final FirebaseFunctions _fFunctions = FirebaseFunctions.instance;
-  final CurrentPlayerService _currentPlayerService =
-      CurrentPlayerService.instance;
+  final FirebaseFunctions _functions;
+  final CurrentPlayerService _currentPlayerService;
+
+  CreatePersonalChatService(BuildContext context)
+      : this._functions = FirebaseFunctions.instance,
+        this._currentPlayerService =
+            Provider.of<CurrentPlayerService>(context, listen: false);
 
   Stream<CreatePersonalChatResponseModel> create$(String otherPlayerId) {
     HttpsCallable createPersonalChat =
-        this._fFunctions.httpsCallable('createPersonalChat');
-    return this._currentPlayerService.player$.take(1).asyncMap((player) async {
-      if (player == null) return CreatePersonalChatResponseModel(chatId: null);
+        _functions.httpsCallable('createPersonalChat');
 
-      final CreatePersonalChatQueryModel query = CreatePersonalChatQueryModel(
-        playerOne: player.uid,
-        playerTwo: otherPlayerId,
-      );
+    return this._currentPlayerService.player$.take(1).asyncMap(
+      (currentPlayer) async {
+        if (currentPlayer == null)
+          return CreatePersonalChatResponseModel(chatId: null);
 
-      final response = await createPersonalChat<String?>(query.toMap());
+        final CreatePersonalChatQueryModel query = CreatePersonalChatQueryModel(
+          playerOne: currentPlayer.uid,
+          playerTwo: otherPlayerId,
+        );
 
-      return CreatePersonalChatResponseModel(chatId: response.data);
-    });
+        final response = await createPersonalChat<String?>(query.toMap());
+
+        return CreatePersonalChatResponseModel(chatId: response.data);
+      },
+    );
   }
 }

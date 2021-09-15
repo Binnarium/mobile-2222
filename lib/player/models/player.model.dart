@@ -5,6 +5,7 @@ class PlayerModel {
   final String uid;
   final String displayName;
   final String email;
+  final String groupId;
 
   final ImageDto avatarImage;
 
@@ -22,12 +23,14 @@ class PlayerModel {
     required this.clubhouseAwards,
     required this.hackatonAwards,
     required this.avatarImage,
+    required this.groupId,
   });
 
   PlayerModel.empty({
     required this.uid,
     required this.displayName,
     required this.email,
+    
   })  : this.avatarImage = ImageDto(
           height: 0,
           width: 0,
@@ -35,6 +38,7 @@ class PlayerModel {
           path: '',
           url: '',
         ),
+        this.groupId = '',
         this.projectAwards = const [],
         this.contributionsAwards = const [],
         this.hackatonAwards = const [],
@@ -46,6 +50,7 @@ class PlayerModel {
       uid: payload['uid'],
       email: payload['email'],
       displayName: payload['displayName'] ?? "",
+      groupId: payload['groupId'],
       clubhouseAwards:
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:

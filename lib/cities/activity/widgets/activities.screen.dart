@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
+import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
@@ -17,11 +17,11 @@ import 'activity-card.widget.dart';
 class ActivitiesScreen extends StatefulWidget {
   static const String route = '/activities';
 
-  final CityDto city;
+  final CityModel city;
 
   ActivitiesScreen({
     Key? key,
-    required CityDto city,
+    required CityModel city,
   })  : this.city = city,
         super(key: key);
 
@@ -87,7 +87,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             AppLoading()
           else ...[
             /// contribution card
-            if (this.widget.city.enabledPages.enableContributionRoutes)
+            if (this.widget.city.enabledPages.enableContribution)
               Padding(
                 padding: EdgeInsets.only(
                   top: 12,
@@ -106,7 +106,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
               ),
 
             /// clubhouse event
-            if (this.widget.city.enabledPages.enableClubhouseRoutes)
+            if (this.widget.city.enabledPages.enableClubhouse)
               Padding(
                 padding: EdgeInsets.only(
                   top: 24,
@@ -125,7 +125,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
               ),
 
             /// project
-            if (this.widget.city.enabledPages.enableProjectRoutes)
+            if (this.widget.city.enabledPages.enableProject)
               Padding(
                 padding: EdgeInsets.only(
                   top: 24,

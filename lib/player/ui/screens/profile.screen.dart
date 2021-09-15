@@ -14,6 +14,7 @@ import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
@@ -27,13 +28,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _loadPlayerSub;
   PlayerModel? player;
 
+  CurrentPlayerService get _currentPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
+
   @override
   void initState() {
     super.initState();
 
     /// load player data
-    this._loadPlayerSub =
-        CurrentPlayerService.instance.player$.listen((player) {
+    this._loadPlayerSub = _currentPlayerService.player$.listen((player) {
       this.setState(() {
         this.player = player;
       });
