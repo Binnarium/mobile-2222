@@ -6,7 +6,7 @@ class ClubhouseExplanationModel {
   final VideoDto video;
 
   ClubhouseExplanationModel.fromMap(Map<String, dynamic> data)
-      : this.explanation = data['explanation'],
-        this.clubUrl = data['clubUrl'],
-        this.video = VideoDto.fromMap(data['video']);
+      : explanation = data['explanation'] as String,
+        clubUrl = data['clubUrl'] as String,
+        video = VideoDto.fromMap(data['video'] as Map<String, dynamic>);
 }

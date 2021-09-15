@@ -32,26 +32,27 @@ class _ClubhouseExplanationWidgetState
 
     GetClubhouseExplanationService clubhouseExplanationService =
         Provider.of<GetClubhouseExplanationService>(context, listen: false);
-    this._explanationSub = clubhouseExplanationService.explanation$.listen(
+    _explanationSub = clubhouseExplanationService.explanation$.listen(
       (event) {
-        if (this.mounted)
-          this.setState(() {
-            this.clubhouseExplanation = event;
+        if (mounted) {
+          setState(() {
+            clubhouseExplanation = event;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._explanationSub?.cancel();
+    _explanationSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return this.clubhouseExplanation == null
+    return clubhouseExplanation == null
         ? AppLoading()
         : Container(
             decoration: BoxDecoration(
@@ -61,7 +62,7 @@ class _ClubhouseExplanationWidgetState
             child: Column(
               children: [
                 /// video provider
-                VideoPlayer(video: this.clubhouseExplanation!.video),
+                VideoPlayer(video: clubhouseExplanation!.video),
 
                 /// content
                 Padding(
@@ -70,7 +71,7 @@ class _ClubhouseExplanationWidgetState
                     horizontal: size.width * 0.08,
                   ),
                   child: Markdown2222(
-                    data: this.clubhouseExplanation!.explanation,
+                    data: clubhouseExplanation!.explanation,
                     color: Colors2222.black,
                   ),
                 ),
@@ -83,13 +84,13 @@ class _ClubhouseExplanationWidgetState
                     left: size.width * 0.08,
                   ),
                   child: TextButton(
-                    onPressed: () => launch(this.clubhouseExplanation!.clubUrl),
+                    onPressed: () => launch(clubhouseExplanation!.clubUrl),
+                    style: TextButton.styleFrom(
+                      primary: Colors2222.primary,
+                    ),
                     child: Text(
                       'Únete a nuestro room de clubhouse'.toUpperCase(),
                       textAlign: TextAlign.center,
-                    ),
-                    style: TextButton.styleFrom(
-                      primary: Colors2222.primary,
                     ),
                   ),
                 ),
