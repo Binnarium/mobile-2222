@@ -4,5 +4,6 @@ class CityFinalVideoModel {
   final VideoDto video;
 
   CityFinalVideoModel.fromMap(Map<String, dynamic> payload)
-      : this.video = VideoDto.fromMap(payload['video']);
+      : video = VideoDto.fromMap(
+            payload['video'] as Map<String, dynamic>? ?? <String, dynamic>{});
 }

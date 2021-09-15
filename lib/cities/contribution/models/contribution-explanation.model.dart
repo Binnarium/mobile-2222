@@ -6,7 +6,8 @@ class ContributionExplanationModel {
   final VideoDto video;
 
   ContributionExplanationModel.fromMap(Map<String, dynamic> data)
-      : this.explanation = data['explanation'],
-        this.manifestUrl = data['manifestUrl'],
-        this.video = VideoDto.fromMap(data['video']);
+      : explanation = data['explanation'] as String,
+        manifestUrl = data['manifestUrl'] as String,
+        video = VideoDto.fromMap(
+            data['video'] as Map<String, dynamic>? ?? <String, dynamic>{});
 }

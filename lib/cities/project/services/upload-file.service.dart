@@ -42,11 +42,12 @@ class UploadFileService {
           final String fileName = selectedFile.name.split('/').last;
           final String uploadPath = '$path/$fileName';
 
-          final Reference uploadRef = this._fStorage.ref(uploadPath);
+          final Reference uploadRef = _fStorage.ref(uploadPath);
           final UploadTask uploadTask = uploadRef.putFile(projectFile);
           final String url = await uploadTask.then((snapshot) async {
-            if (snapshot.state == TaskState.success)
+            if (snapshot.state == TaskState.success) {
               return await uploadRef.getDownloadURL();
+            }
             throw FileNotUploaded();
           });
           return ProjectFileDto(

@@ -33,28 +33,29 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
     super.initState();
 
     LoadMonsterService loadMonsterService =
-        Provider.of<LoadMonsterService>(this.context, listen: false);
+        Provider.of<LoadMonsterService>(context, listen: false);
 
-    this._loadMonsterSub = loadMonsterService.load$(this.widget.city).listen(
+    _loadMonsterSub = loadMonsterService.load$(widget.city).listen(
       (monsterModel) {
-        if (this.mounted)
-          this.setState(() {
-            this._monsterModel = monsterModel;
+        if (mounted) {
+          setState(() {
+            _monsterModel = monsterModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadMonsterSub?.cancel();
+    _loadMonsterSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageMonsterScreen.route,
       body: Column(
@@ -62,15 +63,15 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
         children: [
           LogosHeader(
             showAppLogo: false,
-            showStageLogoCity: this.widget.city,
+            showStageLogoCity: widget.city,
           ),
 
           /// content
-          this._monsterModel == null
+          _monsterModel == null
               ? Center(
                   child: AppLoading(),
                 )
-              : MonsterImage(image: this._monsterModel!.illustration)
+              : MonsterImage(image: _monsterModel!.illustration)
         ],
       ),
     );

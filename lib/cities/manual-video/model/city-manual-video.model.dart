@@ -5,6 +5,7 @@ class CityManualVideoModel {
   final String link;
 
   CityManualVideoModel.fromMap(Map<String, dynamic> payload)
-      : this.video = VideoDto.fromMap(payload['video']),
-        this.link = payload['link'] ?? 'https://google.com';
+      : video = VideoDto.fromMap(
+            payload['video'] as Map<String, dynamic>? ?? <String, dynamic>{}),
+        link = payload['link'] as String? ?? 'https://google.com';
 }

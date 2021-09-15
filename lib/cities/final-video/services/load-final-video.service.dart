@@ -4,17 +4,16 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadFinalVideoService {
   final FirebaseFirestore _firestore;
-  LoadFinalVideoService() : this._firestore = FirebaseFirestore.instance;
+  LoadFinalVideoService() : _firestore = FirebaseFirestore.instance;
 
   Stream<CityFinalVideoModel?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('final-video')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map((data) => data == null ? null : CityFinalVideoModel.fromMap(data));
   }
 }
