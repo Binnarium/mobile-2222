@@ -22,7 +22,7 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatsScreen extends StatefulWidget {
-  static const route = "/chats";
+  static const route = '/chats';
 
   ChatsScreen({Key? key}) : super(key: key);
 
@@ -40,10 +40,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
   StreamSubscription? _chatsSub;
 
   CreatePersonalChatService get _createPersonalChatService =>
-      Provider.of<CreatePersonalChatService>(this.context, listen: false);
+      Provider.of<CreatePersonalChatService>(context, listen: false);
 
   GetChatService get _getChatService =>
-      Provider.of<GetChatService>(this.context, listen: false);
+      Provider.of<GetChatService>(context, listen: false);
 
   ListPlayerChatsService get _listPlayerChatsService =>
       Provider.of<ListPlayerChatsService>(context, listen: false);
@@ -52,13 +52,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
   void initState() {
     super.initState();
     _chatsSub = _listPlayerChatsService.chats$
-        .listen((event) => this.setState(() => this.allChats = event));
+        .listen((event) => setState(() => allChats = event));
   }
 
   @override
   void dispose() {
-    this._createChatSub?.cancel();
-    this._chatsSub?.cancel();
+    _createChatSub?.cancel();
+    _chatsSub?.cancel();
     super.dispose();
   }
 
@@ -103,38 +103,38 @@ class _ChatsScreenState extends State<ChatsScreen> {
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
             child: SearchPlayersWidget(
               onValueChange: (text) {
-                this.setState(() => foundPlayers = text);
+                setState(() => foundPlayers = text);
               },
             ),
           ),
 
           /// searching results
-          if (this.foundPlayers != null) ...[
+          if (foundPlayers != null) ...[
             /// list of found chats
-            for (PlayerModel player in this.foundPlayers!)
+            for (PlayerModel player in foundPlayers!)
               ParticipantsListItem(
                 context: context,
                 color: Colors2222.white,
                 primaryColor: Colors2222.white,
                 participant: ChatParticipantModel(
                     displayName: player.displayName, uid: player.uid),
-                createChatCallback: this._createChatSub == null
+                createChatCallback: _createChatSub == null
                     ? (context) =>
 
                         /// TODO: fix this
-                        this._createChat(FirebaseAuth.instance.currentUser!.uid)
+                        _createChat(FirebaseAuth.instance.currentUser!.uid)
                     : null,
               ),
           ]
 
           /// if no chats loaded show loading icon
-          else if (this.allChats == null)
+          else if (allChats == null)
             AppLoading()
 
           /// show a list of all chats
           else ...[
             /// chats items
-            for (ChatModel chat in this.allChats!)
+            for (ChatModel chat in allChats!)
               ChatListItem(chat: chat, context: context),
           ],
         ],
@@ -144,10 +144,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   /// TODO: remove duplicated code
   void _createChat(String playerId) {
-    if (this._createChatSub != null) return;
+    if (_createChatSub != null) return;
 
-    this.setState(() {
-      this._createChatSub = _createPersonalChatService.create$(playerId).listen(
+    setState(() {
+      _createChatSub = _createPersonalChatService.create$(playerId).listen(
         (response) async {
           /// validate chat was found
           if (response.chatId == null) {
@@ -171,9 +171,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
         /// clean stream
         onDone: () {
-          this.setState(() {
-            this._createChatSub?.cancel();
-            this._createChatSub = null;
+          setState(() {
+            _createChatSub?.cancel();
+            _createChatSub = null;
           });
         },
       );

@@ -54,7 +54,7 @@ class ChatModel {
         kind = data['kind'] as String,
         disabled = data['disabled'] as bool,
         participantsCompleted = data['participantsCompleted'] == true,
-        name = data['name'] as String? ?? null,
+        name = data['name'] as String?,
         lastActivity = (data['lastActivity'] as Timestamp).toDate(),
         indexedDate = (data['indexedDate'] as Timestamp?)?.toDate(),
         participants = (data['participants'] as List<dynamic>?)

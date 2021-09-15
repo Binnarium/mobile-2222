@@ -19,8 +19,7 @@ class ListPlayerChatsService {
         if (currentUser == null) return Stream.value([]);
 
         /// get collection of users
-        final Query chatsCollection = this
-            ._firestore
+        final Query chatsCollection = _firestore
             .collection('chats')
             .where('participantsUids', arrayContains: currentUser.uid)
             .orderBy('lastActivity', descending: true);
