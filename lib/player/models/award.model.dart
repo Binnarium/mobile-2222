@@ -3,6 +3,6 @@ class AwardModel {
   final bool obtained;
 
   AwardModel.fromMap(final Map<String, dynamic> payload)
-      : this.cityId = payload['cityId'],
-        this.obtained = payload['obtained'] ?? false;
+      : cityId = payload['cityId'] as String? ?? '',
+        obtained = payload['obtained'] as bool? ?? false;
 }

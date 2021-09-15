@@ -16,23 +16,26 @@ abstract class ContentDto<T> {
   });
 
   static ContentDto fromJson(Map<String, dynamic> payload) {
-    final String kind = payload['kind'];
-    if (kind == 'CONTENT#VIDEO')
+    final String kind = payload['kind'] as String;
+    if (kind == 'CONTENT#VIDEO') {
       return VideoContentDto(
         kind: kind,
-        title: payload['title'] ?? "Title not available",
-        author: payload['author'] ?? "Author not available",
-        description: payload['description'] ?? "Description not available",
+        title: payload['title'] as String? ?? 'Title not available',
+        author: payload['author'] as String? ?? 'Author not available',
+        description:
+            payload['description'] as String? ?? 'Description not available',
         video: VideoDto.fromMap(payload),
       );
-    else
+    } else {
       return PodcastContentDto(
         kind: kind,
         podcast: AudioDto.fromMap(payload),
-        author: payload['author'] ?? "Falta autor",
-        title: payload['title'] ?? 'Falta agregar titulo',
-        description: payload['description'] ?? 'Falta agregar descripción',
+        author: payload['author'] as String? ?? 'Falta autor',
+        title: payload['title'] as String? ?? 'Falta agregar titulo',
+        description:
+            payload['description'] as String? ?? 'Falta agregar descripción',
       );
+    }
   }
 }
 

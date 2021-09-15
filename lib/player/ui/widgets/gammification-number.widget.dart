@@ -22,10 +22,10 @@ class _GamificationNumberState extends State<GamificationNumber> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: this.widget.color,
+        color: widget.color,
       ),
       child: Text(
-        this.widget.number.toString(),
+        widget.number.toString(),
         style: Theme.of(context)
             .textTheme
             .bodyText1

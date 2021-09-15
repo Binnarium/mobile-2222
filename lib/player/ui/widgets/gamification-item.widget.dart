@@ -36,7 +36,7 @@ class _GamificationWidgetState extends State<GamificationWidget> {
           /// space items to the order
           Expanded(
             child: Text(
-              this.widget.label,
+              widget.label,
               style: Theme.of(context)
                   .textTheme
                   .headline5
@@ -47,7 +47,7 @@ class _GamificationWidgetState extends State<GamificationWidget> {
           /// icon
           /// override image to fit a specified height
           Image(
-            image: this.widget.image,
+            image: widget.image,
             fit: BoxFit.contain,
             height: 50,
             width: 50,
@@ -58,8 +58,8 @@ class _GamificationWidgetState extends State<GamificationWidget> {
 
           /// number of medals
           GamificationNumber(
-            number: this.widget.numberOfMedals,
-            color: this.widget.numberColor,
+            number: widget.numberOfMedals,
+            color: widget.numberColor,
           ),
         ],
       ),

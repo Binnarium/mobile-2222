@@ -5,8 +5,9 @@ class CityHistoryDto {
   final List<HistoryContentDto> content;
 
   CityHistoryDto.fromMap(Map<String, dynamic> payload)
-      : this.content = ((payload['content'] ?? []) as List)
-            .map((e) => HistoryContentDto.fromJson(e))
+      : content = ((payload['content'] ?? <dynamic>[]) as List)
+            .map((dynamic e) =>
+                HistoryContentDto.fromJson(e as Map<String, dynamic>))
             .toList();
 }
 
@@ -18,7 +19,7 @@ abstract class HistoryContentDto {
   });
 
   static HistoryContentDto fromJson(Map<String, dynamic> payload) {
-    final String kind = payload['kind'];
+    final String kind = payload['kind'] as String;
 
     if (kind == 'HISTORY#TITLE') return TitleHistoryDto._fromMap(payload);
 
@@ -34,22 +35,22 @@ class TitleHistoryDto extends HistoryContentDto {
   final String title;
 
   TitleHistoryDto._fromMap(Map<String, dynamic> payload)
-      : this.title = payload['title'] ?? 'No title available',
-        super._(kind: payload['kind']!);
+      : title = payload['title'] as String? ?? 'No title available',
+        super._(kind: payload['kind']! as String);
 }
 
 class TextHistoryDto extends HistoryContentDto {
   final String text;
 
   TextHistoryDto._fromMap(Map<String, dynamic> payload)
-      : this.text = payload['text'] ?? 'No text available',
-        super._(kind: payload['kind']!);
+      : text = payload['text'] as String? ?? 'No text available',
+        super._(kind: payload['kind']! as String);
 }
 
 class ImageHistoryDto extends HistoryContentDto {
   final ImageDto? image;
 
   ImageHistoryDto._fromMap(Map<String, dynamic> payload)
-      : this.image = payload['url'] == null ? null : ImageDto.fromMap(payload),
-        super._(kind: payload['kind']!);
+      : image = payload['url'] == null ? null : ImageDto.fromMap(payload),
+        super._(kind: payload['kind']! as String);
 }
