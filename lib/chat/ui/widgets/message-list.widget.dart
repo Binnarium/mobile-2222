@@ -8,11 +8,11 @@ import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/message.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:provider/provider.dart';
 
 import 'chat-text-description.widget.dart';
 
 class MessagesList extends StatefulWidget {
-  final Stream<List<MessageModel>> messagesStream;
   final ScrollController scrollController;
   final ChatModel chatModel;
 
@@ -20,7 +20,6 @@ class MessagesList extends StatefulWidget {
     Key? key,
     required ChatModel chatModel,
   })  : this.chatModel = chatModel,
-        this.messagesStream = ListMessagesService.instance.list$(chatModel),
         this.scrollController = ScrollController(),
         super(key: key);
 
@@ -32,10 +31,14 @@ class _MessagesListState extends State<MessagesList> {
   List<MessageModel>? messages;
   StreamSubscription? _messagesSub;
 
+  ListMessagesService get _listMessagesService =>
+      Provider.of<ListMessagesService>(context, listen: false);
+
   @override
   void initState() {
     super.initState();
-    _messagesSub = this.widget.messagesStream.listen((event) {
+    _messagesSub =
+        _listMessagesService.list$(this.widget.chatModel).listen((event) {
       /// add new messages
       this.setState(() => this.messages = event);
       Timer(Duration(milliseconds: 500), () {

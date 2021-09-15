@@ -1,34 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CurrentPlayerService {
-  /// singleton instance
-  static CurrentPlayerService? _instance;
-
-  /// base constructor
-  CurrentPlayerService._();
-
-  /// singleton instance constructor
-  static CurrentPlayerService get instance {
-    if (CurrentPlayerService._instance == null)
-      CurrentPlayerService._instance = CurrentPlayerService._();
-    return CurrentPlayerService._instance!;
-  }
+  CurrentPlayerService(BuildContext context);
 
   /// services
-  final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
-  final FirebaseAuth _fAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<PlayerModel?> get player$ => this
-      ._fAuth
+      ._auth
       .userChanges()
 
       /// point to player document
       .map((user) => user == null
           ? null
-          : this._fFirestore.collection('players').doc(user.uid))
+          : this._firestore.collection('players').doc(user.uid))
 
       /// turn document to stream of player snapshots
       .switchMap((playerDoc) =>

@@ -45,7 +45,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: player.contributionsAwards.length,
           label: 'Manifiesto -\nWiki'.toUpperCase(),
           image: CoinsImages.contribution(),
-          numberColor: Colors2222.grey,
+          numberColor: Colors2222.darkGrey,
         ),
 
         SizedBox(height: 25),
@@ -54,7 +54,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: player.clubhouseAwards.length,
           label: 'Eventos Clubhouse'.toUpperCase(),
           image: CoinsImages.clubhouse(),
-          numberColor: Colors2222.grey,
+          numberColor: Colors2222.darkGrey,
         ),
         SizedBox(height: 25),
 
@@ -62,7 +62,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: player.projectAwards.length,
           label: 'Proyecto Personal'.toUpperCase(),
           image: CoinsImages.project(),
-          numberColor: Colors2222.grey,
+          numberColor: Colors2222.darkGrey,
         ),
         SizedBox(height: 25),
 
@@ -70,7 +70,7 @@ class PlayerGamification extends StatelessWidget {
           numberOfMedals: player.hackatonAwards.length,
           label: 'Maratón Proyectos'.toUpperCase(),
           image: CoinsImages.hackaton(),
-          numberColor: Colors2222.grey,
+          numberColor: Colors2222.darkGrey,
         ),
       ],
     );

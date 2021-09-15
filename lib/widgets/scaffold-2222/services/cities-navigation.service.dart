@@ -12,8 +12,8 @@ import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
@@ -131,11 +131,11 @@ class CityNavigator {
         ///medals Hackaton
         if (enabledPagesDto.activities && enabledPagesDto.hackatonMedals)
           ScaffoldRouteBuilder(
-            route: MedalsMaratonScreen.route,
+            route: ProjectAwardsProject.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              MedalsMaratonScreen.route,
-              arguments: MedalsMaratonScreen(city: city),
+              ProjectAwardsProject.route,
+              arguments: ProjectAwardsProject(city: city),
             ),
           ),
       ];

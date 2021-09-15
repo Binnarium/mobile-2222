@@ -16,8 +16,8 @@ import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
+import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/city-medals-hackaton.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
@@ -34,8 +34,8 @@ import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 
-class Lab2222Routes extends MaterialPageRoute {
-  Lab2222Routes(RouteSettings settings)
+class Lab2222Routing extends MaterialPageRoute<Widget> {
+  Lab2222Routing(RouteSettings settings)
       : super(
           builder: (context) {
             switch (settings.name) {
@@ -196,9 +196,9 @@ class Lab2222Routes extends MaterialPageRoute {
                   city: args.city,
                 );
 
-              case MedalsMaratonScreen.route:
-                final args = settings.arguments as MedalsMaratonScreen;
-                return MedalsMaratonScreen(
+              case ProjectAwardsProject.route:
+                final args = settings.arguments as ProjectAwardsProject;
+                return ProjectAwardsProject(
                   city: args.city,
                 );
 

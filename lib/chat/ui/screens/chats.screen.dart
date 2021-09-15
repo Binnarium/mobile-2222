@@ -24,24 +24,20 @@ import 'package:provider/provider.dart';
 class ChatsScreen extends StatefulWidget {
   static const route = "/chats";
 
-  final Stream<List<ChatModel>> userChats;
-
-  ChatsScreen({Key? key})
-      : this.userChats = ListPlayerChatsService.instance.chats$,
-        super(key: key);
+  ChatsScreen({Key? key}) : super(key: key);
 
   @override
   _ChatsScreenState createState() => _ChatsScreenState();
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  StreamSubscription? _chatsSub;
-
   List<ChatModel>? allChats;
 
   /// list of chats founds
   List<PlayerModel>? foundPlayers;
+
   StreamSubscription? _createChatSub;
+  StreamSubscription? _chatsSub;
 
   CreatePersonalChatService get _createPersonalChatService =>
       Provider.of<CreatePersonalChatService>(this.context, listen: false);
@@ -49,12 +45,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
   GetChatService get _getChatService =>
       Provider.of<GetChatService>(this.context, listen: false);
 
+  ListPlayerChatsService get _listPlayerChatsService =>
+      Provider.of<ListPlayerChatsService>(context, listen: false);
+
   @override
   void initState() {
     super.initState();
-    _chatsSub = this
-        .widget
-        .userChats
+    _chatsSub = _listPlayerChatsService.chats$
         .listen((event) => this.setState(() => this.allChats = event));
   }
 
@@ -161,7 +158,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
           /// load chat
           final ChatModel? chat =
-              await _getChatService.getChat(response.chatId!);
+              await _getChatService.getChatWithId(response.chatId!);
           if (chat == null) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(ChatSnackbar.chatNotFound());

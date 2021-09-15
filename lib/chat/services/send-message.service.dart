@@ -1,26 +1,24 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:provider/provider.dart';
 
 class SendMessagesService {
-  /// singleton
-  static SendMessagesService? _instance;
+  final CurrentPlayerService _currentPlayerService;
 
-  static SendMessagesService get instance {
-    if (SendMessagesService._instance == null)
-      SendMessagesService._instance = SendMessagesService();
-    return SendMessagesService._instance!;
-  }
+  final FirebaseFirestore _fFirestore;
 
-  FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
-
-  Stream<PlayerModel?> _player$ = CurrentPlayerService.instance.player$;
+  SendMessagesService(BuildContext context)
+      : _currentPlayerService =
+            Provider.of<CurrentPlayerService>(context, listen: false),
+        _fFirestore = FirebaseFirestore.instance;
 
   Stream<bool> text$(ChatModel chat, String content) {
     return this._sendMessage(
@@ -81,7 +79,7 @@ class SendMessagesService {
     required ChatModel chat,
     required MessageModel Function(PlayerModel) createMessageCallback,
   }) {
-    return this._player$.take(1).asyncMap<bool>(
+    return this._currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
         if (user == null) return false;
 

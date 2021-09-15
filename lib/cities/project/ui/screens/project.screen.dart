@@ -8,8 +8,8 @@ import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart'
 import 'package:lab_movil_2222/cities/project/services/load-project-files.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -54,7 +54,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     userUID = FirebaseAuth.instance.currentUser!.uid;
 
     /// called service to load the next chapter
-   CitiesService loader = CitiesService();
+    CitiesService loader = CitiesService();
 
     /// load the provider to load the projectDTO
     LoadProjectDtoService loadProjectDtoService =
@@ -107,8 +107,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     );
   }
 
-  _projectSheet(BuildContext context, Size size, Color color, String? userUID,
-      List<PlayerProject>? playerProjects) {
+  Widget _projectSheet(BuildContext context, Size size, Color color,
+      String? userUID, List<PlayerProject>? playerProjects) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final horizontalPadding =
         EdgeInsets.symmetric(horizontal: size.width * 0.08);
@@ -226,7 +226,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   }
 }
 
-_taskButton(BuildContext context, color, CityModel city) {
+Widget _taskButton(BuildContext context, Color color, CityModel city) {
   double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -266,14 +266,11 @@ class UploadFileDialog extends StatefulWidget {
   final Color color;
   final CityModel city;
 
-  final UploadProjectService _uploadProjectService;
-
   UploadFileDialog({
     Key? key,
     required this.color,
     required this.city,
-  })  : this._uploadProjectService = UploadProjectService(),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
@@ -282,16 +279,21 @@ class UploadFileDialog extends StatefulWidget {
 class _UploadFileDialogState extends State<UploadFileDialog> {
   StreamSubscription? _userServiceSub;
   StreamSubscription? _uploadFileSub;
-  PlayerModel? player;
+  PlayerModel? currentPlayer;
+
+  CurrentPlayerService get _currentPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
+
+  UploadProjectService get _uploadProjectService =>
+      Provider.of<UploadProjectService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-    this._userServiceSub =
-        CurrentPlayerService.instance.player$.listen((event) {
-      this.player = event;
-      setState(() {});
-      print('PLAYER ES: ${player!.displayName} ${player!.uid}');
+    this._userServiceSub = _currentPlayerService.player$.listen((player) {
+      setState(() {
+        this.currentPlayer = player;
+      });
     });
   }
 
@@ -342,18 +344,16 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         Provider.of<UploadFileService>(context, listen: false);
 
     this._uploadFileSub = uploadFileService
-        .uploadFile$('players/${player!.uid}/${this.widget.city.name}/',
+        .uploadFile$('players/${currentPlayer!.uid}/${this.widget.city.name}/',
             this.widget.city)
-        .switchMap((projectFile) => this
-            .widget
-            ._uploadProjectService
-            .project$(this.widget.city, projectFile))
+        .switchMap((projectFile) =>
+            _uploadProjectService.project$(this.widget.city, projectFile))
         .listen((sended) {
       if (sended) {
         bool medalFound = false;
 
         /// seeks for all medals in the medals array
-        player!.projectAwards.asMap().forEach((key, value) {
+        currentPlayer!.projectAwards.asMap().forEach((key, value) {
           if (value.cityId == this.widget.city.name) {
             medalFound = true;
             print('hay medalla');
@@ -363,7 +363,8 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         /// if there is no medal with the city name, creates new one
         if (!medalFound) {
           print('no hay medalla');
-          UploadProjectService.writeMedal(player!.uid, this.widget.city.name);
+          UploadProjectService.writeMedal(
+              currentPlayer!.uid, this.widget.city.name);
         }
       }
     }, onDone: () {

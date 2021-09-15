@@ -1,58 +1,60 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/player/ui/widgets/participants-list-medals.widget.dart';
-import 'package:lab_movil_2222/models/city.dto.dart';
-import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/chat/ui/widgets/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/services/list-player-group.service.dart';
+import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
+import 'package:lab_movil_2222/player/ui/widgets/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
-final String explanationText = """
+const String explanationText = '''
 Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colegas que consideras haya hecho el proyecto personal más innovador y mejor desarrollado de todos.
 
 1. Elige al viajero que consideras haya tenido mejor desempeño en su proyecto.
 2. Otórgale el premio a esa persona.
 3. Ese premio se visualizará en la página personal del viajero.
-""";
+''';
 
-
-class MedalsMaratonScreen extends StatefulWidget {
+class ProjectAwardsProject extends StatefulWidget {
   static const route = '/medals-maraton';
 
-
-  final Stream<List<PlayerModel>> playerGroup;
   final CityModel city;
 
-  MedalsMaratonScreen({Key? key, required this.city})
-      : this.playerGroup = ListPlayerGroupService.instance.players$,
-        super(key: key);
+  ProjectAwardsProject({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
 
   @override
-  _MedalsMaratonScreenState createState() => _MedalsMaratonScreenState();
+  _ProjectAwardsProjectState createState() => _ProjectAwardsProjectState();
 }
 
-class _MedalsMaratonScreenState extends State<MedalsMaratonScreen> {
-  List<PlayerModel>? foundPlayers;
-
+class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
+  ///
   StreamSubscription? _groupSub;
 
+  ///
   List<PlayerModel>? allPlayers;
+
+  ///
+  List<PlayerModel>? foundPlayers;
+
+  ListPlayerOfGroupService get _playersGroupService =>
+      Provider.of<ListPlayerOfGroupService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-    _groupSub = this
-        .widget
-        .playerGroup
-        .listen((event) => this.setState(() => this.allPlayers = event));
+    _groupSub = this._playersGroupService.group$.listen(
+          (players) => this.setState(() => allPlayers = players),
+        );
   }
 
   @override
@@ -70,35 +72,30 @@ class _MedalsMaratonScreenState extends State<MedalsMaratonScreen> {
     return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
-      route: MedalsMaratonScreen.route,
+      route: ProjectAwardsProject.route,
       body: ListView(
         children: [
           /// icon item
           Padding(
-            padding: EdgeInsets.only(
-              bottom: 32.0,
-            ),
-            child: LogosHeader(
-              showStageLogoCity: this.widget.city,
-            ),
+            padding: EdgeInsets.only(bottom: 32.0),
+            child: LogosHeader(showStageLogoCity: this.widget.city),
           ),
 
-          ///
-          Padding(
+          /// title
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: min(size.width * 0.8, 300),
+            ),
             padding: const EdgeInsets.only(bottom: 24),
-            child: Center(
-              child: Text(
-
-                "Premiación de Proyectos",
-
-                style: textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.center,
-              ),
+            alignment: Alignment.center,
+            child: Text(
+              'Premiación de Proyectos'.toUpperCase(),
+              style: textTheme.headline4,
+              textAlign: TextAlign.center,
             ),
           ),
 
+          /// medal
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
             child: Center(

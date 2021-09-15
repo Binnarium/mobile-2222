@@ -16,12 +16,16 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class AddClubhouseScreen extends StatefulWidget {
   static const String route = '/add-clubhouse';
   final CityModel city;
 
-  const AddClubhouseScreen({Key? key, required this.city}) : super(key: key);
+  const AddClubhouseScreen({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
 
   @override
   _AddClubhouseScreenState createState() => _AddClubhouseScreenState();
@@ -33,10 +37,14 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
   List<ClubhouseModel>? clubhouses;
   final TextEditingController _addClubhouseController = TextEditingController();
 
+  LoadUserClubhouseService get _loadUserClubhouseService =>
+      Provider.of<LoadUserClubhouseService>(context, listen: false);
+
   @override
   void initState() {
     super.initState();
-    this.clubhousesSub = LoadUserClubhouse(this.widget.city).listen((event) {
+    this.clubhousesSub =
+        this._loadUserClubhouseService.load$(this.widget.city).listen((event) {
       this.setState(() {
         this.clubhouses = event;
       });

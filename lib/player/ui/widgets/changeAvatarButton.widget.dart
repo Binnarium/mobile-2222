@@ -5,20 +5,16 @@ import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
 import 'package:provider/provider.dart';
-
 import 'package:rxdart/rxdart.dart';
 
 class ChangeAvatarButton extends StatefulWidget {
   /// player is required to avoid charging again the player service stream
   final PlayerModel player;
 
-  final UpdateAvatarService _updateAvatarService;
-
   ChangeAvatarButton({
     Key? key,
     required this.player,
-  })  : this._updateAvatarService = UpdateAvatarService(),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _ChangeAvatarButtonState createState() => _ChangeAvatarButtonState();
@@ -26,6 +22,9 @@ class ChangeAvatarButton extends StatefulWidget {
 
 class _ChangeAvatarButtonState extends State<ChangeAvatarButton> {
   StreamSubscription? _uploadFileSub;
+
+  UpdateAvatarService get _updateAvatarService =>
+      Provider.of<UpdateAvatarService>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +50,8 @@ class _ChangeAvatarButtonState extends State<ChangeAvatarButton> {
 
     this._uploadFileSub = uploadImageService
         .upload$('players/${this.widget.player.uid}/assets')
-        .switchMap((image) =>
-            this.widget._updateAvatarService.updateAvatar$(image, oldUrl))
+        .switchMap(
+            (image) => this._updateAvatarService.updateAvatar$(image, oldUrl))
         .listen((sended) {
       if (sended) print('Imagen cambiada correctamente');
     }, onDone: () {

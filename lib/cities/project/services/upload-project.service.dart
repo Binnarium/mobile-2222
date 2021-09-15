@@ -1,24 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:provider/provider.dart';
 
 class UploadProjectService {
-  /// singleton
-  static UploadProjectService? _instance;
+  final CurrentPlayerService _currentPlayerService;
 
-  static UploadProjectService get instance {
-    if (UploadProjectService._instance == null)
-      UploadProjectService._instance = UploadProjectService();
-    return UploadProjectService._instance!;
-  }
+  final FirebaseFirestore _fFirestore;
 
-  Stream<PlayerModel?> _player$ = CurrentPlayerService.instance.player$;
-
-  FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
+  UploadProjectService(BuildContext context)
+      : _currentPlayerService =
+            Provider.of<CurrentPlayerService>(context, listen: false),
+        _fFirestore = FirebaseFirestore.instance;
 
   Stream<bool> project$(CityModel city, ProjectFileDto file) {
     return this._uploadProject(
@@ -35,7 +33,7 @@ class UploadProjectService {
   Stream<bool> _uploadProject({
     required PlayerProject Function(PlayerModel) createMessageCallback,
   }) {
-    return this._player$.take(1).asyncMap<bool>(
+    return this._currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
         if (user == null) return false;
 
@@ -72,7 +70,7 @@ class UploadProjectService {
     Map<String, dynamic> medal = {
       'cityId': cityRef,
       'obtained': true,
-      'obtainedDate': Timestamp.now()
+      'obtainedDate': Timestamp.now(),
     };
 
     await FirebaseFirestore.instance.collection('players').doc(userUID).update(
