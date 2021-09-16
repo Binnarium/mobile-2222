@@ -118,13 +118,13 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               case StageArgumentationScreen.route:
                 final args = settings.arguments as StageArgumentationScreen;
                 return StageArgumentationScreen(
-                  chapterSettings: args.chapterSettings,
+                  city: args.city,
                 );
 
               case StageObjetivesScreen.route:
                 final args = settings.arguments as StageObjetivesScreen;
                 return StageObjetivesScreen(
-                  chapterSettings: args.chapterSettings,
+                  city: args.city,
                 );
 
               case ContentScreen.route:

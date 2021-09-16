@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-introductory-video.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
@@ -38,39 +37,39 @@ class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
     super.initState();
 
     LoadCityIntroductoryVideoService loadIntroductoryVideoService =
-        Provider.of<LoadCityIntroductoryVideoService>(this.context,
-            listen: false);
+        Provider.of<LoadCityIntroductoryVideoService>(context, listen: false);
 
-    this._loadIntroductoryVideoSub =
-        loadIntroductoryVideoService.load$(this.widget.city).listen(
+    _loadIntroductoryVideoSub =
+        loadIntroductoryVideoService.load$(widget.city).listen(
       (introductoryVideoDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.introductoryVideo = introductoryVideoDto;
+        if (mounted) {
+          setState(() {
+            introductoryVideo = introductoryVideoDto;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadIntroductoryVideoSub?.cancel();
+    _loadIntroductoryVideoSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: IntroductoryVideoScreen.route,
       body: Stack(
         children: <Widget>[
           Center(child: AppLoading()),
-          if (this.introductoryVideo != null)
+          if (introductoryVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(
-                this.introductoryVideo!.video.url,
+                introductoryVideo!.video.url,
               ),
             ),
         ],

@@ -37,23 +37,24 @@ class _ContentScreenState extends State<ContentScreen> {
     super.initState();
 
     LoadContentsScreenInformationService loadContentsService =
-        Provider.of<LoadContentsScreenInformationService>(this.context,
+        Provider.of<LoadContentsScreenInformationService>(context,
             listen: false);
 
-    // loadContentsService.load$(this.widget.city);
-    this._loadContentsSub = loadContentsService.load$(this.widget.city).listen(
+    // loadContentsService.load$(widget.city);
+    _loadContentsSub = loadContentsService.load$(widget.city).listen(
       (cityContents) {
-        if (this.mounted)
-          this.setState(() {
-            this.contents = cityContents;
+        if (mounted) {
+          setState(() {
+            contents = cityContents;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadContentsSub?.cancel();
+    _loadContentsSub?.cancel();
     super.dispose();
   }
 
@@ -61,14 +62,14 @@ class _ContentScreenState extends State<ContentScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ContentScreen.route,
       body: _stageVideoContent(size, context),
     );
   }
 
-  _stageVideoContent(Size size, BuildContext context) {
+  Container _stageVideoContent(Size size, BuildContext context) {
     ///sizing the container to the mobile
     return Container(
       /// builds an initial Listview with the banner at first element
@@ -76,7 +77,7 @@ class _ContentScreenState extends State<ContentScreen> {
         children: [
           ///calls the head of the chapter (logo leaf, banner)
           LogosHeader(
-            showStageLogoCity: this.widget.city,
+            showStageLogoCity: widget.city,
           ),
           SizedBox(height: 20),
 
@@ -88,23 +89,23 @@ class _ContentScreenState extends State<ContentScreen> {
   }
 
   /// method that returns List<Widget> from firestore depending on content (video, podcast)
-  _pageContent(Size size) {
+  RenderObjectWidget _pageContent(Size size) {
     final double sidePadding = size.width * 0.08;
 
-    if (contents == null)
+    if (contents == null) {
       return Center(
         child: AppLoading(),
       );
-    else
+    } else {
       return Column(
         children: [
-          for (ContentDto c in this.contents!) ...[
+          for (ContentDto c in contents!) ...[
             if (c is VideoContentDto) ...[
               Padding(
                 padding: EdgeInsets.only(
                   bottom: 32,
                 ),
-                child: _titleContainer(size, c.author, c.title, " - vídeo"),
+                child: _titleContainer(size, c.author, c.title, ' - vídeo'),
               ),
 
               /// text content
@@ -135,7 +136,7 @@ class _ContentScreenState extends State<ContentScreen> {
                 padding: EdgeInsets.only(
                   bottom: 32,
                 ),
-                child: _titleContainer(size, c.author, c.title, " - podcast"),
+                child: _titleContainer(size, c.author, c.title, ' - podcast'),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -143,9 +144,7 @@ class _ContentScreenState extends State<ContentScreen> {
                   left: sidePadding,
                   bottom: 32,
                 ),
-                child: (c.description == null)
-                    ? Text('No description Available')
-                    : Markdown2222(data: c.description),
+                child: Markdown2222(data: c.description),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -162,9 +161,11 @@ class _ContentScreenState extends State<ContentScreen> {
           ],
         ],
       );
+    }
   }
 
-  _titleContainer(Size size, String? author, String? title, String kind) {
+  Container _titleContainer(
+      Size size, String? author, String? title, String kind) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       color: Colors2222.white,

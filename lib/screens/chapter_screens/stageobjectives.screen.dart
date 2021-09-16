@@ -12,10 +12,9 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
   static const String route = '/objectives';
-  final CityModel chapterSettings;
+  final CityModel city;
 
-  const StageObjetivesScreen({Key? key, required this.chapterSettings})
-      : super(key: key);
+  const StageObjetivesScreen({Key? key, required this.city}) : super(key: key);
 
   @override
   _StageObjectivesScreenState createState() => _StageObjectivesScreenState();
@@ -36,15 +35,15 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold2222(
-      city: this.widget.chapterSettings,
+    return Scaffold2222.city(
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageObjetivesScreen.route,
       body: _stageBody(size),
     );
   }
 
-  _stageBody(Size size) {
+  Container _stageBody(Size size) {
     double bodyContainerHeight = size.height * 0.75;
 
     double spacedBodyContainers = bodyContainerHeight * 0.035;
@@ -59,7 +58,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       child: ListView(
         children: <Widget>[
           LogosHeader(
-            showStageLogoCity: this.widget.chapterSettings,
+            showStageLogoCity: widget.city,
           ),
           SizedBox(height: spacedBodyContainers),
           ChapterTitleSection(
@@ -84,7 +83,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     );
   }
 
-  _objetBody(Size size) {
+  Container _objetBody(Size size) {
     return Container(
         // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
 
@@ -99,8 +98,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             if (objective.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    this.widget.chapterSettings.color,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    widget.city.color,
                   ),
                 ),
               );
@@ -112,7 +111,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
         ));
   }
 
-  _ideasBody(Size size) {
+  Container _ideasBody(Size size) {
     ///main container
     return Container(
       ///general left padding 25
@@ -132,8 +131,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             if (contents.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    this.widget.chapterSettings.color,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    widget.city.color,
                   ),
                 ),
               );
@@ -144,14 +143,15 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                 itemCount: contents.data?.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  final texto = contents.data!.elementAt(index);
+                  final String texto =
+                      contents.data!.elementAt(index) as String;
                   return IdeaResourcesListItem(description: texto);
                 });
           }),
     );
   }
 
-  _compeBody(Size size) {
+  Container _compeBody(Size size) {
     ///main container
     return Container(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
@@ -169,8 +169,8 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
           if (compe.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  this.widget.chapterSettings.color,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  widget.city.color,
                 ),
               ),
             );
@@ -204,7 +204,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     String contentsTemp = "";
     await FirebaseFirestore.instance
         .collection('cities')
-        .doc(this.widget.chapterSettings.id)
+        .doc(widget.city.id)
         .collection('pages')
         .doc('objective')
         .get()
@@ -223,7 +223,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   Future<List<CompetenceModel>> _readCompetences() async {
     DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
         .collection('cities')
-        .doc(this.widget.chapterSettings.id)
+        .doc(widget.city.id)
         .collection('pages')
         .doc('objective')
         .get();
@@ -233,11 +233,13 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
       //to access to firebase reference
       List<Future<CompetenceModel>> ideasRef =
           (data['competences'] as List<dynamic>)
-              .map((e) => e as DocumentReference)
+              .map((dynamic e) => e as DocumentReference)
               .map((e) async {
         final payload = await e.get();
 
-        return CompetenceModel(name: payload['name'], image: payload['image']);
+        return CompetenceModel(
+            name: payload['name'] as String,
+            image: payload['image'] as Map<String, dynamic>);
       }).toList();
 
       return await Future.wait(ideasRef);
@@ -247,17 +249,17 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   Future<List<dynamic>> _readIdea() async {
-    List<dynamic> ideaTemp = [];
+    List<dynamic> ideaTemp = <dynamic>[];
     await FirebaseFirestore.instance
         .collection('cities')
-        .doc(this.widget.chapterSettings.id)
+        .doc(widget.city.id)
         .collection('pages')
         .doc('objective')
         .get()
         .then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          ideaTemp = documentSnapshot.get('ideas');
+          ideaTemp = documentSnapshot.get('ideas') as List<dynamic>;
         }
       },
     );
