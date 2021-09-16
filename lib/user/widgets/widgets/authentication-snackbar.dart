@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 
-/// TODO:_add docs
+/// Snackbar that is used to inform the user the state of the login function
 class AuthenticationSnackbar extends SnackBar {
-  /// TODO:_add docs
+  /// This snackbar will appear if occurs an undefined error
   AuthenticationSnackbar.somethingWentWrong({Key? key})
       : super(
           key: key,
           content: Text('Ocurrió un error, lo sentimos, vuelve a intentarlo'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the password of the user is too weak
   AuthenticationSnackbar.weakPassword({Key? key})
       : super(
           key: key,
@@ -19,21 +19,21 @@ class AuthenticationSnackbar extends SnackBar {
               Text('Tu contraseña es muy devil, ingresa una nueva contraseña'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the user is not registered
   AuthenticationSnackbar.notInscribed({Key? key})
       : super(
           key: key,
           content: Text('No estas inscrito para acceder al recorrido'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the account of the user is not created
   AuthenticationSnackbar.accountNotRegistered({Key? key})
       : super(
           key: key,
           content: Text('No se pudo crear la cuenta, vuelve a intentarlo'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the the user is registered
   AuthenticationSnackbar.alreadyRegistered({
     required BuildContext context,
     Key? key,
@@ -47,7 +47,7 @@ class AuthenticationSnackbar extends SnackBar {
           ),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the user doesn't have an account
   AuthenticationSnackbar.notRegistered({
     required BuildContext context,
     Key? key,
@@ -61,7 +61,7 @@ class AuthenticationSnackbar extends SnackBar {
           ),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the user inserts a wrong email pattern
   AuthenticationSnackbar.invalidEmail({
     Key? key,
   }) : super(
@@ -69,7 +69,7 @@ class AuthenticationSnackbar extends SnackBar {
           content: Text('Correo electrónico no valido'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the user is not in the Database
   AuthenticationSnackbar.playerNotFound({
     Key? key,
   }) : super(
@@ -77,7 +77,7 @@ class AuthenticationSnackbar extends SnackBar {
           content: Text('No se encontro información del jugador'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the account is deactivated
   AuthenticationSnackbar.disabledAccount({
     Key? key,
   }) : super(
@@ -85,7 +85,7 @@ class AuthenticationSnackbar extends SnackBar {
           content: Text('Esta cuenta esta desactivada'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the password is wrong
   AuthenticationSnackbar.wrongPassword({
     Key? key,
   }) : super(
@@ -93,7 +93,7 @@ class AuthenticationSnackbar extends SnackBar {
           content: Text('Tu contraseña es incorrecta'),
         );
 
-  /// TODO:_add docs
+  /// This snackbar will appear if the login is successful
   AuthenticationSnackbar.welcome({
     required String displayName,
     Key? key,

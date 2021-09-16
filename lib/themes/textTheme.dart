@@ -2,11 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-//Achivo que contiene los themes y fontstyles
-//Font Korolev
-@Deprecated('Use the theme of context utility instead')
-final korolevFont = KorolevFont();
-
+/// Achivo que contiene los themes y fontstyles
+/// Font Korolev
 class KorolevFont extends TextTheme {
   static final String fontFamily = 'Korolev';
 
@@ -50,19 +47,17 @@ class KorolevFont extends TextTheme {
             fontWeight: FontWeight.w700,
           ),
           subtitle1: TextStyle(
-            fontFamily: fontFamily,
-            fontSize: 16,
-            color: textColor,
-            fontWeight: FontWeight.w700,
-            height: 1.1
-          ),
+              fontFamily: fontFamily,
+              fontSize: 16,
+              color: textColor,
+              fontWeight: FontWeight.w700,
+              height: 1.1),
           subtitle2: TextStyle(
-            fontFamily: fontFamily,
-            fontSize: 14,
-            color: textColor,
-            fontWeight: FontWeight.w700,
-            height: 1.1
-          ),
+              fontFamily: fontFamily,
+              fontSize: 14,
+              color: textColor,
+              fontWeight: FontWeight.w700,
+              height: 1.1),
           bodyText1: TextStyle(
             fontFamily: fontFamily,
             fontSize: 16,

@@ -34,11 +34,10 @@ class RegisterService extends IRegisterService {
   Future<PlayerModel> register(RegisterFormModel formModel) async {
     /// get player inscription information
     final PlayerInscription playerInscribed =
-        await this._getInscription(formModel.email);
+        await _getInscription(formModel.email);
 
     /// create account
-    final User user =
-        await this._createAccount(formModel.email, formModel.password);
+    final User user = await _createAccount(formModel.email, formModel.password);
 
     /// create new player account
     final PlayerModel newPlayer = PlayerModel.empty(
@@ -48,7 +47,7 @@ class RegisterService extends IRegisterService {
     );
 
     /// create player
-    await this._createPlayer(newPlayer);
+    await _createPlayer(newPlayer);
 
     /// return new created player
     return newPlayer;
@@ -57,23 +56,23 @@ class RegisterService extends IRegisterService {
   /// check for a inscribed player registry at the collection
   Future<PlayerInscription> _getInscription(String email) async {
     final payload =
-        await this._fFirestore.collection('inscribed-players').doc(email).get();
+        await _fFirestore.collection('inscribed-players').doc(email).get();
 
-    if (!payload.exists)
+    if (!payload.exists) {
       throw RegisterException(RegisterErrorCode.notInscribed);
+    }
 
     return PlayerInscription(
-      email: payload.data()!['email'],
-      lastName: payload.data()!['lastName'],
-      name: payload.data()!['name'],
+      email: payload.data()!['email'] as String,
+      lastName: payload.data()!['lastName'] as String,
+      name: payload.data()!['name'] as String,
     );
   }
 
   /// add player to database
   Future<void> _createPlayer(PlayerModel player) async {
     try {
-      await this
-          ._fFirestore
+      await _fFirestore
           .collection('players')
           .doc(player.uid)
           .set(player.toMap());
@@ -90,24 +89,27 @@ class RegisterService extends IRegisterService {
     UserCredential? credentials;
 
     try {
-      credentials = await this._fAuth.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+      credentials = await _fAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use')
+      if (e.code == 'email-already-in-use') {
         throw RegisterException(RegisterErrorCode.emailAlreadyInUse);
+      }
 
-      if (e.code == 'weak-password')
+      if (e.code == 'weak-password') {
         throw RegisterException(RegisterErrorCode.weakPassword);
+      }
 
       /// unhandled firebase error
       print(e.code);
       throw RegisterException(RegisterErrorCode.other);
     }
 
-    if (credentials.user == null)
+    if (credentials.user == null) {
       throw RegisterException(RegisterErrorCode.notCreated);
+    }
 
     return credentials.user!;
   }

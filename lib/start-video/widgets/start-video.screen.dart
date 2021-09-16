@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/interfaces/i-load-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/start-video/model/start-video.model.dart';
@@ -31,21 +30,22 @@ class _StartVideoScreenState extends State<StartVideoScreen> {
     super.initState();
 
     LoadStartVideoService loadStartVideoService =
-        Provider.of<LoadStartVideoService>(this.context, listen: false);
+        Provider.of<LoadStartVideoService>(context, listen: false);
 
-    this._loadStartVideoModel = loadStartVideoService.load$().listen(
+    _loadStartVideoModel = loadStartVideoService.load$().listen(
       (startVideoModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.startVideo = startVideoModel;
+        if (mounted) {
+          setState(() {
+            startVideo = startVideoModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadStartVideoModel?.cancel();
+    _loadStartVideoModel?.cancel();
     super.dispose();
   }
 
@@ -58,14 +58,14 @@ class _StartVideoScreenState extends State<StartVideoScreen> {
           Center(child: AppLoading()),
 
           /// background video
-          if (this.startVideo != null)
+          if (startVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(
-                this.startVideo!.video.url,
+                startVideo!.video.url,
               ),
               lopping: false,
-              onComplete: () => this.navigateNextPage(context),
-              onPressed: () => this.navigateNextPage(context),
+              onComplete: () => navigateNextPage(context),
+              onPressed: () => navigateNextPage(context),
             ),
         ],
       ),
