@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';

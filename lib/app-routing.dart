@@ -63,9 +63,6 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               case HomeScreen.route:
                 return HomeScreen();
 
-              case StatisticsScreen.route:
-                return StatisticsScreen();
-
               case ProfileScreen.route:
                 return ProfileScreen();
 

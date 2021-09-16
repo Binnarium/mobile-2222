@@ -17,12 +17,12 @@ class TextFormField222 extends StatelessWidget {
   /// validator function
   final String? Function(String?)? validator;
 
-  /// TODO: add docs
+  /// icon at the beginning of the textfield
   final IconData? prefixIcon;
 
   final Color primaryColor;
 
-  /// TODO: add docs
+  /// Controller of the textField
   final TextEditingController? controller;
 
   final bool showEnabledBorder;
@@ -38,7 +38,7 @@ class TextFormField222 extends StatelessWidget {
     this.controller,
     Color? primaryColor,
     this.showEnabledBorder = false,
-  })  : this.primaryColor = primaryColor ?? Colors2222.red,
+  })  : primaryColor = primaryColor ?? Colors2222.red,
         super(key: key);
 
   TextFormField222.password({
@@ -49,9 +49,9 @@ class TextFormField222 extends StatelessWidget {
     this.controller,
     this.validator,
     this.primaryColor = Colors2222.red,
-  })  : this.keyboardType = TextInputType.name,
-        this.showEnabledBorder = false,
-        this.obscureText = true,
+  })  : keyboardType = TextInputType.name,
+        showEnabledBorder = false,
+        obscureText = true,
         super(key: key);
 
   @override
@@ -61,14 +61,14 @@ class TextFormField222 extends StatelessWidget {
     final BorderRadius borderRadius = BorderRadius.circular(4);
 
     return TextFormField(
-      controller: this.controller,
-      obscureText: this.obscureText,
-      onChanged: this.onValueChanged,
-      validator: this.validator,
-      keyboardType: this.keyboardType,
+      controller: controller,
+      obscureText: obscureText,
+      onChanged: onValueChanged,
+      validator: validator,
+      keyboardType: keyboardType,
 
       /// decorate input to match 2222 style
-      cursorColor: this.primaryColor,
+      cursorColor: primaryColor,
 
       /// style inner text
       style: inputStyle.copyWith(color: Colors2222.black),
@@ -78,15 +78,15 @@ class TextFormField222 extends StatelessWidget {
         /// label text
         ///
         /// when focus disable floating effect
-        labelText: this.label,
+        labelText: label,
         floatingLabelBehavior: FloatingLabelBehavior.never,
 
         /// icon decoration
-        prefixIcon: (this.prefixIcon == null)
+        prefixIcon: (prefixIcon == null)
             ? null
             : Icon(
-                this.prefixIcon,
-                color: this.primaryColor,
+                prefixIcon,
+                color: primaryColor,
               ),
 
         /// style background
@@ -108,7 +108,7 @@ class TextFormField222 extends StatelessWidget {
         ),
 
         /// show border when not focused
-        enabledBorder: (this.showEnabledBorder)
+        enabledBorder: (showEnabledBorder)
             ? OutlineInputBorder(
                 borderRadius: borderRadius,
                 borderSide: BorderSide(color: Colors2222.black),

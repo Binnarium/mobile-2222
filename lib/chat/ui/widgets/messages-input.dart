@@ -157,6 +157,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
           ChatSnackbarMessages.textNotSended(),
         );
       }
+      // ignore: argument_type_not_assignable_to_error_handler
     }, onError: (Exception error) {
       if (error.runtimeType == ImageNotLoaded) {
         ScaffoldMessenger.of(context).showSnackBar(

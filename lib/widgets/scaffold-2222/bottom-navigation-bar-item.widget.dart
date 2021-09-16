@@ -12,12 +12,10 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
     required this.icon,
     required this.onTap,
     bool active = false,
-  })  : this.iconColor = onTap == null
+  })  : iconColor = onTap == null
 
             /// when inactive color should be back
             ? Colors2222.black
-
-
             : kIsWeb
 
                 /// by default on web, colors are white
@@ -34,12 +32,12 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
       child: Material(
         color: Colors2222.black,
         child: InkWell(
-          onTap: this.onTap,
+          onTap: onTap,
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 12),
             child: ImageIcon(
-              this.icon,
+              icon,
               color: iconColor,
             ),
           ),

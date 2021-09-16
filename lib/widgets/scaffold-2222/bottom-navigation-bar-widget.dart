@@ -43,44 +43,44 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
 
             /// home item
             Lab2222BottomNavigationBarItem(
-              onTap: this.activePage == Lab2222NavigationBarPages.home
+              onTap: activePage == Lab2222NavigationBarPages.home
                   ? () {}
                   : () =>
                       Navigator.pushReplacementNamed(context, HomeScreen.route),
               icon: AssetImage('assets/navbar/boat.png'),
-              active: this.activePage == Lab2222NavigationBarPages.home,
+              active: activePage == Lab2222NavigationBarPages.home,
             ),
 
             /// profile item
             Lab2222BottomNavigationBarItem(
-              onTap: this.activePage == Lab2222NavigationBarPages.profile
+              onTap: activePage == Lab2222NavigationBarPages.profile
                   ? () {}
                   : () => Navigator.pushNamed(context, ProfileScreen.route),
               icon: AssetImage('assets/navbar/user.png'),
-              active: this.activePage == Lab2222NavigationBarPages.profile,
+              active: activePage == Lab2222NavigationBarPages.profile,
             ),
 
             /// information item
             Lab2222BottomNavigationBarItem(
-              onTap: this.activePage == Lab2222NavigationBarPages.information
+              onTap: activePage == Lab2222NavigationBarPages.information
                   ? () {}
                   : () => Navigator.pushNamed(context, WelcomeScreen.route),
               icon: AssetImage('assets/navbar/info.png'),
-              active: this.activePage == Lab2222NavigationBarPages.information,
+              active: activePage == Lab2222NavigationBarPages.information,
             ),
 
             /// chat item
             Lab2222BottomNavigationBarItem(
-              onTap: this.activePage == Lab2222NavigationBarPages.chat
+              onTap: activePage == Lab2222NavigationBarPages.chat
                   ? () {}
                   : () => Navigator.pushNamed(context, ChatsScreen.route),
               icon: AssetImage('assets/navbar/message-square.png'),
-              active: this.activePage == Lab2222NavigationBarPages.chat,
+              active: activePage == Lab2222NavigationBarPages.chat,
             ),
 
             /// text page item
             Lab2222BottomNavigationBarItem(
-              onTap: this.nextPage,
+              onTap: nextPage,
               icon: AssetImage('assets/navbar/chevron-right.png'),
               active: true,
             ),

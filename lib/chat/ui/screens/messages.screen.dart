@@ -7,7 +7,7 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class MessagesScreen extends StatefulWidget {
-  static const route = "/messages";
+  static const route = '/messages';
   final ChatModel chat;
 
   MessagesScreen({

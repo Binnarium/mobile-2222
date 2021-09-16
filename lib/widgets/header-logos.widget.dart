@@ -18,7 +18,7 @@ class LogosHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (this.showAppLogo) AppLogo(kind: AppImage.cityLogo),
+        if (showAppLogo) AppLogo(kind: AppImage.cityLogo),
 
         /// added a container in the middle, so that in the event of any of
         /// the components is not enabled, it gets pushed to the right side using
@@ -26,11 +26,11 @@ class LogosHeader extends StatelessWidget {
         Container(),
 
         /// when a city logo is provided then show the stage logo
-        if (this.showStageLogoCity != null)
+        if (showStageLogoCity != null)
           Flexible(
             child: Container(
               margin: EdgeInsets.only(top: 16, right: size.width * 0.04),
-              child: _CityStageWidget(cityDto: this.showStageLogoCity!),
+              child: _CityStageWidget(cityDto: showStageLogoCity!),
             ),
           ),
       ],
@@ -69,7 +69,7 @@ class _CityStageWidget extends StatelessWidget {
           children: [
             /// stage of the city
             Text(
-              this.cityDto.phaseName,
+              cityDto.phaseName,
               style: textTheme.headline5,
               textAlign: TextAlign.right,
               textScaleFactor: fontSizeFactor,
@@ -77,7 +77,7 @@ class _CityStageWidget extends StatelessWidget {
 
             /// city name
             Text(
-              this.cityDto.name.toUpperCase(),
+              cityDto.name.toUpperCase(),
               textAlign: TextAlign.right,
               style: textTheme.headline6,
               textScaleFactor: fontSizeFactor,
@@ -94,9 +94,9 @@ class _CityStageWidget extends StatelessWidget {
         /// important: images are specked to have a 1:1 aspect ratio, therefore
         /// image size determinate width and height of an image
         Hero(
-          tag: this.cityDto.imageTag,
+          tag: cityDto.imageTag,
           child: Image(
-            image: this.cityDto.iconImage,
+            image: cityDto.iconImage,
             width: imageSize,
             height: imageSize,
             fit: BoxFit.contain,

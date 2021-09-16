@@ -102,6 +102,7 @@ abstract class MessageModel {
   }
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.video]
 class VideoMessageModel extends MessageModel {
   VideoMessageModel({
@@ -124,6 +125,7 @@ class VideoMessageModel extends MessageModel {
         );
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.image]
 class ImageMessageModel extends MessageModel {
   ImageMessageModel({
@@ -146,6 +148,7 @@ class ImageMessageModel extends MessageModel {
         );
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.text]
 class TextMessageModel extends MessageModel {
   TextMessageModel({
@@ -168,6 +171,7 @@ class TextMessageModel extends MessageModel {
         );
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.banned]
 class BannedMessageModel extends MessageModel {
   BannedMessageModel({
