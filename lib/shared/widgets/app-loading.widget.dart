@@ -9,6 +9,7 @@ class AppLoading extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
@@ -21,11 +22,12 @@ class AppLoading extends StatelessWidget {
           maxHeight: sideWidth,
         ),
         child: AppLogo(
-            kind: AppImage.loadingLogo,
-            width: sideWidth,
-            height: sideWidth,
-            fit: BoxFit.contain,
-            color: Colors2222.white),
+          kind: AppImage.loadingLogo,
+          width: sideWidth,
+          height: sideWidth,
+          fit: BoxFit.contain,
+          color: Colors2222.white,
+        ),
       ),
     );
   }

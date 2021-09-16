@@ -21,10 +21,9 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
+import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
@@ -57,14 +56,8 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               case RegisterScreen.route:
                 return RegisterScreen();
 
-              case StatisticsScreen.route:
-                return StatisticsScreen();
-
               case HomeScreen.route:
                 return HomeScreen();
-
-              case StatisticsScreen.route:
-                return StatisticsScreen();
 
               case ProfileScreen.route:
                 return ProfileScreen();
@@ -115,10 +108,10 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
                   city: args.city,
                 );
 
-              case StageArgumentationScreen.route:
-                final args = settings.arguments as StageArgumentationScreen;
-                return StageArgumentationScreen(
-                  chapterSettings: args.chapterSettings,
+              case ArgumentIdeasScreen.route:
+                final args = settings.arguments as ArgumentIdeasScreen;
+                return ArgumentIdeasScreen(
+                  city: args.city,
                 );
 
               case StageObjetivesScreen.route:

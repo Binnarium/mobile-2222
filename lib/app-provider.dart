@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
 import 'package:lab_movil_2222/chat/services/list-player-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
+import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/get-clubhouse-explanation.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-clubhouse-explanation.service.dart';
@@ -22,7 +23,6 @@ import 'package:lab_movil_2222/player/services/list-players-of-group.service.dar
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
-import 'package:lab_movil_2222/services/load-arguments-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
@@ -92,7 +92,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => LoadCityResourcesService()),
             Provider(create: (_) => LoadCityHistoryService()),
             Provider(create: (_) => LoadContentsScreenInformationService()),
-            Provider(create: (_) => LoadArgumentScreenInformationService()),
+            Provider(create: (_) => ArgumentIdeasService()),
             Provider(create: (_) => ContributionService()),
 
             /// player services
