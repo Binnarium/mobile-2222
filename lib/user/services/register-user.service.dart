@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/user/models/register-form.model.dart';
 import 'package:lab_movil_2222/user/models/registered-player.model.dart';
@@ -18,27 +19,24 @@ class RegisterException implements Exception {
   RegisterException(this.code);
 }
 
-abstract class IRegisterService {
+class RegisterService {
+  final FirebaseAuth _fAuth;
+  final FirebaseFirestore _fFirestore;
+
+  RegisterService(BuildContext context)
+      : _fAuth = FirebaseAuth.instance,
+        _fFirestore = FirebaseFirestore.instance;
+
   /// function to register a player to the application
   ///
   /// A [RegisterException] maybe thrown
-  Future<PlayerModel> register(RegisterFormModel formModel);
-}
-
-/// register implementation using firebase services
-class RegisterService extends IRegisterService {
-  final FirebaseAuth _fAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
-
-  @override
   Future<PlayerModel> register(RegisterFormModel formModel) async {
     /// get player inscription information
     final PlayerInscription playerInscribed =
-        await this._getInscription(formModel.email);
+        await _getUserInscription(formModel.email);
 
     /// create account
-    final User user =
-        await this._createAccount(formModel.email, formModel.password);
+    final User user = await _createAccount(formModel.email, formModel.password);
 
     /// create new player account
     final PlayerModel newPlayer = PlayerModel.empty(
@@ -48,32 +46,33 @@ class RegisterService extends IRegisterService {
     );
 
     /// create player
-    await this._createPlayer(newPlayer);
+    await _createPlayer(newPlayer);
 
     /// return new created player
     return newPlayer;
   }
 
-  /// check for a inscribed player registry at the collection
-  Future<PlayerInscription> _getInscription(String email) async {
+  /// get the inscription information of a player
+  ///
+  /// If no inscription registry found,
+  /// throws a [RegisterException] with the [RegisterErrorCode.notInscribed]
+  Future<PlayerInscription> _getUserInscription(String email) async {
     final payload =
-        await this._fFirestore.collection('inscribed-players').doc(email).get();
+        await _fFirestore.collection('inscribed-players').doc(email).get();
 
-    if (!payload.exists)
+    /// throw exception because no exception found
+    if (!payload.exists) {
       throw RegisterException(RegisterErrorCode.notInscribed);
+    }
 
-    return PlayerInscription(
-      email: payload.data()!['email'],
-      lastName: payload.data()!['lastName'],
-      name: payload.data()!['name'],
-    );
+    final Map<String, dynamic> data = payload.data()!;
+    return PlayerInscription.fromMap(data);
   }
 
   /// add player to database
   Future<void> _createPlayer(PlayerModel player) async {
     try {
-      await this
-          ._fFirestore
+      await _fFirestore
           .collection('players')
           .doc(player.uid)
           .set(player.toMap());
@@ -90,25 +89,28 @@ class RegisterService extends IRegisterService {
     UserCredential? credentials;
 
     try {
-      credentials = await this._fAuth.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+      credentials = await _fAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use')
+      if (e.code == 'email-already-in-use') {
         throw RegisterException(RegisterErrorCode.emailAlreadyInUse);
+      }
 
-      if (e.code == 'weak-password')
+      if (e.code == 'weak-password') {
         throw RegisterException(RegisterErrorCode.weakPassword);
+      }
 
       /// unhandled firebase error
       print(e.code);
       throw RegisterException(RegisterErrorCode.other);
     }
 
-    if (credentials.user == null)
+    if (credentials.user == null) {
       throw RegisterException(RegisterErrorCode.notCreated);
-
+    }
+    
     return credentials.user!;
   }
 }

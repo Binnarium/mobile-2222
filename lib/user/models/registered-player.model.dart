@@ -9,4 +9,9 @@ class PlayerInscription {
     required this.name,
     required this.lastName,
   });
+  
+  PlayerInscription.fromMap(Map<String, dynamic> data)
+      : email = data['email'] as String,
+        name = data['name'] as String,
+        lastName = data['lastName'] as String;
 }

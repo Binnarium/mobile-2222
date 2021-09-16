@@ -24,13 +24,13 @@ import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/screens/splash.screen.dart';
 import 'package:lab_movil_2222/screens/statistics.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
+import 'package:lab_movil_2222/user/widgets/splash.screen.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
 
