@@ -8,7 +8,7 @@ class UserService {
   final FirebaseAuth _auth;
 
   Stream<User?> get user$ =>
-      _auth.authStateChanges().map((user) => null).shareReplay();
+      _auth.authStateChanges().shareReplay().doOnData(print);
 
-  Stream<bool> get isSignIn$ => user$.take(1).map((user) => user != null);
+  Stream<bool> isSignIn$() => user$.take(1).map((user) => user != null);
 }

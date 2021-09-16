@@ -36,7 +36,7 @@ class SplashScreen extends StatelessWidget {
     /// authenticate user and redirect to correct screen
     final UserService _userService =
         Provider.of<UserService>(context, listen: false);
-    final bool isSignIn = await _userService.isSignIn$.first;
+    final bool isSignIn = await _userService.isSignIn$().first;
 
     Navigator.pushReplacementNamed(
       context,
