@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ClubhouseModel {
   final String clubhouseUrl;
   final String clubhouseId;
@@ -24,7 +25,7 @@ class ClubhouseModel {
 
   ClubhouseModel.fromMap(Map<String, dynamic> data)
       : clubhouseUrl = data['clubhouseUrl'] as String,
-        uploaderDisplayName = data['uploaderDisplayName'] as String? ?? null,
+        uploaderDisplayName = data['uploaderDisplayName'] as String?,
         clubhouseId = data['clubhouseId'] as String,
         date = (data['date'] as Timestamp).toDate(),
         name = data['name'] as String,

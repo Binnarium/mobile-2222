@@ -11,14 +11,12 @@ class CurrentPlayerService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Stream<PlayerModel?> get player$ => this
-      ._auth
+  Stream<PlayerModel?> get player$ => _auth
       .userChanges()
 
       /// point to player document
-      .map((user) => user == null
-          ? null
-          : this._firestore.collection('players').doc(user.uid))
+      .map((user) =>
+          user == null ? null : _firestore.collection('players').doc(user.uid))
 
       /// turn document to stream of player snapshots
       .switchMap((playerDoc) =>

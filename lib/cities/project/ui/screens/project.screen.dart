@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -53,33 +52,31 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     userUID = FirebaseAuth.instance.currentUser!.uid;
 
-    /// called service to load the next chapter
-    CitiesService loader = CitiesService();
-
     /// load the provider to load the projectDTO
     LoadProjectDtoService loadProjectDtoService =
-        Provider.of<LoadProjectDtoService>(this.context, listen: false);
+        Provider.of<LoadProjectDtoService>(context, listen: false);
 
     /// calls the service to load the projectDTO
-    this._loadProjectDtoSub =
-        loadProjectDtoService.load$(this.widget.city).listen(
+    _loadProjectDtoSub = loadProjectDtoService.load$(widget.city).listen(
       (projectDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.project = projectDto;
+        if (mounted) {
+          setState(() {
+            project = projectDto;
           });
+        }
       },
     );
 
     /// stream of projects
     LoadProjectFiles loadProjectFiles =
         Provider.of<LoadProjectFiles>(context, listen: false);
-    this._userProjectsSub = loadProjectFiles.load$(this.widget.city).listen(
+    _userProjectsSub = loadProjectFiles.load$(widget.city).listen(
       (projects) {
-        if (this.mounted)
-          this.setState(() {
-            this.playerProjects = projects;
+        if (mounted) {
+          setState(() {
+            playerProjects = projects;
           });
+        }
       },
     );
   }
@@ -96,14 +93,14 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [
         BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
       body: _projectSheet(
-          context, size, this.widget.city.color, userUID, this.playerProjects),
+          context, size, widget.city.color, userUID, playerProjects),
     );
   }
 
@@ -120,7 +117,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             bottom: 32.0,
           ),
           child: LogosHeader(
-            showStageLogoCity: this.widget.city,
+            showStageLogoCity: widget.city,
           ),
         ),
 
@@ -128,7 +125,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           child: Container(
             width: min(300, size.width * 0.9),
             child: Text(
-              "PROYECTO DOCENTE".toUpperCase(),
+              'PROYECTO DOCENTE'.toUpperCase(),
               style: textTheme.headline4,
               textAlign: TextAlign.center,
             ),
@@ -155,13 +152,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         ///
-        if (this.project == null)
+        if (project == null)
           AppLoading()
         else ...[
           Padding(
             padding: horizontalPadding,
             child: Text(
-              this.project!.activity,
+              project!.activity,
               style: textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
@@ -178,7 +175,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           Padding(
             padding: horizontalPadding,
             child: Markdown2222(
-              data: this.project!.explanation,
+              data: project!.explanation,
               contentAlignment: WrapAlignment.start,
             ),
           ),
@@ -188,13 +185,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ),
 
           /// if audio is available then show the audio player
-          if (this.project!.audio != null) ...[
+          if (project!.audio != null) ...[
             Container(
               alignment: Alignment.center,
               padding: horizontalPadding,
               child: AudioPlayerWidget(
-                audio: this.project!.audio!,
-                color: this.widget.city.color,
+                audio: project!.audio!,
+                color: widget.city.color,
               ),
             ),
             SizedBox(
@@ -203,11 +200,11 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ],
 
           /// upload files
-          if (this.project!.allowFile || this.project!.allowAudio) ...[
+          if (project!.allowFile || project!.allowAudio) ...[
             Padding(
               padding: horizontalPadding,
               child: ProjectGalleryWidget(
-                  city: this.widget.city,
+                  city: widget.city,
                   userUID: userUID ?? '',
                   projects: playerProjects!),
             ),
@@ -216,7 +213,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               child: _taskButton(
                 context,
                 color,
-                this.widget.city,
+                widget.city,
               ),
             )
           ],
@@ -290,17 +287,17 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   @override
   void initState() {
     super.initState();
-    this._userServiceSub = _currentPlayerService.player$.listen((player) {
+    _userServiceSub = _currentPlayerService.player$.listen((player) {
       setState(() {
-        this.currentPlayer = player;
+        currentPlayer = player;
       });
     });
   }
 
   @override
   void dispose() {
-    this._userServiceSub?.cancel();
-    this._uploadFileSub?.cancel();
+    _userServiceSub?.cancel();
+    _uploadFileSub?.cancel();
     super.dispose();
   }
 
@@ -324,7 +321,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             height: 10,
           ),
           ButtonWidget(
-            color: this.widget.color,
+            color: widget.color,
             icon: Icons.upload_file_rounded,
             text: 'Subir archivo',
             onClicked: _uploadFile,
@@ -338,23 +335,23 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   }
 
   void _uploadFile() {
-    if (this._uploadFileSub != null) return;
+    if (_uploadFileSub != null) return;
 
     UploadFileService uploadFileService =
         Provider.of<UploadFileService>(context, listen: false);
 
-    this._uploadFileSub = uploadFileService
-        .uploadFile$('players/${currentPlayer!.uid}/${this.widget.city.name}/',
-            this.widget.city)
+    _uploadFileSub = uploadFileService
+        .uploadFile$(
+            'players/${currentPlayer!.uid}/${widget.city.name}/', widget.city)
         .switchMap((projectFile) =>
-            _uploadProjectService.project$(this.widget.city, projectFile))
+            _uploadProjectService.project$(widget.city, projectFile))
         .listen((sended) {
       if (sended) {
         bool medalFound = false;
 
         /// seeks for all medals in the medals array
         currentPlayer!.projectAwards.asMap().forEach((key, value) {
-          if (value.cityId == this.widget.city.name) {
+          if (value.cityId == widget.city.name) {
             medalFound = true;
             print('hay medalla');
           }
@@ -363,13 +360,12 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         /// if there is no medal with the city name, creates new one
         if (!medalFound) {
           print('no hay medalla');
-          UploadProjectService.writeMedal(
-              currentPlayer!.uid, this.widget.city.name);
+          UploadProjectService.writeMedal(currentPlayer!.uid, widget.city.name);
         }
       }
     }, onDone: () {
-      this._uploadFileSub?.cancel();
-      this._uploadFileSub = null;
+      _uploadFileSub?.cancel();
+      _uploadFileSub = null;
       Navigator.pop(context);
     });
   }
@@ -397,10 +393,10 @@ class ButtonWidget extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
       onPressed: onClicked,
-      child: buildContent(textTheme),
       style: ElevatedButton.styleFrom(
         primary: color,
       ),
+      child: buildContent(textTheme),
     );
   }
 

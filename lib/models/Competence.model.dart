@@ -13,10 +13,10 @@ class CompetenceModel {
 
   static CompetenceModel fromJson(Map<String, dynamic> payload) {
     return CompetenceModel(
-      name: payload["name"],
-      image: payload["image"],
-      id: payload["id"],
-      kind : payload["kind"],
+      name: payload['name'] as String,
+      image: payload['image'] as Map<String, dynamic>,
+      id: payload['id'] as String? ?? '',
+      kind: payload['kind'] as String? ?? '',
     );
   }
 }

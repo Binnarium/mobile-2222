@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/final-video/model/city-final-video.model.dart';
 import 'package:lab_movil_2222/cities/final-video/services/load-final-video.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
@@ -36,29 +35,29 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
     super.initState();
 
     LoadFinalVideoService loadFinalVideoService =
-        Provider.of<LoadFinalVideoService>(this.context, listen: false);
+        Provider.of<LoadFinalVideoService>(context, listen: false);
 
-    this._loadFinalVideoSub =
-        loadFinalVideoService.load$(this.widget.city).listen(
+    _loadFinalVideoSub = loadFinalVideoService.load$(widget.city).listen(
       (finalVideoModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.manualVideo = finalVideoModel;
+        if (mounted) {
+          setState(() {
+            manualVideo = finalVideoModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadFinalVideoSub?.cancel();
+    _loadFinalVideoSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: FinalVideoScreen.route,
       body: Stack(
@@ -67,10 +66,10 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
           Center(child: AppLoading()),
 
           /// background video
-          if (this.manualVideo != null)
+          if (manualVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(
-                this.manualVideo!.video.url,
+                manualVideo!.video.url,
               ),
             ),
         ],

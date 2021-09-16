@@ -9,9 +9,9 @@ class IdeaResourcesListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String descTemp;
-    this.description == null
+    description == null
         ? descTemp = 'No se ha cargado una idea'.toUpperCase()
-        : descTemp = this.description!;
+        : descTemp = description!;
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),

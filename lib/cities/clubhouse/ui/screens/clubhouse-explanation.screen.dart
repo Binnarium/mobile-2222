@@ -39,19 +39,20 @@ class _ClubhouseExplanationScreenState
 
     GetClubhouseExplanationService clubhouseExplanationService =
         Provider.of<GetClubhouseExplanationService>(context, listen: false);
-    this._explanationSub = clubhouseExplanationService.explanation$.listen(
+    _explanationSub = clubhouseExplanationService.explanation$.listen(
       (event) {
-        if (this.mounted)
-          this.setState(() {
-            this.clubhouseExplanation = event;
+        if (mounted) {
+          setState(() {
+            clubhouseExplanation = event;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._explanationSub?.cancel();
+    _explanationSub?.cancel();
     super.dispose();
   }
 
@@ -61,7 +62,7 @@ class _ClubhouseExplanationScreenState
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ClubhouseExplanationScreen.route,
       body: ListView(
@@ -69,7 +70,7 @@ class _ClubhouseExplanationScreenState
           /// icon item
           Padding(
             padding: const EdgeInsets.only(bottom: 50.0),
-            child: LogosHeader(showStageLogoCity: this.widget.city),
+            child: LogosHeader(showStageLogoCity: widget.city),
           ),
 
           /// page header
@@ -78,7 +79,7 @@ class _ClubhouseExplanationScreenState
               padding: const EdgeInsets.only(bottom: 24.0),
               width: min(300, size.width * 0.8),
               child: Text(
-                "CLUBHOUSE".toUpperCase(),
+                'CLUBHOUSE'.toUpperCase(),
                 style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
@@ -86,7 +87,7 @@ class _ClubhouseExplanationScreenState
           ),
 
           /// page content
-          if (this.clubhouseExplanation == null)
+          if (clubhouseExplanation == null)
             AppLoading()
           else ...[
             /// video provider
@@ -96,7 +97,7 @@ class _ClubhouseExplanationScreenState
                 right: size.width * 0.08,
                 left: size.width * 0.08,
               ),
-              child: VideoPlayer(video: this.clubhouseExplanation!.video),
+              child: VideoPlayer(video: clubhouseExplanation!.video),
             ),
 
             /// content
@@ -107,7 +108,7 @@ class _ClubhouseExplanationScreenState
                 left: size.width * 0.08,
               ),
               child: Markdown2222(
-                data: this.clubhouseExplanation!.explanation,
+                data: clubhouseExplanation!.explanation,
               ),
             ),
 
@@ -119,14 +120,14 @@ class _ClubhouseExplanationScreenState
                 left: size.width * 0.08,
               ),
               child: ElevatedButton(
-                onPressed: () => launch(this.clubhouseExplanation!.clubUrl),
-                child: Text(
-                  'Únete a nuestro room de clubhouse',
-                  textAlign: TextAlign.center,
-                ),
+                onPressed: () => launch(clubhouseExplanation!.clubUrl),
                 style: TextButton.styleFrom(
                   primary: Colors2222.white,
                   backgroundColor: Colors2222.black,
+                ),
+                child: Text(
+                  'Únete a nuestro room de clubhouse',
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

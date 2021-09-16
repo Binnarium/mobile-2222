@@ -37,17 +37,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     this._loadLoginPayload = loadLoginInfoService.load$.listen(
       (welcomeDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.loginPayload = welcomeDto;
+        if (mounted) {
+          setState(() {
+            loginPayload = welcomeDto;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadLoginPayload?.cancel();
+    _loadLoginPayload?.cancel();
     super.dispose();
   }
 
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   ///Cuerpo de la pantalla
-  Widget _loginBody(Size size, BuildContext context) {
+  ListView _loginBody(Size size, BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListView(
       padding:
@@ -110,7 +111,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
 
         /// loading animation
-        if (this.loginPayload == null)
+        if (loginPayload == null)
           Center(
             child: AppLoading(),
           )
@@ -122,7 +123,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Text(
-              this.loginPayload!.pageTitle,
+              loginPayload!.pageTitle,
               style: textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
               textAlign: TextAlign.center,
             ),
@@ -132,14 +133,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: VideoPlayer(
-                video: this.loginPayload!.welcomeVideo,
+                video: loginPayload!.welcomeVideo,
               )),
 
           /// profundity text
           Padding(
             padding: const EdgeInsets.only(bottom: 28),
             child: Markdown2222(
-              data: this.loginPayload!.profundityText,
+              data: loginPayload!.profundityText,
             ),
           ),
 
@@ -153,7 +154,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: MarkdownCard(
-              content: this.loginPayload!.workloadText,
+              content: loginPayload!.workloadText,
             ),
           ),
         ],

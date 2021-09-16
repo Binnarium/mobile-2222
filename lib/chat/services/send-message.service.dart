@@ -21,14 +21,12 @@ class SendMessagesService {
         _fFirestore = FirebaseFirestore.instance;
 
   Stream<bool> text$(ChatModel chat, String content) {
-    return this._sendMessage(
+    return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => TextMessageModel(
         id: _generateId(),
         senderId: user.uid,
         text: content,
-
-        /// TODO: use FieldValue.serverTimestamp()
         sendedDate: DateTime.now(),
         sender: ChatParticipantModel(
           displayName: user.displayName,
@@ -39,14 +37,12 @@ class SendMessagesService {
   }
 
   Stream<bool> image$(ChatModel chat, ImageDto image) {
-    return this._sendMessage(
+    return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => ImageMessageModel(
         id: _generateId(),
         senderId: user.uid,
         image: image,
-
-        /// TODO: use FieldValue.serverTimestamp()
         sendedDate: DateTime.now(),
         sender: ChatParticipantModel(
           displayName: user.displayName,
@@ -57,14 +53,12 @@ class SendMessagesService {
   }
 
   Stream<bool> video$(ChatModel chat, VideoDto videoDto) {
-    return this._sendMessage(
+    return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => VideoMessageModel(
         id: _generateId(),
         senderId: user.uid,
         video: videoDto,
-
-        /// TODO: use FieldValue.serverTimestamp()
         sendedDate: DateTime.now(),
         sender: ChatParticipantModel(
           displayName: user.displayName,
@@ -79,14 +73,13 @@ class SendMessagesService {
     required ChatModel chat,
     required MessageModel Function(PlayerModel) createMessageCallback,
   }) {
-    return this._currentPlayerService.player$.take(1).asyncMap<bool>(
+    return _currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
         if (user == null) return false;
 
         /// create message to send
         MessageModel newMessage = createMessageCallback(user);
-        final DocumentReference<Map<String, dynamic>> messagesDoc = this
-            ._fFirestore
+        final DocumentReference<Map<String, dynamic>> messagesDoc = _fFirestore
             .collection('chats')
             .doc(chat.id)
             .collection('messages')

@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
@@ -21,7 +22,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
@@ -117,7 +117,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               case StageObjetivesScreen.route:
                 final args = settings.arguments as StageObjetivesScreen;
                 return StageObjetivesScreen(
-                  chapterSettings: args.chapterSettings,
+                  city: args.city,
                 );
 
               case ContentScreen.route:

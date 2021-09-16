@@ -47,14 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
 
-    _loadLoginPayload = loadLoginInfoService.load$.listen(
-      (welcomeDto) {
-        if (mounted)
-          setState(() {
-            loginPayload = welcomeDto;
-          });
-      },
-    );
+    _loadLoginPayload = loadLoginInfoService.load$.listen((welcomeDto) {
+      if (mounted)
+        setState(() {
+          loginPayload = welcomeDto;
+        });
+    });
   }
 
   @override
@@ -188,8 +186,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     primary: Colors2222.black,
                     elevation: 5,
                   ),
-                  child: Text('Iniciar Sesión'),
                   onPressed: _handleLogin,
+                  child: Text('Iniciar Sesión'),
                 ),
 
                 /// register
@@ -239,34 +237,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
         Navigator.of(context).pushReplacementNamed(HomeScreen.route);
       } on LoginException catch (e) {
-        if (e.code == LoginErrorCode.invalidEmail)
+        if (e.code == LoginErrorCode.invalidEmail) {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.invalidEmail(),
           );
-        else if (e.code == LoginErrorCode.playerNotFound)
+        } else if (e.code == LoginErrorCode.playerNotFound) {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.playerNotFound(),
           );
-        else if (e.code == LoginErrorCode.userDisabled)
+        } else if (e.code == LoginErrorCode.userDisabled) {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.somethingWentWrong(),
           );
-        else if (e.code == LoginErrorCode.userDisabled)
+        } else if (e.code == LoginErrorCode.userDisabled) {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.disabledAccount(),
           );
-        else if (e.code == LoginErrorCode.userNotFound)
+        } else if (e.code == LoginErrorCode.userNotFound) {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.notRegistered(context: context),
           );
-        else if (e.code == LoginErrorCode.wrongPassword)
+        } else if (e.code == LoginErrorCode.wrongPassword) {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.wrongPassword(),
           );
-        else
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             AuthenticationSnackbar.somethingWentWrong(),
           );
+        }
       }
     }
   }

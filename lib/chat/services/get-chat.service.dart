@@ -22,7 +22,7 @@ class GetChatService {
         if (currentPlayer == null) return Stream.value(null);
 
         /// get collection of users
-        final chatsDoc = this._firestore.collection('chats').doc(chatId);
+        final chatsDoc = _firestore.collection('chats').doc(chatId);
         return chatsDoc
             .snapshots()
 
@@ -39,7 +39,7 @@ class GetChatService {
                       disabled: data['disabled'] as bool,
                       participantsCompleted:
                           data['participantsCompleted'] == true,
-                      name: data['name'] as String? ?? null,
+                      name: data['name'] as String?,
                       lastActivity:
                           (data['lastActivity'] as Timestamp).toDate(),
                       indexedDate:

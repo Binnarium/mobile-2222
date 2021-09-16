@@ -20,10 +20,10 @@ class ReadingItem extends StatelessWidget {
       type: MaterialType.transparency,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        onTap: () => launch(this.readingDto.validLink),
+        onTap: () => launch(readingDto.validLink),
 
         ///Container of the resource
-        child: new Container(
+        child: Container(
           margin: EdgeInsets.symmetric(vertical: 12, horizontal: sidePadding),
           width: double.infinity,
           child: Row(
@@ -38,14 +38,14 @@ class ReadingItem extends StatelessWidget {
                 width: 80,
                 child: AspectRatio(
                   aspectRatio: 6 / 9,
-                  child: (this.readingDto.cover == null)
+                  child: (readingDto.cover == null)
                       ? Image(
-                          image: this.readingDto.placeholder,
+                          image: readingDto.placeholder,
                           fit: BoxFit.cover,
                         )
                       : FadeInImage(
-                          placeholder: this.readingDto.placeholder,
-                          image: this.readingDto.cover!.image,
+                          placeholder: readingDto.placeholder,
+                          image: readingDto.cover!.image,
                           fit: BoxFit.cover,
                         ),
                 ),
@@ -63,7 +63,7 @@ class ReadingItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Text(
-                        this.readingDto.name.toUpperCase(),
+                        readingDto.name.toUpperCase(),
                         style: textTheme.subtitle1,
                       ),
                     ),
@@ -72,13 +72,13 @@ class ReadingItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Text(
-                        this.readingDto.tagline,
+                        readingDto.tagline,
                         style: textTheme.subtitle2,
                       ),
                     ),
 
                     /// review
-                    Markdown2222(data: this.readingDto.about),
+                    Markdown2222(data: readingDto.about),
                   ],
                 ),
               ),

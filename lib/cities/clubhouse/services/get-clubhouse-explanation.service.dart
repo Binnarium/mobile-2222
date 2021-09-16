@@ -4,11 +4,9 @@ import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse-explanation.mod
 class GetClubhouseExplanationService {
   final FirebaseFirestore _firestore;
 
-  GetClubhouseExplanationService()
-      : this._firestore = FirebaseFirestore.instance;
+  GetClubhouseExplanationService() : _firestore = FirebaseFirestore.instance;
 
-  Stream<ClubhouseExplanationModel?> get explanation$ => this
-      ._firestore
+  Stream<ClubhouseExplanationModel?> get explanation$ => _firestore
       .collection('application')
       .doc('clubhouse-explanation')
       .snapshots()

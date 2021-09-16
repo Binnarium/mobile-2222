@@ -33,8 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     /// load player data
-    this._loadPlayerSub = _currentPlayerService.player$.listen((player) {
-      this.setState(() {
+    _loadPlayerSub = _currentPlayerService.player$.listen((player) {
+      setState(() {
         this.player = player;
       });
     });
@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
-    this._loadPlayerSub?.cancel();
+    _loadPlayerSub?.cancel();
     super.dispose();
   }
 
@@ -62,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: sideSpacing, vertical: 64),
           children: [
-            if (this.player == null)
+            if (player == null)
               Center(child: AppLoading())
             else ...[
               /// title
@@ -87,10 +87,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       type: MaterialType.transparency,
                       child: InkWell(
                           borderRadius: BorderRadius.circular(40),
+                          onTap: () async {
+                            return await showAvatarImage(context);
+                          },
                           child: Container(
                             height: 80,
                             child: Stack(children: [
-                              (this.player?.avatarImage.url == "")
+                              (player?.avatarImage.url == '')
                                   ? CircleAvatar(
                                       backgroundImage: AssetImage(
                                           'assets/backgrounds/decorations/elipse_profile.png'),
@@ -98,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     )
                                   : CircleAvatar(
                                       backgroundImage: NetworkImage(
-                                        this.player!.avatarImage.url,
+                                        player!.avatarImage.url,
                                       ),
                                       maxRadius: 40,
                                     ),
@@ -109,14 +112,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 /// implements the widget to change the avatar
                                 /// logic is implemented on the button
                                 child: ChangeAvatarButton(
-                                  player: this.player!,
+                                  player: player!,
                                 ),
                               ),
                             ]),
-                          ),
-                          onTap: () async {
-                            return await showAvatarImage(context);
-                          }),
+                          )),
                     ),
 
                     /// spacing between picture and information
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               /// widget that contains a list of the player's gammification
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
-                child: PlayerGamification(player: this.player!),
+                child: PlayerGamification(player: player!),
               ),
 
               Padding(
@@ -180,13 +180,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                (this.player?.avatarImage.url == "")
+                (player?.avatarImage.url == '')
                     ? Image(
                         image: AssetImage(
                             'assets/backgrounds/decorations/elipse_profile.png'),
                       )
                     : Image.network(
-                        this.player!.avatarImage.url,
+                        player!.avatarImage.url,
                       ),
                 SizedBox(
                   height: 10,

@@ -4,23 +4,23 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadClubhouseService {
   final FirebaseFirestore _firestore;
-  LoadClubhouseService() : this._firestore = FirebaseFirestore.instance;
+  LoadClubhouseService() : _firestore = FirebaseFirestore.instance;
 
   Stream<ClubhouseActivityModel?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('clubhouse')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map(
           (data) => data == null
               ? null
               : ClubhouseActivityModel(
-                  explanation: data['explanation'] ?? 'Texto de ejemplo',
-                  theme: data['theme'] ?? 'Texto de ejemplo',
+                  explanation:
+                      data['explanation'] as String? ?? 'Texto de ejemplo',
+                  theme: data['theme'] as String? ?? 'Texto de ejemplo',
                 ),
         );
   }

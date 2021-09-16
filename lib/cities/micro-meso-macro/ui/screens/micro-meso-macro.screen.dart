@@ -36,22 +36,22 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
     super.initState();
 
     LoadMicroMesoMacroService loadMicroMesoMacroService =
-        Provider.of<LoadMicroMesoMacroService>(this.context, listen: false);
+        Provider.of<LoadMicroMesoMacroService>(context, listen: false);
 
-    this._loadMisoMesoMacroSub =
-        loadMicroMesoMacroService.load$(this.widget.city).listen(
+    _loadMisoMesoMacroSub = loadMicroMesoMacroService.load$(widget.city).listen(
       (misoMesoMacroModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.microMesoMacroModel = misoMesoMacroModel;
+        if (mounted) {
+          setState(() {
+            microMesoMacroModel = misoMesoMacroModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadMisoMesoMacroSub?.cancel();
+    _loadMisoMesoMacroSub?.cancel();
     super.dispose();
   }
 
@@ -60,10 +60,10 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
     TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       route: MicroMesoMacroScreen.route,
       color: Colors2222.red,
-      body: (this.microMesoMacroModel == null)
+      body: (microMesoMacroModel == null)
           ? AppLoading()
           : Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,7 +91,7 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
 
                 /// text
                 MicroMesoMacroDescriptionText(
-                  text: this.microMesoMacroModel!.subtitle,
+                  text: microMesoMacroModel!.subtitle,
                 ),
               ],
             ),

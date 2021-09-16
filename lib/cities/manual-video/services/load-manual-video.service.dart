@@ -4,17 +4,16 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadManualVideoService {
   final FirebaseFirestore _firestore;
-  LoadManualVideoService() : this._firestore = FirebaseFirestore.instance;
+  LoadManualVideoService() : _firestore = FirebaseFirestore.instance;
 
   Stream<CityManualVideoModel?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('manual-video')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map(
             (data) => data == null ? null : CityManualVideoModel.fromMap(data));
   }

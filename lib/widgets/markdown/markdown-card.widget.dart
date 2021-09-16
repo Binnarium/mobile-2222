@@ -27,7 +27,7 @@ class MarkdownCard extends StatelessWidget {
       ),
       padding: EdgeInsets.all(size.width * 0.1),
       child: fmd.MarkdownBody(
-        data: this.content,
+        data: content,
         builders: {
           'h2': MarkdownCenterTextBuilder(
               padding: EdgeInsets.symmetric(vertical: 8)),

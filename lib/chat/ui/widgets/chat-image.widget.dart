@@ -48,16 +48,18 @@ class ChatImageWidget extends Image {
     double? size,
     Color? color,
   }) {
-    if (chat.isPersonalChat)
+    if (chat.isPersonalChat) {
       return ChatImageWidget.personal(
         size: size,
         color: color,
       );
-    if (chat.isGroupChat)
+    }
+    if (chat.isGroupChat) {
       return ChatImageWidget.group(
         size: size,
         color: color,
       );
+    }
     return ChatImageWidget.general(
       size: size,
       color: color,

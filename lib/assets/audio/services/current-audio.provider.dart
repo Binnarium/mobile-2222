@@ -7,12 +7,11 @@ class CurrentAudioProvider {
   /// manage controls
   final AudioPlayer player = AudioPlayer();
 
-  // TODO: remove comment
   // ignore: close_sinks
   final BehaviorSubject<AudioDto?> _currentAudioSink =
       BehaviorSubject<AudioDto?>.seeded(null);
 
-  Stream<AudioDto?> get currentAudio$ => this._currentAudioSink.stream;
+  Stream<AudioDto?> get currentAudio$ => _currentAudioSink.stream;
 
   // late AudioSession player;
   CurrentAudioProvider() {
@@ -32,19 +31,20 @@ class CurrentAudioProvider {
   void setAudio(AudioDto audio) async {
     try {
       /// load audio to player
-      this._currentAudioSink.add(audio);
+      _currentAudioSink.add(audio);
       await player.setUrl(audio.url);
       await player.play();
     } catch (e) {
-      print("Error loading audio source: $e");
+      print('Error loading audio source: $e');
     }
   }
 
   /// method to stop and close player, if you want to only stop the current audio
+  // ignore: comment_references
   /// use the [playOrPause] method
   void close() async {
-    this._currentAudioSink.add(null);
-    await this.player.stop();
-    await this.player.dispose();
+    _currentAudioSink.add(null);
+    await player.stop();
+    await player.dispose();
   }
 }

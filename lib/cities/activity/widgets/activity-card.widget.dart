@@ -33,8 +33,8 @@ class ActivityCardWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             color: Colors2222.white,
             child: InkWell(
-              splashColor: this.color.withOpacity(0.2),
-              onTap: () => this.onTap(),
+              splashColor: color.withOpacity(0.2),
+              onTap: () => onTap(),
 
               /// card inner content
               child: Container(
@@ -45,11 +45,11 @@ class ActivityCardWidget extends StatelessWidget {
                   children: [
                     /// card title
                     Text(
-                      this.title.toUpperCase(),
+                      title.toUpperCase(),
                       style: Theme.of(context)
                           .textTheme
                           .headline6!
-                          .copyWith(color: this.color),
+                          .copyWith(color: color),
                       textAlign: TextAlign.center,
                     ),
 

@@ -15,7 +15,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
       child: Stack(
         children: [
           CustomBackground(
-            backgroundColor: this.backgroundColor,
+            backgroundColor: backgroundColor,
           ),
           _relieve(),
         ],
@@ -24,7 +24,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
   }
 
   /// To draw the relief in a background
-  _relieve() {
+  Container _relieve() {
     ///Map that contains every position that the relief can be
     Map<String, Container> reliefPosition = {
       'top-left': Container(
@@ -82,10 +82,10 @@ class ChapterBackgroundWidget extends StatelessWidget {
         ),
       ),
     };
-    if (this.reliefPosition == null) {
+    if (reliefPosition == null) {
       return Container();
     } else {
-      return reliefPosition[this.reliefPosition];
+      return reliefPosition[reliefPosition]!;
     }
   }
 }

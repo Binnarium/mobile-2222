@@ -27,32 +27,34 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
   @override
   void initState() {
     super.initState();
-    final VideoPlayerController ctrl = this.widget.controller;
+    final VideoPlayerController ctrl = widget.controller;
 
     ctrl.initialize().then((value) async {
       /// add event listeners
-      if (this.widget.onComplete != null)
+      if (widget.onComplete != null) {
         ctrl.addListener(() {
           /// add completed callback
           if (ctrl.value.isInitialized &&
-              (ctrl.value.duration == ctrl.value.position))
-            this.widget.onComplete!();
+              (ctrl.value.duration == ctrl.value.position)) {
+            widget.onComplete!();
+          }
         });
+      }
 
       /// set looping if enabled
-      if (this.widget.lopping) await ctrl.setLooping(true);
+      if (widget.lopping) await ctrl.setLooping(true);
 
       /// set volume to 0 in case the video has volume
       await ctrl.setVolume(0);
       await ctrl.play();
-      this.setState(() {});
+      setState(() {});
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    this.widget.controller.dispose();
+    widget.controller.dispose();
   }
 
   @override
@@ -64,13 +66,12 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
           child: FittedBox(
             fit: BoxFit.cover,
             child: SizedBox(
-              width: this.widget.controller.value.size.width,
-              height: this.widget.controller.value.size.height,
+              width: widget.controller.value.size.width,
+              height: widget.controller.value.size.height,
               child: AnimatedOpacity(
-                  opacity:
-                      this.widget.controller.value.isInitialized ? 1.0 : 0.0,
+                  opacity: widget.controller.value.isInitialized ? 1.0 : 0.0,
                   duration: Duration(milliseconds: 500),
-                  child: VideoPlayer(this.widget.controller)),
+                  child: VideoPlayer(widget.controller)),
             ),
           ),
         ),
@@ -78,13 +79,13 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
         /// material to capture on press events
         ///
         /// cover only available when a [onPress] method is provided
-        if (this.widget.onPressed != null)
+        if (widget.onPressed != null)
           Positioned.fill(
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                // splashColor: this.city.color.withOpacity(0.5),
-                onTap: () => this.widget.onPressed!(),
+                // splashColor: city.color.withOpacity(0.5),
+                onTap: () => widget.onPressed!(),
                 child: Container(),
               ),
             ),

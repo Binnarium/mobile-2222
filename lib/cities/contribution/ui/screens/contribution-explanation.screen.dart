@@ -39,19 +39,20 @@ class _ContributionExplanationScreenState
 
     GetContributionExplanationService clubhouseExplanationService =
         Provider.of<GetContributionExplanationService>(context, listen: false);
-    this._explanationSub = clubhouseExplanationService.explanation$.listen(
+    _explanationSub = clubhouseExplanationService.explanation$.listen(
       (event) {
-        if (this.mounted)
-          this.setState(() {
-            this.contributionExplanation = event;
+        if (mounted) {
+          setState(() {
+            contributionExplanation = event;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._explanationSub?.cancel();
+    _explanationSub?.cancel();
     super.dispose();
   }
 
@@ -61,7 +62,7 @@ class _ContributionExplanationScreenState
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ContributionExplanationScreen.route,
       body: ListView(
@@ -69,7 +70,7 @@ class _ContributionExplanationScreenState
           /// icon item
           Padding(
             padding: const EdgeInsets.only(bottom: 50.0),
-            child: LogosHeader(showStageLogoCity: this.widget.city),
+            child: LogosHeader(showStageLogoCity: widget.city),
           ),
 
           /// page header
@@ -78,7 +79,7 @@ class _ContributionExplanationScreenState
               padding: const EdgeInsets.only(bottom: 24.0),
               width: min(300, size.width * 0.8),
               child: Text(
-                "Manifiesto por la Educación".toUpperCase(),
+                'Manifiesto por la Educación'.toUpperCase(),
                 style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
@@ -86,7 +87,7 @@ class _ContributionExplanationScreenState
           ),
 
           /// page content
-          if (this.contributionExplanation == null)
+          if (contributionExplanation == null)
             AppLoading()
           else ...[
             /// video provider
@@ -96,7 +97,7 @@ class _ContributionExplanationScreenState
                 right: size.width * 0.08,
                 left: size.width * 0.08,
               ),
-              child: VideoPlayer(video: this.contributionExplanation!.video),
+              child: VideoPlayer(video: contributionExplanation!.video),
             ),
 
             /// content
@@ -107,7 +108,7 @@ class _ContributionExplanationScreenState
                 left: size.width * 0.08,
               ),
               child: Markdown2222(
-                data: this.contributionExplanation!.explanation,
+                data: contributionExplanation!.explanation,
               ),
             ),
 
@@ -119,15 +120,14 @@ class _ContributionExplanationScreenState
                 left: size.width * 0.08,
               ),
               child: ElevatedButton(
-                onPressed: () =>
-                    launch(this.contributionExplanation!.manifestUrl),
-                child: Text(
-                  'Lee nuestro manifiesto',
-                  textAlign: TextAlign.center,
-                ),
+                onPressed: () => launch(contributionExplanation!.manifestUrl),
                 style: TextButton.styleFrom(
                   primary: Colors2222.white,
                   backgroundColor: Colors2222.black,
+                ),
+                child: Text(
+                  'Lee nuestro manifiesto',
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

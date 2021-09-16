@@ -10,7 +10,7 @@ enum BackgroundDecorationStyle {
 }
 
 /// locations of assets
-const Map<BackgroundDecorationStyle, ImageProvider> _BackgroundsDecorations = {
+const Map<BackgroundDecorationStyle, ImageProvider> _backgroundsDecorations = {
   BackgroundDecorationStyle.path:
       AssetImage('assets/backgrounds/background-decorations/path.png'),
   BackgroundDecorationStyle.topLeft:
@@ -41,12 +41,11 @@ class BackgroundDecoration extends StatelessWidget {
       child: Stack(
         children: [
           /// decoration top right
-          if (this
-              .backgroundDecorationsStyles
+          if (backgroundDecorationsStyles
               .contains(BackgroundDecorationStyle.topRight))
             Positioned.fill(
               child: Image(
-                image: _BackgroundsDecorations[
+                image: _backgroundsDecorations[
                     BackgroundDecorationStyle.topRight]!,
                 width: double.infinity,
                 alignment: Alignment.topRight,
@@ -55,13 +54,12 @@ class BackgroundDecoration extends StatelessWidget {
             ),
 
           /// decoration top left
-          if (this
-              .backgroundDecorationsStyles
+          if (backgroundDecorationsStyles
               .contains(BackgroundDecorationStyle.topLeft))
             Positioned.fill(
               child: Image(
                 image:
-                    _BackgroundsDecorations[BackgroundDecorationStyle.topLeft]!,
+                    _backgroundsDecorations[BackgroundDecorationStyle.topLeft]!,
                 width: double.infinity,
                 alignment: Alignment.topLeft,
                 fit: BoxFit.contain,
@@ -69,13 +67,12 @@ class BackgroundDecoration extends StatelessWidget {
             ),
 
           /// decoration bottom left
-          if (this
-              .backgroundDecorationsStyles
+          if (backgroundDecorationsStyles
               .contains(BackgroundDecorationStyle.bottomLeft))
             Positioned.fill(
               child: Image(
                 alignment: Alignment.bottomLeft,
-                image: _BackgroundsDecorations[
+                image: _backgroundsDecorations[
                     BackgroundDecorationStyle.bottomLeft]!,
                 width: double.infinity,
                 fit: BoxFit.contain,
@@ -83,13 +80,12 @@ class BackgroundDecoration extends StatelessWidget {
             ),
 
           /// decoration bottom right
-          if (this
-              .backgroundDecorationsStyles
+          if (backgroundDecorationsStyles
               .contains(BackgroundDecorationStyle.bottomRight))
             Positioned.fill(
               child: Image(
                 alignment: Alignment.bottomRight,
-                image: _BackgroundsDecorations[
+                image: _backgroundsDecorations[
                     BackgroundDecorationStyle.bottomRight]!,
                 width: double.infinity,
                 fit: BoxFit.contain,
@@ -97,12 +93,11 @@ class BackgroundDecoration extends StatelessWidget {
             ),
 
           /// background path decoration
-          if (this
-              .backgroundDecorationsStyles
+          if (backgroundDecorationsStyles
               .contains(BackgroundDecorationStyle.path))
             Positioned.fill(
               child: Image(
-                image: _BackgroundsDecorations[BackgroundDecorationStyle.path]!,
+                image: _backgroundsDecorations[BackgroundDecorationStyle.path]!,
                 width: double.infinity,
                 fit: BoxFit.contain,
                 alignment: Alignment.bottomCenter,
@@ -110,7 +105,7 @@ class BackgroundDecoration extends StatelessWidget {
             ),
 
           /// main content
-          Positioned.fill(child: this.child),
+          Positioned.fill(child: child),
         ],
       ),
     );

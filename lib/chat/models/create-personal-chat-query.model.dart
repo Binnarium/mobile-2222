@@ -8,9 +8,9 @@ class CreatePersonalChatQueryModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'playerTwo': this.playerTwo,
-      'playerOne': this.playerOne,
+    return <String, String>{
+      'playerTwo': playerTwo,
+      'playerOne': playerOne,
     };
   }
 }

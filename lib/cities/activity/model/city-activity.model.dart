@@ -4,7 +4,7 @@ class CityActivityModel {
   final String clubhouse;
 
   CityActivityModel.fromMap(Map<String, dynamic> payload)
-      : this.contribution = payload['contribution'] ?? '',
-        this.project = payload['project'] ?? '',
-        this.clubhouse = payload['clubhouse'] ?? '';
+      : contribution = payload['contribution'] as String? ?? '',
+        project = payload['project'] as String? ?? '',
+        clubhouse = payload['clubhouse'] as String? ?? '';
 }

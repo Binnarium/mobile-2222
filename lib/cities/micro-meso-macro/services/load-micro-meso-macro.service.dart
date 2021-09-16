@@ -4,17 +4,16 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadMicroMesoMacroService {
   final FirebaseFirestore _firestore;
-  LoadMicroMesoMacroService() : this._firestore = FirebaseFirestore.instance;
+  LoadMicroMesoMacroService() : _firestore = FirebaseFirestore.instance;
 
   Stream<MicroMesoMacroModel?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('micro-meso-macro')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map((data) => data == null ? null : MicroMesoMacroModel.fromMap(data));
   }
 }

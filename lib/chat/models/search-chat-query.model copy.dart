@@ -8,9 +8,9 @@ class SearchChatQueryModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'query': this.query,
-      'playerId': this.playerId,
+    return <String, String>{
+      'query': query,
+      'playerId': playerId,
     };
   }
 }

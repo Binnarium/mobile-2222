@@ -19,7 +19,7 @@ class UploadProjectService {
         _fFirestore = FirebaseFirestore.instance;
 
   Stream<bool> project$(CityModel city, ProjectFileDto file) {
-    return this._uploadProject(
+    return _uploadProject(
       createMessageCallback: (user) => PlayerProject(
         cityID: city.name,
         file: file,
@@ -33,17 +33,17 @@ class UploadProjectService {
   Stream<bool> _uploadProject({
     required PlayerProject Function(PlayerModel) createMessageCallback,
   }) {
-    return this._currentPlayerService.player$.take(1).asyncMap<bool>(
+    return _currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
         if (user == null) return false;
 
         /// create project to upload
         PlayerProject newProject = createMessageCallback(user);
-        final CollectionReference<Map<String, dynamic>> messagesDoc = this
-            ._fFirestore
-            .collection('players')
-            .doc(user.uid)
-            .collection('project');
+        final CollectionReference<Map<String, dynamic>> messagesDoc =
+            _fFirestore
+                .collection('players')
+                .doc(user.uid)
+                .collection('project');
 
         /// upload project
         try {
@@ -67,7 +67,7 @@ class UploadProjectService {
   }
 
   static void writeMedal(String userUID, String cityRef) async {
-    Map<String, dynamic> medal = {
+    Map<String, dynamic> medal = <String, dynamic>{
       'cityId': cityRef,
       'obtained': true,
       'obtainedDate': Timestamp.now(),
@@ -75,7 +75,7 @@ class UploadProjectService {
 
     await FirebaseFirestore.instance.collection('players').doc(userUID).update(
       {
-        'projectAwards': FieldValue.arrayUnion([medal])
+        'projectAwards': FieldValue.arrayUnion(<dynamic>[medal])
       },
     );
   }

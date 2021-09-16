@@ -7,7 +7,7 @@ class ChapterTitleSection extends StatelessWidget {
   ChapterTitleSection({
     Key? key,
     required String title,
-  })  : this.title = title.toUpperCase(),
+  })  : title = title.toUpperCase(),
         super(key: key);
 
   @override

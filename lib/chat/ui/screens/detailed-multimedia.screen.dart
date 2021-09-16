@@ -23,11 +23,11 @@ class _DetailedMultimediaScreenState extends State<DetailedMultimediaScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: (this.widget.message.kind == "MESSAGE#VIDEO")
+        child: (widget.message.kind == 'MESSAGE#VIDEO')
             ? VideoPlayer(
-                video: this.widget.message.asset as VideoDto,
+                video: widget.message.asset as VideoDto,
               )
-            : Center(child: Image.network(this.widget.message.asset!.url)),
+            : Center(child: Image.network(widget.message.asset!.url)),
       ),
     );
   }

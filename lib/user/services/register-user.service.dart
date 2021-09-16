@@ -60,7 +60,6 @@ class RegisterService {
     final payload =
         await _fFirestore.collection('inscribed-players').doc(email).get();
 
-    /// throw exception because no exception found
     if (!payload.exists) {
       throw RegisterException(RegisterErrorCode.notInscribed);
     }
@@ -110,7 +109,6 @@ class RegisterService {
     if (credentials.user == null) {
       throw RegisterException(RegisterErrorCode.notCreated);
     }
-    
     return credentials.user!;
   }
 }

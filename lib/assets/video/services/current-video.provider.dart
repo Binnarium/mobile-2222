@@ -9,11 +9,11 @@ class CurrentVideoProvider {
   final BehaviorSubject<VideoDto?> _currentVideoSink =
       BehaviorSubject<VideoDto?>.seeded(null);
 
-  Stream<VideoDto?> get currentVideo$ => this._currentVideoSink.stream;
+  Stream<VideoDto?> get currentVideo$ => _currentVideoSink.stream;
 
   void setVideo(VideoDto video) async {
     if (!kIsWeb) {
-      this._currentVideoSink.add(video);
+      _currentVideoSink.add(video);
     } else {
       launch(video.url);
     }
@@ -21,6 +21,6 @@ class CurrentVideoProvider {
 
   /// method to stop and close VideoPlayer
   void close() async {
-    this._currentVideoSink.add(null);
+    _currentVideoSink.add(null);
   }
 }
