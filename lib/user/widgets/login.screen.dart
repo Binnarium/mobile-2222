@@ -22,6 +22,8 @@ import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   static const String route = '/login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -35,19 +37,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final LoginFormModel _formValue = LoginFormModel.empty();
 
-  final ILoginService _loginService = LoginService();
+  LoginService get _loginService =>
+      Provider.of<LoginService>(context, listen: false);
+
+  WelcomeService get loadLoginInfoService =>
+      Provider.of<WelcomeService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-    LoadLoginInformationService loadLoginInfoService =
-        Provider.of<LoadLoginInformationService>(this.context, listen: false);
 
-    this._loadLoginPayload = loadLoginInfoService.load$().listen(
+    _loadLoginPayload = loadLoginInfoService.load$.listen(
       (welcomeDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.loginPayload = welcomeDto;
+        if (mounted)
+          setState(() {
+            loginPayload = welcomeDto;
           });
       },
     );
@@ -55,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    this._loadLoginPayload?.cancel();
+    _loadLoginPayload?.cancel();
     super.dispose();
   }
 
@@ -67,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     ///safeArea para dispositivos con pantalla notch
     return Form(
-      key: this._formKey,
+      key: _formKey,
       child: Scaffold(
         backgroundColor: Colors2222.primary,
 
@@ -100,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               /// loading animation
-              if (this.loginPayload == null)
+              if (loginPayload == null)
                 Center(
                   child: AppLoading(),
                 )
@@ -112,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Text(
-                    this.loginPayload!.pageTitle,
+                    loginPayload!.pageTitle,
                     style: textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
                     textAlign: TextAlign.center,
                   ),
@@ -122,20 +126,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: VideoPlayer(
-                      video: this.loginPayload!.welcomeVideo,
+                      video: loginPayload!.welcomeVideo,
                     )),
 
                 /// profundity text
                 Padding(
                   padding: const EdgeInsets.only(bottom: 28),
                   child: Markdown2222(
-                    data: this.loginPayload!.profundityText,
+                    data: loginPayload!.profundityText,
                   ),
                 ),
 
                 /// team button
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 24),
                   child: GotoTeamButton(),
                 ),
 
@@ -143,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: MarkdownCard(
-                    content: this.loginPayload!.workloadText,
+                    content: loginPayload!.workloadText,
                   ),
                 ),
 
@@ -163,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextFormField222(
                     label: 'Correo Electrónico',
                     keyboardType: TextInputType.emailAddress,
-                    onValueChanged: (email) => this._formValue.email = email!,
+                    onValueChanged: (email) => _formValue.email = email!,
                     validator: _validateEmail,
                   ),
                 ),
@@ -173,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextFormField222.password(
                     label: 'Contraseña',
                     onValueChanged: (password) =>
-                        this._formValue.password = password!,
+                        _formValue.password = password!,
                     validator: _validatePassword,
                   ),
                 ),
@@ -193,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () =>
                       Navigator.pushNamed(context, RegisterScreen.route),
                   style: TextButton.styleFrom(primary: Colors2222.white),
-                  child: Text('¿No tienes cuenta? Regístrate aquí'),
+                  child: const Text('¿No tienes cuenta? Regístrate aquí'),
                 ),
               ],
             ],
@@ -203,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  String? _validatePassword(value) {
+  String? _validatePassword(String? value) {
     final int numberCaracteres = 6;
     if (value == null || value.isEmpty) {
       return 'Ingresa una contraseña valida';
@@ -214,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  String? _validateEmail(email) {
+  String? _validateEmail(String? email) {
     bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
         .hasMatch(email!);
     if (!emailValid) return 'Correo electrónico invalido';
@@ -222,12 +226,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _handleLogin() async {
-    if (this._formKey.currentState!.validate()) {
-      this._formKey.currentState!.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
       try {
-        final PlayerModel player =
-            await this._loginService.login(this._formValue);
+        final PlayerModel player = await _loginService.login(_formValue);
         ScaffoldMessenger.of(context).showSnackBar(
           AuthenticationSnackbar.welcome(
             displayName: player.displayName,

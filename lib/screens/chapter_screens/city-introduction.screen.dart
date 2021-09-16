@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -62,7 +62,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final double sidePadding = size.width * 0.08;
 
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: this.widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: CityIntroductionScreen.route,
@@ -70,7 +70,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
         children: [
           /// app logo
           Padding(
-            padding: EdgeInsets.only(bottom: 64),
+            padding: EdgeInsets.only(bottom: 40),
             child: LogosHeader(
               showAppLogo: true,
             ),
@@ -79,7 +79,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
           /// Texto cambiar por funcionalidad de cuenta de días
           Padding(
             padding: EdgeInsets.only(
-              bottom: 16,
+              bottom: 20,
               left: sidePadding,
               right: sidePadding,
             ),
@@ -94,7 +94,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
           /// yellow underline on transition
           Padding(
             padding: EdgeInsets.only(
-              bottom: 8,
+              bottom: 16,
               left: sidePadding,
               right: sidePadding,
             ),

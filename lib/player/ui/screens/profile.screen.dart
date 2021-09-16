@@ -6,11 +6,9 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
-import 'package:lab_movil_2222/services/current-user.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
+import 'package:lab_movil_2222/user/widgets/widgets/sign-out-button.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
@@ -24,7 +22,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  StreamSubscription? _signOutSub;
   StreamSubscription? _loadPlayerSub;
   PlayerModel? player;
 
@@ -45,7 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
-    this._signOutSub?.cancel();
     this._loadPlayerSub?.cancel();
     super.dispose();
   }
@@ -167,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: DaysLeftWidget(),
               ),
             ],
-            _logoutButton(context),
+            const LogOutButton(),
           ],
         ),
       ),
@@ -199,39 +195,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ));
         });
-  }
-
-  ElevatedButton _logoutButton(BuildContext context) {
-    final scaffold = ScaffoldMessenger.of(context);
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Colors2222.backgroundBottomBar,
-        elevation: 5,
-      ),
-      onPressed: () =>
-          this._signOutSub = UserService.instance.signOut$().listen((success) {
-        if (success) {
-          /// shows snackbar
-          scaffold.showSnackBar(SnackBar(
-            content: Text(
-              "Cierre de sesión exitoso.",
-              style: textTheme.bodyText1,
-            ),
-            backgroundColor: Colors2222.backgroundBottomBar,
-            action: SnackBarAction(
-                label: 'ENTENDIDO',
-                textColor: Colors.blue.shade300,
-                onPressed: scaffold.hideCurrentSnackBar),
-          ));
-          Navigator.of(context).pushReplacementNamed(LoginScreen.route);
-        } else
-          print(success);
-      }),
-      child: Text(
-        'Cerrar sesión',
-        style: textTheme.headline6?.apply(),
-      ),
-    );
   }
 }

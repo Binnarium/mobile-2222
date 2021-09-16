@@ -28,14 +28,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   StreamSubscription? _loadLoginPayload;
 
+  WelcomeService get loadLoginInfoService =>
+      Provider.of<WelcomeService>(context, listen: false);
+
   @override
   void initState() {
     super.initState();
 
-    LoadLoginInformationService loadLoginInfoService =
-        Provider.of<LoadLoginInformationService>(this.context, listen: false);
-
-    this._loadLoginPayload = loadLoginInfoService.load$().listen(
+    this._loadLoginPayload = loadLoginInfoService.load$.listen(
       (welcomeDto) {
         if (this.mounted)
           this.setState(() {
@@ -82,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   ///Cuerpo de la pantalla
-  _loginBody(Size size, BuildContext context) {
+  Widget _loginBody(Size size, BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListView(
       padding:
