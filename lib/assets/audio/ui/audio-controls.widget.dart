@@ -33,23 +33,23 @@ class _PlayButtonState extends State<PlayButton> {
   @override
   void initState() {
     super.initState();
-    this._iconSub = this.widget.state$.listen((event) {
-      this.setState(() => this.icon = PlayerStateIcons[event]!);
+    _iconSub = widget.state$.listen((event) {
+      setState(() => icon = PlayerStateIcons[event]!);
     });
   }
 
   @override
   void dispose() {
-    this._iconSub?.cancel();
+    _iconSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return PlayerControlIcon(
-      color: this.widget.color,
-      icon: this.icon,
-      onPressed: () => this.widget.onPressed(),
+      color: widget.color,
+      icon: icon,
+      onPressed: () => widget.onPressed(),
     );
   }
 }

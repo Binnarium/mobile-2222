@@ -197,7 +197,7 @@ class CityNavigator {
               context,
               StageArgumentationScreen.route,
               arguments: StageArgumentationScreen(
-                chapterSettings: city,
+                city: city,
               ),
             ),
           ),
@@ -209,7 +209,7 @@ class CityNavigator {
             context,
             StageObjetivesScreen.route,
             arguments: StageObjetivesScreen(
-              chapterSettings: city,
+              city: city,
             ),
           ),
         ),

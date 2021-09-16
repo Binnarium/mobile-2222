@@ -14,17 +14,18 @@ class PlayerProject {
   });
 
   PlayerProject.fromMap(final Map<String, dynamic> payload)
-      : this.kind = payload['kind'] ?? "",
-        this.cityID = payload['cityID'] ?? "",
-        this.id = payload['id'] ?? "",
-        this.file = ProjectFileDto.fromMap(payload['file'] ?? []);
+      : kind = payload['kind'] as String? ?? '',
+        cityID = payload['cityID'] as String? ?? '',
+        id = payload['id'] as String? ?? '',
+        file = ProjectFileDto.fromMap(
+            payload['file'] as Map<String, dynamic>? ?? <String, dynamic>{});
 
   Map<String, dynamic> toMap() {
-    return {
-      "file": {"path": file.path, "url": file.url},
-      "id": this.id,
-      "cityID": this.cityID,
-      "kind": this.kind
+    return <String, dynamic>{
+      'file': {'path': file.path, 'url': file.url},
+      'id': id,
+      'cityID': cityID,
+      'kind': kind
     };
   }
 }

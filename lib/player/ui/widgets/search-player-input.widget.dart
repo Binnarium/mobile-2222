@@ -32,15 +32,14 @@ class _SearchPlayersWidgetState extends State<SearchPlayersWidget> {
     super.initState();
 
     /// emit values every 2 seconds
-    this
-        ._searchValue
+
+    _searchValue
         .debounceTime(Duration(microseconds: 500))
         .startWith(null)
         .asyncMap(
           (value) async {
             if (value == null) return null;
-            return await this
-                ._searchPlayerService
+            return await _searchPlayerService
                 .search(PlayerSearchQueryModel(query: value));
           },
         )
@@ -48,31 +47,31 @@ class _SearchPlayersWidgetState extends State<SearchPlayersWidget> {
           (results) {
             if (results == null) return null;
             final loadTask = results
-                .map((e) async => await this._playerService.load$(e.uid).first);
+                .map((e) async => await _playerService.load$(e.uid).first);
             return Future.wait(loadTask);
           },
         )
         .map(
           (players) => players?.whereNotNull().toList(),
         )
-        .listen((event) => this.widget.onValueChange(event));
+        .listen((event) => widget.onValueChange(event));
   }
 
   @override
   void deactivate() {
-    this._searchValue.close();
+    _searchValue.close();
     super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField222(
-      primaryColor: this.widget.color ?? null,
-      controller: this._searchController,
+      primaryColor: widget.color,
+      controller: _searchController,
       label: 'Buscar viajeros',
       prefixIcon: Icons.search,
       onValueChanged: (value) =>
-          this._searchValue.add((value?.length ?? 0) > 0 ? value : null),
+          _searchValue.add((value?.length ?? 0) > 0 ? value : null),
     );
   }
 

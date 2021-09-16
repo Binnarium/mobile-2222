@@ -30,27 +30,28 @@ class PlayerModel {
     required this.uid,
     required this.displayName,
     required this.email,
-    
-  })  : this.avatarImage = ImageDto(
+  })  : avatarImage = ImageDto(
           height: 0,
           width: 0,
           name: 'avatar.png',
           path: '',
           url: '',
         ),
-        this.groupId = '',
-        this.projectAwards = const [],
-        this.contributionsAwards = const [],
-        this.hackatonAwards = const [],
-        this.clubhouseAwards = const [];
+        groupId = '',
+        projectAwards = const [],
+        contributionsAwards = const [],
+        hackatonAwards = const [],
+        clubhouseAwards = const [];
 
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
     return PlayerModel._(
-      avatarImage: ImageDto.fromMap(payload['avatarImage'] ?? {}),
-      uid: payload['uid'],
-      email: payload['email'],
-      displayName: payload['displayName'] ?? "",
-      groupId: payload['groupId'],
+      avatarImage: ImageDto.fromMap(
+          payload['avatarImage'] as Map<String, dynamic>? ??
+              <String, dynamic>{}),
+      uid: payload['uid'] as String,
+      email: payload['email'] as String,
+      displayName: payload['displayName'] as String? ?? '',
+      groupId: payload['groupId'] as String,
       clubhouseAwards:
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:
@@ -62,18 +63,20 @@ class PlayerModel {
     );
   }
   static List<AwardModel> _getAwardsFromPayload(dynamic payload) {
-    return ((payload ?? []) as List).map((e) => AwardModel.fromMap(e)).toList();
+    return ((payload ?? <dynamic>[]) as List)
+        .map((dynamic e) => AwardModel.fromMap(e as Map<String, dynamic>))
+        .toList();
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'projectAwards': this.projectAwards,
-      'contributionsAwards': this.contributionsAwards,
-      'clubhouseAwards': this.clubhouseAwards,
-      'hackatonAwards': this.hackatonAwards,
-      'uid': this.uid,
-      'displayName': this.displayName,
-      'email': this.email,
+    return <String, dynamic>{
+      'projectAwards': projectAwards,
+      'contributionsAwards': contributionsAwards,
+      'clubhouseAwards': clubhouseAwards,
+      'hackatonAwards': hackatonAwards,
+      'uid': uid,
+      'displayName': displayName,
+      'email': email,
     };
   }
 }

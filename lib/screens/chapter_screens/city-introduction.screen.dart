@@ -36,22 +36,22 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
   void initState() {
     super.initState();
     LoadCityIntroductionService loadIntroductionService =
-        Provider.of<LoadCityIntroductionService>(this.context, listen: false);
+        Provider.of<LoadCityIntroductionService>(context, listen: false);
 
-    this._loadIntroductionSub =
-        loadIntroductionService.load$(this.widget.city).listen(
+    _loadIntroductionSub = loadIntroductionService.load$(widget.city).listen(
       (cityIntroductionDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.introductionDto = cityIntroductionDto;
+        if (mounted) {
+          setState(() {
+            introductionDto = cityIntroductionDto;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadIntroductionSub?.cancel();
+    _loadIntroductionSub?.cancel();
     super.dispose();
   }
 
@@ -62,8 +62,8 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final double sidePadding = size.width * 0.08;
 
-    return Scaffold2222(
-      city: this.widget.city,
+    return Scaffold2222.city(
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: CityIntroductionScreen.route,
       body: ListView(
@@ -84,7 +84,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
               right: sidePadding,
             ),
             child: Text(
-              this.widget.city.phaseName,
+              widget.city.phaseName,
               textAlign: TextAlign.center,
               style: textTheme.headline5,
             ),
@@ -99,7 +99,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
               right: sidePadding,
             ),
             child: Text(
-              this.widget.city.name.toUpperCase(),
+              widget.city.name.toUpperCase(),
               textAlign: TextAlign.center,
               style: textTheme.headline3,
             ),
@@ -114,11 +114,11 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
               right: sidePadding,
             ),
             child: Hero(
-              tag: this.widget.city.icon.path,
+              tag: widget.city.icon.path,
               child: Image(
                 width: size.height * 0.25,
                 height: size.height * 0.25,
-                image: this.widget.city.iconImage,
+                image: widget.city.iconImage,
                 filterQuality: FilterQuality.high,
               ),
             ),
@@ -127,10 +127,10 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
           /// loading screen or content
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
-            child: (this.introductionDto == null)
+            child: (introductionDto == null)
                 ? AppLoading()
                 : Markdown2222(
-                    data: this.introductionDto!.description,
+                    data: introductionDto!.description,
                     contentAlignment: WrapAlignment.center,
                   ),
           )

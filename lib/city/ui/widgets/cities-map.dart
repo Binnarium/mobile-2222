@@ -21,14 +21,14 @@ class CitiesMap extends StatelessWidget {
         /// set top and bottom one pixel inside, so that it doesn't
         /// have a black line at the end of the map
         Positioned.fill(
-          child: Container(color: Colors2222.black),
           bottom: 1,
           top: 1,
+          child: Container(color: Colors2222.black),
         ),
 
         /// map image in this context is used as a background
         const Image(
-          image: const AssetImage('assets/images/map-with-no-icons.png'),
+          image: AssetImage('assets/images/map-with-no-icons.png'),
           fit: BoxFit.fill,
           width: double.infinity,
         ),
@@ -48,8 +48,7 @@ class CitiesMap extends StatelessWidget {
               return Stack(
                 children: [
                   /// draw all cities with positions
-                  for (CityWithMapPositionModel cityPos
-                      in this.citiesWithPositions)
+                  for (CityWithMapPositionModel cityPos in citiesWithPositions)
                     Positioned(
                       top: cityPos.top * vh,
                       left: cityPos.left * vw,

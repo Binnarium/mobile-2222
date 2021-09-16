@@ -21,14 +21,14 @@ class ChatListItem extends ListTile {
               /// chat name
               Expanded(
                 child: Text(
-                  '${chat.chatName}',
+                  chat.chatName,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
 
               /// chat date
               Text(
-                '${DateFormat('MM-dd HH:mm').format(chat.lastActivity)}',
+                DateFormat('MM-dd HH:mm').format(chat.lastActivity),
                 style: Theme.of(context).textTheme.button,
               ),
             ],

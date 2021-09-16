@@ -30,14 +30,14 @@ class _AudioSliderState extends State<AudioSlider> {
   @override
   void initState() {
     super.initState();
-    this.positionDataSub = this.widget.player?.positionData$.listen((event) {
-      if (this.mounted) this.setState(() => this.positionData = event);
+    positionDataSub = widget.player?.positionData$.listen((event) {
+      if (mounted) setState(() => positionData = event);
     });
   }
 
   @override
   void deactivate() {
-    this.positionDataSub?.cancel();
+    positionDataSub?.cancel();
     super.deactivate();
   }
 
@@ -56,10 +56,10 @@ class _AudioSliderState extends State<AudioSlider> {
             activeColor: Colors2222.white,
             inactiveColor: Colors2222.white.withOpacity(0.5),
             min: 0.0,
-            max: this.positionData.duration.inSeconds.toDouble(),
-            value: this.positionData.position.inSeconds.toDouble(),
+            max: positionData.duration.inSeconds.toDouble(),
+            value: positionData.position.inSeconds.toDouble(),
             onChanged: (value) {
-              this.widget.player?.changeToSecond(value.toInt());
+              widget.player?.changeToSecond(value.toInt());
             },
           ),
         ),
@@ -71,11 +71,11 @@ class _AudioSliderState extends State<AudioSlider> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              this.positionData.position.toString().split(".")[0],
+              positionData.position.toString().split('.')[0],
               style: textTheme.bodyText2,
             ),
             Text(
-              this.positionData.duration.toString().split(".")[0],
+              positionData.duration.toString().split('.')[0],
               style: textTheme.bodyText2,
             ),
           ],
@@ -86,6 +86,7 @@ class _AudioSliderState extends State<AudioSlider> {
 }
 
 class _CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
   Rect getPreferredRect({
     required RenderBox parentBox,
     Offset offset = Offset.zero,

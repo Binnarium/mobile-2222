@@ -10,18 +10,19 @@ class CreatePersonalChatService {
   final CurrentPlayerService _currentPlayerService;
 
   CreatePersonalChatService(BuildContext context)
-      : this._functions = FirebaseFunctions.instance,
-        this._currentPlayerService =
+      : _functions = FirebaseFunctions.instance,
+        _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false);
 
   Stream<CreatePersonalChatResponseModel> create$(String otherPlayerId) {
     HttpsCallable createPersonalChat =
         _functions.httpsCallable('createPersonalChat');
 
-    return this._currentPlayerService.player$.take(1).asyncMap(
+    return _currentPlayerService.player$.take(1).asyncMap(
       (currentPlayer) async {
-        if (currentPlayer == null)
+        if (currentPlayer == null) {
           return CreatePersonalChatResponseModel(chatId: null);
+        }
 
         final CreatePersonalChatQueryModel query = CreatePersonalChatQueryModel(
           playerOne: currentPlayer.uid,

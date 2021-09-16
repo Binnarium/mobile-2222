@@ -3,6 +3,6 @@ class LoginFormModel {
   String password;
 
   LoginFormModel.empty()
-      : this.email = '',
-        this.password = '';
+      : email = '',
+        password = '';
 }

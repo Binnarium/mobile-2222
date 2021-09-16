@@ -14,7 +14,7 @@ class ParticipantsListItem extends ListTile {
             horizontal: MediaQuery.of(context).size.width * 0.08,
           ),
           title: Text(
-            '${participant.displayName}',
+            participant.displayName,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   color: color.withOpacity(0.7),

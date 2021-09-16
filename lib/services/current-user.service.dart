@@ -7,35 +7,33 @@ class UserService {
 
   static UserService? _instance;
 
-  UserService._() : this._firebaseAuth = FirebaseAuth.instance;
+  UserService._() : _firebaseAuth = FirebaseAuth.instance;
 
   static UserService get instance {
-    if (UserService._instance == null) {
-      UserService._instance = UserService._();
-    }
+    UserService._instance ??= UserService._();
     return UserService._instance!;
   }
 
   Stream<bool> isSignIn$() {
-    return Stream.value(this._firebaseAuth.currentUser)
+    return Stream.value(_firebaseAuth.currentUser)
         .take(1)
         .map((user) => user != null);
   }
 
   bool isSignIn() {
-    return this._firebaseAuth.currentUser != null;
+    return _firebaseAuth.currentUser != null;
   }
 
   Stream<User?> user$() {
-    return Future.delayed(Duration(seconds: 1))
+    return Future<dynamic>.delayed(Duration(seconds: 1))
         .asStream()
-        .map((_) => this._firebaseAuth.currentUser);
+        .map((dynamic _) => _firebaseAuth.currentUser);
   }
 
   /// TODO: move to correct file
   /// TODO: refactor
   Stream<PlayerModel?> player$() {
-    return this.user$().asyncMap((event) async {
+    return user$().asyncMap((event) async {
       print(event);
       if (event == null) return null;
 
@@ -50,12 +48,11 @@ class UserService {
   }
 
   Stream<bool> signIn$(String email, String password) {
-    final Stream<bool> signInTask = this
-        ._firebaseAuth
+    final Stream<bool> signInTask = _firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password)
         .asStream()
         .map((_) => true)
-        .handleError((error) {
+        .handleError((dynamic error) {
       print(error);
       return false;
     });
@@ -64,12 +61,11 @@ class UserService {
   }
 
   Stream<bool> signOut$() {
-    final Stream<bool> signOutTask = this
-        ._firebaseAuth
+    final Stream<bool> signOutTask = _firebaseAuth
         .signOut()
         .asStream()
         .map((_) => true)
-        .handleError((error) {
+        .handleError((dynamic error) {
       print(error);
       return false;
     });

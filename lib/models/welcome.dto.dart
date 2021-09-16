@@ -7,11 +7,11 @@ class WelcomeDto {
   final VideoDto welcomeVideo;
 
   WelcomeDto.fromMap(Map<String, dynamic> payload)
-      : this.pageTitle = payload['pageTitle'] ?? 'No hay titulo definido',
-        this.profundityText =
-            payload['profundityText'] ?? 'No hay texto profundidad',
-        this.workloadText =
-            payload['workloadText'] ?? 'No hay texto de carga horaria',
-        this.welcomeVideo = VideoDto.fromMap(payload['welcomeVideo']);
+      : pageTitle = payload['pageTitle'] as String? ?? 'No hay titulo definido',
+        profundityText =
+            payload['profundityText'] as String? ?? 'No hay texto profundidad',
+        workloadText = payload['workloadText'] as String? ??
+            'No hay texto de carga horaria',
+        welcomeVideo =
+            VideoDto.fromMap(payload['welcomeVideo'] as Map<String, dynamic>);
 }
-

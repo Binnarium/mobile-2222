@@ -4,5 +4,5 @@ class CityIntroductoryVideoDto {
   final VideoDto video;
 
   CityIntroductoryVideoDto.fromMap(Map<String, dynamic> payload)
-      : this.video = VideoDto.fromMap(payload['video']);
+      : video = VideoDto.fromMap(payload['video'] as Map<String, dynamic>);
 }

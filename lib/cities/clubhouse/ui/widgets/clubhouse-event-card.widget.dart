@@ -30,7 +30,7 @@ class ClubhouseCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: Text(
-            this.clubhouseModel.name,
+            clubhouseModel.name,
             style: textTheme.subtitle2,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
@@ -40,7 +40,7 @@ class ClubhouseCard extends StatelessWidget {
 
         /// date
         Text(
-          DateFormat('EEE, MM/dd-HH:mm').format(this.clubhouseModel.date),
+          DateFormat('EEE, MM/dd-HH:mm').format(clubhouseModel.date),
           style: textTheme.button,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
@@ -48,9 +48,9 @@ class ClubhouseCard extends StatelessWidget {
         ),
 
         /// date
-        if (this.clubhouseModel.uploaderDisplayName != null)
+        if (clubhouseModel.uploaderDisplayName != null)
           Text(
-            this.clubhouseModel.uploaderDisplayName!,
+            clubhouseModel.uploaderDisplayName!,
             style: textTheme.button,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
@@ -66,7 +66,7 @@ class ClubhouseCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             ),
             icon: Icon(Icons.bookmark_add),
-            onPressed: () => launch(this.clubhouseModel.clubhouseUrl),
+            onPressed: () => launch(clubhouseModel.clubhouseUrl),
             label: Text(
               'Agendar',
               overflow: TextOverflow.ellipsis,

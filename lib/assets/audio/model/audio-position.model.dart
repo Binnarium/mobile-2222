@@ -9,7 +9,7 @@ class AudioPositionData {
     required this.duration,
   });
   AudioPositionData.zero()
-      : this.position = Duration.zero,
-        this.bufferedPosition = Duration.zero,
-        this.duration = Duration.zero;
+      : position = Duration.zero,
+        bufferedPosition = Duration.zero,
+        duration = Duration.zero;
 }

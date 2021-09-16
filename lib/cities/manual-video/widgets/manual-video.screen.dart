@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/manual-video/model/city-manual-video.model.dart';
 import 'package:lab_movil_2222/cities/manual-video/services/load-manual-video.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
@@ -37,29 +36,29 @@ class _ManualVideoScreenState extends State<ManualVideoScreen> {
     super.initState();
 
     LoadManualVideoService loadManualVideoService =
-        Provider.of<LoadManualVideoService>(this.context, listen: false);
+        Provider.of<LoadManualVideoService>(context, listen: false);
 
-    this._loadManualVideoSub =
-        loadManualVideoService.load$(this.widget.city).listen(
+    _loadManualVideoSub = loadManualVideoService.load$(widget.city).listen(
       (manualVideoModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.manualVideo = manualVideoModel;
+        if (mounted) {
+          setState(() {
+            manualVideo = manualVideoModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadManualVideoSub?.cancel();
+    _loadManualVideoSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: ManualVideoScreen.route,
       body: Stack(
@@ -68,12 +67,12 @@ class _ManualVideoScreenState extends State<ManualVideoScreen> {
           Center(child: AppLoading()),
 
           /// background video
-          if (this.manualVideo != null)
+          if (manualVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(
-                this.manualVideo!.video.url,
+                manualVideo!.video.url,
               ),
-              onPressed: () => launch(this.manualVideo!.link),
+              onPressed: () => launch(manualVideo!.link),
             ),
         ],
       ),

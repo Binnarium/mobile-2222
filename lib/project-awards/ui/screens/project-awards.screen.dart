@@ -52,14 +52,14 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
   @override
   void initState() {
     super.initState();
-    _groupSub = this._playersGroupService.group$.listen(
-          (players) => this.setState(() => allPlayers = players),
-        );
+    _groupSub = _playersGroupService.group$.listen(
+      (players) => setState(() => allPlayers = players),
+    );
   }
 
   @override
   void dispose() {
-    this._groupSub?.cancel();
+    _groupSub?.cancel();
     super.dispose();
   }
 
@@ -70,7 +70,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
     final double sidePadding = size.width * 0.08;
 
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: ProjectAwardsProject.route,
       body: ListView(
@@ -78,7 +78,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
           /// icon item
           Padding(
             padding: EdgeInsets.only(bottom: 32.0),
-            child: LogosHeader(showStageLogoCity: this.widget.city),
+            child: LogosHeader(showStageLogoCity: widget.city),
           ),
 
           /// title
@@ -117,13 +117,13 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
           ),
 
           ///If players no load
-          if (this.allPlayers == null)
+          if (allPlayers == null)
             AppLoading()
 
           /// show a list of all players of group
           else ...[
             /// chats items
-            for (PlayerModel player in this.allPlayers!)
+            for (PlayerModel player in allPlayers!)
               ParticipantsListMedalsItem(participant: player, context: context),
           ],
         ],

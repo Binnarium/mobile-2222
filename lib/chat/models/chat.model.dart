@@ -54,7 +54,7 @@ class ChatModel {
         kind = data['kind'] as String,
         disabled = data['disabled'] as bool,
         participantsCompleted = data['participantsCompleted'] == true,
-        name = data['name'] as String? ?? null,
+        name = data['name'] as String?,
         lastActivity = (data['lastActivity'] as Timestamp).toDate(),
         indexedDate = (data['indexedDate'] as Timestamp?)?.toDate(),
         participants = (data['participants'] as List<dynamic>?)
@@ -72,17 +72,16 @@ class ChatModel {
                 currentUid: currentUserId,
               );
 
-  String get chatName => this.name != null
-      ? this.name!
-      : (this.isGroupChat)
+  String get chatName => name != null
+      ? name!
+      : (isGroupChat)
           ? 'Grupo de 10'
-          : this
-              .participants
+          : participants
               .map((e) => e.displayName)
               .map((name) => name.split(' ').sublist(0, 1).join(' '))
               .join(', ');
 
-  bool get isGeneralChat => this.kind == 'CHAT#GENERAL';
-  bool get isGroupChat => this.kind == 'CHAT#GROUP';
-  bool get isPersonalChat => this.kind == 'CHAT#PERSONAL';
+  bool get isGeneralChat => kind == 'CHAT#GENERAL';
+  bool get isGroupChat => kind == 'CHAT#GROUP';
+  bool get isPersonalChat => kind == 'CHAT#PERSONAL';
 }

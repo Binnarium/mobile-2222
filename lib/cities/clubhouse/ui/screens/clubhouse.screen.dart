@@ -38,39 +38,39 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
   @override
   void initState() {
     super.initState();
-    this.clubhousesSub =
-        LoadAvailableClubhouseService(this.widget.city).listen((event) {
-      this.setState(() {
-        this.clubhouses = event;
+    clubhousesSub = LoadAvailableClubhouseService(widget.city).listen((event) {
+      setState(() {
+        clubhouses = event;
       });
     });
 
     /// loads clubhouse
     LoadClubhouseService loadClubhouseActivityService =
-        Provider.of<LoadClubhouseService>(this.context, listen: false);
+        Provider.of<LoadClubhouseService>(context, listen: false);
 
-    this._loadClubhousesActivitiesSub =
-        loadClubhouseActivityService.load$(this.widget.city).listen(
+    _loadClubhousesActivitiesSub =
+        loadClubhouseActivityService.load$(widget.city).listen(
       (clubhouseActivityModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.clubhouseActivity = clubhouseActivityModel;
+        if (mounted) {
+          setState(() {
+            clubhouseActivity = clubhouseActivityModel;
           });
+        }
       },
     );
   }
 
   @override
   void deactivate() {
-    this.clubhousesSub?.cancel();
-    this._loadClubhousesActivitiesSub?.cancel();
+    clubhousesSub?.cancel();
+    _loadClubhousesActivitiesSub?.cancel();
     super.deactivate();
   }
 
   @override
   void dispose() {
-    this.clubhousesSub?.cancel();
-    this._loadClubhousesActivitiesSub?.cancel();
+    clubhousesSub?.cancel();
+    _loadClubhousesActivitiesSub?.cancel();
     super.dispose();
   }
 
@@ -80,7 +80,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ClubhouseScreen.route,
       body: ListView(
@@ -89,7 +89,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 50.0),
             child: LogosHeader(
-              showStageLogoCity: this.widget.city,
+              showStageLogoCity: widget.city,
             ),
           ),
 
@@ -99,7 +99,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
               padding: const EdgeInsets.only(bottom: 24.0),
               width: min(300, size.width * 0.8),
               child: Text(
-                "CLUBHOUSE".toUpperCase(),
+                'CLUBHOUSE'.toUpperCase(),
                 style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
@@ -119,13 +119,13 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
           ),
 
           /// page content
-          if (this.clubhouseActivity == null)
+          if (clubhouseActivity == null)
             AppLoading()
           else ...[
             Padding(
               padding: const EdgeInsets.only(bottom: 34.0),
               child: Text(
-                this.clubhouseActivity!.theme,
+                clubhouseActivity!.theme,
                 style:
                     textTheme.headline5!.copyWith(fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
@@ -142,7 +142,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
           ),
 
           /// page content
-          (this.clubhouses == null)
+          (clubhouses == null)
               ? AppLoading()
               : Padding(
                   padding: EdgeInsets.only(
@@ -150,7 +150,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                     left: size.width * 0.04,
                     right: size.width * 0.04,
                   ),
-                  child: (this.clubhouses!.length == 0)
+                  child: (clubhouses!.isEmpty)
                       ? Center(
                           child: Text(
                             'No hay clubhouse programados',
@@ -167,9 +167,9 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                           ),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: this.clubhouses!.length,
+                          itemCount: clubhouses!.length,
                           itemBuilder: (context, index) => ClubhouseCard(
-                            clubhouseModel: this.clubhouses![index],
+                            clubhouseModel: clubhouses![index],
                           ),
                         ),
                 ),
@@ -188,7 +188,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
                   context,
                   AddClubhouseScreen.route,
                   arguments: AddClubhouseScreen(
-                    city: this.widget.city,
+                    city: widget.city,
                   ),
                 ),
               ),

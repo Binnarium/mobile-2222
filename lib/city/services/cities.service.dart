@@ -5,10 +5,9 @@ import 'package:rxdart/rxdart.dart';
 class CitiesService {
   final FirebaseFirestore _firestore;
 
-  CitiesService() : this._firestore = FirebaseFirestore.instance;
+  CitiesService() : _firestore = FirebaseFirestore.instance;
 
-  Stream<List<CityModel>> get allCities$ => this
-          ._firestore
+  Stream<List<CityModel>> get allCities$ => _firestore
           .collection('cities')
           .orderBy('stage')
           .snapshots()

@@ -43,17 +43,17 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
   @override
   void initState() {
     super.initState();
-    this.clubhousesSub =
-        this._loadUserClubhouseService.load$(this.widget.city).listen((event) {
-      this.setState(() {
-        this.clubhouses = event;
+    clubhousesSub =
+        _loadUserClubhouseService.load$(widget.city).listen((event) {
+      setState(() {
+        clubhouses = event;
       });
     });
   }
 
   @override
   void deactivate() {
-    this.clubhousesSub?.cancel();
+    clubhousesSub?.cancel();
     super.deactivate();
   }
 
@@ -63,7 +63,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.empty(
-      backgroundColor: this.widget.city.color,
+      backgroundColor: widget.city.color,
       backgrounds: [BackgroundDecorationStyle.topRight],
       appBar: AppBar(
         title: Text(
@@ -73,7 +73,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
           ),
         ),
         primary: true,
-        backgroundColor: this.widget.city.color,
+        backgroundColor: widget.city.color,
         titleSpacing: 0,
       ),
       body: ListView(
@@ -87,12 +87,12 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
               right: size.width * 0.08,
             ),
             child: TextFormField222(
-              primaryColor: this.widget.city.color,
-              controller: this._addClubhouseController,
+              primaryColor: widget.city.color,
+              controller: _addClubhouseController,
               label: 'Enlace de evento clubhouse',
               keyboardType: TextInputType.url,
               prefixIcon: Icons.search,
-              onValueChanged: (value) => this.clubhouseUrl = value,
+              onValueChanged: (value) => clubhouseUrl = value,
             ),
           ),
           Padding(
@@ -103,17 +103,16 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
-                child: Text('Agregar Evento'),
                 onPressed: () async {
-                  if (this.clubhouseUrl == null) return;
+                  if (clubhouseUrl == null) return;
                   final FirebaseFirestore _fFirestore =
                       FirebaseFirestore.instance;
                   final FirebaseAuth _fAuth = FirebaseAuth.instance;
                   final CreateClubhouseModel createClubhouseModel =
                       CreateClubhouseModel(
-                    cityId: this.widget.city.id,
-                    clubhouseUrl: this.clubhouseUrl!,
-                    id: this._generateId(size: 15),
+                    cityId: widget.city.id,
+                    clubhouseUrl: clubhouseUrl!,
+                    id: _generateId(size: 15),
                     uploaderId: _fAuth.currentUser!.uid,
                   );
 
@@ -122,9 +121,10 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                       .doc(createClubhouseModel.id)
                       .set(createClubhouseModel.toMap());
 
-                  this.clubhouseUrl = null;
-                  this._addClubhouseController.clear();
+                  clubhouseUrl = null;
+                  _addClubhouseController.clear();
                 },
+                child: Text('Agregar Evento'),
               ),
             ),
           ),
@@ -147,7 +147,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
           ),
 
           /// page content
-          (this.clubhouses == null)
+          (clubhouses == null)
               ? AppLoading()
               : Padding(
                   padding: EdgeInsets.only(
@@ -155,7 +155,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                     left: size.width * 0.04,
                     right: size.width * 0.04,
                   ),
-                  child: (this.clubhouses!.length == 0)
+                  child: (clubhouses!.isEmpty)
                       ? Center(
                           child: Text('No hay clubhouse creados'),
                         )
@@ -168,9 +168,9 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                           ),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: this.clubhouses!.length,
+                          itemCount: clubhouses!.length,
                           itemBuilder: (context, index) => ClubhouseCard(
-                            clubhouseModel: this.clubhouses![index],
+                            clubhouseModel: clubhouses![index],
                           ),
                         ),
                 ),

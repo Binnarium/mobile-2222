@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/project-video/model/city-project-video.model.dart';
 import 'package:lab_movil_2222/cities/project-video/services/load-project-video.service.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
@@ -36,29 +35,29 @@ class _ProjectVideoScreenState extends State<ProjectVideoScreen> {
     super.initState();
 
     LoadProjectVideoService loadProjectVideoService =
-        Provider.of<LoadProjectVideoService>(this.context, listen: false);
+        Provider.of<LoadProjectVideoService>(context, listen: false);
 
-    this._loadProjectVideoSub =
-        loadProjectVideoService.load$(this.widget.city).listen(
+    _loadProjectVideoSub = loadProjectVideoService.load$(widget.city).listen(
       (projectVideoModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.projectVideo = projectVideoModel;
+        if (mounted) {
+          setState(() {
+            projectVideo = projectVideoModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadProjectVideoSub?.cancel();
+    _loadProjectVideoSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: ProjectVideoScreen.route,
       body: Stack(
@@ -67,10 +66,10 @@ class _ProjectVideoScreenState extends State<ProjectVideoScreen> {
           Center(child: AppLoading()),
 
           /// background video
-          if (this.projectVideo != null)
+          if (projectVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(
-                this.projectVideo!.video.url,
+                projectVideo!.video.url,
               ),
             ),
         ],

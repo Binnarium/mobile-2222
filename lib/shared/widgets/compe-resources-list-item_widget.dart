@@ -21,8 +21,8 @@ class CompeResourcesListItem extends StatelessWidget {
     String imageurl =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShMSIXzP_rbfUPmoKrBDCxlBFCITYnuzuVHg&usqp=CAU';
     image['url'] == null
-        ? imageNe = new NetworkImage(imageurl)
-        : imageNe = new NetworkImage(image['url']);
+        ? imageNe = NetworkImage(imageurl)
+        : imageNe = NetworkImage(image['url'] as String);
     return Column(
       children: [
         ///seeks if an image url is provided, otherwise returns the no image png
@@ -39,7 +39,7 @@ class CompeResourcesListItem extends StatelessWidget {
         ///Makes the column flexible to avoid the overflow
 
         Text(
-          this.name,
+          name,
           style: textTheme.bodyText1,
           overflow: TextOverflow.ellipsis,
           maxLines: 4,

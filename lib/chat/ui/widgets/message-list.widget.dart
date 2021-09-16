@@ -20,7 +20,7 @@ class MessagesList extends StatefulWidget {
     Key? key,
     required ChatModel chatModel,
   })  : this.chatModel = chatModel,
-        this.scrollController = ScrollController(),
+        scrollController = ScrollController(),
         super(key: key);
 
   @override
@@ -37,37 +37,37 @@ class _MessagesListState extends State<MessagesList> {
   @override
   void initState() {
     super.initState();
-    _messagesSub =
-        _listMessagesService.list$(this.widget.chatModel).listen((event) {
+    _messagesSub = _listMessagesService.list$(widget.chatModel).listen((event) {
       /// add new messages
-      this.setState(() => this.messages = event);
+      setState(() => messages = event);
       Timer(Duration(milliseconds: 500), () {
         try {
-          this.widget.scrollController.animateTo(
-                this.widget.scrollController.position.maxScrollExtent,
-                curve: Curves.ease,
-                duration: Duration(milliseconds: 500),
-              );
-        } catch (error) {}
+          widget.scrollController.animateTo(
+            widget.scrollController.position.maxScrollExtent,
+            curve: Curves.ease,
+            duration: Duration(milliseconds: 500),
+          );
+        } catch (error) {
+          print('error al hacer scroll: $error');
+        }
       });
     });
   }
 
   @override
   void dispose() {
-    this._messagesSub?.cancel();
+    _messagesSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
 
     return ListView(
-      controller: this.widget.scrollController,
+      controller: widget.scrollController,
       children: [
-        if (this.messages == null)
+        if (messages == null)
           AppLoading()
         else ...[
           /// about chats
@@ -77,7 +77,7 @@ class _MessagesListState extends State<MessagesList> {
               child: Container(
                 width: min(400, size.width * 0.8),
                 child: ChatTextDescription.getChatText(
-                  chat: this.widget.chatModel,
+                  chat: widget.chatModel,
                   color: Colors2222.black.withOpacity(0.5),
                 ),
               ),
@@ -85,7 +85,7 @@ class _MessagesListState extends State<MessagesList> {
           ),
 
           /// chats
-          for (MessageModel message in this.messages!)
+          for (MessageModel message in messages!)
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.04,

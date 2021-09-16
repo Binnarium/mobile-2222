@@ -18,10 +18,10 @@ abstract class AssetDto {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'url': this.url,
-      'path': this.path,
-      'name': this.name,
+    return <String, dynamic>{
+      'url': url,
+      'path': path,
+      'name': name,
     };
   }
 }
@@ -45,12 +45,12 @@ class VideoDto extends AssetDto {
         );
 
   VideoDto.fromMap(final Map<String, dynamic> payload)
-      : this.format = payload['format'] ?? '',
-        this.duration = payload['duration'] ?? '',
+      : format = payload['format'] as String? ?? '',
+        duration = payload['duration'] as int? ?? 0,
         super(
-          name: payload['name'] ?? '',
-          path: payload['path'] ?? '',
-          url: payload['url'] ?? '',
+          name: payload['name'] as String? ?? '',
+          path: payload['path'] as String? ?? '',
+          url: payload['url'] as String? ?? '',
         );
 
   ImageProvider get placeholderImage =>
@@ -60,9 +60,9 @@ class VideoDto extends AssetDto {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
 
-    map.addAll({
-      "duration": this.duration,
-      "format": this.format,
+    map.addAll(<String, dynamic>{
+      'duration': duration,
+      'format': format,
     });
 
     return map;
@@ -87,23 +87,23 @@ class ImageDto extends AssetDto {
         );
 
   ImageDto.fromMap(final Map<String, dynamic> payload)
-      : this.height = payload['height'] ?? 0,
-        this.width = payload['width'] ?? 0,
+      : height = payload['height'] as int? ?? 0,
+        width = payload['width'] as int? ?? 0,
         super(
-          name: payload['name'] ?? "",
-          path: payload['path'] ?? "",
-          url: payload['url'] ?? "",
+          name: payload['name'] as String? ?? '',
+          path: payload['path'] as String? ?? '',
+          url: payload['url'] as String? ?? '',
         );
 
-  ImageProvider get image => NetworkImage(this.url);
+  ImageProvider get image => NetworkImage(url);
 
   @override
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
 
-    map.addAll({
-      "width": this.width,
-      "height": this.height,
+    map.addAll(<String, dynamic>{
+      'width': width,
+      'height': height,
     });
 
     return map;
@@ -114,9 +114,9 @@ class ImageDto extends AssetDto {
 class AudioDto extends AssetDto {
   AudioDto.fromMap(final Map<String, dynamic> payload)
       : super(
-          name: payload['name'],
-          path: payload['path'],
-          url: payload['url'],
+          name: payload['name'] as String,
+          path: payload['path'] as String,
+          url: payload['url'] as String,
         );
 }
 
@@ -134,8 +134,8 @@ class ProjectFileDto extends AssetDto {
 
   ProjectFileDto.fromMap(final Map<String, dynamic> payload)
       : super(
-          name: payload['name'] ?? '',
-          path: payload['path'] ?? '',
-          url: payload['url'] ?? '',
+          name: payload['name'] as String? ?? '',
+          path: payload['path'] as String? ?? '',
+          url: payload['url'] as String? ?? '',
         );
 }

@@ -4,7 +4,7 @@ class SearchPlayerResultModel {
   final String email;
 
   SearchPlayerResultModel.fromMap(Map<String, dynamic> map)
-      : this.uid = map['uid'],
-        this.displayName = map['displayName'],
-        this.email = map['email'];
+      : uid = map['uid'] as String,
+        displayName = map['displayName'] as String,
+        email = map['email'] as String;
 }

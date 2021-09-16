@@ -8,6 +8,7 @@ class ChatTextDescription extends Markdown2222 {
   ChatTextDescription.informationText({
     Color? color,
   }) : super(
+          // ignore: prefer_single_quotes
           data: """
 Este chart sirve para las primeras interacciones entre docentes y grupos. 
 
@@ -22,7 +23,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
     Color? color,
   }) : super(
           data:
-              "Si tienes dudas o problemas, **desde aquí te comunicas con los gestores de la plataforma**. O también desde info@labmovil2222.utpl.edu.ec",
+              'Si tienes dudas o problemas, **desde aquí te comunicas con los gestores de la plataforma**. O también desde info@labmovil2222.utpl.edu.ec',
           contentAlignment: WrapAlignment.center,
           color: color ?? Colors2222.black.withOpacity(0.6),
         );
@@ -32,7 +33,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
     Color? color,
   }) : super(
           data:
-              "Aquí puedes iniciar la **conversación con tu grupo**, para ayudarse mutuamente en el desarrollo del viaje y sus actividades.",
+              'Aquí puedes iniciar la **conversación con tu grupo**, para ayudarse mutuamente en el desarrollo del viaje y sus actividades.',
           contentAlignment: WrapAlignment.center,
           color: color ?? Colors2222.black.withOpacity(0.6),
         );
@@ -42,7 +43,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
     Color? color,
   }) : super(
           data:
-              "Aquí puedes iniciar **la conversación con otros viajeros fuera de tu grupo**, para ayudarse mutuamente en el desarrollo del viaje y sus actividades.",
+              'Aquí puedes iniciar **la conversación con otros viajeros fuera de tu grupo**, para ayudarse mutuamente en el desarrollo del viaje y sus actividades.',
           contentAlignment: WrapAlignment.center,
           color: color ?? Colors2222.black.withOpacity(0.6),
         );
@@ -52,15 +53,17 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
     required Color? color,
   }) {
     ///
-    if (chat.isGeneralChat)
+    if (chat.isGeneralChat) {
       return ChatTextDescription.generalText(color: color);
+    }
 
     ///
     if (chat.isGroupChat) return ChatTextDescription.groupText(color: color);
 
     ///
-    if (chat.isPersonalChat)
+    if (chat.isPersonalChat) {
       return ChatTextDescription.personalText(color: color);
+    }
 
     ///
     return ChatTextDescription.informationText(color: color);

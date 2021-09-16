@@ -18,25 +18,23 @@ class CityEnabledPagesModel {
   final bool hackatonMedals;
 
   CityEnabledPagesModel.fromMap(final Map<String, dynamic> payload)
-      : this.activities = payload['activities'] == true,
-        this.contribution = payload['contribution'] == true,
-        this.contributionExplanation =
-            payload['contributionExplanation'] == true,
-        this.clubhouseExplanation = payload['clubhouseExplanation'] == true,
-        this.clubhouse = payload['clubhouse'] == true,
-        this.resources = payload['resources'] == true,
-        this.introductoryVideo = payload['introductoryVideo'] == true,
-        this.argumentation = payload['argumentation'] == true,
-        this.manualVideo = payload['manualVideo'] == true,
-        this.projectVideo = payload['projectVideo'] == true,
-        this.content = payload['content'] == true,
-        this.microMesoMacro = payload['microMesoMacro'] == true,
-        this.finalVideo = payload['finalVideo'] == true,
-        this.project = payload['project'] == true,
-        this.hackatonMedals = payload['hackatonMedals'] == true;
+      : activities = payload['activities'] == true,
+        contribution = payload['contribution'] == true,
+        contributionExplanation = payload['contributionExplanation'] == true,
+        clubhouseExplanation = payload['clubhouseExplanation'] == true,
+        clubhouse = payload['clubhouse'] == true,
+        resources = payload['resources'] == true,
+        introductoryVideo = payload['introductoryVideo'] == true,
+        argumentation = payload['argumentation'] == true,
+        manualVideo = payload['manualVideo'] == true,
+        projectVideo = payload['projectVideo'] == true,
+        content = payload['content'] == true,
+        microMesoMacro = payload['microMesoMacro'] == true,
+        finalVideo = payload['finalVideo'] == true,
+        project = payload['project'] == true,
+        hackatonMedals = payload['hackatonMedals'] == true;
 
-  bool get enableClubhouse => this.clubhouse || this.clubhouseExplanation;
-  bool get enableContribution =>
-      this.contribution || this.contributionExplanation;
-  bool get enableProject => this.project || this.projectVideo;
+  bool get enableClubhouse => clubhouse || clubhouseExplanation;
+  bool get enableContribution => contribution || contributionExplanation;
+  bool get enableProject => project || projectVideo;
 }

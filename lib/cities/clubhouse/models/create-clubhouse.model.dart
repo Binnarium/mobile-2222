@@ -12,11 +12,11 @@ class CreateClubhouseModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      "id": this.id,
-      "cityId": this.cityId,
-      "clubhouseUrl": this.clubhouseUrl,
-      "uploaderId": this.uploaderId,
+    return <String, dynamic>{
+      'id': id,
+      'cityId': cityId,
+      'clubhouseUrl': clubhouseUrl,
+      'uploaderId': uploaderId,
     };
   }
 }
