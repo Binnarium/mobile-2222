@@ -13,17 +13,15 @@ class DaysLeftWidget extends StatelessWidget {
   }
 }
 
-_introductionBody(BuildContext context, Size size) {
+FutureBuilder<String> _introductionBody(BuildContext context, Size size) {
   final TextTheme textTheme = Theme.of(context).textTheme;
   //Creando el Scroll
-  double spacedSize = size.height * 0.165;
+
   double daysLeftSize = size.height * 0.0011;
   if (size.height < 550) {
-    spacedSize = size.height * 0.19;
     daysLeftSize = size.height * 0.0014;
   }
   if (size.height < 650) {
-    spacedSize = size.height * 0.125;
     daysLeftSize = size.height * 0.0011;
   }
   return FutureBuilder(
@@ -35,7 +33,7 @@ _introductionBody(BuildContext context, Size size) {
       if (days.connectionState == ConnectionState.waiting) {
         return Center(
           child: CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(
+            valueColor: AlwaysStoppedAnimation<Color>(
               Colors2222.red,
             ),
           ),
@@ -51,7 +49,7 @@ _introductionBody(BuildContext context, Size size) {
             SizedBox(height: size.height * 0.01),
             //Texto cambiar por funcionalidad de cuenta de días
 
-            Text(days.data! + " DÍAS",
+            Text(days.data! + ' DÍAS',
                 style:
                     textTheme.headline3?.apply(fontSizeFactor: daysLeftSize)),
 
@@ -63,7 +61,7 @@ _introductionBody(BuildContext context, Size size) {
           ],
         );
       }
-      return Text("Error loading daysleft _configuration_");
+      return Text('Error loading daysleft _configuration_');
     },
   );
 }
@@ -74,8 +72,9 @@ Future<String> _daysLeftReading() async {
       .doc('_configuration_')
       .get();
 
-  if (!snap.exists)
-    new ErrorDescription('Document _configuration_ does not exists');
+  if (!snap.exists) {
+    ErrorDescription('Document _configuration_ does not exists');
+  }
 
   final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
   final DateTime date =

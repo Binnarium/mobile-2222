@@ -1,32 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadArgumentScreenInformationService {
   final FirebaseFirestore _firestore;
   LoadArgumentScreenInformationService()
-      : this._firestore = FirebaseFirestore.instance;
+      : _firestore = FirebaseFirestore.instance;
 
   Stream<List<String>?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('argument')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map((event) => event?['questions'] as List<dynamic>)
         .first
         .asStream()
-        .map((event) => event.map((e) => e.toString()).toList());
+        .map((event) => event.map((dynamic e) => e.toString()).toList());
   }
 
   // @override
   // Future<List<String>> load() async {
   //   final data = await FirebaseFirestore.instance
   //       .collection('cities')
-  //       .doc(this.options.id)
+  //       .doc(options.id)
   //       .collection('pages')
   //       .doc('argument')
   //       .get();

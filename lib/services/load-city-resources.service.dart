@@ -4,17 +4,16 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadCityResourcesService {
   final FirebaseFirestore _firestore;
-  LoadCityResourcesService() : this._firestore = FirebaseFirestore.instance;
+  LoadCityResourcesService() : _firestore = FirebaseFirestore.instance;
 
   Stream<CityResourcesDto?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('resources')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map((data) => data == null ? null : CityResourcesDto.fromMap(data));
   }
 }

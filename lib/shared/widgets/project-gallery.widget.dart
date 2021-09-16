@@ -29,19 +29,19 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
     final Size size = MediaQuery.of(context).size;
     List<PlayerProject> cityProjects = [];
     List<Widget> items = [];
-    this.widget.projects.forEach((element) {
+    widget.projects.forEach((element) {
       // print(element.cityName);
-      if (element.cityID == this.widget.city.name) {
+      if (element.cityID == widget.city.name) {
         cityProjects.add(element);
       }
       // print("PROJECT: $project");
     });
-    if (cityProjects != []) {
+    if (cityProjects != <dynamic>[]) {
       items = _gridItemsList(cityProjects);
     }
     return Column(
       children: [
-        (items.length == 0)
+        (items.isEmpty)
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
@@ -82,7 +82,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
   List<Widget> _gridItemsList(List<PlayerProject> projects) {
     List<Widget> items = [];
     projects.forEach((project) {
-      if (project.cityID == this.widget.city.name) {
+      if (project.cityID == widget.city.name) {
         items.add(_gridItem(project));
       }
     });
@@ -105,14 +105,14 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
           runSpacing: 10,
           children: [
             Image.asset('assets/icons/upload_project_icon.png'),
-            Text(project.file.path.split("/").last)
+            Text(project.file.path.split('/').last)
           ],
         ),
       ),
     );
   }
 
-  fileDialog(PlayerProject project) {
+  AlertDialog fileDialog(PlayerProject project) {
     return AlertDialog(
       backgroundColor: Colors.black,
       content: Column(
@@ -122,11 +122,11 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Center(
-                child: Text(project.file.path.split("/").last),
+                child: Text(project.file.path.split('/').last),
               ),
             ),
             ButtonWidget(
-              color: this.widget.city.color,
+              color: widget.city.color,
               icon: Icons.download_rounded,
               text: 'Descargar',
               iconColor: Colors.white,
@@ -141,7 +141,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
               text: 'Eliminar',
               onClicked: () {
                 UploadProjectService.deletePlayerProjectFile(
-                    this.widget.userUID, project);
+                    widget.userUID, project);
                 setState(() {});
                 Navigator.pop(context);
               },

@@ -6,8 +6,7 @@ class LoadPlayerService {
   final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
 
   Stream<PlayerModel?> load$(String userUID) {
-    return this
-        ._fFirestore
+    return _fFirestore
         .collection('players')
         .doc(userUID)
         .snapshots()

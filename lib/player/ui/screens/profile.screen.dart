@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     /// load player data
     _loadPlayerSub = _currentPlayerService.player$.listen((player) {
       setState(() {
-        player = player;
+        this.player = player;
       });
     });
   }
@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Container(
                             height: 80,
                             child: Stack(children: [
-                              (player?.avatarImage.url == "")
+                              (player?.avatarImage.url == '')
                                   ? CircleAvatar(
                                       backgroundImage: AssetImage(
                                           'assets/backgrounds/decorations/elipse_profile.png'),
@@ -184,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                (player?.avatarImage.url == "")
+                (player?.avatarImage.url == '')
                     ? Image(
                         image: AssetImage(
                             'assets/backgrounds/decorations/elipse_profile.png'),
@@ -225,8 +225,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: scaffold.hideCurrentSnackBar),
           ));
           Navigator.of(context).pushReplacementNamed(LoginScreen.route);
-        } else
+        } else {
           print(success);
+        }
       }),
       child: Text(
         'Cerrar sesión',
