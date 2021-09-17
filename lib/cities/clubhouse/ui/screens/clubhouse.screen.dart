@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse-activity.model.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
+import 'package:lab_movil_2222/cities/clubhouse/services/clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhouse.service.dart';
-import 'package:lab_movil_2222/cities/clubhouse/services/load-clubhouse-activity.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
@@ -22,6 +22,8 @@ class ClubhouseScreen extends StatefulWidget {
   const ClubhouseScreen({Key? key, required this.city}) : super(key: key);
 
   static const String route = '/chapterClubhouse';
+
+
   final CityModel city;
 
   @override
@@ -45,11 +47,12 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
     });
 
     /// loads clubhouse
-    final LoadClubhouseService loadClubhouseActivityService =
-        Provider.of<LoadClubhouseService>(context, listen: false);
+=======
+    final ClubhouseActivityService loadClubhouseActivityService =
+        Provider.of<ClubhouseActivityService>(context, listen: false);
 
     _loadClubhousesActivitiesSub =
-        loadClubhouseActivityService.load$(widget.city).listen(
+        loadClubhouseActivityService.activity$(widget.city).listen(
       (clubhouseActivityModel) {
         if (mounted) {
           setState(() {
@@ -126,9 +129,8 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 34.0),
               child: Text(
-                clubhouseActivity!.theme,
-                style:
-                    textTheme.headline5!.copyWith(fontWeight: FontWeight.w600),
+                clubhouseActivity!.thematic,
+                style: textTheme.headline5,
                 textAlign: TextAlign.center,
               ),
             ),
