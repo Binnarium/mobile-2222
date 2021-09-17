@@ -11,6 +11,7 @@ class ClubhouseModel {
   final String id;
   final String? uploaderDisplayName;
 
+  // ignore: sort_constructors_first
   ClubhouseModel({
     required this.clubhouseUrl,
     required this.clubhouseId,
@@ -23,6 +24,7 @@ class ClubhouseModel {
     required this.uploaderDisplayName,
   });
 
+  // ignore: sort_constructors_first
   ClubhouseModel.fromMap(Map<String, dynamic> data)
       : clubhouseUrl = data['clubhouseUrl'] as String,
         uploaderDisplayName = data['uploaderDisplayName'] as String?,

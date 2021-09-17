@@ -16,14 +16,14 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatParticipantsScreen extends StatefulWidget {
-  static const route = '/chat-participants';
-
-  final ChatModel chat;
-
   const ChatParticipantsScreen({
     Key? key,
     required this.chat,
   }) : super(key: key);
+
+  static const route = '/chat-participants';
+
+  final ChatModel chat;
 
   @override
   _ChatParticipantsScreenState createState() => _ChatParticipantsScreenState();
@@ -91,7 +91,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 40.0, bottom: 44),
             child: Center(
-              child: Container(
+              child: SizedBox(
                 width: min(400, size.width * 0.8),
                 child: ChatTextDescription.getChatText(
                   chat: widget.chat,
@@ -121,7 +121,9 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
   }
 
   void _createChat(String playerId) {
-    if (_createChatSub != null) return;
+    if (_createChatSub != null) {
+      return;
+    }
 
     setState(() {
       _createChatSub = _createPersonalChatService.create$(playerId).listen(
@@ -129,7 +131,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
           /// validate chat was found
           if (response.chatId == null) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(ChatSnackbar.couldNotCreateChat());
+                .showSnackBar(const ChatSnackbar.couldNotCreateChat());
             return;
           }
 
@@ -138,7 +140,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
               await _getChatService.getChatWithId(response.chatId!);
           if (chat == null) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(ChatSnackbar.chatNotFound());
+                .showSnackBar(const ChatSnackbar.chatNotFound());
             return;
           }
 
@@ -159,14 +161,15 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
 }
 
 class ChatSnackbar extends SnackBar {
-  ChatSnackbar.couldNotCreateChat({Key? key})
+  const ChatSnackbar.couldNotCreateChat({Key? key})
       : super(
           key: key,
-          content: Text('Ocurrio un problema. No se pudo acceder al chat.'),
+          content:
+              const Text('Ocurrió un problema. No se pudo acceder al chat.'),
         );
-  ChatSnackbar.chatNotFound({Key? key})
+  const ChatSnackbar.chatNotFound({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo encontrar el chat.'),
+          content: const Text('No se pudo encontrar el chat.'),
         );
 }

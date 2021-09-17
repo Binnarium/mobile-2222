@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/model/player-playing-state.enum.dart';
 
 class PlayButton extends StatefulWidget {
-  final Stream<PlayerPlayingStateEnum> state$;
-  final Color color;
-  final VoidCallback onPressed;
-
-  PlayButton({
+  const PlayButton({
     Key? key,
     required this.state$,
     required this.color,
     required this.onPressed,
   }) : super(key: key);
+
+  final Stream<PlayerPlayingStateEnum> state$;
+  final Color color;
+  final VoidCallback onPressed;
 
   @override
   _PlayButtonState createState() => _PlayButtonState();
@@ -68,8 +68,8 @@ class PlayerControlIcon extends ElevatedButton {
             onPrimary: color,
             primary: Colors.white,
             alignment: Alignment.center,
-            padding: EdgeInsets.all(0),
-            shape: CircleBorder(),
+            padding: const EdgeInsets.all(0),
+            shape: const CircleBorder(),
           ),
         );
 }

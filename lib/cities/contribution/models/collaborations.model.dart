@@ -1,10 +1,4 @@
 class CollaborationModel {
-  final String explanation;
-  final String theme;
-  final bool allowIdea;
-  final bool allowLecture;
-  final bool allowProject;
-
   CollaborationModel({
     required this.theme,
     required this.explanation,
@@ -12,4 +6,10 @@ class CollaborationModel {
     required this.allowLecture,
     required this.allowProject,
   });
+
+  final String explanation;
+  final String theme;
+  final bool allowIdea;
+  final bool allowLecture;
+  final bool allowProject;
 }

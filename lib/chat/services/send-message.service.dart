@@ -11,14 +11,14 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
 class SendMessagesService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-
   SendMessagesService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
+
+  final CurrentPlayerService _currentPlayerService;
+
+  final FirebaseFirestore _fFirestore;
 
   Stream<bool> text$(ChatModel chat, String content) {
     return _sendMessage(
@@ -75,10 +75,12 @@ class SendMessagesService {
   }) {
     return _currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
-        if (user == null) return false;
+        if (user == null) {
+          return false;
+        }
 
         /// create message to send
-        MessageModel newMessage = createMessageCallback(user);
+        final MessageModel newMessage = createMessageCallback(user);
         final DocumentReference<Map<String, dynamic>> messagesDoc = _fFirestore
             .collection('chats')
             .doc(chat.id)
@@ -100,9 +102,9 @@ class SendMessagesService {
   String _generateId({int size = 10}) {
     const _chars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    Random _rnd = Random();
+    final Random _rnd = Random();
 
-    String id = String.fromCharCodes(
+    final String id = String.fromCharCodes(
       Iterable.generate(
         size,
         (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)),

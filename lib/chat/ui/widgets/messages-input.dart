@@ -10,15 +10,17 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MessageTextInput extends StatefulWidget {
-  final TextEditingController messageInput;
-
-  final ChatModel chat;
-
+  /// constructor
   MessageTextInput({
     Key? key,
     required this.chat,
   })  : messageInput = TextEditingController(),
         super(key: key);
+
+  /// params
+  final TextEditingController messageInput;
+
+  final ChatModel chat;
 
   @override
   _MessageTextInputState createState() => _MessageTextInputState();
@@ -59,14 +61,14 @@ class _MessageTextInputState extends State<MessageTextInput> {
             /// multimedia button
             IconButton(
               color: Colors2222.black,
-              icon: Icon(Icons.attach_file_rounded),
+              icon: const Icon(Icons.attach_file_rounded),
               onPressed: () => setState(() => showOtherSendOptions = true),
             ),
 
             /// send button
             IconButton(
               color: Colors2222.red,
-              icon: Icon(Icons.send_rounded),
+              icon: const Icon(Icons.send_rounded),
               onPressed: _sendTextMessage,
             )
           ],
@@ -88,19 +90,19 @@ class _MessageTextInputState extends State<MessageTextInput> {
                   /// multimedia button
                   IconButton(
                     color: Colors2222.white,
-                    icon: Icon(Icons.image_rounded),
+                    icon: const Icon(Icons.image_rounded),
                     onPressed: _sendImageMessage,
                   ),
                   IconButton(
                       color: Colors2222.white,
-                      icon: Icon(Icons.videocam_rounded),
+                      icon: const Icon(Icons.videocam_rounded),
                       onPressed: _sendVideoMessage),
 
                   /// space items away from each other
                   Expanded(child: Container()),
                   IconButton(
                     color: Colors2222.white,
-                    icon: Icon(Icons.close_rounded),
+                    icon: const Icon(Icons.close_rounded),
                     onPressed: () =>
                         setState(() => showOtherSendOptions = false),
                   ),
@@ -114,15 +116,19 @@ class _MessageTextInputState extends State<MessageTextInput> {
 
   void _sendTextMessage() {
     /// validate input has text
-    if (widget.messageInput.text == '') return;
-    if (_sendMessageSub != null) return;
+    if (widget.messageInput.text == '') {
+      return;
+    }
+    if (_sendMessageSub != null) {
+      return;
+    }
 
     _sendMessageSub = _sendMessagesService
         .text$(widget.chat, widget.messageInput.text)
         .listen((sended) {
       if (!sended) {
         ScaffoldMessenger.of(context).showSnackBar(
-          ChatSnackbarMessages.textNotSended(),
+          const ChatSnackbarMessages.textNotSended(),
         );
       }
 
@@ -134,10 +140,12 @@ class _MessageTextInputState extends State<MessageTextInput> {
 
   void _sendImageMessage() {
     /// checks if the stream is bussy
-    if (_sendMessageSub != null) return;
+    if (_sendMessageSub != null) {
+      return;
+    }
 
     /// calls the provider to upload image.
-    UploadImageService uploadImageService =
+    final UploadImageService uploadImageService =
         Provider.of<UploadImageService>(context, listen: false);
 
     /// use the message sub stream with the upload$ stream
@@ -154,18 +162,18 @@ class _MessageTextInputState extends State<MessageTextInput> {
         .listen((sended) {
       if (!sended) {
         ScaffoldMessenger.of(context).showSnackBar(
-          ChatSnackbarMessages.textNotSended(),
+          const ChatSnackbarMessages.textNotSended(),
         );
       }
       // ignore: argument_type_not_assignable_to_error_handler
     }, onError: (Exception error) {
       if (error.runtimeType == ImageNotLoaded) {
         ScaffoldMessenger.of(context).showSnackBar(
-          ChatSnackbarMessages.imageNotLoaded(),
+          const ChatSnackbarMessages.imageNotLoaded(),
         );
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        ChatSnackbarMessages.textNotSended(),
+        const ChatSnackbarMessages.textNotSended(),
       );
     }, onDone: () {
       _sendMessageSub?.cancel();
@@ -177,10 +185,12 @@ class _MessageTextInputState extends State<MessageTextInput> {
   /// method to send a video message
   void _sendVideoMessage() {
     /// checks if the stream is bussy
-    if (_sendMessageSub != null) return;
+    if (_sendMessageSub != null) {
+      return;
+    }
 
     /// calls the provider to upload image.
-    UploadVideoService uploadVideoService =
+    final UploadVideoService uploadVideoService =
         Provider.of<UploadVideoService>(context, listen: false);
 
     /// use the message sub stream with the upload$ stream
@@ -197,17 +207,18 @@ class _MessageTextInputState extends State<MessageTextInput> {
         .listen((sended) {
       if (!sended) {
         ScaffoldMessenger.of(context).showSnackBar(
-          ChatSnackbarMessages.textNotSended(),
+          const ChatSnackbarMessages.textNotSended(),
         );
       }
+      // ignore: argument_type_not_assignable_to_error_handler
     }, onError: (Exception error) {
       if (error.runtimeType == VideoNotLoaded) {
         ScaffoldMessenger.of(context).showSnackBar(
-          ChatSnackbarMessages.videoNotLoaded(),
+          const ChatSnackbarMessages.videoNotLoaded(),
         );
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        ChatSnackbarMessages.videoNotSended(),
+        const ChatSnackbarMessages.videoNotSended(),
       );
     }, onDone: () {
       _sendMessageSub?.cancel();
@@ -218,31 +229,30 @@ class _MessageTextInputState extends State<MessageTextInput> {
 }
 
 class ChatSnackbarMessages extends SnackBar {
-  /// TODO: add docs
-  ChatSnackbarMessages.textNotSended({Key? key})
+  const ChatSnackbarMessages.textNotSended({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo enviar el mensaje'),
+          content: const Text('No se pudo enviar el mensaje'),
         );
 
-  ChatSnackbarMessages.imageNotLoaded({Key? key})
+  const ChatSnackbarMessages.imageNotLoaded({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo cargar la imagen a enviar'),
+          content: const Text('No se pudo cargar la imagen a enviar'),
         );
-  ChatSnackbarMessages.imageNotSended({Key? key})
+  const ChatSnackbarMessages.imageNotSended({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo enviar la imagen'),
+          content: const Text('No se pudo enviar la imagen'),
         );
-  ChatSnackbarMessages.videoNotLoaded({Key? key})
+  const ChatSnackbarMessages.videoNotLoaded({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo cargar el video a enviar'),
+          content: const Text('No se pudo cargar el video a enviar'),
         );
-  ChatSnackbarMessages.videoNotSended({Key? key})
+  const ChatSnackbarMessages.videoNotSended({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo enviar el video'),
+          content: const Text('No se pudo enviar el video'),
         );
 }

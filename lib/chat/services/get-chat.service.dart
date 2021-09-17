@@ -8,18 +8,20 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class GetChatService {
-  final FirebaseFirestore _firestore;
-  final CurrentPlayerService _currentPlayerService;
-
   GetChatService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _firestore = FirebaseFirestore.instance;
 
+  final FirebaseFirestore _firestore;
+  final CurrentPlayerService _currentPlayerService;
+
   Future<ChatModel?> getChatWithId(String chatId) {
     return _currentPlayerService.player$.take(1).switchMap(
       (currentPlayer) {
-        if (currentPlayer == null) return Stream.value(null);
+        if (currentPlayer == null) {
+          return Stream.value(null);
+        }
 
         /// get collection of users
         final chatsDoc = _firestore.collection('chats').doc(chatId);

@@ -34,6 +34,7 @@ class ChatModel {
   /// list of user identifiers of the participants in the chat
   final List<String> participantsUids;
 
+  // ignore: sort_constructors_first
   ChatModel({
     required this.id,
     required this.name,
@@ -47,6 +48,7 @@ class ChatModel {
     required this.kind,
   });
 
+  // ignore: sort_constructors_first
   ChatModel.fromMap(
     Map<String, dynamic> data, {
     required String currentUserId,
@@ -74,7 +76,7 @@ class ChatModel {
 
   String get chatName => name != null
       ? name!
-      : (isGroupChat)
+      : isGroupChat
           ? 'Grupo de 10'
           : participants
               .map((e) => e.displayName)

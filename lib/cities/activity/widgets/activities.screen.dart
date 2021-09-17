@@ -15,15 +15,15 @@ import 'package:provider/provider.dart';
 import 'activity-card.widget.dart';
 
 class ActivitiesScreen extends StatefulWidget {
+  const ActivitiesScreen({
+    Key? key,
+    required CityModel city,
+  })  : city = city,
+        super(key: key);
+
   static const String route = '/activities';
 
   final CityModel city;
-
-  ActivitiesScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _ActivitiesScreenState createState() => _ActivitiesScreenState();
@@ -37,7 +37,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     super.initState();
 
     /// to load activities using provider
-    LoadCityActivitiesService loadActivitiesService =
+    final LoadCityActivitiesService loadActivitiesService =
         Provider.of<LoadCityActivitiesService>(context, listen: false);
 
     /// loading stream
@@ -60,10 +60,11 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ActivitiesScreen.route,
       body: ListView(
@@ -85,7 +86,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
 
           /// activities card
           if (_activity == null)
-            AppLoading()
+            const AppLoading()
           else ...[
             /// contribution card
             if (widget.city.enabledPages.enableContribution)
@@ -144,7 +145,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           ],
 
           /// end page padding
-          SizedBox(height: 24)
+          const SizedBox(height: 24)
         ],
       ),
     );

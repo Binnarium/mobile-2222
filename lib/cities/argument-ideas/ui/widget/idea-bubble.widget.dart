@@ -42,10 +42,6 @@ class IdeaBubbleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
     /// contenedor principal que contendrá la imagen y el texto en un stack
     return Stack(
       alignment: Alignment.center,

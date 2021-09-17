@@ -18,7 +18,9 @@ extension Lab2222AudioPlayerExtension on AudioPlayer {
           if (processingState == ProcessingState.completed) {
             return PlayerPlayingStateEnum.completed;
           }
-          if (event.playing) return PlayerPlayingStateEnum.playing;
+          if (event.playing) {
+            return PlayerPlayingStateEnum.playing;
+          }
           return PlayerPlayingStateEnum.paused;
         },
       );
@@ -61,12 +63,13 @@ extension Lab2222AudioPlayerExtension on AudioPlayer {
 
   /// method to change to a specific second (used on slider)
   Future<void> changeToSecond(int second) async {
-    Duration newDuration = Duration(seconds: second);
+    final Duration newDuration = Duration(seconds: second);
     await seek(newDuration);
   }
 
   /// method to play or pause the audio
   Future<void> playOrPause() async {
+    // ignore: prefer_final_locals
     PlayerPlayingStateEnum? playing = await playing$.first;
 
     /// if playing, then pause

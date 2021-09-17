@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 
 class LoadCityActivitiesService {
-  final FirebaseFirestore _firestore;
   LoadCityActivitiesService() : _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
   Stream<CityActivityModel?> load$() {
     return _firestore

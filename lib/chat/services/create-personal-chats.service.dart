@@ -6,16 +6,18 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
 class CreatePersonalChatService {
-  final FirebaseFunctions _functions;
-  final CurrentPlayerService _currentPlayerService;
-
+  /// constructor
   CreatePersonalChatService(BuildContext context)
       : _functions = FirebaseFunctions.instance,
         _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false);
 
+  /// params
+  final FirebaseFunctions _functions;
+  final CurrentPlayerService _currentPlayerService;
+
   Stream<CreatePersonalChatResponseModel> create$(String otherPlayerId) {
-    HttpsCallable createPersonalChat =
+    final HttpsCallable createPersonalChat =
         _functions.httpsCallable('createPersonalChat');
 
     return _currentPlayerService.player$.take(1).asyncMap(
