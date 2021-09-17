@@ -1,9 +1,7 @@
 class ClubhouseActivityModel {
   ClubhouseActivityModel({
-    required this.theme,
-    required this.explanation,
+    required this.thematic,
   });
 
-  final String explanation;
-  final String theme;
+  final String thematic;
 }

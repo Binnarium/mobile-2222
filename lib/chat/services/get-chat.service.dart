@@ -46,14 +46,14 @@ class GetChatService {
                           (data['lastActivity'] as Timestamp).toDate(),
                       indexedDate:
                           (data['indexedDate'] as Timestamp?)?.toDate(),
-                      participants:
-                          (data['participants'] as List<Map<String, dynamic>>?)
-                                  ?.map((e) => ChatParticipantModel.fromMap(e))
-                                  .toList() ??
-                              [],
+                      participants: (data['participants'] as List<dynamic>?)
+                              ?.map((dynamic e) => ChatParticipantModel.fromMap(
+                                  e as Map<String, dynamic>))
+                              .toList() ??
+                          [],
                       participantsUids: (data['participantsUids']
-                              as List<Map<String, dynamic>>)
-                          .map((e) => e.toString())
+                              as List<dynamic>)
+                              .map((dynamic e) => e as String)
                           .toList(),
                       lastMessage:
                           (data['lastMessage'] as Map<String, dynamic>?) == null

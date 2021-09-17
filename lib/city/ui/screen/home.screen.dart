@@ -38,13 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     _citiesSub = _allCitiesLoader.load$.listen((cities) {
-      print(cities);
       setState(() => _cities = cities);
 
       /// once all cities have loaded make map scroll automatically
       /// if flag has been enabled
       if (enableAutoScroll) {
-        Timer(Duration(microseconds: 0), _scrollMapBottom);
+        Timer(const Duration(microseconds: 0), _scrollMapBottom);
       }
     });
   }
