@@ -13,15 +13,16 @@ import 'package:provider/provider.dart';
 import 'chat-text-description.widget.dart';
 
 class MessagesList extends StatefulWidget {
-  final ScrollController scrollController;
-  final ChatModel chatModel;
-
+  /// constructor
   MessagesList({
     Key? key,
     required ChatModel chatModel,
-  })  : this.chatModel = chatModel,
+  })  : chatModel = chatModel,
         scrollController = ScrollController(),
         super(key: key);
+
+  final ScrollController scrollController;
+  final ChatModel chatModel;
 
   @override
   _MessagesListState createState() => _MessagesListState();
@@ -40,12 +41,12 @@ class _MessagesListState extends State<MessagesList> {
     _messagesSub = _listMessagesService.list$(widget.chatModel).listen((event) {
       /// add new messages
       setState(() => messages = event);
-      Timer(Duration(milliseconds: 500), () {
+      Timer(const Duration(milliseconds: 500), () {
         try {
           widget.scrollController.animateTo(
             widget.scrollController.position.maxScrollExtent,
             curve: Curves.ease,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
           );
         } catch (error) {
           print('error al hacer scroll: $error');
@@ -68,13 +69,13 @@ class _MessagesListState extends State<MessagesList> {
       controller: widget.scrollController,
       children: [
         if (messages == null)
-          AppLoading()
+          const AppLoading()
         else ...[
           /// about chats
           Padding(
             padding: const EdgeInsets.only(top: 40.0),
             child: Center(
-              child: Container(
+              child: SizedBox(
                 width: min(400, size.width * 0.8),
                 child: ChatTextDescription.getChatText(
                   chat: widget.chatModel,

@@ -11,14 +11,14 @@ import 'package:provider/provider.dart';
 /// Class that creates a video player depending on video URL and the description
 /// of the video
 class VideoPlayer extends StatefulWidget {
-  final VideoDto video;
-
-  VideoPlayer({
+  const VideoPlayer({
     Key? key,
 
     /// videoDTO
     required this.video,
   }) : super(key: key);
+
+  final VideoDto video;
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();
@@ -71,7 +71,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     width: double.infinity,
                     height: double.infinity,
                   ),
-                  Center(
+                  const Center(
                     child: Icon(
                       Icons.play_arrow_rounded,
                       size: 150,
@@ -108,8 +108,6 @@ class _Lab2222BetterPlayer extends BetterPlayer {
               autoPlay: false,
               allowedScreenSleep: false,
               looping: false,
-
-              /// TODO: create specific widget
               placeholder: Center(
                 child: Image.asset('assets/images/video-placeholder.png'),
               ),

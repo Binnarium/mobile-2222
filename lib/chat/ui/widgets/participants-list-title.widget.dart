@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ParticipantsListTitle extends ListTile {
+  // ignore: use_key_in_widget_constructors
   ParticipantsListTitle({
     String title = 'Participantes',
     required num participantsCount,

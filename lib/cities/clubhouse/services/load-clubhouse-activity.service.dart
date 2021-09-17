@@ -3,8 +3,9 @@ import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse-activity.model.
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadClubhouseService {
-  final FirebaseFirestore _firestore;
   LoadClubhouseService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<ClubhouseActivityModel?> load$(CityModel city) {
     return _firestore

@@ -16,15 +16,17 @@ import 'package:provider/provider.dart';
 
 /// contribution activity page
 class ContributionScreen extends StatefulWidget {
+  /// constructor
+  const ContributionScreen({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
+
+  /// params
   static const String route = '/contribution-activity';
 
   /// current city
   final CityModel city;
-
-  ContributionScreen({
-    Key? key,
-    required this.city,
-  }) : super(key: key);
 
   @override
   _ContributionScreenState createState() => _ContributionScreenState();
@@ -66,6 +68,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [
         BackgroundDecorationStyle.bottomRight,
         BackgroundDecorationStyle.path
@@ -107,7 +110,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
 
           /// collaboration data loading state
           if (collaborationActivityModel == null) ...[
-            AppLoading(),
+            const AppLoading(),
           ]
 
           /// collaboration data
@@ -169,10 +172,10 @@ class _ContributionScreenState extends State<ContributionScreen> {
 
 Widget _contributionButton(
     BuildContext context, String name, CityModel city, void Function() goto) {
-  double buttonWidth = MediaQuery.of(context).size.width;
+  final double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
-    margin: EdgeInsets.symmetric(horizontal: 40),
+    margin: const EdgeInsets.symmetric(horizontal: 40),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors.white,

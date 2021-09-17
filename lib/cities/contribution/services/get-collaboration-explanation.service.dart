@@ -3,9 +3,9 @@ import 'package:lab_movil_2222/cities/contribution/models/collaborations.model.d
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class ContributionService {
-  final FirebaseFirestore _firestore;
-
   ContributionService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<CollaborationModel?> explanation$(CityModel city) {
     return _firestore

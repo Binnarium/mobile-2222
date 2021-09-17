@@ -7,14 +7,16 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class MessagesScreen extends StatefulWidget {
-  static const route = '/messages';
-  final ChatModel chat;
-
-  MessagesScreen({
+  /// constructor
+  const MessagesScreen({
     Key? key,
     required ChatModel chat,
-  })  : this.chat = chat,
+  })  : chat = chat,
         super(key: key);
+
+  /// params
+  static const route = '/messages';
+  final ChatModel chat;
 
   @override
   _MessagesScreenState createState() => _MessagesScreenState();
@@ -41,7 +43,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         ),
         actions: <IconButton>[
           IconButton(
-            icon: Icon(Icons.people),
+            icon: const Icon(Icons.people),
             onPressed: () => Navigator.pushNamed(
               context,
               ChatParticipantsScreen.route,

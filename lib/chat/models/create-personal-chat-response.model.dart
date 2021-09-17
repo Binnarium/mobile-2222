@@ -1,7 +1,9 @@
 class CreatePersonalChatResponseModel {
-  final String? chatId;
-
+  /// constructor
   CreatePersonalChatResponseModel({
     this.chatId,
   });
+
+  /// params
+  final String? chatId;
 }

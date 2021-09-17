@@ -4,7 +4,7 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class ChatTextDescription extends Markdown2222 {
-  ///
+  // ignore: use_key_in_widget_constructors
   ChatTextDescription.informationText({
     Color? color,
   }) : super(
@@ -19,6 +19,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
         );
 
   ///
+  // ignore: use_key_in_widget_constructors
   ChatTextDescription.generalText({
     Color? color,
   }) : super(
@@ -29,6 +30,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
         );
 
   ///
+  // ignore: use_key_in_widget_constructors
   ChatTextDescription.groupText({
     Color? color,
   }) : super(
@@ -39,6 +41,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
         );
 
   ///
+  // ignore: use_key_in_widget_constructors
   ChatTextDescription.personalText({
     Color? color,
   }) : super(
@@ -58,7 +61,9 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
     }
 
     ///
-    if (chat.isGroupChat) return ChatTextDescription.groupText(color: color);
+    if (chat.isGroupChat) {
+      return ChatTextDescription.groupText(color: color);
+    }
 
     ///
     if (chat.isPersonalChat) {

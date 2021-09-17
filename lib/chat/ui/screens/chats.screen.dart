@@ -22,9 +22,9 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatsScreen extends StatefulWidget {
-  static const route = '/chats';
+  const ChatsScreen({Key? key}) : super(key: key);
 
-  ChatsScreen({Key? key}) : super(key: key);
+  static const route = '/chats';
 
   @override
   _ChatsScreenState createState() => _ChatsScreenState();
@@ -72,7 +72,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       activePage: Lab2222NavigationBarPages.chat,
       body: ListView(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: LogosHeader(
               showAppLogo: true,
@@ -129,7 +129,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
           /// if no chats loaded show loading icon
           else if (allChats == null)
-            AppLoading()
+            const AppLoading()
 
           /// show a list of all chats
           else ...[
@@ -144,7 +144,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   /// TODO: remove duplicated code
   void _createChat(String playerId) {
-    if (_createChatSub != null) return;
+    if (_createChatSub != null) {
+      return;
+    }
 
     setState(() {
       _createChatSub = _createPersonalChatService.create$(playerId).listen(
@@ -152,7 +154,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           /// validate chat was found
           if (response.chatId == null) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(ChatSnackbar.couldNotCreateChat());
+                .showSnackBar(const ChatSnackbar.couldNotCreateChat());
             return;
           }
 
@@ -161,7 +163,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               await _getChatService.getChatWithId(response.chatId!);
           if (chat == null) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(ChatSnackbar.chatNotFound());
+                .showSnackBar(const ChatSnackbar.chatNotFound());
             return;
           }
 

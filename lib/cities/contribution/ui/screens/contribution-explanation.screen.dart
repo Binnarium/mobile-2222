@@ -16,11 +16,13 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContributionExplanationScreen extends StatefulWidget {
-  static const String route = '/contribution-explanation';
-  final CityModel city;
-
+  /// constructor
   const ContributionExplanationScreen({Key? key, required this.city})
       : super(key: key);
+
+  /// params
+  static const String route = '/contribution-explanation';
+  final CityModel city;
 
   @override
   _ContributionExplanationScreenState createState() =>
@@ -37,7 +39,7 @@ class _ContributionExplanationScreenState
   void initState() {
     super.initState();
 
-    GetContributionExplanationService clubhouseExplanationService =
+    final GetContributionExplanationService clubhouseExplanationService =
         Provider.of<GetContributionExplanationService>(context, listen: false);
     _explanationSub = clubhouseExplanationService.explanation$.listen(
       (event) {
@@ -63,6 +65,7 @@ class _ContributionExplanationScreenState
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ContributionExplanationScreen.route,
       body: ListView(
@@ -88,6 +91,7 @@ class _ContributionExplanationScreenState
 
           /// page content
           if (contributionExplanation == null)
+            // ignore: prefer_const_constructors
             AppLoading()
           else ...[
             /// video provider
@@ -125,7 +129,7 @@ class _ContributionExplanationScreenState
                   primary: Colors2222.white,
                   backgroundColor: Colors2222.black,
                 ),
-                child: Text(
+                child: const Text(
                   'Lee nuestro manifiesto',
                   textAlign: TextAlign.center,
                 ),

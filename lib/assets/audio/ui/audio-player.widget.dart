@@ -11,17 +11,17 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
+  const AudioPlayerWidget({
+    Key? key,
+    required this.audio,
+    this.color = Colors2222.primary,
+  }) : super(key: key);
+
   /// audio to play
   final AudioDto audio;
 
   /// style player with a proper color
   final Color color;
-
-  AudioPlayerWidget({
-    Key? key,
-    required this.audio,
-    this.color = Colors2222.primary,
-  }) : super(key: key);
 
   @override
   _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
@@ -77,7 +77,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
               PlayerControlIcon(
                 color: widget.color,
                 icon: Icons.replay_5_rounded,
-                onPressed: () => player!.rewind(Duration(seconds: 5)),
+                onPressed: () => player!.rewind(const Duration(seconds: 5)),
               ),
 
               /// play button
@@ -91,12 +91,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
               PlayerControlIcon(
                 color: widget.color,
                 icon: Icons.forward_5_rounded,
-                onPressed: () => player!.forward(Duration(seconds: 5)),
+                onPressed: () => player!.forward(const Duration(seconds: 5)),
               ),
             ],
           )
         ] else ...[
-          FakeAudioSlider(),
+          const FakeAudioSlider(),
           PlayerControlIcon(
             color: widget.color,
             icon: Icons.play_arrow,

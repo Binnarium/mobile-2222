@@ -3,6 +3,7 @@ import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ParticipantsListItem extends ListTile {
+  // ignore: use_key_in_widget_constructors
   ParticipantsListItem({
     Function(BuildContext)? createChatCallback,
     required ChatParticipantModel participant,
@@ -26,8 +27,8 @@ class ParticipantsListItem extends ListTile {
             onPressed: createChatCallback == null
                 ? () {}
                 : () => createChatCallback(context),
-            icon: Icon(Icons.messenger_outline_rounded),
-            label: Text('Chat'),
+            icon: const Icon(Icons.messenger_outline_rounded),
+            label: const Text('Chat'),
             style: TextButton.styleFrom(
               primary: createChatCallback == null
                   ? color.withOpacity(0.5)

@@ -4,16 +4,7 @@ import 'package:lab_movil_2222/models/asset.dto.dart';
 
 /// base model of a chat message
 abstract class MessageModel {
-  final String id;
-  final String kind;
-  final AssetDto? asset;
-  final String? text;
-  final bool banned;
-  final DateTime sendedDate;
-  final String senderId;
-  final ChatParticipantModel sender;
-  final bool sendedByMe;
-
+  /// constructor
   MessageModel({
     required this.id,
     required this.kind,
@@ -26,6 +17,18 @@ abstract class MessageModel {
     this.asset,
   });
 
+  /// params
+  final String id;
+  final String kind;
+  final AssetDto? asset;
+  final String? text;
+  final bool banned;
+  final DateTime sendedDate;
+  final String senderId;
+  final ChatParticipantModel sender;
+  final bool sendedByMe;
+
+  // ignore: sort_constructors_first
   factory MessageModel.fromMap(
     Map<String, dynamic> data, {
     required String currentUid,
