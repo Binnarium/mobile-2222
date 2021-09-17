@@ -94,8 +94,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [
+
+      backgrounds: const [
         BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
       ],
@@ -215,6 +215,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
                 context,
                 color,
                 widget.city,
+                project!,
               ),
             )
           ],
@@ -224,7 +225,9 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   }
 }
 
-Widget _taskButton(BuildContext context, Color color, CityModel city) {
+
+Widget _taskButton(
+    BuildContext context, Color color, CityModel city, ProjectDto project) {
   final double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -244,6 +247,7 @@ Widget _taskButton(BuildContext context, Color color, CityModel city) {
               return UploadFileDialog(
                 city: city,
                 color: color,
+                projectDto: project,
               );
             });
       },
@@ -265,10 +269,12 @@ class UploadFileDialog extends StatefulWidget {
     Key? key,
     required this.color,
     required this.city,
+    required this.projectDto,
   }) : super(key: key);
 
   final Color color;
   final CityModel city;
+  final ProjectDto projectDto;
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
@@ -344,10 +350,13 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         Provider.of<UploadFileService>(context, listen: false);
 
     _uploadFileSub = uploadFileService
-        .uploadFile$(
-            'players/${currentPlayer!.uid}/${widget.city.name}/', widget.city)
-        .switchMap((projectFile) =>
-            _uploadProjectService.project$(widget.city, projectFile))
+        .uploadFile$('players/${currentPlayer!.uid}/${widget.city.name}/',
+            widget.projectDto)
+        .switchMap((projectFile) => _uploadProjectService.project$(
+              widget.city,
+              projectFile,
+              widget.projectDto.allowAudio,
+            ))
         .listen((sended) {
       if (sended) {
         bool medalFound = false;

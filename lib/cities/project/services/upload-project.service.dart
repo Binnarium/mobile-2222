@@ -8,6 +8,8 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
+/// Class that uploads the project to the database reference
+/// This class does not uploads the file, for that Implement "UploadFileService"
 class UploadProjectService {
   UploadProjectService(BuildContext context)
       : _currentPlayerService =
@@ -18,19 +20,20 @@ class UploadProjectService {
 
   final FirebaseFirestore _fFirestore;
 
-  Stream<bool> project$(CityModel city, ProjectFileDto file) {
-    return _uploadProject(
+
+  Stream<bool> project$(CityModel city, ProjectFileDto file, bool allowAudio) {
+    return _uploadProject$(
       createMessageCallback: (user) => PlayerProject(
         cityID: city.name,
         file: file,
-        kind: (city.stage == 10) ? 'Project#MP3' : 'PROJECT#PDF',
+        kind: allowAudio ? 'PROJECT#MP3' : 'PROJECT#PDF',
         id: '',
       ),
     );
   }
 
   /// function that uploads a message to the specific player database reference
-  Stream<bool> _uploadProject({
+  Stream<bool> _uploadProject$({
     required PlayerProject Function(PlayerModel) createMessageCallback,
   }) {
     return _currentPlayerService.player$.take(1).asyncMap<bool>(

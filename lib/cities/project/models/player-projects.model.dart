@@ -21,6 +21,11 @@ class PlayerProject {
         file = ProjectFileDto.fromMap(
             payload['file'] as Map<String, dynamic>? ?? <String, dynamic>{});
 
+  final String cityID;
+  final ProjectFileDto file;
+  final String kind;
+  final String id;
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'file': {'path': file.path, 'url': file.url},
