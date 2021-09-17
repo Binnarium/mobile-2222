@@ -1,11 +1,6 @@
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
 class PlayerProject {
-  final String cityID;
-  final ProjectFileDto file;
-  final String kind;
-  final String id;
-
   PlayerProject({
     required this.cityID,
     required this.file,
@@ -19,6 +14,11 @@ class PlayerProject {
         id = payload['id'] as String? ?? '',
         file = ProjectFileDto.fromMap(
             payload['file'] as Map<String, dynamic>? ?? <String, dynamic>{});
+
+  final String cityID;
+  final ProjectFileDto file;
+  final String kind;
+  final String id;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

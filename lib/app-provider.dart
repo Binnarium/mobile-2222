@@ -46,6 +46,7 @@ import 'cities/manual-video/services/load-manual-video.service.dart';
 import 'cities/micro-meso-macro/services/load-micro-meso-macro.service.dart';
 import 'cities/project-video/services/load-project-video.service.dart';
 import 'cities/project/services/load-project-files.service.dart';
+import 'cities/project/services/upload-project.service.dart';
 
 class AppProvider extends MultiProvider {
   AppProvider({
@@ -103,6 +104,7 @@ class AppProvider extends MultiProvider {
 
             /// project services
             Provider(create: (ctx) => LoadProjectFiles(ctx)),
+            Provider(create: (ctx) => UploadProjectService(ctx)),
 
             /// chat services
             Provider(create: (ctx) => SendMessagesService(ctx)),
