@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CitiesMapPositionsService {
-  final CitiesService _citiesService;
-
   CitiesMapPositionsService(BuildContext context)
       : _citiesService = Provider.of<CitiesService>(context, listen: false);
+
+  final CitiesService _citiesService;
 
   Stream<List<CityWithMapPositionModel>> get load$ => _citiesService.allCities$
       .map((event) => _addCitiesPositions(event))

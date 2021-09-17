@@ -12,11 +12,12 @@ class CityHistoryDto {
 }
 
 abstract class HistoryContentDto {
-  final String kind;
-
   HistoryContentDto._({
     required this.kind,
   });
+  
+  final String kind;
+
 
   static HistoryContentDto fromJson(Map<String, dynamic> payload) {
     final String kind = payload['kind'] as String;

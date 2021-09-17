@@ -17,9 +17,8 @@ import 'activity-card.widget.dart';
 class ActivitiesScreen extends StatefulWidget {
   const ActivitiesScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
-        super(key: key);
+    required this.city,
+  }) : super(key: key);
 
   static const String route = '/activities';
 
@@ -103,7 +102,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   onTap: () =>
                       CityNavigator.getContributionNextScreen(widget.city)
                           .builder(context),
-                  title: 'Manifiesto por la Educación',
+                  title: 'Manifiesto-wiki por la Educación',
                 ),
               ),
 
