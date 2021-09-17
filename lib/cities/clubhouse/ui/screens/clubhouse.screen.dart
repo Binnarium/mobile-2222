@@ -23,7 +23,6 @@ class ClubhouseScreen extends StatefulWidget {
 
   static const String route = '/chapterClubhouse';
 
-
   final CityModel city;
 
   @override
@@ -47,7 +46,6 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
     });
 
     /// loads clubhouse
-=======
     final ClubhouseActivityService loadClubhouseActivityService =
         Provider.of<ClubhouseActivityService>(context, listen: false);
 

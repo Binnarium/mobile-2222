@@ -17,11 +17,6 @@ class ProjectDto {
             ? null
             : AudioDto.fromMap(payload['audio'] as Map<String, dynamic>);
 
-  final String activity;
-  final String explanation;
-  final String allow;
-  final AudioDto? audio;
-
   bool get allowFile => allow == 'ALLOW#FILE';
   bool get allowAudio => allow == 'ALLOW#AUDIO';
   bool get allowNone => allow == 'ALLOW#NONE';

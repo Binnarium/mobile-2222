@@ -15,9 +15,6 @@ abstract class HistoryContentDto {
   HistoryContentDto._({
     required this.kind,
   });
-  
-  final String kind;
-
 
   final String kind;
 
