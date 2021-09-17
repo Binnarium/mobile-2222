@@ -5,23 +5,22 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadMonsterService {
   final FirebaseFirestore _firestore;
-  LoadMonsterService() : this._firestore = FirebaseFirestore.instance;
+  LoadMonsterService() : _firestore = FirebaseFirestore.instance;
 
   Stream<MonsterModel?> load$(CityModel city) {
-    return this
-        ._firestore
+    return _firestore
         .collection('cities')
         .doc(city.id)
         .collection('pages')
         .doc('monster')
         .snapshots()
-        .map((snapshot) => snapshot.data() ?? null)
+        .map((snapshot) => snapshot.data())
         .map(
           (data) => data == null
               ? null
               : MonsterModel(
                   illustration: ImageDto.fromMap(
-                    data['illustration'],
+                    data['illustration'] as Map<String, dynamic>,
                   ),
                 ),
         );

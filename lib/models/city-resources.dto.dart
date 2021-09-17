@@ -6,11 +6,12 @@ class CityResourcesDto {
   final List<ReadingDto> readings;
 
   CityResourcesDto.fromMap(Map<String, dynamic> payload)
-      : this.externalLinks = ((payload['externalLinks'] ?? []) as List)
-            .map((e) => ExternalLinkDto.fromMap(e))
+      : externalLinks = ((payload['externalLinks'] ?? <dynamic>[]) as List)
+            .map((dynamic e) =>
+                ExternalLinkDto.fromMap(e as Map<String, dynamic>))
             .toList(),
-        this.readings = ((payload['readings'] ?? []) as List)
-            .map((e) => ReadingDto.fromMap(e))
+        readings = ((payload['readings'] ?? <dynamic>[]) as List)
+            .map((dynamic e) => ReadingDto.fromMap(e as Map<String, dynamic>))
             .toList();
 }
 
@@ -23,22 +24,19 @@ class ReadingDto {
   final int? publishedYear;
 
   ReadingDto.fromMap(Map<String, dynamic> payload)
-      : this.name = payload['name'],
-        this.about = payload['about'] ?? 'Sin descripción',
-        this.author = payload['author'] ?? 'Sin autor',
-        this.link = payload['link'] ?? null,
-        this.publishedYear = payload['publishedYear'] ?? null,
-        this.cover = (payload['cover']['url'] == null)
+      : name = payload['name'] as String? ?? 'Sin nombre',
+        about = payload['about'] as String? ?? 'Sin descripción',
+        author = payload['author'] as String? ?? 'Sin autor',
+        link = payload['link'] as String?,
+        publishedYear = payload['publishedYear'] as int?,
+        cover = (payload['cover']['url'] == null)
             ? null
-            : ImageDto.fromMap(payload['cover']);
+            : ImageDto.fromMap(payload['cover'] as Map<String, dynamic>);
 
-  String get validLink =>
-      this.link ?? 'https://www.google.com/search?q=${this.name}';
+  String get validLink => link ?? 'https://www.google.com/search?q=$name';
 
-  String get tagline => [
-        this.author,
-        if (this.publishedYear != null) this.publishedYear
-      ].join(' | ');
+  String get tagline =>
+      [author, if (publishedYear != null) publishedYear].join(' | ');
 
   ImageProvider get placeholder =>
       AssetImage('assets/images/book-placeholder.png');
@@ -51,13 +49,14 @@ abstract class ExternalLinkDto {
   final String description;
 
   ExternalLinkDto._fromMap(Map<String, dynamic> data)
-      : this.kind = data['kind'],
-        this.link = data['link'] ?? 'https://google.com',
-        this.title = data['title'],
-        this.description = data['description'] ?? "no description available";
+      : kind = data['kind'] as String,
+        link = data['link'] as String? ?? 'https://google.com',
+        title = data['title'] as String? ?? '',
+        description =
+            data['description'] as String? ?? 'no description available';
 
   static ExternalLinkDto fromMap(Map<String, dynamic> data) {
-    final String kind = data['kind'];
+    final String kind = data['kind'] as String;
 
     if (kind == 'LINK#YOUTUBE') return _YoutubeLinkDto._fromMap(data);
     if (kind == 'LINK#FACEBOOK') return _FacebookLinkDto._fromMap(data);

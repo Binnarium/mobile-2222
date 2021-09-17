@@ -7,14 +7,16 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class MessagesScreen extends StatefulWidget {
-  static const route = "/messages";
-  final ChatModel chat;
-
-  MessagesScreen({
+  /// constructor
+  const MessagesScreen({
     Key? key,
     required ChatModel chat,
-  })  : this.chat = chat,
+  })  : chat = chat,
         super(key: key);
+
+  /// params
+  static const route = '/messages';
+  final ChatModel chat;
 
   @override
   _MessagesScreenState createState() => _MessagesScreenState();
@@ -34,19 +36,19 @@ class _MessagesScreenState extends State<MessagesScreen> {
         backgroundColor: Colors2222.primary,
         titleSpacing: 0,
         title: Text(
-          this.widget.chat.chatName,
+          widget.chat.chatName,
           style: textTheme.subtitle1!.copyWith(
             color: Colors2222.white,
           ),
         ),
         actions: <IconButton>[
           IconButton(
-            icon: Icon(Icons.people),
+            icon: const Icon(Icons.people),
             onPressed: () => Navigator.pushNamed(
               context,
               ChatParticipantsScreen.route,
               arguments: ChatParticipantsScreen(
-                chat: this.widget.chat,
+                chat: widget.chat,
               ),
             ),
           ),
@@ -62,7 +64,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
           /// take all available spaces
           Expanded(
             child: MessagesList(
-              chatModel: this.widget.chat,
+              chatModel: widget.chat,
             ),
           ),
 
@@ -73,7 +75,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
               vertical: 12,
             ),
             child: MessageTextInput(
-              chat: this.widget.chat,
+              chat: widget.chat,
             ),
           ),
         ],

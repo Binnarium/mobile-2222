@@ -7,23 +7,22 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoadProjectFiles {
+  LoadProjectFiles(BuildContext context)
+      : _currentPlayerService =
+            Provider.of<CurrentPlayerService>(context, listen: false),
+        _firestore = FirebaseFirestore.instance;
+
   final FirebaseFirestore _firestore;
   final CurrentPlayerService _currentPlayerService;
 
-  LoadProjectFiles(BuildContext context)
-      : this._currentPlayerService =
-            Provider.of<CurrentPlayerService>(context, listen: false),
-        this._firestore = FirebaseFirestore.instance;
-
   Stream<List<PlayerProject>> load$(CityModel city) {
-    return this._currentPlayerService.player$.switchMap((user) {
-      if (user == null) return Stream.value([]);
+    return _currentPlayerService.player$.switchMap((user) {
+      if (user == null) {
+        return Stream.value([]);
+      }
 
-      final Query<Map<String, dynamic>> query = this
-          ._firestore
-          .collection('players')
-          .doc(user.uid)
-          .collection('project');
+      final Query<Map<String, dynamic>> query =
+          _firestore.collection('players').doc(user.uid).collection('project');
 
       return query
           .snapshots()

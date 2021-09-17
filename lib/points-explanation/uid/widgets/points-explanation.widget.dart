@@ -26,30 +26,31 @@ class _ApproveTextState extends State<ApproveText> {
     super.initState();
 
     GetPointsExplanationService loadExplanationService =
-        Provider.of<GetPointsExplanationService>(this.context, listen: false);
+        Provider.of<GetPointsExplanationService>(context, listen: false);
 
-    this._explanationSub = loadExplanationService.explanation$().listen(
+    _explanationSub = loadExplanationService.explanation$().listen(
       (pointsExplanationModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.pointsExplanation = pointsExplanationModel;
+        if (mounted) {
+          setState(() {
+            pointsExplanation = pointsExplanationModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._explanationSub?.cancel();
+    _explanationSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return this.pointsExplanation == null
+    return pointsExplanation == null
         ? AppLoading()
         : MarkdownCard(
-            content: this.pointsExplanation!.explanation,
+            content: pointsExplanation!.explanation,
           );
   }
 }

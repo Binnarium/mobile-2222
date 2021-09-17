@@ -1,20 +1,20 @@
 class ChatParticipantModel {
-  final String uid;
-  final String displayName;
-
   ChatParticipantModel({
     required this.uid,
     required this.displayName,
   });
 
   ChatParticipantModel.fromMap(Map<String, dynamic> map)
-      : this.uid = map['uid'],
-        this.displayName = map['displayName'];
+      : uid = map['uid'] as String,
+        displayName = map['displayName'] as String;
+
+  final String uid;
+  final String displayName;
 
   Map<String, dynamic> toMap() {
-    return {
-      "uid": this.uid,
-      "displayName": this.displayName,
+    return <String, dynamic>{
+      'uid': uid,
+      'displayName': displayName,
     };
   }
 }

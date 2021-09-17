@@ -4,7 +4,7 @@ class RegisterFormModel {
   String validatePassword;
 
   RegisterFormModel.empty()
-      : this.email = '',
-        this.password = '',
-        this.validatePassword = '';
+      : email = '',
+        password = '',
+        validatePassword = '';
 }

@@ -18,7 +18,7 @@ class TeamContentMarkdown extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return fmd.MarkdownBody(
-      data: this.teamContent,
+      data: teamContent,
       builders: {
         'h2': MarkdownCenterTextBuilder(),
         'h3': MarkdownCenterTextBuilder(padding: EdgeInsets.only(top: 36)),
@@ -97,17 +97,18 @@ class _MarkdownCustomCreators extends fmd.MarkdownElementBuilder {
       colItems.add(row);
 
       /// add spacer between lines
-      if (i + 1 < names.length)
+      if (i + 1 < names.length) {
         colItems.add(
           Container(
             height: 5,
           ),
         );
+      }
     }
 
     return Column(
-      children: colItems,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: colItems,
     );
   }
 }

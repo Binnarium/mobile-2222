@@ -3,8 +3,9 @@ class CityActivityModel {
   final String project;
   final String clubhouse;
 
+  // ignore: sort_constructors_first
   CityActivityModel.fromMap(Map<String, dynamic> payload)
-      : this.contribution = payload['contribution'] ?? '',
-        this.project = payload['project'] ?? '',
-        this.clubhouse = payload['clubhouse'] ?? '';
+      : contribution = payload['contribution'] as String? ?? '',
+        project = payload['project'] as String? ?? '',
+        clubhouse = payload['clubhouse'] as String? ?? '';
 }

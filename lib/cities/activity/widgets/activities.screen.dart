@@ -15,15 +15,14 @@ import 'package:provider/provider.dart';
 import 'activity-card.widget.dart';
 
 class ActivitiesScreen extends StatefulWidget {
+  const ActivitiesScreen({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
+
   static const String route = '/activities';
 
   final CityModel city;
-
-  ActivitiesScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _ActivitiesScreenState createState() => _ActivitiesScreenState();
@@ -37,32 +36,34 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     super.initState();
 
     /// to load activities using provider
-    LoadCityActivitiesService loadActivitiesService =
-        Provider.of<LoadCityActivitiesService>(this.context, listen: false);
+    final LoadCityActivitiesService loadActivitiesService =
+        Provider.of<LoadCityActivitiesService>(context, listen: false);
 
     /// loading stream
-    this._loadActivitiesSub = loadActivitiesService.load$().listen(
+    _loadActivitiesSub = loadActivitiesService.load$().listen(
       (cityActivityModel) {
-        if (this.mounted)
-          this.setState(() {
-            this._activity = cityActivityModel;
+        if (mounted) {
+          setState(() {
+            _activity = cityActivityModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadActivitiesSub?.cancel();
+    _loadActivitiesSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
     return Scaffold2222.city(
-      city: this.widget.city,
+      city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ActivitiesScreen.route,
       body: ListView(
@@ -71,7 +72,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 50.0),
             child: LogosHeader(
-              showStageLogoCity: this.widget.city,
+              showStageLogoCity: widget.city,
             ),
           ),
 
@@ -83,11 +84,11 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           ),
 
           /// activities card
-          if (this._activity == null)
-            AppLoading()
+          if (_activity == null)
+            const AppLoading()
           else ...[
             /// contribution card
-            if (this.widget.city.enabledPages.enableContribution)
+            if (widget.city.enabledPages.enableContribution)
               Padding(
                 padding: EdgeInsets.only(
                   top: 12,
@@ -95,18 +96,18 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   right: sidePadding,
                 ),
                 child: ActivityCardWidget(
-                  color: this.widget.city.color,
-                  content: this._activity!.contribution,
-                  iconPath: "assets/icons/multiple_choice_activity_icon.png",
+                  color: widget.city.color,
+                  content: _activity!.contribution,
+                  iconPath: 'assets/icons/multiple_choice_activity_icon.png',
                   onTap: () =>
-                      CityNavigator.getContributionNextScreen(this.widget.city)
+                      CityNavigator.getContributionNextScreen(widget.city)
                           .builder(context),
-                  title: "Manifiesto por la Educación",
+                  title: 'Manifiesto-wiki por la Educación',
                 ),
               ),
 
             /// clubhouse event
-            if (this.widget.city.enabledPages.enableClubhouse)
+            if (widget.city.enabledPages.enableClubhouse)
               Padding(
                 padding: EdgeInsets.only(
                   top: 24,
@@ -114,18 +115,17 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   right: sidePadding,
                 ),
                 child: ActivityCardWidget(
-                  color: this.widget.city.color,
-                  content: this._activity!.clubhouse,
-                  iconPath: "assets/icons/clubhouse_activity_icon.png",
-                  onTap: () =>
-                      CityNavigator.getCLubhouseNextScreen(this.widget.city)
-                          .builder(context),
-                  title: "Eventos Clubhouse",
+                  color: widget.city.color,
+                  content: _activity!.clubhouse,
+                  iconPath: 'assets/icons/clubhouse_activity_icon.png',
+                  onTap: () => CityNavigator.getCLubhouseNextScreen(widget.city)
+                      .builder(context),
+                  title: 'Eventos Clubhouse',
                 ),
               ),
 
             /// project
-            if (this.widget.city.enabledPages.enableProject)
+            if (widget.city.enabledPages.enableProject)
               Padding(
                 padding: EdgeInsets.only(
                   top: 24,
@@ -133,19 +133,18 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   right: sidePadding,
                 ),
                 child: ActivityCardWidget(
-                  color: this.widget.city.color,
-                  content: this._activity!.project,
-                  iconPath: "assets/icons/project_activity_icon.png",
-                  onTap: () =>
-                      CityNavigator.getProjectNextScreen(this.widget.city)
-                          .builder(context),
-                  title: "Proyecto Docente",
+                  color: widget.city.color,
+                  content: _activity!.project,
+                  iconPath: 'assets/icons/project_activity_icon.png',
+                  onTap: () => CityNavigator.getProjectNextScreen(widget.city)
+                      .builder(context),
+                  title: 'Proyecto Docente',
                 ),
               ),
           ],
 
           /// end page padding
-          SizedBox(height: 24)
+          const SizedBox(height: 24)
         ],
       ),
     );

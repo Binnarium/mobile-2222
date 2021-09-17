@@ -1,9 +1,5 @@
 class CreateClubhouseModel {
-  final String id;
-  final String cityId;
-  final String clubhouseUrl;
-  final String uploaderId;
-
+  /// constructor
   CreateClubhouseModel({
     required this.clubhouseUrl,
     required this.cityId,
@@ -11,12 +7,18 @@ class CreateClubhouseModel {
     required this.id,
   });
 
+  /// params
+  final String id;
+  final String cityId;
+  final String clubhouseUrl;
+  final String uploaderId;
+
   Map<String, dynamic> toMap() {
-    return {
-      "id": this.id,
-      "cityId": this.cityId,
-      "clubhouseUrl": this.clubhouseUrl,
-      "uploaderId": this.uploaderId,
+    return <String, dynamic>{
+      'id': id,
+      'cityId': cityId,
+      'clubhouseUrl': clubhouseUrl,
+      'uploaderId': uploaderId,
     };
   }
 }

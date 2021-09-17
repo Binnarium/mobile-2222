@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "590170055799-dmbpu6chsi1jkcbp6d5mq73d75tsb0l6.apps.googleusercontent.com",
+              "client_id": "590170055799-58106b9g3tb2v1mhbc8dv719546p8fur.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.binnariumedu.2222"
+                "bundle_id": "ec.edu.utpl.labmovil2222"
               }
             }
           ]

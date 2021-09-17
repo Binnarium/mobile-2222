@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
 
 class ChatListItem extends ListTile {
+  // ignore: use_key_in_widget_constructors
   ChatListItem({
     required ChatModel chat,
     required BuildContext context,
@@ -21,14 +22,14 @@ class ChatListItem extends ListTile {
               /// chat name
               Expanded(
                 child: Text(
-                  '${chat.chatName}',
+                  chat.chatName,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
 
               /// chat date
               Text(
-                '${DateFormat('MM-dd HH:mm').format(chat.lastActivity)}',
+                DateFormat('MM-dd HH:mm').format(chat.lastActivity),
                 style: Theme.of(context).textTheme.button,
               ),
             ],
@@ -52,7 +53,9 @@ class ChatListItem extends ListTile {
 }
 
 String _getSubtitle(ChatModel chat) {
-  if (chat.lastMessage == null) return 'No hay mensajes';
+  if (chat.lastMessage == null) {
+    return 'No hay mensajes';
+  }
   final String prefix =
       '${chat.lastMessage!.sender.displayName.split(' ').first}: ';
 

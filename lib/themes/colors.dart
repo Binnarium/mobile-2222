@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-@Deprecated('Use Colors2222 instead')
-typedef ColorsApp = Colors2222;
-
 //Clase que contiene los colores de la aplicación
 class Colors2222 {
   Colors2222._();
@@ -19,8 +16,6 @@ class Colors2222 {
   static Color darkGrey = Colors2222.black.withOpacity(0.6);
   static const Color lightGrey = Color(0xffdddddd);
 
-  @Deprecated('use color red instead')
-  static const Color backgroundRed = Color(0xffD52027);
   static const Color backgroundOrange = Color(0xffF1682A);
   static const Color backgroundBottomBar = Color(0xff242B30);
 }

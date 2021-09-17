@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/cities/contribution/models/collaborations.model.dart';
-import 'package:lab_movil_2222/cities/contribution/services/get-collaboration-explanation.service.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lab_movil_2222/cities/contribution/models/contribution.model.dart';
+import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
+import 'package:lab_movil_2222/cities/contribution/ui/widget/goto-pub-button.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -16,15 +17,17 @@ import 'package:provider/provider.dart';
 
 /// contribution activity page
 class ContributionScreen extends StatefulWidget {
+  /// constructor
+  const ContributionScreen({
+    Key? key,
+    required this.city,
+  }) : super(key: key);
+
+  /// params
   static const String route = '/contribution-activity';
 
   /// current city
   final CityModel city;
-
-  ContributionScreen({
-    Key? key,
-    required this.city,
-  }) : super(key: key);
 
   @override
   _ContributionScreenState createState() => _ContributionScreenState();
@@ -32,11 +35,11 @@ class ContributionScreen extends StatefulWidget {
 
 class _ContributionScreenState extends State<ContributionScreen> {
   late List<CityModel> chapters;
-  CollaborationModel? collaborationActivityModel;
+  CollaborationModel? _contribution;
   StreamSubscription? collaborationActivitySub;
 
-  ContributionService get _contributionService =>
-      Provider.of<ContributionService>(context, listen: false);
+  ContributionActivityService get _contributionService =>
+      Provider.of<ContributionActivityService>(context, listen: false);
 
   @override
   void initState() {
@@ -46,7 +49,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
         _contributionService.explanation$(widget.city).listen(
       (event) {
         setState(() {
-          collaborationActivityModel = event;
+          _contribution = event;
         });
       },
     );
@@ -66,6 +69,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [
         BackgroundDecorationStyle.bottomRight,
         BackgroundDecorationStyle.path
@@ -83,9 +87,9 @@ class _ContributionScreenState extends State<ContributionScreen> {
           Center(
             child: Container(
               padding: const EdgeInsets.only(bottom: 24.0),
-              width: min(300, size.width * 0.8),
+              width: min(350, size.width * 0.8),
               child: Text(
-                'Manifiesto por la Educación'.toUpperCase(),
+                'Manifiesto-wiki por la Educación'.toUpperCase(),
                 style: textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
@@ -106,8 +110,8 @@ class _ContributionScreenState extends State<ContributionScreen> {
           ),
 
           /// collaboration data loading state
-          if (collaborationActivityModel == null) ...[
-            AppLoading(),
+          if (_contribution == null) ...[
+            const AppLoading(),
           ]
 
           /// collaboration data
@@ -120,7 +124,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
                 bottom: 40,
               ),
               child: Text(
-                collaborationActivityModel!.theme,
+                _contribution!.thematic,
                 style: textTheme.headline5,
                 textAlign: TextAlign.center,
               ),
@@ -134,60 +138,23 @@ class _ContributionScreenState extends State<ContributionScreen> {
                 bottom: 28,
               ),
               child: Markdown2222(
-                data: collaborationActivityModel!.explanation,
+                data: _contribution!.explanation,
               ),
             ),
 
             ///
-            if (collaborationActivityModel!.allowIdea)
-              _contributionButton(
-                context,
-                'Sube una idea',
-                widget.city,
-                () {},
+            Container(
+              padding: EdgeInsets.only(
+                left: size.width * 0.08,
+                right: size.width * 0.08,
+                bottom: 28,
               ),
-            if (collaborationActivityModel!.allowLecture)
-              _contributionButton(
-                context,
-                'Comparte una lectura',
-                widget.city,
-                () {},
-              ),
-            if (collaborationActivityModel!.allowProject)
-              _contributionButton(
-                context,
-                'Agrega un proyecto',
-                widget.city,
-                () {},
-              ),
+              alignment: Alignment.center,
+              child: GotoPubButton(pubUrl: _contribution!.pubUrl),
+            ),
           ],
         ],
       ),
     );
   }
-}
-
-Widget _contributionButton(
-    BuildContext context, String name, CityModel city, void Function() goto) {
-  double buttonWidth = MediaQuery.of(context).size.width;
-  return Container(
-    width: buttonWidth,
-    margin: EdgeInsets.symmetric(horizontal: 40),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Colors.white,
-        elevation: 5,
-      ),
-
-      ///Navigates to main screen
-      onPressed: goto,
-      child: Text(
-        name,
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .copyWith(color: Colors2222.black),
-      ),
-    ),
-  );
 }

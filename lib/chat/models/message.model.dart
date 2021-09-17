@@ -4,16 +4,7 @@ import 'package:lab_movil_2222/models/asset.dto.dart';
 
 /// base model of a chat message
 abstract class MessageModel {
-  final String id;
-  final String kind;
-  final AssetDto? asset;
-  final String? text;
-  final bool banned;
-  final DateTime sendedDate;
-  final String senderId;
-  final ChatParticipantModel sender;
-  final bool sendedByMe;
-
+  /// constructor
   MessageModel({
     required this.id,
     required this.kind,
@@ -26,19 +17,31 @@ abstract class MessageModel {
     this.asset,
   });
 
+  /// params
+  final String id;
+  final String kind;
+  final AssetDto? asset;
+  final String? text;
+  final bool banned;
+  final DateTime sendedDate;
+  final String senderId;
+  final ChatParticipantModel sender;
+  final bool sendedByMe;
+
+  // ignore: sort_constructors_first
   factory MessageModel.fromMap(
     Map<String, dynamic> data, {
     required String currentUid,
   }) {
-    final String kind = data['kind'];
-    final String id = data['id'];
-    final String senderId = data['senderId'];
+    final String kind = data['kind'] as String;
+    final String id = data['id'] as String;
+    final String senderId = data['senderId'] as String;
     final ChatParticipantModel sender =
         ChatParticipantModel.fromMap(data['sender'] as Map<String, dynamic>);
     final DateTime sendedDate = (data['sendedDate'] as Timestamp).toDate();
     final bool sendedByMe = currentUid == sender.uid;
     if (kind == 'MESSAGE#TEXT') {
-      final String text = data['text'];
+      final String text = data['text'] as String;
       return TextMessageModel(
         id: id,
         senderId: senderId,
@@ -50,7 +53,8 @@ abstract class MessageModel {
     }
 
     if (kind == 'MESSAGE#IMAGE') {
-      final ImageDto image = ImageDto.fromMap(data['asset']);
+      final ImageDto image =
+          ImageDto.fromMap(data['asset'] as Map<String, dynamic>);
       return ImageMessageModel(
         id: id,
         senderId: senderId,
@@ -62,7 +66,8 @@ abstract class MessageModel {
     }
 
     if (kind == 'MESSAGE#VIDEO') {
-      final VideoDto video = VideoDto.fromMap(data['asset']);
+      final VideoDto video =
+          VideoDto.fromMap(data['asset'] as Map<String, dynamic>);
       return VideoMessageModel(
         id: id,
         senderId: senderId,
@@ -87,19 +92,20 @@ abstract class MessageModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      "id": this.id,
-      "kind": this.kind,
-      "asset": this.asset?.toMap(),
-      "text": this.text,
-      "banned": this.banned,
-      "sendedDate": Timestamp.fromDate(this.sendedDate),
-      "senderId": this.senderId,
-      "sender": this.sender.toMap(),
+    return <String, dynamic>{
+      'id': id,
+      'kind': kind,
+      'asset': asset?.toMap(),
+      'text': text,
+      'banned': banned,
+      'sendedDate': Timestamp.fromDate(sendedDate),
+      'senderId': senderId,
+      'sender': sender.toMap(),
     };
   }
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.video]
 class VideoMessageModel extends MessageModel {
   VideoMessageModel({
@@ -122,6 +128,7 @@ class VideoMessageModel extends MessageModel {
         );
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.image]
 class ImageMessageModel extends MessageModel {
   ImageMessageModel({
@@ -144,6 +151,7 @@ class ImageMessageModel extends MessageModel {
         );
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.text]
 class TextMessageModel extends MessageModel {
   TextMessageModel({
@@ -166,6 +174,7 @@ class TextMessageModel extends MessageModel {
         );
 }
 
+// ignore: comment_references
 /// Message of type [MessageKind.banned]
 class BannedMessageModel extends MessageModel {
   BannedMessageModel({

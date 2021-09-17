@@ -22,8 +22,8 @@ class CityMapButton extends StatelessWidget {
 
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-      width: this.size,
-      height: this.size,
+      width: size,
+      height: size,
       child: Stack(
         clipBehavior: Clip.none,
 
@@ -33,7 +33,7 @@ class CityMapButton extends StatelessWidget {
           Positioned.fill(
             child: ClipRRect(
               clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.all(Radius.circular(this.size)),
+              borderRadius: BorderRadius.all(Radius.circular(size)),
               child: Container(
                 color: Colors2222.mapColor,
               ),
@@ -44,9 +44,9 @@ class CityMapButton extends StatelessWidget {
           Positioned.fill(
             child: ClipRRect(
               clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.all(Radius.circular(this.size)),
+              borderRadius: BorderRadius.all(Radius.circular(size)),
               child: Image(
-                image: this.city.iconMapImage,
+                image: city.iconMapImage,
                 width: double.infinity,
                 height: double.infinity,
               ),
@@ -58,12 +58,12 @@ class CityMapButton extends StatelessWidget {
           Positioned.fill(
             child: Material(
               color: Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(this.size)),
+              borderRadius: BorderRadius.all(Radius.circular(size)),
               clipBehavior: Clip.hardEdge,
               child: InkWell(
-                splashColor: this.city.color.withOpacity(0.5),
+                splashColor: city.color.withOpacity(0.5),
                 onTap: () {
-                  final route = CityNavigator.getFirsScreenOfCity(this.city);
+                  final route = CityNavigator.getFirsScreenOfCity(city);
                   route.builder(context);
                 },
                 child: Container(),
@@ -75,13 +75,13 @@ class CityMapButton extends StatelessWidget {
           /// on top of the main image, we use the size of the container, plus 8 units
           /// for spacing
           Positioned(
-            top: !this.textOnTop ? this.size + (smallFont ? 4 : 8) : null,
-            bottom: this.textOnTop ? this.size + (smallFont ? 4 : 8) : null,
-            left: -this.size,
-            right: -this.size,
+            top: !textOnTop ? size + (smallFont ? 4 : 8) : null,
+            bottom: textOnTop ? size + (smallFont ? 4 : 8) : null,
+            left: -size,
+            right: -size,
             child: Center(
               child: Text(
-                '${this.city.stage}. ${this.city.name.toUpperCase()}',
+                '${city.stage}. ${city.name.toUpperCase()}',
                 style: smallFont ? textTheme.button : textTheme.headline5,
               ),
             ),

@@ -14,10 +14,6 @@ class GotoTeamButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          child: Text(
-            'Equipo 2222',
-            style: textTheme.button,
-          ),
           style: TextButton.styleFrom(
             backgroundColor: Colors2222.white,
             alignment: Alignment.centerLeft,
@@ -25,6 +21,10 @@ class GotoTeamButton extends StatelessWidget {
             primary: Colors2222.red,
           ),
           onPressed: () => Navigator.pushNamed(context, TeamScreen.route),
+          child: Text(
+            'Equipo 2222',
+            style: textTheme.button,
+          ),
         ),
       ],
     );

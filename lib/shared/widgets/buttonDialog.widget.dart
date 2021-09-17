@@ -25,10 +25,10 @@ class ButtonWidget extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
       onPressed: onClicked,
-      child: buildContent(textTheme),
       style: ElevatedButton.styleFrom(
         primary: color,
       ),
+      child: buildContent(textTheme),
     );
   }
 

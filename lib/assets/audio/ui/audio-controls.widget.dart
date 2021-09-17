@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/model/player-playing-state.enum.dart';
 
 class PlayButton extends StatefulWidget {
-  final Stream<PlayerPlayingStateEnum> state$;
-  final Color color;
-  final VoidCallback onPressed;
-
-  PlayButton({
+  const PlayButton({
     Key? key,
     required this.state$,
     required this.color,
     required this.onPressed,
   }) : super(key: key);
+
+  final Stream<PlayerPlayingStateEnum> state$;
+  final Color color;
+  final VoidCallback onPressed;
 
   @override
   _PlayButtonState createState() => _PlayButtonState();
@@ -33,23 +33,23 @@ class _PlayButtonState extends State<PlayButton> {
   @override
   void initState() {
     super.initState();
-    this._iconSub = this.widget.state$.listen((event) {
-      this.setState(() => this.icon = PlayerStateIcons[event]!);
+    _iconSub = widget.state$.listen((event) {
+      setState(() => icon = PlayerStateIcons[event]!);
     });
   }
 
   @override
   void dispose() {
-    this._iconSub?.cancel();
+    _iconSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return PlayerControlIcon(
-      color: this.widget.color,
-      icon: this.icon,
-      onPressed: () => this.widget.onPressed(),
+      color: widget.color,
+      icon: icon,
+      onPressed: () => widget.onPressed(),
     );
   }
 }
@@ -68,8 +68,8 @@ class PlayerControlIcon extends ElevatedButton {
             onPrimary: color,
             primary: Colors.white,
             alignment: Alignment.center,
-            padding: EdgeInsets.all(0),
-            shape: CircleBorder(),
+            padding: const EdgeInsets.all(0),
+            shape: const CircleBorder(),
           ),
         );
 }

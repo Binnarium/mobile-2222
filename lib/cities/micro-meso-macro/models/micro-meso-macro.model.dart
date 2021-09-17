@@ -6,7 +6,8 @@ class MicroMesoMacroModel {
   final String subtitle;
 
   MicroMesoMacroModel.fromMap(final Map<String, dynamic> payload)
-      : this.image = ImageDto.fromMap(payload['image'] ?? []),
-        this.title = payload['title'] ?? "",
-        this.subtitle = payload['subtitle'] ?? "";
+      : image = ImageDto.fromMap(
+            payload['image'] as Map<String, dynamic>? ?? <String, dynamic>{}),
+        title = payload['title'] as String? ?? '',
+        subtitle = payload['subtitle'] as String? ?? '';
 }

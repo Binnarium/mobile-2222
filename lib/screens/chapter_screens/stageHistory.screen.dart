@@ -36,21 +36,22 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     super.initState();
 
     LoadCityHistoryService loadHistoryService =
-        Provider.of<LoadCityHistoryService>(this.context, listen: false);
+        Provider.of<LoadCityHistoryService>(context, listen: false);
 
-    this._loadHistorySub = loadHistoryService.load$(this.widget.city).listen(
+    _loadHistorySub = loadHistoryService.load$(widget.city).listen(
       (cityHistoryDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.historyDto = cityHistoryDto;
+        if (mounted) {
+          setState(() {
+            historyDto = cityHistoryDto;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadHistorySub?.cancel();
+    _loadHistorySub?.cancel();
     super.dispose();
   }
 
@@ -60,8 +61,8 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     double bodyContainerHeight = size.height * 0.75;
 
     double spacedBodyContainers = bodyContainerHeight * 0.04;
-    return Scaffold2222(
-      city: this.widget.city,
+    return Scaffold2222.city(
+      city: widget.city,
       backgrounds: [
         BackgroundDecorationStyle.bottomLeft,
         BackgroundDecorationStyle.path
@@ -70,7 +71,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
       body: ListView(
         children: <Widget>[
           LogosHeader(
-            showStageLogoCity: this.widget.city,
+            showStageLogoCity: widget.city,
           ),
           SizedBox(height: spacedBodyContainers),
           // _imageOne(size),
@@ -108,16 +109,16 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     );
   }
 
-  _contentsBody(Size size) {
+  Column _contentsBody(Size size) {
     final double sidePadding = size.width * 0.08;
 
     ///main container
     return Column(
       children: [
-        if (this.historyDto == null)
+        if (historyDto == null)
           Center(child: AppLoading())
         else ...[
-          for (HistoryContentDto content in this.historyDto!.content)
+          for (HistoryContentDto content in historyDto!.content)
             if (content is TitleHistoryDto)
               Padding(
                 padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 40),

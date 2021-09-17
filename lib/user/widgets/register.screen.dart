@@ -10,6 +10,7 @@ import 'package:lab_movil_2222/user/services/register-user.service.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/authentication-snackbar.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String route = '/register';
@@ -21,7 +22,9 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final RegisterFormModel _formValue = RegisterFormModel.empty();
-  final IRegisterService registerService = RegisterService();
+
+  RegisterService get _registerService =>
+      Provider.of<RegisterService>(context, listen: false);
 
   ///página de login donde pide usuario y contraseña
   @override
@@ -32,14 +35,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     ///safeArea para dispositivos con pantalla notch
     return Form(
-      key: this._formKey,
+      key: _formKey,
       child: Scaffold(
         backgroundColor: Colors2222.red,
         body: BackgroundDecoration(
           backgroundDecorationsStyles: [BackgroundDecorationStyle.bottomRight],
           child: ListView(
             padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.08, vertical: 64),
+              horizontal: size.width * 0.08,
+              vertical: 64,
+            ),
             children: [
               /// app logo
               Padding(
@@ -78,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextFormField222(
                   label: 'Correo Electrónico',
                   keyboardType: TextInputType.emailAddress,
-                  onValueChanged: (email) => this._formValue.email = email!,
+                  onValueChanged: (email) => _formValue.email = email!,
                   validator: _validateEmail,
                 ),
               ),
@@ -88,8 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.only(bottom: 15),
                 child: TextFormField222.password(
                   label: 'Contraseña',
-                  onValueChanged: (password) =>
-                      this._formValue.password = password!,
+                  onValueChanged: (password) => _formValue.password = password!,
                   validator: _validatePassword,
                 ),
               ),
@@ -100,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextFormField222.password(
                   label: 'Validar Contraseña',
                   onValueChanged: (password) =>
-                      this._formValue.validatePassword = password!,
+                      _formValue.validatePassword = password!,
                   validator: _validatePasswordsMatch,
                 ),
               ),
@@ -111,8 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
+                onPressed: _register,
                 child: Text('REGISTRATE AHORA'),
-                onPressed: this._register,
               ),
 
               /// already have an account button
@@ -130,13 +134,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  String? _validatePasswordsMatch(password) {
-    if (this._formValue.password != password)
-      return 'Las contraseñas no coinciden';
+  String? _validatePasswordsMatch(String? password) {
+    if (_formValue.password != password) return 'Las contraseñas no coinciden';
     return null;
   }
 
-  String? _validatePassword(value) {
+  String? _validatePassword(String? value) {
     final int numberCaracteres = 6;
     if (value == null || value.isEmpty) {
       return 'Ingresa una contraseña valida';
@@ -147,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  String? _validateEmail(email) {
+  String? _validateEmail(String? email) {
     bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
         .hasMatch(email!);
     if (!emailValid) return 'Correo electrónico invalido';
@@ -155,11 +158,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _register() async {
-    if (this._formKey.currentState!.validate()) {
-      this._formKey.currentState!.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       try {
         final PlayerModel createdPlayer =
-            await this.registerService.register(this._formValue);
+            await _registerService.register(_formValue);
 
         /// complete navigation and notify user
         ScaffoldMessenger.of(context).showSnackBar(

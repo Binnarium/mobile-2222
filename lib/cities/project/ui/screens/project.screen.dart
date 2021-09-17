@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/models/project.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -26,14 +25,14 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CityProjectScreen extends StatefulWidget {
-  static const String route = '/project';
-
-  final CityModel city;
-
-  CityProjectScreen({
+  const CityProjectScreen({
     Key? key,
     required this.city,
   }) : super(key: key);
+
+  static const String route = '/project';
+
+  final CityModel city;
 
   @override
   _CityProjectScreenState createState() => _CityProjectScreenState();
@@ -53,33 +52,31 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     userUID = FirebaseAuth.instance.currentUser!.uid;
 
-    /// called service to load the next chapter
-    CitiesService loader = CitiesService();
-
     /// load the provider to load the projectDTO
-    LoadProjectDtoService loadProjectDtoService =
-        Provider.of<LoadProjectDtoService>(this.context, listen: false);
+    final LoadProjectDtoService loadProjectDtoService =
+        Provider.of<LoadProjectDtoService>(context, listen: false);
 
     /// calls the service to load the projectDTO
-    this._loadProjectDtoSub =
-        loadProjectDtoService.load$(this.widget.city).listen(
+    _loadProjectDtoSub = loadProjectDtoService.load$(widget.city).listen(
       (projectDto) {
-        if (this.mounted)
-          this.setState(() {
-            this.project = projectDto;
+        if (mounted) {
+          setState(() {
+            project = projectDto;
           });
+        }
       },
     );
 
     /// stream of projects
-    LoadProjectFiles loadProjectFiles =
+    final LoadProjectFiles loadProjectFiles =
         Provider.of<LoadProjectFiles>(context, listen: false);
-    this._userProjectsSub = loadProjectFiles.load$(this.widget.city).listen(
+    _userProjectsSub = loadProjectFiles.load$(widget.city).listen(
       (projects) {
-        if (this.mounted)
-          this.setState(() {
-            this.playerProjects = projects;
+        if (mounted) {
+          setState(() {
+            playerProjects = projects;
           });
+        }
       },
     );
   }
@@ -93,17 +90,17 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.city(
-      city: this.widget.city,
-      backgrounds: [
+      city: widget.city,
+      backgrounds: const [
         BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
       body: _projectSheet(
-          context, size, this.widget.city.color, userUID, this.playerProjects),
+          context, size, widget.city.color, userUID, playerProjects),
     );
   }
 
@@ -116,19 +113,19 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
       children: [
         /// icon item
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: 32.0,
           ),
           child: LogosHeader(
-            showStageLogoCity: this.widget.city,
+            showStageLogoCity: widget.city,
           ),
         ),
 
         Center(
-          child: Container(
+          child: SizedBox(
             width: min(300, size.width * 0.9),
             child: Text(
-              "PROYECTO DOCENTE".toUpperCase(),
+              'PROYECTO DOCENTE'.toUpperCase(),
               style: textTheme.headline4,
               textAlign: TextAlign.center,
             ),
@@ -136,7 +133,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         ///
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
 
@@ -150,18 +147,18 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         ///
-        SizedBox(
+        const SizedBox(
           height: 32,
         ),
 
         ///
-        if (this.project == null)
-          AppLoading()
+        if (project == null)
+          const AppLoading()
         else ...[
           Padding(
             padding: horizontalPadding,
             child: Text(
-              this.project!.activity,
+              project!.activity,
               style: textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
@@ -170,7 +167,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 28,
           ),
 
@@ -178,45 +175,46 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           Padding(
             padding: horizontalPadding,
             child: Markdown2222(
-              data: this.project!.explanation,
+              data: project!.explanation,
               contentAlignment: WrapAlignment.start,
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
 
           /// if audio is available then show the audio player
-          if (this.project!.audio != null) ...[
+          if (project!.audio != null) ...[
             Container(
               alignment: Alignment.center,
               padding: horizontalPadding,
               child: AudioPlayerWidget(
-                audio: this.project!.audio!,
-                color: this.widget.city.color,
+                audio: project!.audio!,
+                color: widget.city.color,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],
 
           /// upload files
-          if (this.project!.allowFile || this.project!.allowAudio) ...[
+          if (project!.allowFile || project!.allowAudio) ...[
             Padding(
               padding: horizontalPadding,
               child: ProjectGalleryWidget(
-                  city: this.widget.city,
+                  city: widget.city,
                   userUID: userUID ?? '',
                   projects: playerProjects!),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 50),
+              padding: const EdgeInsets.only(bottom: 50),
               child: _taskButton(
                 context,
                 color,
-                this.widget.city,
+                widget.city,
+                project!,
               ),
             )
           ],
@@ -226,11 +224,12 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   }
 }
 
-Widget _taskButton(BuildContext context, Color color, CityModel city) {
-  double buttonWidth = MediaQuery.of(context).size.width;
+Widget _taskButton(
+    BuildContext context, Color color, CityModel city, ProjectDto project) {
+  final double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
-    margin: EdgeInsets.symmetric(horizontal: 40),
+    margin: const EdgeInsets.symmetric(horizontal: 40),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors.white,
@@ -239,13 +238,14 @@ Widget _taskButton(BuildContext context, Color color, CityModel city) {
 
       ///Navigates to main screen
       onPressed: () async {
-        return await showDialog(
+        return showDialog(
             context: context,
             builder: (context) {
               /// creates the alert dialog to upload file
               return UploadFileDialog(
                 city: city,
                 color: color,
+                projectDto: project,
               );
             });
       },
@@ -263,14 +263,16 @@ Widget _taskButton(BuildContext context, Color color, CityModel city) {
 /// Creates alert dialog to upload file [color] is needed to create the button
 /// with the city color
 class UploadFileDialog extends StatefulWidget {
-  final Color color;
-  final CityModel city;
-
-  UploadFileDialog({
+  const UploadFileDialog({
     Key? key,
     required this.color,
     required this.city,
+    required this.projectDto,
   }) : super(key: key);
+
+  final Color color;
+  final CityModel city;
+  final ProjectDto projectDto;
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
@@ -290,17 +292,17 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   @override
   void initState() {
     super.initState();
-    this._userServiceSub = _currentPlayerService.player$.listen((player) {
+    _userServiceSub = _currentPlayerService.player$.listen((player) {
       setState(() {
-        this.currentPlayer = player;
+        currentPlayer = player;
       });
     });
   }
 
   @override
   void dispose() {
-    this._userServiceSub?.cancel();
-    this._uploadFileSub?.cancel();
+    _userServiceSub?.cancel();
+    _uploadFileSub?.cancel();
     super.dispose();
   }
 
@@ -316,20 +318,20 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             'Elige tu proyecto',
             style: Theme.of(context).textTheme.headline6,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          SizedBox(height: 8),
-          SizedBox(
+          const SizedBox(height: 8),
+          const SizedBox(
             height: 10,
           ),
           ButtonWidget(
-            color: this.widget.color,
+            color: widget.color,
             icon: Icons.upload_file_rounded,
             text: 'Subir archivo',
             onClicked: _uploadFile,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],
@@ -338,23 +340,28 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   }
 
   void _uploadFile() {
-    if (this._uploadFileSub != null) return;
+    if (_uploadFileSub != null) {
+      return;
+    }
 
-    UploadFileService uploadFileService =
+    final UploadFileService uploadFileService =
         Provider.of<UploadFileService>(context, listen: false);
 
-    this._uploadFileSub = uploadFileService
-        .uploadFile$('players/${currentPlayer!.uid}/${this.widget.city.name}/',
-            this.widget.city)
-        .switchMap((projectFile) =>
-            _uploadProjectService.project$(this.widget.city, projectFile))
+    _uploadFileSub = uploadFileService
+        .uploadFile$('players/${currentPlayer!.uid}/${widget.city.name}/',
+            widget.projectDto)
+        .switchMap((projectFile) => _uploadProjectService.project$(
+              widget.city,
+              projectFile,
+              widget.projectDto.allowAudio,
+            ))
         .listen((sended) {
       if (sended) {
         bool medalFound = false;
 
         /// seeks for all medals in the medals array
         currentPlayer!.projectAwards.asMap().forEach((key, value) {
-          if (value.cityId == this.widget.city.name) {
+          if (value.cityId == widget.city.name) {
             medalFound = true;
             print('hay medalla');
           }
@@ -363,13 +370,12 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         /// if there is no medal with the city name, creates new one
         if (!medalFound) {
           print('no hay medalla');
-          UploadProjectService.writeMedal(
-              currentPlayer!.uid, this.widget.city.name);
+          UploadProjectService.writeMedal(currentPlayer!.uid, widget.city.name);
         }
       }
     }, onDone: () {
-      this._uploadFileSub?.cancel();
-      this._uploadFileSub = null;
+      _uploadFileSub?.cancel();
+      _uploadFileSub = null;
       Navigator.pop(context);
     });
   }
@@ -380,10 +386,6 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 /// at the head of the button, [onClicked] is the function that will be
 /// executed on pressed
 class ButtonWidget extends StatelessWidget {
-  final Color color;
-  final String? text;
-  final IconData? icon;
-  final VoidCallback? onClicked;
   const ButtonWidget({
     Key? key,
     required this.color,
@@ -392,15 +394,20 @@ class ButtonWidget extends StatelessWidget {
     this.icon,
   }) : super(key: key);
 
+  final Color color;
+  final String? text;
+  final IconData? icon;
+  final VoidCallback? onClicked;
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
       onPressed: onClicked,
-      child: buildContent(textTheme),
       style: ElevatedButton.styleFrom(
         primary: color,
       ),
+      child: buildContent(textTheme),
     );
   }
 
@@ -409,13 +416,14 @@ class ButtonWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          (icon != null)
-              ? Icon(
-                  icon,
-                  color: Colors2222.black,
-                )
-              : Container(),
-          SizedBox(
+          if (icon != null)
+            Icon(
+              icon,
+              color: Colors2222.black,
+            )
+          else
+            Container(),
+          const SizedBox(
             width: 12,
           ),
           Text(

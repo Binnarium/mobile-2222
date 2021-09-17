@@ -8,9 +8,9 @@ class PlayerSearchQueryModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'query': this.query,
-      if (this.groupId != null) 'groupId': this.groupId,
+    return <String, dynamic>{
+      'query': query,
+      if (groupId != null) 'groupId': groupId,
     };
   }
 }

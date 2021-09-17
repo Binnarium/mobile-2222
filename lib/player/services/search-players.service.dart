@@ -9,14 +9,13 @@ class SearchPlayersService {
 
   Future<List<SearchPlayerResultModel>?> search(
       PlayerSearchQueryModel query) async {
-    HttpsCallable searchPlayers =
-        this._fFunctions.httpsCallable('searchPlayer');
+    HttpsCallable searchPlayers = _fFunctions.httpsCallable('searchPlayer');
 
     final response = await searchPlayers<String>(query.toMap());
 
     final List<Map<String, dynamic>>? data =
         (jsonDecode(response.data) as List<dynamic>)
-            .map((e) => e as Map<String, dynamic>)
+            .map((dynamic e) => e as Map<String, dynamic>)
             .toList();
 
     List<SearchPlayerResultModel>? searchChatsResults = data

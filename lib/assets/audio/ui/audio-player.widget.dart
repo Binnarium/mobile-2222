@@ -11,17 +11,17 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
+  const AudioPlayerWidget({
+    Key? key,
+    required this.audio,
+    this.color = Colors2222.primary,
+  }) : super(key: key);
+
   /// audio to play
   final AudioDto audio;
 
   /// style player with a proper color
   final Color color;
-
-  AudioPlayerWidget({
-    Key? key,
-    required this.audio,
-    this.color = Colors2222.primary,
-  }) : super(key: key);
 
   @override
   _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
@@ -38,23 +38,24 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   @override
   void initState() {
     super.initState();
-    this._currentPlayerSub = this.audioProvider.currentAudio$.listen(
+    _currentPlayerSub = audioProvider.currentAudio$.listen(
       (currentAudio) {
-        if (this.mounted)
-          this.setState(() {
-            if (currentAudio?.path == this.widget.audio.path)
-              this.player = audioProvider.player;
+        if (mounted) {
+          setState(() {
+            if (currentAudio?.path == widget.audio.path)
+              player = audioProvider.player;
             else
-              this.player = null;
+              player = null;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._currentPlayerSub?.cancel();
-    this.audioProvider.close();
+    _currentPlayerSub?.cancel();
+    audioProvider.close();
     super.dispose();
   }
 
@@ -65,41 +66,41 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       mainAxisSize: MainAxisSize.max,
       children: [
         /// progress indicator
-        if (this.player != null) ...[
+        if (player != null) ...[
           AudioSlider(
-            player: this.player!,
+            player: player!,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               /// rewind button
               PlayerControlIcon(
-                color: this.widget.color,
+                color: widget.color,
                 icon: Icons.replay_5_rounded,
-                onPressed: () => this.player!.rewind(Duration(seconds: 5)),
+                onPressed: () => player!.rewind(const Duration(seconds: 5)),
               ),
 
               /// play button
               PlayButton(
-                state$: this.player!.playing$,
-                color: this.widget.color,
-                onPressed: () => this.player!.playOrPause(),
+                state$: player!.playing$,
+                color: widget.color,
+                onPressed: () => player!.playOrPause(),
               ),
 
               /// forward button
               PlayerControlIcon(
-                color: this.widget.color,
+                color: widget.color,
                 icon: Icons.forward_5_rounded,
-                onPressed: () => this.player!.forward(Duration(seconds: 5)),
+                onPressed: () => player!.forward(const Duration(seconds: 5)),
               ),
             ],
           )
         ] else ...[
-          FakeAudioSlider(),
+          const FakeAudioSlider(),
           PlayerControlIcon(
-            color: this.widget.color,
+            color: widget.color,
             icon: Icons.play_arrow,
-            onPressed: () => audioProvider.setAudio(this.widget.audio),
+            onPressed: () => audioProvider.setAudio(widget.audio),
           ),
         ],
       ],

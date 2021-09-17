@@ -11,14 +11,14 @@ import 'package:provider/provider.dart';
 /// Class that creates a video player depending on video URL and the description
 /// of the video
 class VideoPlayer extends StatefulWidget {
-  final VideoDto video;
-
-  VideoPlayer({
+  const VideoPlayer({
     Key? key,
 
     /// videoDTO
     required this.video,
   }) : super(key: key);
+
+  final VideoDto video;
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();
@@ -34,22 +34,23 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void initState() {
-    this.videoProvider.close();
+    videoProvider.close();
     super.initState();
-    this._currentPlayerSub = this.videoProvider.currentVideo$.listen(
+    _currentPlayerSub = videoProvider.currentVideo$.listen(
       (currentVideo) {
-        if (this.mounted)
-          this.setState(() {
-            this.showPlayer = currentVideo?.path == this.widget.video.path;
+        if (mounted) {
+          setState(() {
+            showPlayer = currentVideo?.path == widget.video.path;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._currentPlayerSub?.cancel();
-    this.videoProvider.close();
+    _currentPlayerSub?.cancel();
+    videoProvider.close();
     super.dispose();
   }
 
@@ -60,17 +61,17 @@ class _VideoPlayerState extends State<VideoPlayer> {
       aspectRatio: 16 / 9,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: this.showPlayer
-            ? _Lab2222BetterPlayer(video: this.widget.video)
+        child: showPlayer
+            ? _Lab2222BetterPlayer(video: widget.video)
             : Stack(
                 children: [
                   Image(
-                    image: this.widget.video.placeholderImage,
+                    image: widget.video.placeholderImage,
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
                   ),
-                  Center(
+                  const Center(
                     child: Icon(
                       Icons.play_arrow_rounded,
                       size: 150,
@@ -83,7 +84,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     child: Material(
                       color: Colors2222.transparent,
                       child: InkWell(
-                        onTap: () => videoProvider.setVideo(this.widget.video),
+                        onTap: () => videoProvider.setVideo(widget.video),
                       ),
                     ),
                   ),
@@ -107,8 +108,6 @@ class _Lab2222BetterPlayer extends BetterPlayer {
               autoPlay: false,
               allowedScreenSleep: false,
               looping: false,
-
-              /// TODO: create specific widget
               placeholder: Center(
                 child: Image.asset('assets/images/video-placeholder.png'),
               ),

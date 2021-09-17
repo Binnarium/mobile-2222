@@ -16,14 +16,14 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatParticipantsScreen extends StatefulWidget {
-  static const route = '/chat-participants';
-
-  final ChatModel chat;
-
   const ChatParticipantsScreen({
     Key? key,
     required this.chat,
   }) : super(key: key);
+
+  static const route = '/chat-participants';
+
+  final ChatModel chat;
 
   @override
   _ChatParticipantsScreenState createState() => _ChatParticipantsScreenState();
@@ -33,14 +33,14 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
   StreamSubscription? _createChatSub;
 
   CreatePersonalChatService get _createPersonalChatService =>
-      Provider.of<CreatePersonalChatService>(this.context, listen: false);
+      Provider.of<CreatePersonalChatService>(context, listen: false);
 
   GetChatService get _getChatService =>
-      Provider.of<GetChatService>(this.context, listen: false);
+      Provider.of<GetChatService>(context, listen: false);
 
   @override
   void dispose() {
-    this._createChatSub?.cancel();
+    _createChatSub?.cancel();
     super.dispose();
   }
 
@@ -67,7 +67,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 64.0),
             child: ChatImageWidget.fromChat(
-              this.widget.chat,
+              widget.chat,
               color: Colors2222.black,
               size: min(270, size.width * 0.4),
             ),
@@ -78,7 +78,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
             padding: const EdgeInsets.only(top: 40.0),
             child: Center(
               child: Text(
-                this.widget.chat.chatName,
+                widget.chat.chatName,
                 style: textTheme.headline5!.copyWith(
                   color: Colors2222.black,
                 ),
@@ -91,10 +91,10 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 40.0, bottom: 44),
             child: Center(
-              child: Container(
+              child: SizedBox(
                 width: min(400, size.width * 0.8),
                 child: ChatTextDescription.getChatText(
-                  chat: this.widget.chat,
+                  chat: widget.chat,
                   color: Colors2222.black.withOpacity(0.5),
                 ),
               ),
@@ -104,16 +104,15 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
           /// participants title
           ParticipantsListTitle(
             context: context,
-            participantsCount: this.widget.chat.participants.length,
+            participantsCount: widget.chat.participants.length,
           ),
 
-          for (ChatParticipantModel participant
-              in this.widget.chat.participants)
+          for (ChatParticipantModel participant in widget.chat.participants)
             ParticipantsListItem(
               context: context,
               participant: participant,
-              createChatCallback: this._createChatSub == null
-                  ? (context) => this._createChat(participant.uid)
+              createChatCallback: _createChatSub == null
+                  ? (context) => _createChat(participant.uid)
                   : null,
             ),
         ],
@@ -122,15 +121,17 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
   }
 
   void _createChat(String playerId) {
-    if (this._createChatSub != null) return;
+    if (_createChatSub != null) {
+      return;
+    }
 
-    this.setState(() {
-      this._createChatSub = _createPersonalChatService.create$(playerId).listen(
+    setState(() {
+      _createChatSub = _createPersonalChatService.create$(playerId).listen(
         (response) async {
           /// validate chat was found
           if (response.chatId == null) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(ChatSnackbar.couldNotCreateChat());
+                .showSnackBar(const ChatSnackbar.couldNotCreateChat());
             return;
           }
 
@@ -139,7 +140,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
               await _getChatService.getChatWithId(response.chatId!);
           if (chat == null) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(ChatSnackbar.chatNotFound());
+                .showSnackBar(const ChatSnackbar.chatNotFound());
             return;
           }
 
@@ -149,9 +150,9 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
 
         /// clean stream
         onDone: () {
-          this.setState(() {
-            this._createChatSub?.cancel();
-            this._createChatSub = null;
+          setState(() {
+            _createChatSub?.cancel();
+            _createChatSub = null;
           });
         },
       );
@@ -160,14 +161,15 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
 }
 
 class ChatSnackbar extends SnackBar {
-  ChatSnackbar.couldNotCreateChat({Key? key})
+  const ChatSnackbar.couldNotCreateChat({Key? key})
       : super(
           key: key,
-          content: Text('Ocurrio un problema. No se pudo acceder al chat.'),
+          content:
+              const Text('Ocurrió un problema. No se pudo acceder al chat.'),
         );
-  ChatSnackbar.chatNotFound({Key? key})
+  const ChatSnackbar.chatNotFound({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo encontrar el chat.'),
+          content: const Text('No se pudo encontrar el chat.'),
         );
 }

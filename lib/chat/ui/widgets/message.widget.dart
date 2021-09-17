@@ -8,11 +8,14 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class MessageWidget extends StatelessWidget {
-  final MessageModel message;
+  /// constructor
   const MessageWidget({
     Key? key,
     required this.message,
   }) : super(key: key);
+
+  /// params
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class MessageWidget extends StatelessWidget {
         : message.sender.displayName.split(' ').first + ' - ';
 
     final List<Widget> children = [
-      Flexible(child: Container(), flex: 1),
+      Flexible(flex: 1, child: Container()),
       Expanded(
         flex: 4,
         child: Align(
@@ -38,7 +41,7 @@ class MessageWidget extends StatelessWidget {
             children: [
               /// date
               Text(
-                '$prefix${DateFormat('HH:mm').format(this.message.sendedDate)}',
+                '$prefix${DateFormat('HH:mm').format(message.sendedDate)}',
                 style: textTheme.caption!.copyWith(color: Colors2222.black),
               ),
 
@@ -51,41 +54,45 @@ class MessageWidget extends StatelessWidget {
     ];
 
     return Row(
-      children:
-          (this.message.sendedByMe) ? children : children.reversed.toList(),
+      children: (message.sendedByMe) ? children : children.reversed.toList(),
     );
   }
 }
 
 /// base clase to create a card with content for the message
 abstract class _MessageCard<T extends MessageModel> extends StatelessWidget {
+  /// constructor
+  _MessageCard({
+    Key? key,
+    required T message,
+  })  : message = message,
+        padding = const EdgeInsets.all(12),
+        decoration = BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
+        ),
+        super(key: key);
+
+  /// params
   final T message;
 
   final EdgeInsets padding;
   final BoxDecoration decoration;
 
-  _MessageCard({
-    Key? key,
-    required T message,
-  })  : this.message = message,
-        this.padding = EdgeInsets.all(12),
-        this.decoration = BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
-        ),
-        super(key: key);
-
   static _MessageCard fromMessage({
     required MessageModel message,
   }) {
-    if (message.runtimeType == TextMessageModel)
+    if (message.runtimeType == TextMessageModel) {
       return _TextMessageCard(message: message as TextMessageModel);
+    }
 
-    if (message.runtimeType == ImageMessageModel)
+    if (message.runtimeType == ImageMessageModel) {
       return _ImageMessageCard(message: message as ImageMessageModel);
+    }
 
-    if (message.runtimeType == VideoMessageModel)
+    if (message.runtimeType == VideoMessageModel) {
       return _VideoMessageCard(message: message as VideoMessageModel);
+    }
 
     return _TextMessageCard(message: message as TextMessageModel);
   }
@@ -104,13 +111,13 @@ class _TextMessageCard extends _MessageCard<TextMessageModel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: this.padding,
-      decoration: this.decoration,
+      padding: padding,
+      decoration: decoration,
       child: Markdown2222(
-        data: this.message.text!,
+        data: message.text!,
         contentAlignment:
-            this.message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
-        color: this.message.sendedByMe ? Colors2222.black : Colors2222.white,
+            message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
+        color: message.sendedByMe ? Colors2222.black : Colors2222.white,
       ),
     );
   }
@@ -129,22 +136,22 @@ class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: this.padding,
-      decoration: this.decoration,
+      padding: padding,
+      decoration: decoration,
       width: double.infinity,
       child: InkWell(
-        child: Image.network(
-          this.message.asset!.url,
-          height: 140,
-          fit: BoxFit.cover,
-        ),
         onTap: () {
-          Navigator.push(
+          Navigator.push<MaterialPageRoute>(
               context,
               MaterialPageRoute(
                   builder: (context) =>
                       DetailedMultimediaScreen(message: message)));
         },
+        child: Image.network(
+          message.asset!.url,
+          height: 140,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -163,10 +170,10 @@ class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: this.padding,
-      decoration: this.decoration,
+      padding: padding,
+      decoration: decoration,
       width: double.infinity,
-      child: VideoPlayer(video: message.asset as VideoDto),
+      child: VideoPlayer(video: message.asset! as VideoDto),
 
       /// TODO: implement screen
       /// DetailedMultimediaScreen(message: message)));

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:lab_movil_2222/interfaces/i-load-with-options.service.dart';
 import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/services/load-city-resources.service.dart';
@@ -38,30 +37,30 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     super.initState();
 
     LoadCityResourcesService loadResourcesService =
-        Provider.of<LoadCityResourcesService>(this.context, listen: false);
+        Provider.of<LoadCityResourcesService>(context, listen: false);
 
-    this._loadResourcesSub =
-        loadResourcesService.load$(this.widget.city).listen(
+    _loadResourcesSub = loadResourcesService.load$(widget.city).listen(
       (cityResources) {
-        if (this.mounted)
-          this.setState(() {
-            this.resourcesDto = cityResources;
+        if (mounted) {
+          setState(() {
+            resourcesDto = cityResources;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadResourcesSub?.cancel();
+    _loadResourcesSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold2222(
-      city: this.widget.city,
+    return Scaffold2222.city(
+      city: widget.city,
       backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ResourcesScreen.route,
       body: _resourcesContent(size),
@@ -69,7 +68,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   }
 
   ///body of the screen
-  _resourcesContent(Size size) {
+  ListView _resourcesContent(Size size) {
     final double sidePadding = size.width * 0.04;
 
     ///sizing the container to the mobile
@@ -78,10 +77,10 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: LogosHeader(
-            showStageLogoCity: this.widget.city,
+            showStageLogoCity: widget.city,
           ),
         ),
-        if (this.resourcesDto == null)
+        if (resourcesDto == null)
           AppLoading()
         else ...[
           /// readings title screen widgets
@@ -93,7 +92,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
 
           /// readings
-          for (ReadingDto reading in this.resourcesDto!.readings)
+          for (ReadingDto reading in resourcesDto!.readings)
             Padding(
               padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
               child: ReadingItem(readingDto: reading),
@@ -115,7 +114,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               ///general spacing per resource
               crossAxisCount: 2,
               staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-              itemCount: this.resourcesDto!.externalLinks.length,
+              itemCount: resourcesDto!.externalLinks.length,
 
               /// property that sizes the container automatically according
               /// the items
@@ -124,7 +123,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               ///to avoid the scroll
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final item = this.resourcesDto!.externalLinks.elementAt(index);
+                final item = resourcesDto!.externalLinks.elementAt(index);
                 // print(item);
                 // print(item.kind);
 

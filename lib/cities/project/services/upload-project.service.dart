@@ -8,42 +8,46 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
+/// Class that uploads the project to the database reference
+/// This class does not uploads the file, for that Implement "UploadFileService"
 class UploadProjectService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-
   UploadProjectService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
 
-  Stream<bool> project$(CityModel city, ProjectFileDto file) {
-    return this._uploadProject(
+  final CurrentPlayerService _currentPlayerService;
+
+  final FirebaseFirestore _fFirestore;
+
+  Stream<bool> project$(CityModel city, ProjectFileDto file, bool allowAudio) {
+    return _uploadProject$(
       createMessageCallback: (user) => PlayerProject(
         cityID: city.name,
         file: file,
-        kind: (city.stage == 10) ? 'Project#MP3' : 'PROJECT#PDF',
+        kind: allowAudio ? 'PROJECT#MP3' : 'PROJECT#PDF',
         id: '',
       ),
     );
   }
 
   /// function that uploads a message to the specific player database reference
-  Stream<bool> _uploadProject({
+  Stream<bool> _uploadProject$({
     required PlayerProject Function(PlayerModel) createMessageCallback,
   }) {
-    return this._currentPlayerService.player$.take(1).asyncMap<bool>(
+    return _currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
-        if (user == null) return false;
+        if (user == null) {
+          return false;
+        }
 
         /// create project to upload
-        PlayerProject newProject = createMessageCallback(user);
-        final CollectionReference<Map<String, dynamic>> messagesDoc = this
-            ._fFirestore
-            .collection('players')
-            .doc(user.uid)
-            .collection('project');
+        final PlayerProject newProject = createMessageCallback(user);
+        final CollectionReference<Map<String, dynamic>> messagesDoc =
+            _fFirestore
+                .collection('players')
+                .doc(user.uid)
+                .collection('project');
 
         /// upload project
         try {
@@ -66,8 +70,9 @@ class UploadProjectService {
     );
   }
 
+  // ignore: avoid_void_async
   static void writeMedal(String userUID, String cityRef) async {
-    Map<String, dynamic> medal = {
+    final Map<String, dynamic> medal = <String, dynamic>{
       'cityId': cityRef,
       'obtained': true,
       'obtainedDate': Timestamp.now(),
@@ -75,11 +80,12 @@ class UploadProjectService {
 
     await FirebaseFirestore.instance.collection('players').doc(userUID).update(
       {
-        'projectAwards': FieldValue.arrayUnion([medal])
+        'projectAwards': FieldValue.arrayUnion(<dynamic>[medal])
       },
     );
   }
 
+  // ignore: avoid_void_async
   static void deletePlayerProjectFile(
       String userUID, PlayerProject project) async {
     await FirebaseStorage.instance.refFromURL(project.file.url).delete();

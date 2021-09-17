@@ -42,21 +42,20 @@ class _ChangeAvatarButtonState extends State<ChangeAvatarButton> {
 
   /// method to change the avatarImage
   void _changeAvatar() async {
-    if (this._uploadFileSub != null) return;
-    String oldUrl = this.widget.player.avatarImage.url;
+    if (_uploadFileSub != null) return;
+    String oldUrl = widget.player.avatarImage.url;
     print('old image url');
     UploadImageService uploadImageService =
         Provider.of<UploadImageService>(context, listen: false);
 
-    this._uploadFileSub = uploadImageService
-        .upload$('players/${this.widget.player.uid}/assets')
-        .switchMap(
-            (image) => this._updateAvatarService.updateAvatar$(image, oldUrl))
+    _uploadFileSub = uploadImageService
+        .upload$('players/${widget.player.uid}/assets')
+        .switchMap((image) => _updateAvatarService.updateAvatar$(image, oldUrl))
         .listen((sended) {
       if (sended) print('Imagen cambiada correctamente');
     }, onDone: () {
-      this._uploadFileSub?.cancel();
-      this._uploadFileSub = null;
+      _uploadFileSub?.cancel();
+      _uploadFileSub = null;
     });
   }
 }

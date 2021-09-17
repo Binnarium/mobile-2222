@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
+import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse-explanation.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/contribution/ui/screens/city-contribution.screen.dart';
@@ -17,7 +18,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
-import 'package:lab_movil_2222/screens/chapter_screens/stageArgumentation.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 
@@ -192,12 +192,12 @@ class CityNavigator {
         /// ideas
         if (enabledPagesDto.argumentation)
           ScaffoldRouteBuilder(
-            route: StageArgumentationScreen.route,
+            route: ArgumentIdeasScreen.route,
             builder: (context) => Navigator.pushNamed(
               context,
-              StageArgumentationScreen.route,
-              arguments: StageArgumentationScreen(
-                chapterSettings: city,
+              ArgumentIdeasScreen.route,
+              arguments: ArgumentIdeasScreen(
+                city: city,
               ),
             ),
           ),
@@ -209,7 +209,7 @@ class CityNavigator {
             context,
             StageObjetivesScreen.route,
             arguments: StageObjetivesScreen(
-              chapterSettings: city,
+              city: city,
             ),
           ),
         ),

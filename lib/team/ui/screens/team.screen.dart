@@ -26,21 +26,22 @@ class _TeamScreenState extends State<TeamScreen> {
     super.initState();
 
     LoadTeamService loadTeamService =
-        Provider.of<LoadTeamService>(this.context, listen: false);
+        Provider.of<LoadTeamService>(context, listen: false);
 
-    this._loadTeamSub = loadTeamService.load$().listen(
+    _loadTeamSub = loadTeamService.load$().listen(
       (teamModel) {
-        if (this.mounted)
-          this.setState(() {
-            this.teamDto = teamModel;
+        if (mounted) {
+          setState(() {
+            teamDto = teamModel;
           });
+        }
       },
     );
   }
 
   @override
   void dispose() {
-    this._loadTeamSub?.cancel();
+    _loadTeamSub?.cancel();
     super.dispose();
   }
 
@@ -56,10 +57,10 @@ class _TeamScreenState extends State<TeamScreen> {
       appBar: AppBar(
         backgroundColor: Colors2222.red,
       ),
-      body: (this.teamDto == null)
+      body: (teamDto == null)
           ? Center(
               child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
+                valueColor: AlwaysStoppedAnimation<Color>(
                   Colors2222.red,
                 ),
               ),
@@ -70,7 +71,7 @@ class _TeamScreenState extends State<TeamScreen> {
                 vertical: 24,
               ),
               child: TeamContentMarkdown(
-                teamContent: this.teamDto!.teamText,
+                teamContent: teamDto!.teamText,
               ),
             ),
     );
