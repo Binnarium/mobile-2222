@@ -19,10 +19,10 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ClubhouseScreen extends StatefulWidget {
+  const ClubhouseScreen({Key? key, required this.city}) : super(key: key);
+
   static const String route = '/chapterClubhouse';
   final CityModel city;
-
-  const ClubhouseScreen({Key? key, required this.city}) : super(key: key);
 
   @override
   _ClubhouseScreenState createState() => _ClubhouseScreenState();
@@ -45,7 +45,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
     });
 
     /// loads clubhouse
-    LoadClubhouseService loadClubhouseActivityService =
+    final LoadClubhouseService loadClubhouseActivityService =
         Provider.of<LoadClubhouseService>(context, listen: false);
 
     _loadClubhousesActivitiesSub =
@@ -81,6 +81,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ClubhouseScreen.route,
       body: ListView(
@@ -110,7 +111,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
             padding: const EdgeInsets.only(bottom: 32),
             child: Center(
               child: Image(
-                image: CoinsImages.clubhouse(),
+                image: const CoinsImages.clubhouse(),
                 alignment: Alignment.bottomRight,
                 fit: BoxFit.contain,
                 width: min(160, size.width * 0.4),
@@ -120,7 +121,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
 
           /// page content
           if (clubhouseActivity == null)
-            AppLoading()
+            const AppLoading()
           else ...[
             Padding(
               padding: const EdgeInsets.only(bottom: 34.0),
@@ -134,56 +135,56 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
           ],
 
           /// next clubhouse title
-          Padding(
-            padding: const EdgeInsets.only(bottom: 34.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
               title: 'Eventos en las próximas 24 horas',
             ),
           ),
 
           /// page content
-          (clubhouses == null)
-              ? AppLoading()
-              : Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 20,
-                    left: size.width * 0.04,
-                    right: size.width * 0.04,
-                  ),
-                  child: (clubhouses!.isEmpty)
-                      ? Center(
-                          child: Text(
-                            'No hay clubhouse programados',
-                            style: textTheme.headline6!
-                                .copyWith(fontWeight: FontWeight.w600),
-                          ),
-                        )
-                      : GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: size.width * 0.04,
-                            mainAxisSpacing: size.width * 0.04,
-                          ),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: clubhouses!.length,
-                          itemBuilder: (context, index) => ClubhouseCard(
-                            clubhouseModel: clubhouses![index],
-                          ),
-                        ),
-                ),
+          if (clubhouses == null)
+            const AppLoading()
+          else
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 20,
+                left: size.width * 0.04,
+                right: size.width * 0.04,
+              ),
+              child: (clubhouses!.isEmpty)
+                  ? Center(
+                      child: Text(
+                        'No hay clubhouse programados',
+                        style: textTheme.headline6!
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                    )
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: size.width * 0.04,
+                        mainAxisSpacing: size.width * 0.04,
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: clubhouses!.length,
+                      itemBuilder: (context, index) => ClubhouseCard(
+                        clubhouseModel: clubhouses![index],
+                      ),
+                    ),
+            ),
 
           Padding(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Center(
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
-                icon: Icon(Icons.add_rounded),
-                label: Text('Agrega tu evento Clubhouse'),
+                icon: const Icon(Icons.add_rounded),
+                label: const Text('Agrega tu evento Clubhouse'),
                 onPressed: () => Navigator.pushNamed(
                   context,
                   AddClubhouseScreen.route,

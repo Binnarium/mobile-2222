@@ -2,9 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
 class CityResourcesDto {
-  final List<ExternalLinkDto> externalLinks;
-  final List<ReadingDto> readings;
-
+  /// constructor
   CityResourcesDto.fromMap(Map<String, dynamic> payload)
       : externalLinks = ((payload['externalLinks'] ?? <dynamic>[]) as List)
             .map((dynamic e) =>
@@ -13,6 +11,10 @@ class CityResourcesDto {
         readings = ((payload['readings'] ?? <dynamic>[]) as List)
             .map((dynamic e) => ReadingDto.fromMap(e as Map<String, dynamic>))
             .toList();
+
+  /// params
+  final List<ExternalLinkDto> externalLinks;
+  final List<ReadingDto> readings;
 }
 
 class ReadingDto {
@@ -23,6 +25,7 @@ class ReadingDto {
   final String? link;
   final int? publishedYear;
 
+  // ignore: sort_constructors_first
   ReadingDto.fromMap(Map<String, dynamic> payload)
       : name = payload['name'] as String? ?? 'Sin nombre',
         about = payload['about'] as String? ?? 'Sin descripción',
@@ -39,7 +42,7 @@ class ReadingDto {
       [author, if (publishedYear != null) publishedYear].join(' | ');
 
   ImageProvider get placeholder =>
-      AssetImage('assets/images/book-placeholder.png');
+      const AssetImage('assets/images/book-placeholder.png');
 }
 
 abstract class ExternalLinkDto {
@@ -48,6 +51,7 @@ abstract class ExternalLinkDto {
   final String title;
   final String description;
 
+  // ignore: sort_constructors_first
   ExternalLinkDto._fromMap(Map<String, dynamic> data)
       : kind = data['kind'] as String,
         link = data['link'] as String? ?? 'https://google.com',
@@ -58,11 +62,21 @@ abstract class ExternalLinkDto {
   static ExternalLinkDto fromMap(Map<String, dynamic> data) {
     final String kind = data['kind'] as String;
 
-    if (kind == 'LINK#YOUTUBE') return _YoutubeLinkDto._fromMap(data);
-    if (kind == 'LINK#FACEBOOK') return _FacebookLinkDto._fromMap(data);
-    if (kind == 'LINK#TWITTER') return _TwitterLinkDto._fromMap(data);
-    if (kind == 'LINK#INSTAGRAM') return _InstagramLinkDto._fromMap(data);
-    if (kind == 'LINK#TIK_TOK') return _TikTokLinkDto._fromMap(data);
+    if (kind == 'LINK#YOUTUBE') {
+      return _YoutubeLinkDto._fromMap(data);
+    }
+    if (kind == 'LINK#FACEBOOK') {
+      return _FacebookLinkDto._fromMap(data);
+    }
+    if (kind == 'LINK#TWITTER') {
+      return _TwitterLinkDto._fromMap(data);
+    }
+    if (kind == 'LINK#INSTAGRAM') {
+      return _InstagramLinkDto._fromMap(data);
+    }
+    if (kind == 'LINK#TIK_TOK') {
+      return _TikTokLinkDto._fromMap(data);
+    }
     return _OtherLinkDto._fromMap(data);
   }
 
@@ -76,7 +90,7 @@ class _YoutubeLinkDto extends ExternalLinkDto {
 
   @override
   ImageProvider<Object> get iconImage =>
-      AssetImage('assets/images/youtube.png');
+      const AssetImage('assets/images/youtube.png');
 }
 
 class _FacebookLinkDto extends ExternalLinkDto {
@@ -85,7 +99,7 @@ class _FacebookLinkDto extends ExternalLinkDto {
 
   @override
   ImageProvider<Object> get iconImage =>
-      AssetImage('assets/images/facebook.png');
+      const AssetImage('assets/images/facebook.png');
 }
 
 class _TwitterLinkDto extends ExternalLinkDto {
@@ -94,7 +108,7 @@ class _TwitterLinkDto extends ExternalLinkDto {
 
   @override
   ImageProvider<Object> get iconImage =>
-      AssetImage('assets/images/twitter.png');
+      const AssetImage('assets/images/twitter.png');
 }
 
 class _OtherLinkDto extends ExternalLinkDto {
@@ -102,7 +116,8 @@ class _OtherLinkDto extends ExternalLinkDto {
       : super._fromMap(payload);
 
   @override
-  ImageProvider<Object> get iconImage => AssetImage('assets/images/link.png');
+  ImageProvider<Object> get iconImage =>
+      const AssetImage('assets/images/link.png');
 }
 
 class _InstagramLinkDto extends ExternalLinkDto {
@@ -111,7 +126,7 @@ class _InstagramLinkDto extends ExternalLinkDto {
 
   @override
   ImageProvider<Object> get iconImage =>
-      AssetImage('assets/images/instagram.png');
+      const AssetImage('assets/images/instagram.png');
 }
 
 class _TikTokLinkDto extends ExternalLinkDto {
@@ -119,5 +134,6 @@ class _TikTokLinkDto extends ExternalLinkDto {
       : super._fromMap(payload);
 
   @override
-  ImageProvider<Object> get iconImage => AssetImage('assets/images/tiktok.png');
+  ImageProvider<Object> get iconImage =>
+      const AssetImage('assets/images/tiktok.png');
 }

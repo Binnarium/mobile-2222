@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class TeamScreen extends StatefulWidget {
   static const String route = '/team';
 
@@ -25,7 +26,7 @@ class _TeamScreenState extends State<TeamScreen> {
   void initState() {
     super.initState();
 
-    LoadTeamService loadTeamService =
+    final LoadTeamService loadTeamService =
         Provider.of<LoadTeamService>(context, listen: false);
 
     _loadTeamSub = loadTeamService.load$().listen(
@@ -50,6 +51,7 @@ class _TeamScreenState extends State<TeamScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.empty(
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [
         BackgroundDecorationStyle.path,
         BackgroundDecorationStyle.bottomRight
@@ -58,7 +60,7 @@ class _TeamScreenState extends State<TeamScreen> {
         backgroundColor: Colors2222.red,
       ),
       body: (teamDto == null)
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
                   Colors2222.red,

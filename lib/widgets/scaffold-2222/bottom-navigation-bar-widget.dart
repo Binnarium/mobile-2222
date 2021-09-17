@@ -40,7 +40,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
               /// prev page item
               Lab2222BottomNavigationBarItem(
                 onTap: prevPage,
-                icon: AssetImage('assets/navbar/chevron-left.png'),
+                icon: const AssetImage('assets/navbar/chevron-left.png'),
                 active: true,
               ),
 
@@ -50,7 +50,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
                     ? () {}
                     : () => Navigator.pushReplacementNamed(
                         context, HomeScreen.route),
-                icon: AssetImage('assets/navbar/boat.png'),
+                icon: const AssetImage('assets/navbar/boat.png'),
                 active: activePage == Lab2222NavigationBarPages.home,
               ),
 
@@ -59,7 +59,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
                 onTap: activePage == Lab2222NavigationBarPages.profile
                     ? () {}
                     : () => Navigator.pushNamed(context, ProfileScreen.route),
-                icon: AssetImage('assets/navbar/user.png'),
+                icon: const AssetImage('assets/navbar/user.png'),
                 active: activePage == Lab2222NavigationBarPages.profile,
               ),
 
@@ -68,7 +68,7 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
                 onTap: activePage == Lab2222NavigationBarPages.information
                     ? () {}
                     : () => Navigator.pushNamed(context, WelcomeScreen.route),
-                icon: AssetImage('assets/navbar/info.png'),
+                icon: const AssetImage('assets/navbar/info.png'),
                 active: activePage == Lab2222NavigationBarPages.information,
               ),
 
@@ -77,14 +77,14 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
                 onTap: activePage == Lab2222NavigationBarPages.chat
                     ? () {}
                     : () => Navigator.pushNamed(context, ChatsScreen.route),
-                icon: AssetImage('assets/navbar/message-square.png'),
+                icon: const AssetImage('assets/navbar/message-square.png'),
                 active: activePage == Lab2222NavigationBarPages.chat,
               ),
 
               /// text page item
               Lab2222BottomNavigationBarItem(
                 onTap: nextPage,
-                icon: AssetImage('assets/navbar/chevron-right.png'),
+                icon: const AssetImage('assets/navbar/chevron-right.png'),
                 active: true,
               ),
             ],

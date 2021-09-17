@@ -13,15 +13,15 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class MicroMesoMacroScreen extends StatefulWidget {
+  const MicroMesoMacroScreen({
+    Key? key,
+    required CityModel city,
+  })  : city = city,
+        super(key: key);
+
   static const String route = '/micro_meso_macro';
 
   final CityModel city;
-
-  MicroMesoMacroScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _MicroMesoMacroScreenState createState() => _MicroMesoMacroScreenState();
@@ -35,7 +35,7 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
   void initState() {
     super.initState();
 
-    LoadMicroMesoMacroService loadMicroMesoMacroService =
+    final LoadMicroMesoMacroService loadMicroMesoMacroService =
         Provider.of<LoadMicroMesoMacroService>(context, listen: false);
 
     _loadMisoMesoMacroSub = loadMicroMesoMacroService.load$(widget.city).listen(
@@ -57,14 +57,15 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
+
     return Scaffold2222.city(
       city: widget.city,
       route: MicroMesoMacroScreen.route,
       color: Colors2222.red,
       body: (microMesoMacroModel == null)
-          ? AppLoading()
+          ? const AppLoading()
           : Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

@@ -6,6 +6,7 @@ class CompeResourcesListItem extends StatelessWidget {
   final Map<String, dynamic> image;
   final String? id;
 
+  // ignore: sort_constructors_first
   const CompeResourcesListItem({
     Key? key,
     required this.name,
@@ -18,10 +19,10 @@ class CompeResourcesListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     NetworkImage imageNe;
-    String imageurl =
+    const String imageurl =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShMSIXzP_rbfUPmoKrBDCxlBFCITYnuzuVHg&usqp=CAU';
     image['url'] == null
-        ? imageNe = NetworkImage(imageurl)
+        ? imageNe = const NetworkImage(imageurl)
         : imageNe = NetworkImage(image['url'] as String);
     return Column(
       children: [
@@ -32,7 +33,7 @@ class CompeResourcesListItem extends StatelessWidget {
           height: 60,
           alignment: Alignment.center,
         ),
-        SizedBox(
+        const SizedBox(
           height: 9,
         ),
 

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CoinsImages extends AssetImage {
-  CoinsImages.redCoin({Key? key})
+  const CoinsImages.redCoin()
       : super('assets/gamification/2222_proactivo_rojo.png');
 
-  CoinsImages.yellowCoin({Key? key})
+  const CoinsImages.yellowCoin()
       : super('assets/gamification/2222_proactivo_amarillo.png');
 
-  CoinsImages.greenCoin({Key? key})
+  const CoinsImages.greenCoin()
       : super('assets/gamification/2222_proactivo_verde.png');
 
-  CoinsImages.project({Key? key})
-      : super('assets/gamification/2222_project.png');
-      
-  CoinsImages.hackaton({Key? key})
-      : super('assets/gamification/2222_marathon.png');
+  const CoinsImages.project() : super('assets/gamification/2222_project.png');
 
-  CoinsImages.clubhouse({Key? key})
+  const CoinsImages.hackaton() : super('assets/gamification/2222_marathon.png');
+
+  const CoinsImages.clubhouse()
       : super('assets/gamification/2222_medalla-clubhouse.png');
 
-  CoinsImages.contribution({Key? key})
+  const CoinsImages.contribution()
       : super('assets/gamification/2222_monedas.png');
 }

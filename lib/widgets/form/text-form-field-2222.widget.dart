@@ -27,7 +27,8 @@ class TextFormField222 extends StatelessWidget {
 
   final bool showEnabledBorder;
 
-  TextFormField222({
+  // ignore: sort_constructors_first
+  const TextFormField222({
     Key? key,
     this.obscureText = false,
     this.keyboardType,
@@ -41,7 +42,8 @@ class TextFormField222 extends StatelessWidget {
   })  : primaryColor = primaryColor ?? Colors2222.red,
         super(key: key);
 
-  TextFormField222.password({
+  // ignore: sort_constructors_first
+  const TextFormField222.password({
     Key? key,
     required this.onValueChanged,
     required this.label,
@@ -92,7 +94,8 @@ class TextFormField222 extends StatelessWidget {
         /// style background
         fillColor: Colors2222.white,
         filled: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
 
         /// style info
         errorStyle: overlineStyle.copyWith(color: Colors2222.white),
@@ -104,14 +107,14 @@ class TextFormField222 extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: Colors2222.black),
+          borderSide: const BorderSide(color: Colors2222.black),
         ),
 
         /// show border when not focused
-        enabledBorder: (showEnabledBorder)
+        enabledBorder: showEnabledBorder
             ? OutlineInputBorder(
                 borderRadius: borderRadius,
-                borderSide: BorderSide(color: Colors2222.black),
+                borderSide: const BorderSide(color: Colors2222.black),
               )
             : null,
       ),

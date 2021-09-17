@@ -32,10 +32,15 @@ class UploadFileService {
         .asStream()
         .asyncMap<ProjectFileDto>(
       (FilePickerResult? filePickerResult) async {
-        if (filePickerResult == null) throw FileNotSelected();
+        if (filePickerResult == null) {
+          throw FileNotSelected();
+        }
 
+        // ignore: unnecessary_nullable_for_final_variable_declarations
         final PlatformFile? selectedFile = filePickerResult.files.first;
-        if (selectedFile == null) throw FileNotLoaded();
+        if (selectedFile == null) {
+          throw FileNotLoaded();
+        }
 
         try {
           final File projectFile = File(selectedFile.path!);
@@ -46,7 +51,7 @@ class UploadFileService {
           final UploadTask uploadTask = uploadRef.putFile(projectFile);
           final String url = await uploadTask.then((snapshot) async {
             if (snapshot.state == TaskState.success) {
-              return await uploadRef.getDownloadURL();
+              return uploadRef.getDownloadURL();
             }
             throw FileNotUploaded();
           });

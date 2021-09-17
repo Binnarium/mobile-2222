@@ -21,8 +21,10 @@ class TeamContentMarkdown extends StatelessWidget {
       data: teamContent,
       builders: {
         'h2': MarkdownCenterTextBuilder(),
-        'h3': MarkdownCenterTextBuilder(padding: EdgeInsets.only(top: 36)),
-        'h4': MarkdownCenterTextBuilder(padding: EdgeInsets.only(top: 16)),
+        'h3':
+            MarkdownCenterTextBuilder(padding: const EdgeInsets.only(top: 36)),
+        'h4':
+            MarkdownCenterTextBuilder(padding: const EdgeInsets.only(top: 16)),
         'p': _MarkdownCustomCreators(),
       },
       styleSheet: fmd.MarkdownStyleSheet(
@@ -53,7 +55,7 @@ class _MarkdownCustomCreators extends fmd.MarkdownElementBuilder {
         children: [
           /// add first name
           Expanded(
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Text(
                 nameOne,
@@ -67,7 +69,7 @@ class _MarkdownCustomCreators extends fmd.MarkdownElementBuilder {
 
           /// add second name then found
           if (nameTwo != null) ...[
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Container(
@@ -78,7 +80,7 @@ class _MarkdownCustomCreators extends fmd.MarkdownElementBuilder {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(

@@ -9,14 +9,14 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
 class UploadProjectService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-
   UploadProjectService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
+
+  final CurrentPlayerService _currentPlayerService;
+
+  final FirebaseFirestore _fFirestore;
 
   Stream<bool> project$(CityModel city, ProjectFileDto file) {
     return _uploadProject(
@@ -35,10 +35,12 @@ class UploadProjectService {
   }) {
     return _currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
-        if (user == null) return false;
+        if (user == null) {
+          return false;
+        }
 
         /// create project to upload
-        PlayerProject newProject = createMessageCallback(user);
+        final PlayerProject newProject = createMessageCallback(user);
         final CollectionReference<Map<String, dynamic>> messagesDoc =
             _fFirestore
                 .collection('players')
@@ -66,8 +68,9 @@ class UploadProjectService {
     );
   }
 
+  // ignore: avoid_void_async
   static void writeMedal(String userUID, String cityRef) async {
-    Map<String, dynamic> medal = <String, dynamic>{
+    final Map<String, dynamic> medal = <String, dynamic>{
       'cityId': cityRef,
       'obtained': true,
       'obtainedDate': Timestamp.now(),
@@ -80,6 +83,7 @@ class UploadProjectService {
     );
   }
 
+  // ignore: avoid_void_async
   static void deletePlayerProjectFile(
       String userUID, PlayerProject project) async {
     await FirebaseStorage.instance.refFromURL(project.file.url).delete();

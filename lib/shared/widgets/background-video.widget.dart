@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class BackgroundVideo extends StatefulWidget {
-  BackgroundVideo({
+  const BackgroundVideo({
     Key? key,
     required this.controller,
     this.lopping = true,
@@ -42,7 +42,9 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
       }
 
       /// set looping if enabled
-      if (widget.lopping) await ctrl.setLooping(true);
+      if (widget.lopping) {
+        await ctrl.setLooping(true);
+      }
 
       /// set volume to 0 in case the video has volume
       await ctrl.setVolume(0);
@@ -70,7 +72,7 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
               height: widget.controller.value.size.height,
               child: AnimatedOpacity(
                   opacity: widget.controller.value.isInitialized ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: VideoPlayer(widget.controller)),
             ),
           ),

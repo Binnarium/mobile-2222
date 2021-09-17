@@ -6,6 +6,7 @@ class WelcomeDto {
   final String workloadText;
   final VideoDto welcomeVideo;
 
+  // ignore: sort_constructors_first
   WelcomeDto.fromMap(Map<String, dynamic> payload)
       : pageTitle = payload['pageTitle'] as String? ?? 'No hay titulo definido',
         profundityText =

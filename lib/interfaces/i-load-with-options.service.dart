@@ -6,9 +6,8 @@ typedef ILoadOptions<T, U> = ILoadInformationWithOptions<T, U>;
 @Deprecated('Use ILoadOptions instead')
 abstract class ILoadInformationWithOptions<T, U>
     extends ILoadInformationService<T> {
-  final U options;
-
   const ILoadInformationWithOptions({
     required this.options,
   });
+  final U options;
 }

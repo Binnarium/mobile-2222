@@ -39,7 +39,7 @@ class Scaffold2222 extends StatelessWidget {
         super(key: key);
 
   /// modifiers scaffold to include background decorations of the lab movil 2222
-  Scaffold2222.empty({
+  const Scaffold2222.empty({
     Key? key,
     required this.body,
     Color backgroundColor = Colors2222.red,
@@ -53,7 +53,7 @@ class Scaffold2222 extends StatelessWidget {
         super(key: key);
 
   /// scaffold with bottom bar navigation, but no navigate right or left button
-  Scaffold2222.navigation({
+  const Scaffold2222.navigation({
     Key? key,
     required this.body,
     this.backgrounds = const [],
@@ -92,10 +92,11 @@ class Scaffold2222 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// back button
-    VoidCallback? prevPage = backButton ? () => Navigator.pop(context) : null;
+    final VoidCallback? prevPage =
+        backButton ? () => Navigator.pop(context) : null;
 
     /// next page button
-    VoidCallback? nextPage =
+    final VoidCallback? nextPage =
         _nextRoute == null ? null : () => _nextRoute!.builder(context);
 
     /// page layout
@@ -103,7 +104,7 @@ class Scaffold2222 extends StatelessWidget {
       backgroundColor: _backgroundColor,
 
       /// add bottom navigation if enabled
-      bottomNavigationBar: (_showBottomNavigationBar)
+      bottomNavigationBar: _showBottomNavigationBar
           ? Lab2222BottomNavigationBar(
               nextPage: nextPage,
               prevPage: prevPage,
@@ -117,10 +118,14 @@ class Scaffold2222 extends StatelessWidget {
       body: GestureDetector(
         onPanUpdate: (details) {
           /// left
-          if (prevPage != null && details.delta.dx > 5) prevPage();
+          if (prevPage != null && details.delta.dx > 5) {
+            prevPage();
+          }
 
           /// right
-          if (nextPage != null && details.delta.dx < -5) nextPage();
+          if (nextPage != null && details.delta.dx < -5) {
+            nextPage();
+          }
         },
         child: BackgroundDecoration(
           backgroundDecorationsStyles: backgrounds,

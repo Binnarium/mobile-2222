@@ -7,16 +7,17 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
 class UpdateAvatarService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-  final FirebaseStorage _fStorage;
-
+  /// constructor
   UpdateAvatarService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance,
         _fStorage = FirebaseStorage.instance;
+
+  /// params
+  final CurrentPlayerService _currentPlayerService;
+  final FirebaseFirestore _fFirestore;
+  final FirebaseStorage _fStorage;
 
   Stream<bool> updateAvatar$(ImageDto avatar, String oldImageUrl) {
     return _uploadImage(
@@ -32,10 +33,12 @@ class UpdateAvatarService {
   }) {
     return _currentPlayerService.player$.take(1).asyncMap(
       (user) async {
-        if (user == null) return false;
+        if (user == null) {
+          return false;
+        }
 
         /// create image to upload
-        ImageDto image = createMessageCallback(user);
+        final ImageDto image = createMessageCallback(user);
 
         if (oldImageUrl != '') {
           try {
@@ -43,6 +46,7 @@ class UpdateAvatarService {
             print('Succesfully deleted avatar from storage');
           } catch (e) {
             print(
+                // ignore: missing_whitespace_between_adjacent_strings
                 'Error, no se pudo borrar desde storage (puede que no exista el'
                 'archivo) $e');
           }

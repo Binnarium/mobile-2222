@@ -4,7 +4,7 @@ import 'package:lab_movil_2222/city/ui/widgets/city-map-button.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class CitiesMap extends StatelessWidget {
-  CitiesMap({
+  const CitiesMap({
     Key? key,
     required this.citiesWithPositions,
   }) : super(key: key);

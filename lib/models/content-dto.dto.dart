@@ -7,6 +7,7 @@ abstract class ContentDto<T> {
   final String title;
   final T content;
 
+  // ignore: sort_constructors_first
   ContentDto._({
     required this.kind,
     required this.author,

@@ -25,14 +25,14 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CityProjectScreen extends StatefulWidget {
-  static const String route = '/project';
-
-  final CityModel city;
-
-  CityProjectScreen({
+  const CityProjectScreen({
     Key? key,
     required this.city,
   }) : super(key: key);
+
+  static const String route = '/project';
+
+  final CityModel city;
 
   @override
   _CityProjectScreenState createState() => _CityProjectScreenState();
@@ -53,7 +53,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     userUID = FirebaseAuth.instance.currentUser!.uid;
 
     /// load the provider to load the projectDTO
-    LoadProjectDtoService loadProjectDtoService =
+    final LoadProjectDtoService loadProjectDtoService =
         Provider.of<LoadProjectDtoService>(context, listen: false);
 
     /// calls the service to load the projectDTO
@@ -68,7 +68,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     );
 
     /// stream of projects
-    LoadProjectFiles loadProjectFiles =
+    final LoadProjectFiles loadProjectFiles =
         Provider.of<LoadProjectFiles>(context, listen: false);
     _userProjectsSub = loadProjectFiles.load$(widget.city).listen(
       (projects) {
@@ -90,10 +90,11 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [
         BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
@@ -113,7 +114,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
       children: [
         /// icon item
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: 32.0,
           ),
           child: LogosHeader(
@@ -122,7 +123,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         Center(
-          child: Container(
+          child: SizedBox(
             width: min(300, size.width * 0.9),
             child: Text(
               'PROYECTO DOCENTE'.toUpperCase(),
@@ -133,13 +134,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         ///
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
 
         Center(
           child: Image(
-            image: CoinsImages.project(),
+            image: const CoinsImages.project(),
             alignment: Alignment.bottomRight,
             fit: BoxFit.contain,
             width: min(160, size.width * 0.4),
@@ -147,13 +148,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         ///
-        SizedBox(
+        const SizedBox(
           height: 32,
         ),
 
         ///
         if (project == null)
-          AppLoading()
+          const AppLoading()
         else ...[
           Padding(
             padding: horizontalPadding,
@@ -167,7 +168,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 28,
           ),
 
@@ -180,7 +181,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
 
@@ -194,7 +195,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
                 color: widget.city.color,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],
@@ -209,7 +210,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
                   projects: playerProjects!),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 50),
+              padding: const EdgeInsets.only(bottom: 50),
               child: _taskButton(
                 context,
                 color,
@@ -224,10 +225,10 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 }
 
 Widget _taskButton(BuildContext context, Color color, CityModel city) {
-  double buttonWidth = MediaQuery.of(context).size.width;
+  final double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
-    margin: EdgeInsets.symmetric(horizontal: 40),
+    margin: const EdgeInsets.symmetric(horizontal: 40),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors.white,
@@ -236,7 +237,7 @@ Widget _taskButton(BuildContext context, Color color, CityModel city) {
 
       ///Navigates to main screen
       onPressed: () async {
-        return await showDialog(
+        return showDialog(
             context: context,
             builder: (context) {
               /// creates the alert dialog to upload file
@@ -260,14 +261,14 @@ Widget _taskButton(BuildContext context, Color color, CityModel city) {
 /// Creates alert dialog to upload file [color] is needed to create the button
 /// with the city color
 class UploadFileDialog extends StatefulWidget {
-  final Color color;
-  final CityModel city;
-
-  UploadFileDialog({
+  const UploadFileDialog({
     Key? key,
     required this.color,
     required this.city,
   }) : super(key: key);
+
+  final Color color;
+  final CityModel city;
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
@@ -313,11 +314,11 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             'Elige tu proyecto',
             style: Theme.of(context).textTheme.headline6,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          SizedBox(height: 8),
-          SizedBox(
+          const SizedBox(height: 8),
+          const SizedBox(
             height: 10,
           ),
           ButtonWidget(
@@ -326,7 +327,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             text: 'Subir archivo',
             onClicked: _uploadFile,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],
@@ -335,9 +336,11 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
   }
 
   void _uploadFile() {
-    if (_uploadFileSub != null) return;
+    if (_uploadFileSub != null) {
+      return;
+    }
 
-    UploadFileService uploadFileService =
+    final UploadFileService uploadFileService =
         Provider.of<UploadFileService>(context, listen: false);
 
     _uploadFileSub = uploadFileService
@@ -376,10 +379,6 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
 /// at the head of the button, [onClicked] is the function that will be
 /// executed on pressed
 class ButtonWidget extends StatelessWidget {
-  final Color color;
-  final String? text;
-  final IconData? icon;
-  final VoidCallback? onClicked;
   const ButtonWidget({
     Key? key,
     required this.color,
@@ -387,6 +386,11 @@ class ButtonWidget extends StatelessWidget {
     this.onClicked,
     this.icon,
   }) : super(key: key);
+
+  final Color color;
+  final String? text;
+  final IconData? icon;
+  final VoidCallback? onClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -405,13 +409,14 @@ class ButtonWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          (icon != null)
-              ? Icon(
-                  icon,
-                  color: Colors2222.black,
-                )
-              : Container(),
-          SizedBox(
+          if (icon != null)
+            Icon(
+              icon,
+              color: Colors2222.black,
+            )
+          else
+            Container(),
+          const SizedBox(
             width: 12,
           ),
           Text(

@@ -6,6 +6,7 @@ class ProjectDto {
   final String allow;
   final AudioDto? audio;
 
+  // ignore: sort_constructors_first
   ProjectDto.fromJson(Map<String, dynamic> payload)
       : activity =
             payload['activity'] as String? ?? 'No hay actividad definida',

@@ -13,15 +13,15 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
+  const CityIntroductionScreen({
+    Key? key,
+    required CityModel city,
+  })  : city = city,
+        super(key: key);
+
   static const String route = '/introduction';
 
   final CityModel city;
-
-  CityIntroductionScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _CityIntroductionScreenState createState() => _CityIntroductionScreenState();
@@ -35,7 +35,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
   @override
   void initState() {
     super.initState();
-    LoadCityIntroductionService loadIntroductionService =
+    final LoadCityIntroductionService loadIntroductionService =
         Provider.of<LoadCityIntroductionService>(context, listen: false);
 
     _loadIntroductionSub = loadIntroductionService.load$(widget.city).listen(
@@ -64,12 +64,13 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: CityIntroductionScreen.route,
       body: ListView(
         children: [
           /// app logo
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(bottom: 40),
             child: LogosHeader(
               showAppLogo: true,
@@ -128,7 +129,7 @@ class _CityIntroductionScreenState extends State<CityIntroductionScreen> {
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
             child: (introductionDto == null)
-                ? AppLoading()
+                ? const AppLoading()
                 : Markdown2222(
                     data: introductionDto!.description,
                     contentAlignment: WrapAlignment.center,

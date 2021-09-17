@@ -3,8 +3,9 @@ import 'package:lab_movil_2222/cities/final-video/model/city-final-video.model.d
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadFinalVideoService {
-  final FirebaseFirestore _firestore;
   LoadFinalVideoService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<CityFinalVideoModel?> load$(CityModel city) {
     return _firestore
