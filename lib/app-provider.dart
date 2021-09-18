@@ -55,7 +55,7 @@ class AppProvider extends MultiProvider {
   }) : super(
           providers: [
             /// user services
-            Provider(create: (_) => UserService()),
+            Provider(create: (_) => IsUserSignInService()),
             Provider(create: (ctx) => SignOutService(ctx)),
             Provider(create: (ctx) => RegisterService(ctx)),
             Provider(create: (ctx) => LoginService(ctx)),

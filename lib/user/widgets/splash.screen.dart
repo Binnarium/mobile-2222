@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
@@ -9,9 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class SplashScreen extends StatelessWidget {
-  SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key) {
+    print('Called user\$: called constructor');
+  }
 
-  static const String route = '/splash';
+  static const String route = '/';
 
   /// splash video controller
   final VideoPlayerController _controller =
@@ -25,8 +29,14 @@ class SplashScreen extends StatelessWidget {
       body: BackgroundVideo(
         controller: _controller,
         lopping: false,
-        onComplete: () => navigateNextPage(context),
-        onPressed: () => navigateNextPage(context),
+        onComplete: () {
+          print('Called user\$: called from onComplete');
+          navigateNextPage(context);
+        },
+        onPressed: () {
+          print('Called user\$: called from onPressed');
+          navigateNextPage(context);
+        },
       ),
     );
   }
@@ -34,10 +44,10 @@ class SplashScreen extends StatelessWidget {
   /// redirect user to navigate to next page, to sign in page, or to home page if already signed in
   Future<void> navigateNextPage(BuildContext context) async {
     /// authenticate user and redirect to correct screen
-    final UserService _userService =
-        Provider.of<UserService>(context, listen: false);
-    final bool isSignIn = await _userService.isSignIn$().first;
-
+    final IsUserSignInService _userService =
+        Provider.of<IsUserSignInService>(context, listen: false);
+    final isSignIn = await _userService.isSignIn;
+    print('Called user\$: isSignIn: $isSignIn');
     Navigator.pushReplacementNamed(
       context,
       isSignIn ? HomeScreen.route : StartVideoScreen.route,

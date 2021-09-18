@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/cities/project/services/load-project-files.servic
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/models/project.model.dart';
+import 'package:lab_movil_2222/models/project-screen.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
@@ -39,8 +39,11 @@ class CityProjectScreen extends StatefulWidget {
 }
 
 class _CityProjectScreenState extends State<CityProjectScreen> {
-  List<PlayerProject>? playerProjects = [];
-  ProjectDto? project;
+  /// projects uploaded by the player
+  List<PlayerProject> playerProjects = [];
+
+  /// project screen information
+  ProjectScreenModel? projectScreen;
 
   StreamSubscription? _userProjectsSub;
   StreamSubscription? _loadProjectDtoSub;
@@ -61,7 +64,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
       (projectDto) {
         if (mounted) {
           setState(() {
-            project = projectDto;
+            projectScreen = projectDto;
           });
         }
       },
@@ -152,13 +155,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         ///
-        if (project == null)
+        if (projectScreen == null)
           const AppLoading()
         else ...[
           Padding(
             padding: horizontalPadding,
             child: Text(
-              project!.activity,
+              projectScreen!.activity,
               style: textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
@@ -175,7 +178,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           Padding(
             padding: horizontalPadding,
             child: Markdown2222(
-              data: project!.explanation,
+              data: projectScreen!.explanation,
               contentAlignment: WrapAlignment.start,
             ),
           ),
@@ -185,12 +188,12 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ),
 
           /// if audio is available then show the audio player
-          if (project!.audio != null) ...[
+          if (projectScreen!.audio != null) ...[
             Container(
               alignment: Alignment.center,
               padding: horizontalPadding,
               child: AudioPlayerWidget(
-                audio: project!.audio!,
+                audio: projectScreen!.audio!,
                 color: widget.city.color,
               ),
             ),
@@ -200,7 +203,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
           ],
 
           /// upload files
-          if (project!.allowFile || project!.allowAudio) ...[
+          if (projectScreen!.allowFile || projectScreen!.allowAudio) ...[
             Padding(
               padding: horizontalPadding,
               child: ProjectGalleryWidget(
@@ -214,7 +217,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
                 context,
                 color,
                 widget.city,
-                project!,
+                projectScreen!,
               ),
             )
           ],
@@ -225,7 +228,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 }
 
 Widget _taskButton(
-    BuildContext context, Color color, CityModel city, ProjectDto project) {
+    BuildContext context, Color color, CityModel city,
+    ProjectScreenModel project) {
   final double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -272,7 +276,7 @@ class UploadFileDialog extends StatefulWidget {
 
   final Color color;
   final CityModel city;
-  final ProjectDto projectDto;
+  final ProjectScreenModel projectDto;
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
