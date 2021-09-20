@@ -5,12 +5,12 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClubhouseCard extends StatelessWidget {
-  final ClubhouseModel clubhouseModel;
-
   const ClubhouseCard({
     Key? key,
     required this.clubhouseModel,
   }) : super(key: key);
+
+  final ClubhouseModel clubhouseModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class ClubhouseCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         /// coffee image
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 8.0),
           child: Image(
             image: AssetImage('assets/icons/clubhouse_activity_icon.png'),
           ),
@@ -63,11 +63,11 @@ class ClubhouseCard extends StatelessWidget {
           child: OutlinedButton.icon(
             style: OutlinedButton.styleFrom(
               primary: Colors2222.white,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             ),
-            icon: Icon(Icons.bookmark_add),
+            icon: const Icon(Icons.bookmark_add),
             onPressed: () => launch(clubhouseModel.clubhouseUrl),
-            label: Text(
+            label: const Text(
               'Agendar',
               overflow: TextOverflow.ellipsis,
               maxLines: 1,

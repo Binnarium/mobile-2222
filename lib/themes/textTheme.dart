@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 /// Achivo que contiene los themes y fontstyles
 /// Font Korolev
 class KorolevFont extends TextTheme {
-  static final String fontFamily = 'Korolev';
+  static const String fontFamily = 'Korolev';
 
+  // ignore: sort_constructors_first
   KorolevFont({
     Color textColor = Colors.white,
   }) : super(

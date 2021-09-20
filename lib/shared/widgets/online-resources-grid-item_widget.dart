@@ -5,12 +5,12 @@ import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExternalLinkCard extends StatelessWidget {
-  final ExternalLinkDto externalLinkDto;
-
   const ExternalLinkCard({
     Key? key,
     required this.externalLinkDto,
   }) : super(key: key);
+
+  final ExternalLinkDto externalLinkDto;
 
   @override
   Widget build(BuildContext context) {

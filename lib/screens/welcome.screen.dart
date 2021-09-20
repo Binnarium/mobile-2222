@@ -16,6 +16,7 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widge
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class WelcomeScreen extends StatefulWidget {
   static const String route = '/welcome';
 
@@ -35,7 +36,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
 
-    this._loadLoginPayload = loadLoginInfoService.load$.listen(
+    _loadLoginPayload = loadLoginInfoService.load$.listen(
       (welcomeDto) {
         if (mounted) {
           setState(() {
@@ -68,7 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ///Container del color rojo
             ///Deprecated ignore cause Scaffold2222 needs city
             // ignore: deprecated_member_use_from_same_package
-            CustomBackground(
+            const CustomBackground(
               backgroundColor: Colors2222.red,
             ),
 
@@ -112,7 +113,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
         /// loading animation
         if (loginPayload == null)
-          Center(
+          const Center(
             child: AppLoading(),
           )
 
@@ -145,8 +146,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
 
           /// team button
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 24),
             child: GotoTeamButton(),
           ),
 

@@ -4,12 +4,12 @@ import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReadingItem extends StatelessWidget {
-  final ReadingDto readingDto;
-
   const ReadingItem({
     Key? key,
     required this.readingDto,
   }) : super(key: key);
+
+  final ReadingDto readingDto;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class ReadingItem extends StatelessWidget {
               ),
 
               /// space items inside card
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
 
               ///Makes the column flexible to avoid the overflow
               Expanded(

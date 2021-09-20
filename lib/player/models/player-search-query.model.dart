@@ -1,11 +1,11 @@
 class PlayerSearchQueryModel {
-  final String query;
-  final String? groupId;
-
   PlayerSearchQueryModel({
     required this.query,
     this.groupId,
   });
+
+  final String query;
+  final String? groupId;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

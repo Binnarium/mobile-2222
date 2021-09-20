@@ -1,9 +1,5 @@
 class SearchChatResponseModel {
-  final String id;
-  final String? name;
-  final List<String> participantsUids;
-  final List<String> participantsNames;
-
+  /// constructor
   SearchChatResponseModel.fromMap(Map<String, dynamic> map)
       : id = map['id'] as String,
         name = map['name'] as String?,
@@ -13,4 +9,10 @@ class SearchChatResponseModel {
         participantsUids = (map['participantsUids'] as List)
             .map((dynamic e) => e as String)
             .toList();
+
+  /// params
+  final String id;
+  final String? name;
+  final List<String> participantsUids;
+  final List<String> participantsNames;
 }

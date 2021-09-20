@@ -12,8 +12,8 @@ import 'package:lab_movil_2222/cities/activity/services/load-activity.service.da
 import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/get-clubhouse-explanation.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.service.dart';
-import 'package:lab_movil_2222/cities/contribution/services/get-clubhouse-explanation.service.dart';
-import 'package:lab_movil_2222/cities/contribution/services/get-collaboration-explanation.service.dart';
+import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
+import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-maraton-medal.service.dart';
@@ -41,12 +41,13 @@ import 'package:lab_movil_2222/user/services/user.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
-import 'cities/clubhouse/services/load-clubhouse-activity.service.dart';
+import 'cities/clubhouse/services/clubhouse.service.dart';
 import 'cities/final-video/services/load-final-video.service.dart';
 import 'cities/manual-video/services/load-manual-video.service.dart';
 import 'cities/micro-meso-macro/services/load-micro-meso-macro.service.dart';
 import 'cities/project-video/services/load-project-video.service.dart';
 import 'cities/project/services/load-project-files.service.dart';
+import 'cities/project/services/upload-project.service.dart';
 
 class AppProvider extends MultiProvider {
   AppProvider({
@@ -55,7 +56,7 @@ class AppProvider extends MultiProvider {
   }) : super(
           providers: [
             /// user services
-            Provider(create: (_) => UserService()),
+            Provider(create: (_) => IsUserSignInService()),
             Provider(create: (ctx) => SignOutService(ctx)),
             Provider(create: (ctx) => RegisterService(ctx)),
             Provider(create: (ctx) => LoginService(ctx)),
@@ -82,7 +83,6 @@ class AppProvider extends MultiProvider {
 
             ///cities screens loaders
             Provider(create: (_) => LoadCityActivitiesService()),
-            Provider(create: (_) => LoadClubhouseService()),
             Provider(create: (_) => LoadFinalVideoService()),
             Provider(create: (_) => LoadManualVideoService()),
             Provider(create: (_) => LoadMicroMesoMacroService()),
@@ -94,17 +94,24 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => LoadCityHistoryService()),
             Provider(create: (_) => LoadContentsScreenInformationService()),
             Provider(create: (_) => ArgumentIdeasService()),
-            Provider(create: (_) => ContributionService()),
 
             /// player services
             Provider(create: (ctx) => UpdateAvatarService(ctx)),
 
+            /// contribution services
+            Provider(create: (ctx) => ContributionActivityService(ctx)),
+
             /// clubhouse services
             Provider(create: (ctx) => LoadUserClubhouseService(ctx)),
+            Provider(create: (ctx) => ClubhouseActivityService(ctx)),
 
             /// project services
             Provider(create: (ctx) => LoadProjectFiles(ctx)),
+
             Provider(create: (ctx) => UploadMaratonMedalService(ctx)),
+
+            Provider(create: (ctx) => UploadProjectService(ctx)),
+
 
             /// chat services
             Provider(create: (ctx) => SendMessagesService(ctx)),

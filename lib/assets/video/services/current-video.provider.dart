@@ -11,6 +11,7 @@ class CurrentVideoProvider {
 
   Stream<VideoDto?> get currentVideo$ => _currentVideoSink.stream;
 
+  // ignore: avoid_void_async
   void setVideo(VideoDto video) async {
     if (!kIsWeb) {
       _currentVideoSink.add(video);
@@ -20,7 +21,6 @@ class CurrentVideoProvider {
   }
 
   /// method to stop and close VideoPlayer
-  void close() async {
-    _currentVideoSink.add(null);
-  }
+  // ignore: avoid_void_async
+  void close() async => _currentVideoSink.add(null);
 }

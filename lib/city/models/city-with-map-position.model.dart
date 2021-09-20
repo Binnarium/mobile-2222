@@ -7,6 +7,7 @@ class CityWithMapPositionModel {
   final int size;
   final bool textOnTop;
 
+  // ignore: sort_constructors_first
   CityWithMapPositionModel({
     required this.city,
     required this.top,

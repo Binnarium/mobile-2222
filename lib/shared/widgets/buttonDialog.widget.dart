@@ -11,6 +11,8 @@ class ButtonWidget extends StatelessWidget {
   final IconData? icon;
   final Color? iconColor;
   final VoidCallback? onClicked;
+
+  // ignore: sort_constructors_first
   const ButtonWidget({
     Key? key,
     required this.color,
@@ -37,13 +39,14 @@ class ButtonWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          (icon != null)
-              ? Icon(
-                  icon,
-                  color: iconColor,
-                )
-              : Container(),
-          SizedBox(
+          if (icon != null)
+            Icon(
+              icon,
+              color: iconColor,
+            )
+          else
+            Container(),
+          const SizedBox(
             width: 12,
           ),
           Text(

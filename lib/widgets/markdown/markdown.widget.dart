@@ -15,6 +15,7 @@ class Markdown2222 extends StatelessWidget {
   /// align content to a side
   final WrapAlignment? contentAlignment;
 
+  // ignore: sort_constructors_first
   const Markdown2222({
     Key? key,
     required this.data,

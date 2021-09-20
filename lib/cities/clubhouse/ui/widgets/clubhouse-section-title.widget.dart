@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ClubhouseSectionTitle extends StatelessWidget {
-  final String title;
-
-  ClubhouseSectionTitle({
+  const ClubhouseSectionTitle({
     Key? key,
     required this.title,
   }) : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ClubhouseSectionTitle extends StatelessWidget {
           maxWidth: min(300, size.width * 0.9),
         ),
         color: Colors2222.black,
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Text(
           title.toUpperCase(),
           style: textTheme.subtitle1,

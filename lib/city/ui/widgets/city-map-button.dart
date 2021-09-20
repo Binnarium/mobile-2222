@@ -4,10 +4,6 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
 
 class CityMapButton extends StatelessWidget {
-  final CityModel city;
-  final double size;
-  final bool textOnTop;
-
   const CityMapButton({
     Key? key,
     required this.city,
@@ -15,13 +11,17 @@ class CityMapButton extends StatelessWidget {
     required this.textOnTop,
   }) : super(key: key);
 
+  final CityModel city;
+  final double size;
+  final bool textOnTop;
+
   @override
   Widget build(BuildContext context) {
     final Size fontFactor = MediaQuery.of(context).size;
     final bool smallFont = fontFactor.width < 750;
 
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
       child: Stack(

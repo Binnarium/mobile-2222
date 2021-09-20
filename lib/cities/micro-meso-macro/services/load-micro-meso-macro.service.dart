@@ -3,8 +3,9 @@ import 'package:lab_movil_2222/cities/micro-meso-macro/models/micro-meso-macro.m
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadMicroMesoMacroService {
-  final FirebaseFirestore _firestore;
   LoadMicroMesoMacroService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<MicroMesoMacroModel?> load$(CityModel city) {
     return _firestore

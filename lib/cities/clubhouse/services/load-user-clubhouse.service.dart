@@ -7,19 +7,23 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoadUserClubhouseService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-
+  /// constructor
   LoadUserClubhouseService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
 
+  /// params
+  final CurrentPlayerService _currentPlayerService;
+
+  final FirebaseFirestore _fFirestore;
+
   Stream<List<ClubhouseModel>> load$(CityModel city) {
     return _currentPlayerService.player$.switchMap(
       (user) {
-        if (user == null) return Stream.value([]);
+        if (user == null) {
+          return Stream.value([]);
+        }
 
         final Query<Map<String, dynamic>> query = _fFirestore
             .collection('clubhouse')

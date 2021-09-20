@@ -8,14 +8,14 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ListMessagesService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-
   ListMessagesService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
+
+  final CurrentPlayerService _currentPlayerService;
+
+  final FirebaseFirestore _fFirestore;
 
   Stream<List<MessageModel>> list$(ChatModel chat) {
     final Stream<List<Map<String, dynamic>>> snapshots$ = _fFirestore

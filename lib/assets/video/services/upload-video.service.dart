@@ -32,10 +32,15 @@ class UploadVideoService {
         )
         .asStream()
         .asyncMap<VideoDto>((FilePickerResult? filePickerResult) async {
-      if (filePickerResult == null) throw VideoNotSelected();
+      if (filePickerResult == null) {
+        throw VideoNotSelected();
+      }
 
+      // ignore: unnecessary_nullable_for_final_variable_declarations
       final PlatformFile? video = filePickerResult.files.first;
-      if (video == null) throw VideoNotLoaded();
+      if (video == null) {
+        throw VideoNotLoaded();
+      }
 
       try {
         final File videoFile = File(video.path!);
@@ -46,7 +51,7 @@ class UploadVideoService {
         final UploadTask uploadTask = uploadRef.putFile(videoFile);
         final String url = await uploadTask.then((snapshot) async {
           if (snapshot.state == TaskState.success) {
-            return await uploadRef.getDownloadURL();
+            return uploadRef.getDownloadURL();
           }
           throw VideoNotUploaded();
         });

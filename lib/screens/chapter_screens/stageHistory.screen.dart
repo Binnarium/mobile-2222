@@ -14,14 +14,14 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class StageHistoryScreen extends StatefulWidget {
-  static const String route = '/history';
-  final CityModel city;
-
-  StageHistoryScreen({
+  const StageHistoryScreen({
     Key? key,
     required CityModel city,
-  })  : this.city = city,
+  })  : city = city,
         super(key: key);
+
+  static const String route = '/history';
+  final CityModel city;
 
   @override
   _StageHistoryScreenState createState() => _StageHistoryScreenState();
@@ -35,7 +35,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   void initState() {
     super.initState();
 
-    LoadCityHistoryService loadHistoryService =
+    final LoadCityHistoryService loadHistoryService =
         Provider.of<LoadCityHistoryService>(context, listen: false);
 
     _loadHistorySub = loadHistoryService.load$(widget.city).listen(
@@ -58,11 +58,12 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    double bodyContainerHeight = size.height * 0.75;
+    final double bodyContainerHeight = size.height * 0.75;
 
-    double spacedBodyContainers = bodyContainerHeight * 0.04;
+    final double spacedBodyContainers = bodyContainerHeight * 0.04;
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [
         BackgroundDecorationStyle.bottomLeft,
         BackgroundDecorationStyle.path
@@ -84,7 +85,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
 
   Widget _titleHistory(Size size, TitleHistoryDto history) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Text(
         history.title,
@@ -116,7 +117,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     return Column(
       children: [
         if (historyDto == null)
-          Center(child: AppLoading())
+          const Center(child: AppLoading())
         else ...[
           for (HistoryContentDto content in historyDto!.content)
             if (content is TitleHistoryDto)

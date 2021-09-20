@@ -3,13 +3,14 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 
 class LogosHeader extends StatelessWidget {
-  final bool showAppLogo;
-  final CityModel? showStageLogoCity;
-
+  // ignore: use_key_in_widget_constructors
   const LogosHeader({
     this.showAppLogo = false,
     this.showStageLogoCity,
   });
+
+  final bool showAppLogo;
+  final CityModel? showStageLogoCity;
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +40,16 @@ class LogosHeader extends StatelessWidget {
 }
 
 class _CityStageWidget extends StatelessWidget {
-  final CityModel cityDto;
-
   const _CityStageWidget({
     Key? key,
     required this.cityDto,
   }) : super(key: key);
 
+  final CityModel cityDto;
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     final TextTheme textTheme = Theme.of(context).textTheme;
 

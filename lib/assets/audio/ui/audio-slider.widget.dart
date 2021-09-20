@@ -6,18 +6,19 @@ import 'package:lab_movil_2222/assets/audio/model/audio-player.extension.dart';
 import 'package:lab_movil_2222/assets/audio/model/audio-position.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
-/// TODO: review how to remove this widget
+///  review how to remove this widget
 class FakeAudioSlider extends AudioSlider {
-  FakeAudioSlider() : super();
+  // ignore: use_key_in_widget_constructors
+  const FakeAudioSlider() : super();
 }
 
 class AudioSlider extends StatefulWidget {
-  final AudioPlayer? player;
-
   const AudioSlider({
     Key? key,
     this.player,
   }) : super(key: key);
+
+  final AudioPlayer? player;
 
   @override
   _AudioSliderState createState() => _AudioSliderState();
@@ -31,14 +32,16 @@ class _AudioSliderState extends State<AudioSlider> {
   void initState() {
     super.initState();
     positionDataSub = widget.player?.positionData$.listen((event) {
-      if (mounted) setState(() => positionData = event);
+      if (mounted) {
+        setState(() => positionData = event);
+      }
     });
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     positionDataSub?.cancel();
-    super.deactivate();
+    super.dispose();
   }
 
   @override

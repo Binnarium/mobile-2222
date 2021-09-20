@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse-explanation.model.dart';
 
 class GetClubhouseExplanationService {
-  final FirebaseFirestore _firestore;
-
   GetClubhouseExplanationService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<ClubhouseExplanationModel?> get explanation$ => _firestore
       .collection('application')

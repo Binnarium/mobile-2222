@@ -9,14 +9,15 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SearchPlayersWidget extends StatefulWidget {
-  final Function(List<PlayerModel>?) onValueChange;
-
-  final Color? color;
-  SearchPlayersWidget({
+  const SearchPlayersWidget({
     Key? key,
     required this.onValueChange,
     this.color,
   }) : super(key: key);
+
+  final Function(List<PlayerModel>?) onValueChange;
+
+  final Color? color;
 
   @override
   _SearchPlayersWidgetState createState() => _SearchPlayersWidgetState();
@@ -34,20 +35,24 @@ class _SearchPlayersWidgetState extends State<SearchPlayersWidget> {
     /// emit values every 2 seconds
 
     _searchValue
-        .debounceTime(Duration(microseconds: 500))
+        .debounceTime(const Duration(microseconds: 500))
         .startWith(null)
         .asyncMap(
           (value) async {
-            if (value == null) return null;
-            return await _searchPlayerService
+            if (value == null) {
+              return null;
+            }
+            return _searchPlayerService
                 .search(PlayerSearchQueryModel(query: value));
           },
         )
         .asyncMap<List<PlayerModel?>?>(
           (results) {
-            if (results == null) return null;
-            final loadTask = results
-                .map((e) async => await _playerService.load$(e.uid).first);
+            if (results == null) {
+              return null;
+            }
+            final loadTask =
+                results.map((e) async => _playerService.load$(e.uid).first);
             return Future.wait(loadTask);
           },
         )
@@ -58,9 +63,9 @@ class _SearchPlayersWidgetState extends State<SearchPlayersWidget> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     _searchValue.close();
-    super.deactivate();
+    super.dispose();
   }
 
   @override

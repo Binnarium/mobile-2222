@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/cities/contribution/models/contribution-explanation.model.dart';
 
 class GetContributionExplanationService {
-  final FirebaseFirestore _firestore;
-
   GetContributionExplanationService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<ContributionExplanationModel?> get explanation$ => _firestore
       .collection('application')
@@ -15,6 +15,6 @@ class GetContributionExplanationService {
       .map((snapshot) => snapshot.data())
 
       /// turn snapshot data into explanation object, if props found
-      .map((objet) =>
-          objet == null ? null : ContributionExplanationModel.fromMap(objet));
+      .map((object) =>
+          object == null ? null : ContributionExplanationModel.fromMap(object));
 }

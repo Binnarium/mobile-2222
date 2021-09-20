@@ -4,8 +4,9 @@ import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadMonsterService {
-  final FirebaseFirestore _firestore;
   LoadMonsterService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<MonsterModel?> load$(CityModel city) {
     return _firestore

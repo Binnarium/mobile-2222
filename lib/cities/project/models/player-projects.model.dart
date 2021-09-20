@@ -1,11 +1,6 @@
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
 class PlayerProject {
-  final String cityID;
-  final ProjectFileDto file;
-  final String kind;
-  final String id;
-
   PlayerProject({
     required this.cityID,
     required this.file,
@@ -13,6 +8,12 @@ class PlayerProject {
     required this.id,
   });
 
+  final String cityID;
+  final ProjectFileDto file;
+  final String kind;
+  final String id;
+
+  // ignore: sort_constructors_first
   PlayerProject.fromMap(final Map<String, dynamic> payload)
       : kind = payload['kind'] as String? ?? '',
         cityID = payload['cityID'] as String? ?? '',

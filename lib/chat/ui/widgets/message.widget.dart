@@ -8,11 +8,14 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class MessageWidget extends StatelessWidget {
-  final MessageModel message;
+  /// constructor
   const MessageWidget({
     Key? key,
     required this.message,
   }) : super(key: key);
+
+  /// params
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -58,21 +61,23 @@ class MessageWidget extends StatelessWidget {
 
 /// base clase to create a card with content for the message
 abstract class _MessageCard<T extends MessageModel> extends StatelessWidget {
+  /// constructor
+  _MessageCard({
+    Key? key,
+    required T message,
+  })  : message = message,
+        padding = const EdgeInsets.all(12),
+        decoration = BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
+        ),
+        super(key: key);
+
+  /// params
   final T message;
 
   final EdgeInsets padding;
   final BoxDecoration decoration;
-
-  _MessageCard({
-    Key? key,
-    required T message,
-  })  : this.message = message,
-        padding = EdgeInsets.all(12),
-        decoration = BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
-        ),
-        super(key: key);
 
   static _MessageCard fromMessage({
     required MessageModel message,
@@ -137,10 +142,13 @@ class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
       child: InkWell(
         onTap: () {
           Navigator.push<MaterialPageRoute>(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      DetailedMultimediaScreen(message: message)));
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailedMultimediaScreen(
+                multimedia: message.asset!,
+              ),
+            ),
+          );
         },
         child: Image.network(
           message.asset!.url,
@@ -168,10 +176,7 @@ class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
       padding: padding,
       decoration: decoration,
       width: double.infinity,
-      child: VideoPlayer(video: message.asset as VideoDto),
-
-      /// TODO: implement screen
-      /// DetailedMultimediaScreen(message: message)));
+      child: VideoPlayer(video: message.asset! as VideoDto),
     );
   }
 }

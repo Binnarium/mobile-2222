@@ -4,11 +4,10 @@ import 'package:markdown/markdown.dart' as md;
 
 /// utility to center markdown text
 class MarkdownCenterTextBuilder extends fmd.MarkdownElementBuilder {
-  final EdgeInsets? padding;
-
   MarkdownCenterTextBuilder({
     this.padding,
   });
+  final EdgeInsets? padding;
 
   @override
   Widget? visitText(md.Text element, TextStyle? preferredStyle) {

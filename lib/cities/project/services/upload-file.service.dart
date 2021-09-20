@@ -1,8 +1,9 @@
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/models/project-screen.model.dart';
 
 class FileNotSelected implements Exception {}
 
@@ -10,6 +11,9 @@ class FileNotLoaded implements Exception {}
 
 class FileNotUploaded implements Exception {}
 
+/// Class that uploads a file to the Firebase Storage.
+/// This class does not updates the Firebase database reference project of the
+/// player. For that, implement UploadProjectService
 class UploadFileService {
   final FirebaseStorage _fStorage = FirebaseStorage.instance;
 
@@ -21,21 +25,28 @@ class UploadFileService {
   /// - [FileNotSelected] when an File is not selected
   /// - [FileNotLoaded] when an File could not be loaded
   /// - [FileNotUploaded] when an File could not be uploaded to the cloud
-  Stream<ProjectFileDto> uploadFile$(String path, CityModel city) {
+  Stream<ProjectFileDto> uploadFile$(String path, ProjectScreenModel dto) {
     return FilePicker.platform
         .pickFiles(
           /// TESTING
-          type: (city.stage == 10) ? FileType.audio : FileType.custom,
+          type: (dto.allowAudio) ? FileType.audio : FileType.custom,
           allowMultiple: false,
-          allowedExtensions: (city.stage == 10) ? [] : ['pdf'],
+          allowedExtensions: (dto.allowAudio) ? [] : ['pdf'],
         )
         .asStream()
         .asyncMap<ProjectFileDto>(
       (FilePickerResult? filePickerResult) async {
-        if (filePickerResult == null) throw FileNotSelected();
+        if (filePickerResult == null) {
+          throw FileNotSelected();
+        }
 
-        final PlatformFile? selectedFile = filePickerResult.files.first;
-        if (selectedFile == null) throw FileNotLoaded();
+
+        PlatformFile? selectedFile;
+        selectedFile = filePickerResult.files.first;
+
+        if (selectedFile == null) {
+          throw FileNotLoaded();
+        }
 
         try {
           final File projectFile = File(selectedFile.path!);
@@ -46,7 +57,7 @@ class UploadFileService {
           final UploadTask uploadTask = uploadRef.putFile(projectFile);
           final String url = await uploadTask.then((snapshot) async {
             if (snapshot.state == TaskState.success) {
-              return await uploadRef.getDownloadURL();
+              return uploadRef.getDownloadURL();
             }
             throw FileNotUploaded();
           });

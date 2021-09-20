@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
@@ -37,178 +38,181 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
   Lab2222Routing(RouteSettings settings)
       : super(
           builder: (context) {
-            switch (settings.name) {
-              case SplashScreen.route:
-                return SplashScreen();
+            print('called router at: ${settings.name}');
+            if (settings.name == SplashScreen.route) return SplashScreen();
 
-              case StartVideoScreen.route:
-                return StartVideoScreen();
+            if (settings.name == StartVideoScreen.route)
+              return StartVideoScreen();
 
-              case WelcomeScreen.route:
-                return WelcomeScreen();
+            if (settings.name == WelcomeScreen.route) return WelcomeScreen();
 
-              case TeamScreen.route:
-                return TeamScreen();
+            if (settings.name == TeamScreen.route) return TeamScreen();
 
-              case LoginScreen.route:
-                return LoginScreen();
+            if (settings.name == LoginScreen.route) return LoginScreen();
 
-              case RegisterScreen.route:
-                return RegisterScreen();
+            if (settings.name == RegisterScreen.route) return RegisterScreen();
 
-              case HomeScreen.route:
-                return HomeScreen();
+            if (settings.name == HomeScreen.route) return HomeScreen();
 
-              case ProfileScreen.route:
-                return ProfileScreen();
+            if (settings.name == ProfileScreen.route) return ProfileScreen();
 
-              /// all chats screens
-              case ChatsScreen.route:
-                return ChatsScreen();
+            /// all chats screens
+            if (settings.name == ChatsScreen.route) return ChatsScreen();
 
-              case CityIntroductionScreen.route:
-                final args = settings.arguments as CityIntroductionScreen;
-                return CityIntroductionScreen(
-                  city: args.city,
-                );
-
-              case MessagesScreen.route:
-                final args = settings.arguments as MessagesScreen;
-                return MessagesScreen(
-                  chat: args.chat,
-                );
-              case ChatParticipantsScreen.route:
-                final args = settings.arguments as ChatParticipantsScreen;
-                return ChatParticipantsScreen(
-                  chat: args.chat,
-                );
-
-              /// to go to the multimedia detailed screen in the chat
-              case DetailedMultimediaScreen.route:
-                final args = settings.arguments as DetailedMultimediaScreen;
-                return DetailedMultimediaScreen(
-                  message: args.message,
-                );
-
-              case IntroductoryVideoScreen.route:
-                final args = settings.arguments as IntroductoryVideoScreen;
-                return IntroductoryVideoScreen(
-                  city: args.city,
-                );
-
-              case StageHistoryScreen.route:
-                final args = settings.arguments as StageHistoryScreen;
-                return StageHistoryScreen(
-                  city: args.city,
-                );
-
-              case StageMonsterScreen.route:
-                final args = settings.arguments as StageMonsterScreen;
-                return StageMonsterScreen(
-                  city: args.city,
-                );
-
-              case ArgumentIdeasScreen.route:
-                final args = settings.arguments as ArgumentIdeasScreen;
-                return ArgumentIdeasScreen(
-                  city: args.city,
-                );
-
-              case StageObjetivesScreen.route:
-                final args = settings.arguments as StageObjetivesScreen;
-                return StageObjetivesScreen(
-                  city: args.city,
-                );
-
-              case ContentScreen.route:
-                final args = settings.arguments as ContentScreen;
-                return ContentScreen(
-                  city: args.city,
-                );
-
-              case ResourcesScreen.route:
-                final args = settings.arguments as ResourcesScreen;
-                return ResourcesScreen(
-                  city: args.city,
-                );
-
-              case ActivitiesScreen.route:
-                final args = settings.arguments as ActivitiesScreen;
-                return ActivitiesScreen(
-                  city: args.city,
-                );
-
-              ///
-              case ContributionExplanationScreen.route:
-                final args =
-                    settings.arguments as ContributionExplanationScreen;
-                return ContributionExplanationScreen(
-                  city: args.city,
-                );
-
-              ///
-              case ContributionScreen.route:
-                final args = settings.arguments as ContributionScreen;
-                return ContributionScreen(
-                  city: args.city,
-                );
-
-              case ClubhouseExplanationScreen.route:
-                final args = settings.arguments as ClubhouseExplanationScreen;
-                return ClubhouseExplanationScreen(
-                  city: args.city,
-                );
-
-              case ClubhouseScreen.route:
-                final args = settings.arguments as ClubhouseScreen;
-                return ClubhouseScreen(
-                  city: args.city,
-                );
-
-              case AddClubhouseScreen.route:
-                final args = settings.arguments as AddClubhouseScreen;
-                return AddClubhouseScreen(
-                  city: args.city,
-                );
-
-              case MicroMesoMacroScreen.route:
-                final args = settings.arguments as MicroMesoMacroScreen;
-                return MicroMesoMacroScreen(
-                  city: args.city,
-                );
-
-              case ProjectVideoScreen.route:
-                final args = settings.arguments as ProjectVideoScreen;
-                return ProjectVideoScreen(
-                  city: args.city,
-                );
-
-              case CityProjectScreen.route:
-                final args = settings.arguments as CityProjectScreen;
-                return CityProjectScreen(
-                  city: args.city,
-                );
-
-              case ProjectAwardsProject.route:
-                final args = settings.arguments as ProjectAwardsProject;
-                return ProjectAwardsProject(
-                  city: args.city,
-                );
-
-              case ManualVideoScreen.route:
-                final args = settings.arguments as ManualVideoScreen;
-                return ManualVideoScreen(
-                  city: args.city,
-                );
-              case FinalVideoScreen.route:
-                final args = settings.arguments as FinalVideoScreen;
-                return FinalVideoScreen(
-                  city: args.city,
-                );
-
-              default:
-                return SplashScreen();
+            if (settings.name == CityIntroductionScreen.route) {
+              final args = settings.arguments as CityIntroductionScreen;
+              return CityIntroductionScreen(
+                city: args.city,
+              );
             }
+            if (settings.name == MessagesScreen.route) {
+              final args = settings.arguments as MessagesScreen;
+              return MessagesScreen(
+                chat: args.chat,
+              );
+            }
+            if (settings.name == ChatParticipantsScreen.route) {
+              final args = settings.arguments as ChatParticipantsScreen;
+              return ChatParticipantsScreen(
+                chat: args.chat,
+              );
+            }
+
+            /// to go to the multimedia detailed screen in the chat
+            if (settings.name == DetailedMultimediaScreen.route) {
+              final args = settings.arguments as DetailedMultimediaScreen;
+              return DetailedMultimediaScreen(
+                multimedia: args.multimedia,
+              );
+            }
+            if (settings.name == IntroductoryVideoScreen.route) {
+              final args = settings.arguments as IntroductoryVideoScreen;
+              return IntroductoryVideoScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == StageHistoryScreen.route) {
+              final args = settings.arguments as StageHistoryScreen;
+              return StageHistoryScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == StageMonsterScreen.route) {
+              final args = settings.arguments as StageMonsterScreen;
+              return StageMonsterScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ArgumentIdeasScreen.route) {
+              final args = settings.arguments as ArgumentIdeasScreen;
+              return ArgumentIdeasScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == StageObjetivesScreen.route) {
+              final args = settings.arguments as StageObjetivesScreen;
+              return StageObjetivesScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ContentScreen.route) {
+              final args = settings.arguments as ContentScreen;
+              return ContentScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ResourcesScreen.route) {
+              final args = settings.arguments as ResourcesScreen;
+              return ResourcesScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ActivitiesScreen.route) {
+              final args = settings.arguments as ActivitiesScreen;
+              return ActivitiesScreen(
+                city: args.city,
+              );
+            }
+
+            ///
+            if (settings.name == ContributionExplanationScreen.route) {
+              final args = settings.arguments as ContributionExplanationScreen;
+              return ContributionExplanationScreen(
+                city: args.city,
+              );
+            }
+
+            ///
+            if (settings.name == ContributionScreen.route) {
+              final args = settings.arguments as ContributionScreen;
+              return ContributionScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ClubhouseExplanationScreen.route) {
+              final args = settings.arguments as ClubhouseExplanationScreen;
+              return ClubhouseExplanationScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ClubhouseScreen.route) {
+              final args = settings.arguments as ClubhouseScreen;
+              return ClubhouseScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == AddClubhouseScreen.route) {
+              final args = settings.arguments as AddClubhouseScreen;
+              return AddClubhouseScreen(
+                city: args.city,
+              );
+            }
+
+            if (settings.name == MicroMesoMacroScreen.route) {
+              final args = settings.arguments as MicroMesoMacroScreen;
+              return MicroMesoMacroScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ProjectVideoScreen.route) {
+              final args = settings.arguments as ProjectVideoScreen;
+              return ProjectVideoScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == CityProjectScreen.route) {
+              final args = settings.arguments as CityProjectScreen;
+              return CityProjectScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == ProjectAwardsProject.route) {
+              final args = settings.arguments as ProjectAwardsProject;
+              return ProjectAwardsProject(
+                city: args.city,
+              );
+            }
+            if (settings.name == ManualVideoScreen.route) {
+              final args = settings.arguments as ManualVideoScreen;
+              return ManualVideoScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == FinalVideoScreen.route) {
+              final args = settings.arguments as FinalVideoScreen;
+              return FinalVideoScreen(
+                city: args.city,
+              );
+            }
+
+            print('-----------------');
+            print('ROUTE NOT DEFINED');
+            print('-----------------');
+
+            ///TODO: Fix this bad gateway
+            /// to exit the application (in theory)
+            throw SystemChannels.platform
+                .invokeMethod<String>('SystemNavigator.pop');
           },
         );
 }

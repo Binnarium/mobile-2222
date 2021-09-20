@@ -3,9 +3,10 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 
 class LoadContentsScreenInformationService {
-  final FirebaseFirestore _firestore;
   LoadContentsScreenInformationService()
       : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<List<ContentDto>?> load$(CityModel city) {
     return _firestore

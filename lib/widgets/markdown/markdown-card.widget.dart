@@ -8,12 +8,12 @@ import 'markdown-center-text.builder.dart';
 ///
 ///
 class MarkdownCard extends StatelessWidget {
-  final String content;
-
   const MarkdownCard({
     Key? key,
     required this.content,
   }) : super(key: key);
+
+  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,11 @@ class MarkdownCard extends StatelessWidget {
         data: content,
         builders: {
           'h2': MarkdownCenterTextBuilder(
-              padding: EdgeInsets.symmetric(vertical: 8)),
+              padding: const EdgeInsets.symmetric(vertical: 8)),
           'h3': MarkdownCenterTextBuilder(
-              padding: EdgeInsets.symmetric(vertical: 4)),
+              padding: const EdgeInsets.symmetric(vertical: 4)),
           'p': MarkdownCenterTextBuilder(
-              padding: EdgeInsets.symmetric(vertical: 4)),
+              padding: const EdgeInsets.symmetric(vertical: 4)),
         },
         styleSheet: fmd.MarkdownStyleSheet(
           h2: textTheme.subtitle1,

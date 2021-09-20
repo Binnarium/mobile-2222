@@ -7,6 +7,7 @@ class GamificationWidget extends StatefulWidget {
   final String label;
   final Color numberColor;
 
+  // ignore: sort_constructors_first
   const GamificationWidget({
     Key? key,
     required this.numberOfMedals,
@@ -24,7 +25,7 @@ class _GamificationWidgetState extends State<GamificationWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
@@ -54,7 +55,7 @@ class _GamificationWidgetState extends State<GamificationWidget> {
           ),
 
           /// space icon and number of medals
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
 
           /// number of medals
           GamificationNumber(

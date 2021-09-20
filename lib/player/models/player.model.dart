@@ -14,6 +14,7 @@ class PlayerModel {
   final List<AwardModel> clubhouseAwards;
   final List<AwardModel> maratonAwards;
 
+  // ignore: sort_constructors_first
   PlayerModel._({
     required this.uid,
     required this.displayName,
@@ -26,6 +27,7 @@ class PlayerModel {
     required this.groupId,
   });
 
+  // ignore: sort_constructors_first
   PlayerModel.empty({
     required this.uid,
     required this.displayName,
@@ -43,6 +45,7 @@ class PlayerModel {
         this.maratonAwards = const [],
         this.clubhouseAwards = const [];
 
+  // ignore: sort_constructors_first
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
     return PlayerModel._(
       avatarImage: ImageDto.fromMap(

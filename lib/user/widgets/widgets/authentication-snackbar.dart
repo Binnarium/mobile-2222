@@ -5,32 +5,34 @@ import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 /// Snackbar that is used to inform the user the state of the login function
 class AuthenticationSnackbar extends SnackBar {
   /// This snackbar will appear if occurs an undefined error
-  AuthenticationSnackbar.somethingWentWrong({Key? key})
-      : super(
-          key: key,
-          content: Text('Ocurrió un error, lo sentimos, vuelve a intentarlo'),
-        );
-
-  /// This snackbar will appear if the password of the user is too weak
-  AuthenticationSnackbar.weakPassword({Key? key})
+  const AuthenticationSnackbar.somethingWentWrong({Key? key})
       : super(
           key: key,
           content:
-              Text('Tu contraseña es muy devil, ingresa una nueva contraseña'),
+              const Text('Ocurrió un error, lo sentimos, vuelve a intentarlo'),
+        );
+
+  /// This snackbar will appear if the password of the user is too weak
+  const AuthenticationSnackbar.weakPassword({Key? key})
+      : super(
+          key: key,
+          content: const Text(
+              'Tu contraseña es muy devil, ingresa una nueva contraseña'),
         );
 
   /// This snackbar will appear if the user is not registered
-  AuthenticationSnackbar.notInscribed({Key? key})
+  const AuthenticationSnackbar.notInscribed({Key? key})
       : super(
           key: key,
-          content: Text('No estas inscrito para acceder al recorrido'),
+          content: const Text('No estas inscrito para acceder al recorrido'),
         );
 
   /// This snackbar will appear if the account of the user is not created
-  AuthenticationSnackbar.accountNotRegistered({Key? key})
+  const AuthenticationSnackbar.accountNotRegistered({Key? key})
       : super(
           key: key,
-          content: Text('No se pudo crear la cuenta, vuelve a intentarlo'),
+          content:
+              const Text('No se pudo crear la cuenta, vuelve a intentarlo'),
         );
 
   /// This snackbar will appear if the the user is registered
@@ -39,7 +41,8 @@ class AuthenticationSnackbar extends SnackBar {
     Key? key,
   }) : super(
           key: key,
-          content: Text('Ya existe una cuenta usando este correo electrónico'),
+          content:
+              const Text('Ya existe una cuenta usando este correo electrónico'),
           action: SnackBarAction(
             label: 'Inicia Sesión',
             onPressed: () =>
@@ -53,7 +56,7 @@ class AuthenticationSnackbar extends SnackBar {
     Key? key,
   }) : super(
           key: key,
-          content: Text('Aun no tienes una cuenta'),
+          content: const Text('Aun no tienes una cuenta'),
           action: SnackBarAction(
             label: 'Registrate ahora',
             onPressed: () =>
@@ -62,35 +65,35 @@ class AuthenticationSnackbar extends SnackBar {
         );
 
   /// This snackbar will appear if the user inserts a wrong email pattern
-  AuthenticationSnackbar.invalidEmail({
+  const AuthenticationSnackbar.invalidEmail({
     Key? key,
   }) : super(
           key: key,
-          content: Text('Correo electrónico no valido'),
+          content: const Text('Correo electrónico no valido'),
         );
 
   /// This snackbar will appear if the user is not in the Database
-  AuthenticationSnackbar.playerNotFound({
+  const AuthenticationSnackbar.playerNotFound({
     Key? key,
   }) : super(
           key: key,
-          content: Text('No se encontro información del jugador'),
+          content: const Text('No se encontro información del jugador'),
         );
 
   /// This snackbar will appear if the account is deactivated
-  AuthenticationSnackbar.disabledAccount({
+  const AuthenticationSnackbar.disabledAccount({
     Key? key,
   }) : super(
           key: key,
-          content: Text('Esta cuenta esta desactivada'),
+          content: const Text('Esta cuenta esta desactivada'),
         );
 
   /// This snackbar will appear if the password is wrong
-  AuthenticationSnackbar.wrongPassword({
+  const AuthenticationSnackbar.wrongPassword({
     Key? key,
   }) : super(
           key: key,
-          content: Text('Tu contraseña es incorrecta'),
+          content: const Text('Tu contraseña es incorrecta'),
         );
 
   /// This snackbar will appear if the login is successful

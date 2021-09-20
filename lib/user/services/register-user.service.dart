@@ -13,19 +13,18 @@ enum RegisterErrorCode {
   other,
 }
 
-/// TODO: add docs
 class RegisterException implements Exception {
-  RegisterErrorCode code;
   RegisterException(this.code);
+  RegisterErrorCode code;
 }
 
 class RegisterService {
-  final FirebaseAuth _fAuth;
-  final FirebaseFirestore _fFirestore;
-
   RegisterService(BuildContext context)
       : _fAuth = FirebaseAuth.instance,
         _fFirestore = FirebaseFirestore.instance;
+
+  final FirebaseAuth _fAuth;
+  final FirebaseFirestore _fFirestore;
 
   /// function to register a player to the application
   ///

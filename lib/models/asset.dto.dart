@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 /// - [VideoDto] for video kind of assets
 /// - [AudioDto] for audio kind of assets
 abstract class AssetDto {
-  final String url;
-  final String path;
-  final String name;
-
   AssetDto({
     required this.url,
     required this.path,
     required this.name,
   });
+
+  final String url;
+  final String path;
+  final String name;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -32,6 +32,7 @@ class VideoDto extends AssetDto {
   final String format;
 
   /// defaault constructor
+  // ignore: sort_constructors_first
   VideoDto({
     required this.duration,
     required this.format,
@@ -44,6 +45,7 @@ class VideoDto extends AssetDto {
           url: url,
         );
 
+  // ignore: sort_constructors_first
   VideoDto.fromMap(final Map<String, dynamic> payload)
       : format = payload['format'] as String? ?? '',
         duration = payload['duration'] as int? ?? 0,
@@ -54,11 +56,11 @@ class VideoDto extends AssetDto {
         );
 
   ImageProvider get placeholderImage =>
-      AssetImage('assets/images/video-placeholder.png');
+      const AssetImage('assets/images/video-placeholder.png');
 
   @override
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = super.toMap();
+    final Map<String, dynamic> map = super.toMap();
 
     map.addAll(<String, dynamic>{
       'duration': duration,
@@ -74,6 +76,7 @@ class ImageDto extends AssetDto {
   final int width;
   final int height;
 
+  // ignore: sort_constructors_first
   ImageDto({
     required this.height,
     required this.width,
@@ -86,6 +89,7 @@ class ImageDto extends AssetDto {
           url: url,
         );
 
+  // ignore: sort_constructors_first
   ImageDto.fromMap(final Map<String, dynamic> payload)
       : height = payload['height'] as int? ?? 0,
         width = payload['width'] as int? ?? 0,
@@ -99,7 +103,7 @@ class ImageDto extends AssetDto {
 
   @override
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = super.toMap();
+    final Map<String, dynamic> map = super.toMap();
 
     map.addAll(<String, dynamic>{
       'width': width,

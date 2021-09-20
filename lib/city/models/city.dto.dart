@@ -14,6 +14,7 @@ class CityModel {
 
   CityModel? nextCity;
 
+  // ignore: sort_constructors_first
   CityModel.fromMap(final Map<String, dynamic> payload)
       : id = payload['id'] as String,
         name = payload['name'] as String,

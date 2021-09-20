@@ -8,18 +8,20 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class GetChatService {
-  final FirebaseFirestore _firestore;
-  final CurrentPlayerService _currentPlayerService;
-
   GetChatService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _firestore = FirebaseFirestore.instance;
 
+  final FirebaseFirestore _firestore;
+  final CurrentPlayerService _currentPlayerService;
+
   Future<ChatModel?> getChatWithId(String chatId) {
     return _currentPlayerService.player$.take(1).switchMap(
       (currentPlayer) {
-        if (currentPlayer == null) return Stream.value(null);
+        if (currentPlayer == null) {
+          return Stream.value(null);
+        }
 
         /// get collection of users
         final chatsDoc = _firestore.collection('chats').doc(chatId);
@@ -44,14 +46,14 @@ class GetChatService {
                           (data['lastActivity'] as Timestamp).toDate(),
                       indexedDate:
                           (data['indexedDate'] as Timestamp?)?.toDate(),
-                      participants:
-                          (data['participants'] as List<Map<String, dynamic>>?)
-                                  ?.map((e) => ChatParticipantModel.fromMap(e))
-                                  .toList() ??
-                              [],
+                      participants: (data['participants'] as List<dynamic>?)
+                              ?.map((dynamic e) => ChatParticipantModel.fromMap(
+                                  e as Map<String, dynamic>))
+                              .toList() ??
+                          [],
                       participantsUids: (data['participantsUids']
-                              as List<Map<String, dynamic>>)
-                          .map((e) => e.toString())
+                              as List<dynamic>)
+                              .map((dynamic e) => e as String)
                           .toList(),
                       lastMessage:
                           (data['lastMessage'] as Map<String, dynamic>?) == null

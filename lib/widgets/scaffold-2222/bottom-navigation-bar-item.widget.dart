@@ -7,6 +7,7 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
   final VoidCallback? onTap;
   final Color iconColor;
 
+  // ignore: sort_constructors_first
   Lab2222BottomNavigationBarItem({
     Key? key,
     required this.icon,
@@ -35,7 +36,7 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
           onTap: onTap,
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             child: ImageIcon(
               icon,
               color: iconColor,

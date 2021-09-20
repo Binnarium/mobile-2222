@@ -1,12 +1,13 @@
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
-class ProjectDto {
+class ProjectScreenModel {
   final String activity;
   final String explanation;
   final String allow;
   final AudioDto? audio;
 
-  ProjectDto.fromJson(Map<String, dynamic> payload)
+  // ignore: sort_constructors_first
+  ProjectScreenModel.fromJson(Map<String, dynamic> payload)
       : activity =
             payload['activity'] as String? ?? 'No hay actividad definida',
         explanation = payload['explanation'] as String? ??

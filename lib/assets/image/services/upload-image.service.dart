@@ -30,10 +30,15 @@ class UploadImageService {
         )
         .asStream()
         .asyncMap<ImageDto>((FilePickerResult? filePickerResult) async {
-      if (filePickerResult == null) throw ImageNotSelected();
+      if (filePickerResult == null) {
+        throw ImageNotSelected();
+      }
 
+      // ignore: unnecessary_nullable_for_final_variable_declarations
       final PlatformFile? selectedImage = filePickerResult.files.first;
-      if (selectedImage == null) throw ImageNotLoaded();
+      if (selectedImage == null) {
+        throw ImageNotLoaded();
+      }
 
       try {
         final File imageFile = File(selectedImage.path!);
@@ -44,7 +49,7 @@ class UploadImageService {
         final UploadTask uploadTask = uploadRef.putFile(imageFile);
         final String url = await uploadTask.then((snapshot) async {
           if (snapshot.state == TaskState.success) {
-            return await uploadRef.getDownloadURL();
+            return uploadRef.getDownloadURL();
           }
           throw ImageNotUploaded();
         });
@@ -62,42 +67,3 @@ class UploadImageService {
     });
   }
 }
-
-// /// to upload a file
-// Future<String> uploadMultimediaFile(File file, String kind) async {
-//   String urlDownload = "";
-
-//   final destination =
-//       'chats/${this.widget.chat.id}/files/${file.path.split("/").last}';
-//   print("LOCATION: $destination");
-
-//   UploadTask? task = UploadFileToFirebaseService.uploadFile(destination, file);
-
-//   if (task == null) return "";
-
-//   final snapshot = await task;
-
-//   urlDownload = await snapshot.ref.getDownloadURL();
-
-//   print('Download link: $urlDownload');
-//   return urlDownload;
-// }
-
-// // Future<File> selectMultimediaFile(String kind) async {
-// //   /// allowed extensions depending on file kind
-// //   Map<String, List<String>> allowedExtensions = {
-// //     'MESSAGE#IMAGE': ['png', 'svg', 'jpg', 'jpeg'],
-// //     'MESSAGE#VIDEO': ['mp4', 'avi', 'wmv', 'amv', 'm4v', 'gif']
-// //   };
-// //   final result = await FilePicker.platform.pickFiles(
-// //       type: FileType.custom,
-// //       allowMultiple: false,
-// //       allowedExtensions: allowedExtensions[kind]);
-
-// //   if (result == null) return File('');
-
-// //   /// to get the path of the file
-// //   final path = result.files.single.path!;
-
-// //   return File(path);
-// // }
