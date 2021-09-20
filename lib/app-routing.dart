@@ -38,9 +38,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
   Lab2222Routing(RouteSettings settings)
       : super(
           builder: (context) {
-            print(settings.name);
-            print(settings);
-            print(settings.toString());
+            print('called router at: ${settings.name}');
             if (settings.name == SplashScreen.route) return SplashScreen();
 
             if (settings.name == StartVideoScreen.route)

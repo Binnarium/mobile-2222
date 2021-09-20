@@ -39,9 +39,9 @@ class _AudioSliderState extends State<AudioSlider> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     positionDataSub?.cancel();
-    super.deactivate();
+    super.dispose();
   }
 
   @override

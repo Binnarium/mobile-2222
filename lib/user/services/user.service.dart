@@ -6,8 +6,8 @@ class IsUserSignInService {
 
   final FirebaseAuth _auth;
 
-  Future<bool> get isSignIn => Future.delayed(
+  Stream<bool> get isSignIn$ => Future.delayed(
         const Duration(milliseconds: 100),
         () => _auth.currentUser != null,
-      );
+      ).asStream();
 }
