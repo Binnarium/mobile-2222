@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
+import 'package:provider/provider.dart';
 
 import 'bottom-navigation-bar-widget.dart';
 
@@ -99,6 +101,10 @@ class Scaffold2222 extends StatelessWidget {
     final VoidCallback? nextPage =
         _nextRoute == null ? null : () => _nextRoute!.builder(context);
 
+    /// podcast provider
+    final CurrentAudioProvider audioProvider =
+        Provider.of<CurrentAudioProvider>(context, listen: false);
+
     /// page layout
     return Scaffold(
       backgroundColor: _backgroundColor,
@@ -125,7 +131,15 @@ class Scaffold2222 extends StatelessWidget {
 
           /// right
           if (nextPage != null && details.delta.dx < -5) {
-            nextPage();
+            try {
+              if (audioProvider.player.playing) {
+                audioProvider.player.pause();
+              }
+            } catch (e) {
+              print('Error al pausar podcast $e');
+            } finally {
+              nextPage();
+            }
           }
         },
         child: BackgroundDecoration(
