@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/videoPlaceholder.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
@@ -126,7 +126,7 @@ class _ContentScreenState extends State<ContentScreen> {
                   left: sidePadding,
                   bottom: 32,
                 ),
-                child: VideoPlaceholderWidget(
+                child: VideoPlayer(
                   video: c.content,
                 ),
               ),
