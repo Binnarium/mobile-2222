@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 /// Sign Out
 class SignOutService {
-  final FirebaseAuth _auth;
-
   SignOutService(BuildContext context) : _auth = FirebaseAuth.instance;
+
+  final FirebaseAuth _auth;
 
   Stream<void> signOut$() {
     return Stream.fromFuture(_auth.signOut());

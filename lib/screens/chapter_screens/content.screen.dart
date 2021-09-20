@@ -15,14 +15,14 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ContentScreen extends StatefulWidget {
-  static const String route = '/contenido';
-  final CityModel city;
-
-  ContentScreen({
+  const ContentScreen({
     Key? key,
     required CityModel city,
-  })  : this.city = city,
+  })  : city = city,
         super(key: key);
+
+  static const String route = '/contenido';
+  final CityModel city;
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -36,7 +36,7 @@ class _ContentScreenState extends State<ContentScreen> {
   void initState() {
     super.initState();
 
-    LoadContentsScreenInformationService loadContentsService =
+    final LoadContentsScreenInformationService loadContentsService =
         Provider.of<LoadContentsScreenInformationService>(context,
             listen: false);
 
@@ -60,18 +60,19 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ContentScreen.route,
       body: _stageVideoContent(size, context),
     );
   }
 
-  Container _stageVideoContent(Size size, BuildContext context) {
+  SizedBox _stageVideoContent(Size size, BuildContext context) {
     ///sizing the container to the mobile
-    return Container(
+    return SizedBox(
       /// builds an initial Listview with the banner at first element
       child: ListView(
         children: [
@@ -79,7 +80,7 @@ class _ContentScreenState extends State<ContentScreen> {
           LogosHeader(
             showStageLogoCity: widget.city,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           /// method that makes the query from firestore who brings the whole content
           _pageContent(size),
@@ -93,7 +94,7 @@ class _ContentScreenState extends State<ContentScreen> {
     final double sidePadding = size.width * 0.08;
 
     if (contents == null) {
-      return Center(
+      return const Center(
         child: AppLoading(),
       );
     } else {
@@ -102,7 +103,7 @@ class _ContentScreenState extends State<ContentScreen> {
           for (ContentDto c in contents!) ...[
             if (c is VideoContentDto) ...[
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   bottom: 32,
                 ),
                 child: _titleContainer(size, c.author, c.title, ' - vídeo'),
@@ -131,7 +132,7 @@ class _ContentScreenState extends State<ContentScreen> {
               ),
             ] else if (c is PodcastContentDto) ...[
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   bottom: 32,
                 ),
                 child: _titleContainer(size, c.author, c.title, ' - podcast'),
@@ -189,7 +190,7 @@ class _ContentScreenState extends State<ContentScreen> {
                   ),
                 )
               ])),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(

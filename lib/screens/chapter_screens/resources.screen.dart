@@ -15,14 +15,14 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ResourcesScreen extends StatefulWidget {
-  static const String route = '/resources';
-  final CityModel city;
-
-  ResourcesScreen({
+  const ResourcesScreen({
     Key? key,
     required CityModel city,
-  })  : this.city = city,
+  })  : city = city,
         super(key: key);
+
+  static const String route = '/resources';
+  final CityModel city;
 
   @override
   _ResourcesScreenState createState() => _ResourcesScreenState();
@@ -36,7 +36,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   void initState() {
     super.initState();
 
-    LoadCityResourcesService loadResourcesService =
+    final LoadCityResourcesService loadResourcesService =
         Provider.of<LoadCityResourcesService>(context, listen: false);
 
     _loadResourcesSub = loadResourcesService.load$(widget.city).listen(
@@ -58,9 +58,10 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topLeft],
       route: ResourcesScreen.route,
       body: _resourcesContent(size),
@@ -81,7 +82,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
         ),
         if (resourcesDto == null)
-          AppLoading()
+          const AppLoading()
         else ...[
           /// readings title screen widgets
           Padding(
@@ -113,7 +114,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             child: StaggeredGridView.countBuilder(
               ///general spacing per resource
               crossAxisCount: 2,
-              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+              staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
               itemCount: resourcesDto!.externalLinks.length,
 
               /// property that sizes the container automatically according
@@ -121,7 +122,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               shrinkWrap: true,
 
               ///to avoid the scroll
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final item = resourcesDto!.externalLinks.elementAt(index);
                 // print(item);
@@ -132,7 +133,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                   return ExternalLinkCard(externalLinkDto: item);
                 }
 
-                return Text('Kind of content not found');
+                return const Text('Kind of content not found');
               },
             ),
           )

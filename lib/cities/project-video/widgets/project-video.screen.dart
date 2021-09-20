@@ -12,15 +12,15 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class ProjectVideoScreen extends StatefulWidget {
+  const ProjectVideoScreen({
+    Key? key,
+    required CityModel city,
+  })  : city = city,
+        super(key: key);
+
   static const String route = '/project-video';
 
   final CityModel city;
-
-  ProjectVideoScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _ProjectVideoScreenState createState() => _ProjectVideoScreenState();
@@ -34,7 +34,7 @@ class _ProjectVideoScreenState extends State<ProjectVideoScreen> {
   void initState() {
     super.initState();
 
-    LoadProjectVideoService loadProjectVideoService =
+    final LoadProjectVideoService loadProjectVideoService =
         Provider.of<LoadProjectVideoService>(context, listen: false);
 
     _loadProjectVideoSub = loadProjectVideoService.load$(widget.city).listen(
@@ -58,12 +58,13 @@ class _ProjectVideoScreenState extends State<ProjectVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: ProjectVideoScreen.route,
       body: Stack(
         children: <Widget>[
           /// loading state
-          Center(child: AppLoading()),
+          const Center(child: AppLoading()),
 
           /// background video
           if (projectVideo != null)

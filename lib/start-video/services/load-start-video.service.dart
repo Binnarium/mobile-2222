@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/start-video/model/start-video.model.dart';
 
 class LoadStartVideoService {
-  final FirebaseFirestore _firestore;
   LoadStartVideoService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<StartVideoModel?> load$() {
     return _firestore

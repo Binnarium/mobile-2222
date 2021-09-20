@@ -17,6 +17,7 @@ class CityEnabledPagesModel {
   final bool project;
   final bool hackatonMedals;
 
+  // ignore: sort_constructors_first
   CityEnabledPagesModel.fromMap(final Map<String, dynamic> payload)
       : activities = payload['activities'] == true,
         contribution = payload['contribution'] == true,

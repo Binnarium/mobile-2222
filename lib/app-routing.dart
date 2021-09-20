@@ -82,7 +82,8 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == DetailedMultimediaScreen.route) {
               final args = settings.arguments as DetailedMultimediaScreen;
               return DetailedMultimediaScreen(
-                message: args.message,
+                isVideo: args.isVideo,
+                multimedia: args.multimedia,
               );
             }
             if (settings.name == IntroductoryVideoScreen.route) {

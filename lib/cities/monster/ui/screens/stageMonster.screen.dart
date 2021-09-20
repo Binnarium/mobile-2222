@@ -13,13 +13,13 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class StageMonsterScreen extends StatefulWidget {
-  static const String route = '/monster';
-  final CityModel city;
-
   const StageMonsterScreen({
     Key? key,
     required this.city,
   }) : super(key: key);
+
+  static const String route = '/monster';
+  final CityModel city;
 
   @override
   _StageMonsterScreenState createState() => _StageMonsterScreenState();
@@ -32,7 +32,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   void initState() {
     super.initState();
 
-    LoadMonsterService loadMonsterService =
+    final LoadMonsterService loadMonsterService =
         Provider.of<LoadMonsterService>(context, listen: false);
 
     _loadMonsterSub = loadMonsterService.load$(widget.city).listen(
@@ -56,6 +56,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageMonsterScreen.route,
       body: Column(
@@ -67,11 +68,12 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
           ),
 
           /// content
-          _monsterModel == null
-              ? Center(
-                  child: AppLoading(),
-                )
-              : MonsterImage(image: _monsterModel!.illustration)
+          if (_monsterModel == null)
+            const Center(
+              child: AppLoading(),
+            )
+          else
+            MonsterImage(image: _monsterModel!.illustration)
         ],
       ),
     );
@@ -79,11 +81,12 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
 }
 
 class MonsterImage extends StatelessWidget {
-  final ImageDto image;
   const MonsterImage({
     Key? key,
     required this.image,
   }) : super(key: key);
+
+  final ImageDto image;
 
   @override
   Widget build(BuildContext context) {

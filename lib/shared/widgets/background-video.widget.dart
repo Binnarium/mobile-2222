@@ -46,7 +46,7 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
     });
   }
 
-  @override 
+  @override
   void dispose() {
     widget.controller.removeListener(_videoCompletedListener);
     widget.controller.dispose();

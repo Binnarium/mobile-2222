@@ -97,6 +97,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
+
       backgrounds: const [
         BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
@@ -142,7 +143,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
         Center(
           child: Image(
-            image: CoinsImages.project(),
+            image: const CoinsImages.project(),
             alignment: Alignment.bottomRight,
             fit: BoxFit.contain,
             width: min(160, size.width * 0.4),
@@ -226,6 +227,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     );
   }
 }
+
 
 Widget _taskButton(
     BuildContext context, Color color, CityModel city,

@@ -14,17 +14,17 @@ enum LoginErrorCode {
 }
 
 class LoginException implements Exception {
-  LoginErrorCode code;
   LoginException(this.code);
+  LoginErrorCode code;
 }
 
 class LoginService {
-  final FirebaseAuth _fAuth;
-  final FirebaseFirestore _fFirestore;
-
   LoginService(BuildContext context)
       : _fAuth = FirebaseAuth.instance,
         _fFirestore = FirebaseFirestore.instance;
+
+  final FirebaseAuth _fAuth;
+  final FirebaseFirestore _fFirestore;
 
   Future<PlayerModel> login(LoginFormModel formModel) async {
     final User user = await _signIn(
@@ -34,14 +34,17 @@ class LoginService {
 
     final payload = await _fFirestore.collection('players').doc(user.uid).get();
 
-    if (!payload.exists) throw LoginException(LoginErrorCode.playerNotFound);
+    if (!payload.exists) {
+      throw LoginException(LoginErrorCode.playerNotFound);
+    }
 
     return PlayerModel.fromMap(payload.data()!);
   }
 
   Future<User> _signIn(String email, String password) async {
     try {
-      UserCredential credentials = await _fAuth.signInWithEmailAndPassword(
+      final UserCredential credentials =
+          await _fAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

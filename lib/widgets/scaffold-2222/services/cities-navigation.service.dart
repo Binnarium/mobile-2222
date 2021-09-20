@@ -22,13 +22,12 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart'
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 
 class ScaffoldRouteBuilder {
-  final String route;
-  final Future<void> Function(BuildContext) builder;
-
   ScaffoldRouteBuilder({
     required this.route,
     required this.builder,
   });
+  final String route;
+  final Future<void> Function(BuildContext) builder;
 }
 
 class CityNavigator {
@@ -302,7 +301,9 @@ class CityNavigator {
 
     /// if next index still inside array length then retrieve next page value
     /// otherwise send first item index with next city data
-    if (nextIndex < availableRoutes.length) return availableRoutes[nextIndex];
+    if (nextIndex < availableRoutes.length) {
+      return availableRoutes[nextIndex];
+    }
 
     /// otherwise send to start of next city, if a next city exists
     if (cityDto.nextCity != null && nextIndex == availableRoutes.length) {

@@ -5,13 +5,15 @@ import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 
 @Deprecated('Since Scaffold2222 chapter background should not be used')
 class ChapterBackgroundWidget extends StatelessWidget {
+  const ChapterBackgroundWidget(
+      {required this.backgroundColor, this.reliefPosition});
+
   final Color backgroundColor;
   final String? reliefPosition;
-  ChapterBackgroundWidget({required this.backgroundColor, this.reliefPosition});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Stack(
         children: [
           CustomBackground(
@@ -26,7 +28,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
   /// To draw the relief in a background
   Container _relieve() {
     ///Map that contains every position that the relief can be
-    Map<String, Container> reliefPosition = {
+    final Map<String, Container> reliefPosition = {
       'top-left': Container(
         width: double.infinity,
         height: double.infinity,
@@ -42,7 +44,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
             ..rotateY(math.pi),
           //para que mantenga su eje
           alignment: FractionalOffset.center,
-          child: Image(
+          child: const Image(
             image: AssetImage(
               'assets/backgrounds/decorations/background_decoration1.png',
             ),
@@ -64,7 +66,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
             ..rotateY(0),
           //para que mantenga su eje
           alignment: FractionalOffset.center,
-          child: Image(
+          child: const Image(
             image: AssetImage(
               'assets/backgrounds/decorations/background_decoration1.png',
             ),
@@ -75,7 +77,7 @@ class ChapterBackgroundWidget extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         width: double.infinity,
         height: double.infinity,
-        child: Image(
+        child: const Image(
           image: AssetImage(
             'assets/backgrounds/decorations/background_decoration1.png',
           ),

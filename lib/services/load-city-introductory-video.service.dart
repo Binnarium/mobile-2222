@@ -3,8 +3,9 @@ import 'package:lab_movil_2222/models/city-introductory-video.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadCityIntroductoryVideoService {
-  final FirebaseFirestore _firestore;
   LoadCityIntroductoryVideoService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<CityIntroductoryVideoDto?> load$(CityModel city) {
     return _firestore

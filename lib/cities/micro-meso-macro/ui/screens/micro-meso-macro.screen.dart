@@ -13,15 +13,15 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class MicroMesoMacroScreen extends StatefulWidget {
-  static const String route = '/micro_meso_macro';
-
-  final CityModel city;
-
   const MicroMesoMacroScreen({
     Key? key,
     required CityModel city,
-  })  : this.city = city,
+  })  : city = city,
         super(key: key);
+
+  static const String route = '/micro_meso_macro';
+
+  final CityModel city;
 
   @override
   _MicroMesoMacroScreenState createState() => _MicroMesoMacroScreenState();
@@ -59,6 +59,7 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
+
     return Scaffold2222.city(
       city: widget.city,
       route: MicroMesoMacroScreen.route,

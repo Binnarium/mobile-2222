@@ -12,15 +12,15 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class IntroductoryVideoScreen extends StatefulWidget {
+  const IntroductoryVideoScreen({
+    Key? key,
+    required CityModel city,
+  })  : city = city,
+        super(key: key);
+
   static const String route = '/introductory-video';
 
   final CityModel city;
-
-  IntroductoryVideoScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _IntroductoryVideoScreenState createState() =>
@@ -36,7 +36,7 @@ class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
   void initState() {
     super.initState();
 
-    LoadCityIntroductoryVideoService loadIntroductoryVideoService =
+    final LoadCityIntroductoryVideoService loadIntroductoryVideoService =
         Provider.of<LoadCityIntroductoryVideoService>(context, listen: false);
 
     _loadIntroductoryVideoSub =
@@ -61,11 +61,12 @@ class _IntroductoryVideoScreenState extends State<IntroductoryVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: IntroductoryVideoScreen.route,
       body: Stack(
         children: <Widget>[
-          Center(child: AppLoading()),
+          const Center(child: AppLoading()),
           if (introductoryVideo != null)
             BackgroundVideo(
               controller: VideoPlayerController.network(

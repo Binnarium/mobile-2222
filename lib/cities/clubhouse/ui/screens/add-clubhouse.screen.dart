@@ -19,13 +19,13 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class AddClubhouseScreen extends StatefulWidget {
-  static const String route = '/add-clubhouse';
-  final CityModel city;
-
   const AddClubhouseScreen({
     Key? key,
     required this.city,
   }) : super(key: key);
+
+  static const String route = '/add-clubhouse';
+  final CityModel city;
 
   @override
   _AddClubhouseScreenState createState() => _AddClubhouseScreenState();
@@ -64,6 +64,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
 
     return Scaffold2222.empty(
       backgroundColor: widget.city.color,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       appBar: AppBar(
         title: Text(
@@ -96,7 +97,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -104,7 +105,9 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                   elevation: 5,
                 ),
                 onPressed: () async {
-                  if (clubhouseUrl == null) return;
+                  if (clubhouseUrl == null) {
+                    return;
+                  }
                   final FirebaseFirestore _fFirestore =
                       FirebaseFirestore.instance;
                   final FirebaseAuth _fAuth = FirebaseAuth.instance;
@@ -124,7 +127,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                   clubhouseUrl = null;
                   _addClubhouseController.clear();
                 },
-                child: Text('Agregar Evento'),
+                child: const Text('Agregar Evento'),
               ),
             ),
           ),
@@ -135,45 +138,45 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
               vertical: 30.0,
               horizontal: size.width * 0.08,
             ),
-            child: ClubhouseExplanationWidget(),
+            child: const ClubhouseExplanationWidget(),
           ),
 
           /// next clubhouse title
-          Padding(
-            padding: const EdgeInsets.only(bottom: 34.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 34.0),
             child: ClubhouseSectionTitle(
               title: 'Tus eventos creados',
             ),
           ),
 
           /// page content
-          (clubhouses == null)
-              ? AppLoading()
-              : Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 20,
-                    left: size.width * 0.04,
-                    right: size.width * 0.04,
-                  ),
-                  child: (clubhouses!.isEmpty)
-                      ? Center(
-                          child: Text('No hay clubhouse creados'),
-                        )
-                      : GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: size.width * 0.04,
-                            mainAxisSpacing: size.width * 0.04,
-                          ),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: clubhouses!.length,
-                          itemBuilder: (context, index) => ClubhouseCard(
-                            clubhouseModel: clubhouses![index],
-                          ),
-                        ),
-                ),
+          if (clubhouses == null)
+            const AppLoading()
+          else
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 20,
+                left: size.width * 0.04,
+                right: size.width * 0.04,
+              ),
+              child: (clubhouses!.isEmpty)
+                  ? const Center(
+                      child: Text('No hay clubhouse creados'),
+                    )
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: size.width * 0.04,
+                        mainAxisSpacing: size.width * 0.04,
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: clubhouses!.length,
+                      itemBuilder: (context, index) => ClubhouseCard(
+                        clubhouseModel: clubhouses![index],
+                      ),
+                    ),
+            ),
         ],
       ),
     );
@@ -182,9 +185,9 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
   String _generateId({int size = 10}) {
     const _chars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    Random _rnd = Random();
+    final Random _rnd = Random();
 
-    String id = String.fromCharCodes(
+    final String id = String.fromCharCodes(
       Iterable.generate(
         size,
         (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)),

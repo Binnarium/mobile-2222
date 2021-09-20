@@ -3,10 +3,11 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project-screen.model.dart';
 
 class LoadProjectDtoService {
-  final FirebaseFirestore _firestore;
   LoadProjectDtoService() : _firestore = FirebaseFirestore.instance;
 
-  Stream<ProjectScreenModel?> load$(CityModel city) {
+  final FirebaseFirestore _firestore;
+
+  Stream<ProjectDto?> load$(CityModel city) {
     return _firestore
         .collection('cities')
         .doc(city.id)
@@ -14,6 +15,6 @@ class LoadProjectDtoService {
         .doc('project')
         .snapshots()
         .map((snapshot) => snapshot.data())
-        .map((data) => data == null ? null : ProjectScreenModel.fromJson(data));
+        .map((data) => data == null ? null : ProjectDto.fromJson(data));
   }
 }

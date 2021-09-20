@@ -12,15 +12,15 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class FinalVideoScreen extends StatefulWidget {
+  const FinalVideoScreen({
+    Key? key,
+    required CityModel city,
+  })  : city = city,
+        super(key: key);
+
   static const String route = '/final-video';
 
   final CityModel city;
-
-  FinalVideoScreen({
-    Key? key,
-    required CityModel city,
-  })  : this.city = city,
-        super(key: key);
 
   @override
   _FinalVideoScreenState createState() => _FinalVideoScreenState();
@@ -34,7 +34,7 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
   void initState() {
     super.initState();
 
-    LoadFinalVideoService loadFinalVideoService =
+    final LoadFinalVideoService loadFinalVideoService =
         Provider.of<LoadFinalVideoService>(context, listen: false);
 
     _loadFinalVideoSub = loadFinalVideoService.load$(widget.city).listen(
@@ -58,12 +58,13 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: FinalVideoScreen.route,
       body: Stack(
         children: <Widget>[
           /// loading state
-          Center(child: AppLoading()),
+          const Center(child: AppLoading()),
 
           /// background video
           if (manualVideo != null)

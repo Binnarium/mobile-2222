@@ -40,8 +40,10 @@ class UploadFileService {
           throw FileNotSelected();
         }
 
+
         PlatformFile? selectedFile;
         selectedFile = filePickerResult.files.first;
+
         if (selectedFile == null) {
           throw FileNotLoaded();
         }
