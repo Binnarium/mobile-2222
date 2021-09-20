@@ -15,7 +15,9 @@ const bool enableAutoScroll = false;
 
 /// main screen of the app to navigate any city or content
 class HomeScreen extends StatefulWidget {
-  static const String route = '/home';
+  const HomeScreen({Key? key}) : super(key: key);
+
+  static String get route => '/home';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

@@ -103,13 +103,8 @@ class CustomBubbleList extends StatelessWidget {
                 left: size.width * 0.08,
                 right: size.width * 0.08,
               ),
-              constraints: BoxConstraints(
-                maxWidth: size.width * 0.7,
-              ),
               child: IdeaBubbleWidget(
                 text: ideas[i],
-                bubbleKind:
-                    BubbleKind.values[seed.nextInt(BubbleKind.values.length)],
               ),
             ),
           ],

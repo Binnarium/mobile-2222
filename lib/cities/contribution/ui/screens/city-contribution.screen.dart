@@ -56,9 +56,9 @@ class _ContributionScreenState extends State<ContributionScreen> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     collaborationActivitySub?.cancel();
-    super.deactivate();
+    super.dispose();
   }
 
   @override

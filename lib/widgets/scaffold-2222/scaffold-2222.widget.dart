@@ -115,6 +115,7 @@ class Scaffold2222 extends StatelessWidget {
 
       /// wrap everything in a gesture detector to move across cities
       body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onPanUpdate: (details) {
           /// left
           if (prevPage != null && details.delta.dx > 5) prevPage();

@@ -52,9 +52,9 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     clubhousesSub?.cancel();
-    super.deactivate();
+    super.dispose();
   }
 
   @override

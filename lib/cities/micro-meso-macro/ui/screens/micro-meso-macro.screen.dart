@@ -17,7 +17,7 @@ class MicroMesoMacroScreen extends StatefulWidget {
 
   final CityModel city;
 
-  MicroMesoMacroScreen({
+  const MicroMesoMacroScreen({
     Key? key,
     required CityModel city,
   })  : this.city = city,
@@ -29,15 +29,15 @@ class MicroMesoMacroScreen extends StatefulWidget {
 
 class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
   MicroMesoMacroModel? microMesoMacroModel;
+
   StreamSubscription? _loadMisoMesoMacroSub;
+
+  LoadMicroMesoMacroService get loadMicroMesoMacroService =>
+      Provider.of<LoadMicroMesoMacroService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-
-    LoadMicroMesoMacroService loadMicroMesoMacroService =
-        Provider.of<LoadMicroMesoMacroService>(context, listen: false);
-
     _loadMisoMesoMacroSub = loadMicroMesoMacroService.load$(widget.city).listen(
       (misoMesoMacroModel) {
         if (mounted) {
@@ -57,14 +57,14 @@ class _MicroMesoMacroScreenState extends State<MicroMesoMacroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: widget.city,
       route: MicroMesoMacroScreen.route,
       color: Colors2222.red,
       body: (microMesoMacroModel == null)
-          ? AppLoading()
+          ? const AppLoading()
           : Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
