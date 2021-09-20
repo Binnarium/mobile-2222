@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
-import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
 class DetailedMultimediaScreen extends StatefulWidget {
   /// constructor
   const DetailedMultimediaScreen({
     Key? key,
-    required MessageModel message,
-  })  : message = message,
+    required AssetDto multimedia,
+    required bool isVideo,
+  })  : multimedia = multimedia,
+        isVideo = isVideo,
         super(key: key);
 
   /// params
   static const String route = '/detailed-multimedia';
-  final MessageModel message;
+  final AssetDto multimedia;
+  final bool isVideo;
 
   @override
   _DetailedMultimediaScreenState createState() =>
@@ -26,11 +28,11 @@ class _DetailedMultimediaScreenState extends State<DetailedMultimediaScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: (widget.message.kind == 'MESSAGE#VIDEO')
+        child: widget.isVideo
             ? VideoPlayer(
-                video: widget.message.asset! as VideoDto,
+                video: widget.multimedia as VideoDto,
               )
-            : Center(child: Image.network(widget.message.asset!.url)),
+            : Center(child: Image.network(widget.multimedia.url)),
       ),
     );
   }

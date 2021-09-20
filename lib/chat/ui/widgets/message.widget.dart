@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/shared/widgets/videoPlaceholder.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
@@ -144,8 +144,10 @@ class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
           Navigator.push<MaterialPageRoute>(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      DetailedMultimediaScreen(message: message)));
+                  builder: (context) => DetailedMultimediaScreen(
+                        isVideo: false,
+                        multimedia: message.asset!,
+                      )));
         },
         child: Image.network(
           message.asset!.url,
@@ -170,13 +172,9 @@ class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding,
-      decoration: decoration,
-      width: double.infinity,
-      child: VideoPlayer(video: message.asset! as VideoDto),
-
-      /// TODO: implement screen
-      /// DetailedMultimediaScreen(message: message)));
-    );
+        padding: padding,
+        decoration: decoration,
+        width: double.infinity,
+        child: VideoPlaceholderWidget(video: message.asset! as VideoDto));
   }
 }

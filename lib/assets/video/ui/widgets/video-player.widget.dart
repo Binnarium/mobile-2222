@@ -25,34 +25,34 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
-  StreamSubscription? _currentPlayerSub;
+  // StreamSubscription? _currentPlayerSub;
 
-  CurrentVideoProvider get videoProvider =>
-      Provider.of<CurrentVideoProvider>(context, listen: false);
+  // CurrentVideoProvider get videoProvider =>
+  //     Provider.of<CurrentVideoProvider>(context, listen: false);
 
   bool showPlayer = false;
 
-  @override
-  void initState() {
-    videoProvider.close();
-    super.initState();
-    _currentPlayerSub = videoProvider.currentVideo$.listen(
-      (currentVideo) {
-        if (mounted) {
-          setState(() {
-            showPlayer = currentVideo?.path == widget.video.path;
-          });
-        }
-      },
-    );
-  }
+  // @override
+  // void initState() {
+  //   videoProvider.close();
+  //   super.initState();
+  //   _currentPlayerSub = videoProvider.currentVideo$.listen(
+  //     (currentVideo) {
+  //       if (mounted) {
+  //         setState(() {
+  //           showPlayer = currentVideo?.path == widget.video.path;
+  //         });
+  //       }
+  //     },
+  //   );
+  // }
 
-  @override
-  void dispose() {
-    _currentPlayerSub?.cancel();
-    videoProvider.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _currentPlayerSub?.cancel();
+  //   videoProvider.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,37 +60,36 @@ class _VideoPlayerState extends State<VideoPlayer> {
       // aspectRatio: CurrentVideoProvider.VIDEO_ASPECT_RATIO,
       aspectRatio: 16 / 9,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: showPlayer
-            ? _Lab2222BetterPlayer(video: widget.video)
-            : Stack(
-                children: [
-                  Image(
-                    image: widget.video.placeholderImage,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                  const Center(
-                    child: Icon(
-                      Icons.play_arrow_rounded,
-                      size: 150,
-                      color: Colors.black54,
-                    ),
-                  ),
+          borderRadius: BorderRadius.circular(8),
+          child: _Lab2222BetterPlayer(video: widget.video)
+          // : Stack(
+          //     children: [
+          //       Image(
+          //         image: widget.video.placeholderImage,
+          //         fit: BoxFit.cover,
+          //         width: double.infinity,
+          //         height: double.infinity,
+          //       ),
+          //       const Center(
+          //         child: Icon(
+          //           Icons.play_arrow_rounded,
+          //           size: 150,
+          //           color: Colors.black54,
+          //         ),
+          //       ),
 
-                  /// button action
-                  Positioned.fill(
-                    child: Material(
-                      color: Colors2222.transparent,
-                      child: InkWell(
-                        onTap: () => videoProvider.setVideo(widget.video),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-      ),
+          //       /// button action
+          //       Positioned.fill(
+          //         child: Material(
+          //           color: Colors2222.transparent,
+          //           child: InkWell(
+          //             onTap: () =>show,
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          ),
     );
   }
 }
@@ -102,15 +101,15 @@ class _Lab2222BetterPlayer extends BetterPlayer {
   }) : super(
           key: key,
           controller: BetterPlayerController(
-            BetterPlayerConfiguration(
+            const BetterPlayerConfiguration(
               aspectRatio: 16 / 9,
               fit: BoxFit.contain,
               autoPlay: false,
               allowedScreenSleep: false,
               looping: false,
-              placeholder: Center(
-                child: Image.asset('assets/images/video-placeholder.png'),
-              ),
+              // placeholder: Center(
+              //   child: Image.asset('assets/images/video-placeholder.png'),
+              // ),
               deviceOrientationsAfterFullScreen: [
                 DeviceOrientation.portraitUp,
               ],
