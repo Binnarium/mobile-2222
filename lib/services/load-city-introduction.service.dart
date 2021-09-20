@@ -3,8 +3,9 @@ import 'package:lab_movil_2222/models/city-introduction.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadCityIntroductionService {
-  final FirebaseFirestore _firestore;
   LoadCityIntroductionService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<CityIntroductionDto?> load$(CityModel city) {
     return _firestore

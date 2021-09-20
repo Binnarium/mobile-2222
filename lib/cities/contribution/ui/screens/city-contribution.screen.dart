@@ -56,9 +56,9 @@ class _ContributionScreenState extends State<ContributionScreen> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     collaborationActivitySub?.cancel();
-    super.deactivate();
+    super.dispose();
   }
 
   @override
@@ -101,7 +101,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
             padding: const EdgeInsets.only(bottom: 32),
             child: Center(
               child: Image(
-                image: CoinsImages.contribution(),
+                image: const CoinsImages.contribution(),
                 alignment: Alignment.bottomRight,
                 fit: BoxFit.contain,
                 width: min(160, size.width * 0.4),

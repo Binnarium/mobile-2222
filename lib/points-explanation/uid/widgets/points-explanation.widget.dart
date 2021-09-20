@@ -25,7 +25,7 @@ class _ApproveTextState extends State<ApproveText> {
   void initState() {
     super.initState();
 
-    GetPointsExplanationService loadExplanationService =
+    final GetPointsExplanationService loadExplanationService =
         Provider.of<GetPointsExplanationService>(context, listen: false);
 
     _explanationSub = loadExplanationService.explanation$().listen(
@@ -48,7 +48,7 @@ class _ApproveTextState extends State<ApproveText> {
   @override
   Widget build(BuildContext context) {
     return pointsExplanation == null
-        ? AppLoading()
+        ? const AppLoading()
         : MarkdownCard(
             content: pointsExplanation!.explanation,
           );

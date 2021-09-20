@@ -14,8 +14,11 @@ import 'package:provider/provider.dart';
 const bool enableAutoScroll = false;
 
 /// main screen of the app to navigate any city or content
+// ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
-  static const String route = '/home';
+  const HomeScreen({Key? key}) : super(key: key);
+
+  static String get route => '/home';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -61,12 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: (_cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
-          ? Center(
+          ? const Center(
               child: AppLoading(),
             )
 
           /// otherwise load the map with cities
-          : Container(
+          : SizedBox(
               width: double.infinity,
               height: double.infinity,
               child: Stack(

@@ -75,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         ///Stack para apilar el background y luego el cuerpo de la pantalla
         body: BackgroundDecoration(
+          // ignore: prefer_const_literals_to_create_immutables
           backgroundDecorationsStyles: [BackgroundDecorationStyle.topLeft],
           child: ListView(
             padding: EdgeInsets.symmetric(
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               /// loading animation
               if (loginPayload == null)
-                Center(
+                const Center(
                   child: AppLoading(),
                 )
 
@@ -155,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: textTheme.headline6!.apply(fontSizeFactor: 1.3),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
 
@@ -187,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     elevation: 5,
                   ),
                   onPressed: _handleLogin,
-                  child: Text('Iniciar Sesión'),
+                  child: const Text('Iniciar Sesión'),
                 ),
 
                 /// register
@@ -206,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String? _validatePassword(String? value) {
-    final int numberCaracteres = 6;
+    const int numberCaracteres = 6;
     if (value == null || value.isEmpty) {
       return 'Ingresa una contraseña valida';
     }
@@ -217,9 +218,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String? _validateEmail(String? email) {
-    bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-        .hasMatch(email!);
-    if (!emailValid) return 'Correo electrónico invalido';
+    final bool emailValid =
+        RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+            .hasMatch(email!);
+    if (!emailValid) {
+      return 'Correo electrónico invalido';
+    }
     return null;
   }
 
@@ -239,19 +243,19 @@ class _LoginScreenState extends State<LoginScreen> {
       } on LoginException catch (e) {
         if (e.code == LoginErrorCode.invalidEmail) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.invalidEmail(),
+            const AuthenticationSnackbar.invalidEmail(),
           );
         } else if (e.code == LoginErrorCode.playerNotFound) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.playerNotFound(),
+            const AuthenticationSnackbar.playerNotFound(),
           );
         } else if (e.code == LoginErrorCode.userDisabled) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.somethingWentWrong(),
+            const AuthenticationSnackbar.somethingWentWrong(),
           );
         } else if (e.code == LoginErrorCode.userDisabled) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.disabledAccount(),
+            const AuthenticationSnackbar.disabledAccount(),
           );
         } else if (e.code == LoginErrorCode.userNotFound) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -259,11 +263,11 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else if (e.code == LoginErrorCode.wrongPassword) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.wrongPassword(),
+            const AuthenticationSnackbar.wrongPassword(),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.somethingWentWrong(),
+            const AuthenticationSnackbar.somethingWentWrong(),
           );
         }
       }

@@ -14,6 +14,7 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widge
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
 
@@ -53,6 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold2222.navigation(
       activePage: Lab2222NavigationBarPages.profile,
       body: BackgroundDecoration(
+        // ignore: prefer_const_literals_to_create_immutables
         backgroundDecorationsStyles: [
           BackgroundDecorationStyle.path,
           BackgroundDecorationStyle.topLeft
@@ -63,11 +65,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.symmetric(horizontal: sideSpacing, vertical: 64),
           children: [
             if (player == null)
-              Center(child: AppLoading())
+              const Center(child: AppLoading())
             else ...[
               /// title
               Padding(
-                padding: EdgeInsets.only(bottom: 32),
+                padding: const EdgeInsets.only(bottom: 32),
                 child: Text(
                   'Mi viaje al día'.toUpperCase(),
                   style: Theme.of(context).textTheme.headline3,
@@ -77,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               /// player profile
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   bottom: 64,
                 ),
                 child: Row(
@@ -88,23 +90,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: InkWell(
                           borderRadius: BorderRadius.circular(40),
                           onTap: () async {
-                            return await showAvatarImage(context);
+                            return showAvatarImage(context);
                           },
-                          child: Container(
+                          child: SizedBox(
                             height: 80,
                             child: Stack(children: [
-                              (player?.avatarImage.url == '')
-                                  ? CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                          'assets/backgrounds/decorations/elipse_profile.png'),
-                                      maxRadius: 40,
-                                    )
-                                  : CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        player!.avatarImage.url,
-                                      ),
-                                      maxRadius: 40,
-                                    ),
+                              if (player?.avatarImage.url == '')
+                                const CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                      'assets/backgrounds/decorations/elipse_profile.png'),
+                                  maxRadius: 40,
+                                )
+                              else
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    player!.avatarImage.url,
+                                  ),
+                                  maxRadius: 40,
+                                ),
                               Positioned(
                                 bottom: -6,
                                 right: -14,
@@ -120,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
 
                     /// spacing between picture and information
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
 
                     /// page content
                     Expanded(
@@ -134,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
 
                           /// spacing
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
 
                           /// email
                           Text(
@@ -154,12 +157,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: PlayerGamification(player: player!),
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(bottom: 25),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 25),
                 child: ApproveText(),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 25),
+                padding: const EdgeInsets.only(bottom: 25),
                 child: DaysLeftWidget(),
               ),
             ],
@@ -175,20 +178,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return Center(
-              child: Container(
+              child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                (player?.avatarImage.url == '')
-                    ? Image(
-                        image: AssetImage(
-                            'assets/backgrounds/decorations/elipse_profile.png'),
-                      )
-                    : Image.network(
-                        player!.avatarImage.url,
-                      ),
-                SizedBox(
+                if (player?.avatarImage.url == '')
+                  const Image(
+                    image: AssetImage(
+                        'assets/backgrounds/decorations/elipse_profile.png'),
+                  )
+                else
+                  Image.network(
+                    player!.avatarImage.url,
+                  ),
+                const SizedBox(
                   height: 10,
                 ),
               ],

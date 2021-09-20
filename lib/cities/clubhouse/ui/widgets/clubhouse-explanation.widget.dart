@@ -30,7 +30,7 @@ class _ClubhouseExplanationWidgetState
   void initState() {
     super.initState();
 
-    GetClubhouseExplanationService clubhouseExplanationService =
+    final GetClubhouseExplanationService clubhouseExplanationService =
         Provider.of<GetClubhouseExplanationService>(context, listen: false);
     _explanationSub = clubhouseExplanationService.explanation$.listen(
       (event) {
@@ -53,7 +53,7 @@ class _ClubhouseExplanationWidgetState
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return clubhouseExplanation == null
-        ? AppLoading()
+        ? const AppLoading()
         : Container(
             decoration: BoxDecoration(
               color: Colors2222.white,

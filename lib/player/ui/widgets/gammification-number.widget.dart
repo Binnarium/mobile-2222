@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class GamificationNumber extends StatefulWidget {
   final int number;
   final Color color;
+  // ignore: sort_constructors_first
   const GamificationNumber({
     Key? key,
     required this.number,

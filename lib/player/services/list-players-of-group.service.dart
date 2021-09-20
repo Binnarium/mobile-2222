@@ -6,17 +6,21 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ListPlayerOfGroupService {
-  final FirebaseFirestore _firestore;
-  final CurrentPlayerService _currentPlayerService;
-
+  /// constructor
   ListPlayerOfGroupService(BuildContext context)
       : _firestore = FirebaseFirestore.instance,
         _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false);
 
+  /// params
+  final FirebaseFirestore _firestore;
+  final CurrentPlayerService _currentPlayerService;
+
   Stream<List<PlayerModel>> get group$ =>
       _currentPlayerService.player$.switchMap((currentUser) {
-        if (currentUser == null) return Stream.value([]);
+        if (currentUser == null) {
+          return Stream.value([]);
+        }
 
         /// get collection of users
         /// from the players collections
@@ -32,8 +36,8 @@ class ListPlayerOfGroupService {
 
             /// obtain docs of payload
             .map(
-              (snap) =>
-                  snap.docs.map((doc) => doc.data() as Map<String, dynamic>),
+              (snap) => snap.docs.map((doc) =>
+                  doc.data() as Map<String, dynamic>? ?? <String, dynamic>{}),
             )
 
             /// map data to instances of group player

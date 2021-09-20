@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
@@ -8,14 +10,31 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-class SplashScreen extends StatelessWidget {
-  SplashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
-  static const String route = '/splash';
+  static const String route = '/';
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   /// splash video controller
   final VideoPlayerController _controller =
       VideoPlayerController.asset('assets/videos/splash-video.mp4');
+
+  StreamSubscription? navigatingSub;
+
+  IsUserSignInService get _userService =>
+      Provider.of<IsUserSignInService>(context, listen: false);
+
+  @override
+  void dispose() {
+    navigatingSub?.cancel();
+    navigatingSub = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +51,21 @@ class SplashScreen extends StatelessWidget {
   }
 
   /// redirect user to navigate to next page, to sign in page, or to home page if already signed in
-  Future<void> navigateNextPage(BuildContext context) async {
-    /// authenticate user and redirect to correct screen
-    final UserService _userService =
-        Provider.of<UserService>(context, listen: false);
-    final bool isSignIn = await _userService.isSignIn$().first;
+  void navigateNextPage(BuildContext context) {
+    if (navigatingSub != null) {
+      return;
+    }
 
-    Navigator.pushReplacementNamed(
-      context,
-      isSignIn ? HomeScreen.route : StartVideoScreen.route,
+    /// authenticate user and redirect to correct screen
+    navigatingSub = _userService.isSignIn$.listen(
+      (isSignIn) async {
+        await Navigator.pushReplacementNamed(
+          context,
+          isSignIn ? HomeScreen.route : StartVideoScreen.route,
+        );
+        navigatingSub?.cancel();
+        navigatingSub = null;
+      },
     );
   }
 }

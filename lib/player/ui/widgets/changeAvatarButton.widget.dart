@@ -8,13 +8,14 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ChangeAvatarButton extends StatefulWidget {
-  /// player is required to avoid charging again the player service stream
-  final PlayerModel player;
-
-  ChangeAvatarButton({
+  /// constructor
+  const ChangeAvatarButton({
     Key? key,
     required this.player,
   }) : super(key: key);
+
+  /// player is required to avoid charging again the player service stream
+  final PlayerModel player;
 
   @override
   _ChangeAvatarButtonState createState() => _ChangeAvatarButtonState();
@@ -32,27 +33,32 @@ class _ChangeAvatarButtonState extends State<ChangeAvatarButton> {
       // onPressed: _changeAvatar,
       onPressed: _changeAvatar,
       style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           primary: Colors.black,
           onPrimary: Colors.white,
           elevation: 0),
-      child: Icon(Icons.photo_camera_rounded),
+      child: const Icon(Icons.photo_camera_rounded),
     );
   }
 
   /// method to change the avatarImage
+  // ignore: avoid_void_async
   void _changeAvatar() async {
-    if (_uploadFileSub != null) return;
-    String oldUrl = widget.player.avatarImage.url;
+    if (_uploadFileSub != null) {
+      return;
+    }
+    final String oldUrl = widget.player.avatarImage.url;
     print('old image url');
-    UploadImageService uploadImageService =
+    final UploadImageService uploadImageService =
         Provider.of<UploadImageService>(context, listen: false);
 
     _uploadFileSub = uploadImageService
         .upload$('players/${widget.player.uid}/assets')
         .switchMap((image) => _updateAvatarService.updateAvatar$(image, oldUrl))
         .listen((sended) {
-      if (sended) print('Imagen cambiada correctamente');
+      if (sended) {
+        print('Imagen cambiada correctamente');
+      }
     }, onDone: () {
       _uploadFileSub?.cancel();
       _uploadFileSub = null;

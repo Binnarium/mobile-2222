@@ -3,8 +3,9 @@ import 'package:lab_movil_2222/models/city-history.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
 class LoadCityHistoryService {
-  final FirebaseFirestore _firestore;
   LoadCityHistoryService() : _firestore = FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
 
   Stream<CityHistoryDto?> load$(CityModel city) {
     return _firestore

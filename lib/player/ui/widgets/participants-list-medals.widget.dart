@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ParticipantsListMedalsItem extends ListTile {
+  // ignore: use_key_in_widget_constructors
   ParticipantsListMedalsItem({
     Function(BuildContext)? createChatCallback,
     required PlayerModel participant,
@@ -27,8 +28,8 @@ class ParticipantsListMedalsItem extends ListTile {
             onPressed: createChatCallback == null
                 ? () {}
                 : () => createChatCallback(context),
-            icon: Icon(Icons.card_giftcard_rounded),
-            label: Text('Medalla'),
+            icon: const Icon(Icons.card_giftcard_rounded),
+            label: const Text('Medalla'),
             style: TextButton.styleFrom(
               primary: createChatCallback == null
                   ? color.withOpacity(0.7)

@@ -11,10 +11,10 @@ import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 
 class StageObjetivesScreen extends StatefulWidget {
+  const StageObjetivesScreen({Key? key, required this.city}) : super(key: key);
+
   static const String route = '/objectives';
   final CityModel city;
-
-  const StageObjetivesScreen({Key? key, required this.city}) : super(key: key);
 
   @override
   _StageObjectivesScreenState createState() => _StageObjectivesScreenState();
@@ -27,6 +27,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     super.initState();
   }
 
+  // ignore: avoid_void_async
   void _asyncLecture() async {
     await _readCompetences();
   }
@@ -37,6 +38,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: StageObjetivesScreen.route,
       body: _stageBody(size),
@@ -44,7 +46,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   Container _stageBody(Size size) {
-    double bodyContainerHeight = size.height * 0.75;
+    final double bodyContainerHeight = size.height * 0.75;
 
     double spacedBodyContainers = bodyContainerHeight * 0.035;
     if (size.width > 550) {
@@ -139,7 +141,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             }
 
             return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: contents.data?.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -175,8 +177,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
               ),
             );
           }
-          final List<CompetenceModel> compeTemp =
-              compe.data as List<CompetenceModel>;
+          final List<CompetenceModel>? compeTemp = compe.data;
 
           return Center(
             child: Padding(
@@ -186,7 +187,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
                 direction: Axis.vertical,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  for (var item in compeTemp)
+                  for (var item in compeTemp!)
                     CompeResourcesListItem(
                       name: item.name,
                       image: item.image,
@@ -201,7 +202,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   Future<String> _readObjective() async {
-    String contentsTemp = "";
+    String contentsTemp = '';
     await FirebaseFirestore.instance
         .collection('cities')
         .doc(widget.city.id)
@@ -221,7 +222,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
   }
 
   Future<List<CompetenceModel>> _readCompetences() async {
-    DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
+    final DocumentSnapshot objectiveSnapshot = await FirebaseFirestore.instance
         .collection('cities')
         .doc(widget.city.id)
         .collection('pages')
@@ -229,9 +230,9 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
         .get();
 
     if (objectiveSnapshot.exists) {
-      dynamic data = objectiveSnapshot.data()!;
+      final dynamic data = objectiveSnapshot.data()!;
       //to access to firebase reference
-      List<Future<CompetenceModel>> ideasRef =
+      final List<Future<CompetenceModel>> ideasRef =
           (data['competences'] as List<dynamic>)
               .map((dynamic e) => e as DocumentReference)
               .map((e) async {
@@ -242,6 +243,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             image: payload['image'] as Map<String, dynamic>);
       }).toList();
 
+      // ignore: unnecessary_await_in_return
       return await Future.wait(ideasRef);
     }
 

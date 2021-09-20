@@ -10,11 +10,11 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class StartVideoScreen extends StatefulWidget {
-  static const String route = '/start-video';
-
   StartVideoScreen({
     Key? key,
   }) : super(key: key);
+
+  static const String route = '/start-video';
 
   @override
   _StartVideoScreenState createState() => _StartVideoScreenState();
@@ -29,7 +29,7 @@ class _StartVideoScreenState extends State<StartVideoScreen> {
   void initState() {
     super.initState();
 
-    LoadStartVideoService loadStartVideoService =
+    final LoadStartVideoService loadStartVideoService =
         Provider.of<LoadStartVideoService>(context, listen: false);
 
     _loadStartVideoModel = loadStartVideoService.load$().listen(
@@ -55,7 +55,7 @@ class _StartVideoScreenState extends State<StartVideoScreen> {
       body: Stack(
         children: <Widget>[
           /// loading state
-          Center(child: AppLoading()),
+          const Center(child: AppLoading()),
 
           /// background video
           if (startVideo != null)

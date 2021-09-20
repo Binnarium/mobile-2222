@@ -142,10 +142,13 @@ class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
       child: InkWell(
         onTap: () {
           Navigator.push<MaterialPageRoute>(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      DetailedMultimediaScreen(message: message)));
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailedMultimediaScreen(
+                multimedia: message.asset!,
+              ),
+            ),
+          );
         },
         child: Image.network(
           message.asset!.url,
@@ -174,9 +177,6 @@ class _VideoMessageCard extends _MessageCard<VideoMessageModel> {
       decoration: decoration,
       width: double.infinity,
       child: VideoPlayer(video: message.asset! as VideoDto),
-
-      /// TODO: implement screen
-      /// DetailedMultimediaScreen(message: message)));
     );
   }
 }

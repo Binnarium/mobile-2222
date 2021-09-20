@@ -16,11 +16,11 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClubhouseExplanationScreen extends StatefulWidget {
-  static const String route = '/chapterClubhouseExplanation';
-  final CityModel city;
-
   const ClubhouseExplanationScreen({Key? key, required this.city})
       : super(key: key);
+
+  static const String route = '/chapterClubhouseExplanation';
+  final CityModel city;
 
   @override
   _ClubhouseExplanationScreenState createState() =>
@@ -37,7 +37,7 @@ class _ClubhouseExplanationScreenState
   void initState() {
     super.initState();
 
-    GetClubhouseExplanationService clubhouseExplanationService =
+    final GetClubhouseExplanationService clubhouseExplanationService =
         Provider.of<GetClubhouseExplanationService>(context, listen: false);
     _explanationSub = clubhouseExplanationService.explanation$.listen(
       (event) {
@@ -63,6 +63,7 @@ class _ClubhouseExplanationScreenState
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.topRight],
       route: ClubhouseExplanationScreen.route,
       body: ListView(
@@ -88,7 +89,7 @@ class _ClubhouseExplanationScreenState
 
           /// page content
           if (clubhouseExplanation == null)
-            AppLoading()
+            const AppLoading()
           else ...[
             /// video provider
             Padding(
@@ -125,7 +126,7 @@ class _ClubhouseExplanationScreenState
                   primary: Colors2222.white,
                   backgroundColor: Colors2222.black,
                 ),
-                child: Text(
+                child: const Text(
                   'Únete a nuestro room de clubhouse',
                   textAlign: TextAlign.center,
                 ),

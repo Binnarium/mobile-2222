@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
 class IdeaResourcesListItem extends StatelessWidget {
-  final String? description;
-
   const IdeaResourcesListItem({Key? key, this.description}) : super(key: key);
+
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class IdeaResourcesListItem extends StatelessWidget {
         : descTemp = description!;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       width: double.infinity,
       // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
 

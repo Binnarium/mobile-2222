@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ChapterTitleSection extends StatelessWidget {
-  final String title;
-
   ChapterTitleSection({
     Key? key,
     required String title,
   })  : title = title.toUpperCase(),
         super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {

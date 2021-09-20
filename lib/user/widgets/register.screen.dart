@@ -12,6 +12,7 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:provider/provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class RegisterScreen extends StatefulWidget {
   static const String route = '/register';
 
@@ -39,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         backgroundColor: Colors2222.red,
         body: BackgroundDecoration(
+          // ignore: prefer_const_literals_to_create_immutables
           backgroundDecorationsStyles: [BackgroundDecorationStyle.bottomRight],
           child: ListView(
             padding: EdgeInsets.symmetric(
@@ -116,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   elevation: 5,
                 ),
                 onPressed: _register,
-                child: Text('REGISTRATE AHORA'),
+                child: const Text('REGISTRATE AHORA'),
               ),
 
               /// already have an account button
@@ -125,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 style: TextButton.styleFrom(primary: Colors2222.white),
-                child: Text('¿Ya tienes una cuenta? Inicia Sesión!'),
+                child: const Text('¿Ya tienes una cuenta? Inicia Sesión!'),
               ),
             ],
           ),
@@ -135,12 +137,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   String? _validatePasswordsMatch(String? password) {
-    if (_formValue.password != password) return 'Las contraseñas no coinciden';
+    if (_formValue.password != password) {
+      return 'Las contraseñas no coinciden';
+    }
     return null;
   }
 
   String? _validatePassword(String? value) {
-    final int numberCaracteres = 6;
+    const int numberCaracteres = 6;
     if (value == null || value.isEmpty) {
       return 'Ingresa una contraseña valida';
     }
@@ -151,9 +155,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   String? _validateEmail(String? email) {
-    bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-        .hasMatch(email!);
-    if (!emailValid) return 'Correo electrónico invalido';
+    final bool emailValid =
+        RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+            .hasMatch(email!);
+    if (!emailValid) {
+      return 'Correo electrónico invalido';
+    }
     return null;
   }
 
@@ -181,19 +188,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         } else if (e.code == RegisterErrorCode.notCreated) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.accountNotRegistered(),
+            const AuthenticationSnackbar.accountNotRegistered(),
           );
         } else if (e.code == RegisterErrorCode.notInscribed) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.notInscribed(),
+            const AuthenticationSnackbar.notInscribed(),
           );
         } else if (e.code == RegisterErrorCode.weakPassword) {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.weakPassword(),
+            const AuthenticationSnackbar.weakPassword(),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            AuthenticationSnackbar.somethingWentWrong(),
+            const AuthenticationSnackbar.somethingWentWrong(),
           );
         }
       }

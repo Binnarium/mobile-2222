@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CitiesMapPositionsService {
+
   CitiesMapPositionsService(BuildContext context)
       : _citiesService = Provider.of<CitiesService>(context, listen: false);
 
@@ -21,7 +22,7 @@ class CitiesMapPositionsService {
         .map((index, city) {
           int top = 0;
           int left = 0;
-          int size = 12;
+          const int size = 12;
           bool textOnTop = false;
 
           /// calculate pos

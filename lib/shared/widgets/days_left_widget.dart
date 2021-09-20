@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
+// ignore: use_key_in_widget_constructors
 class DaysLeftWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ FutureBuilder<String> _introductionBody(BuildContext context, Size size) {
         return Text(days.error.toString());
       }
       if (days.connectionState == ConnectionState.waiting) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(
               Colors2222.red,
@@ -61,7 +62,7 @@ FutureBuilder<String> _introductionBody(BuildContext context, Size size) {
           ],
         );
       }
-      return Text('Error loading daysleft _configuration_');
+      return const Text('Error loading daysleft _configuration_');
     },
   );
 }
@@ -76,6 +77,7 @@ Future<String> _daysLeftReading() async {
     ErrorDescription('Document _configuration_ does not exists');
   }
 
+  // ignore: cast_nullable_to_non_nullable
   final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
   final DateTime date =
       (payload['courseFinalizationDate'] as Timestamp).toDate();

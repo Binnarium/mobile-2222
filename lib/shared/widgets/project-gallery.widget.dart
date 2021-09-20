@@ -11,6 +11,7 @@ class ProjectGalleryWidget extends StatefulWidget {
   final CityModel city;
   final String userUID;
   final List<PlayerProject> projects;
+  // ignore: sort_constructors_first
   const ProjectGalleryWidget({
     Key? key,
     required this.city,
@@ -27,8 +28,9 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
-    List<PlayerProject> cityProjects = [];
+    final List<PlayerProject> cityProjects = [];
     List<Widget> items = [];
+    // ignore: avoid_function_literals_in_foreach_calls
     widget.projects.forEach((element) {
       // print(element.cityName);
       if (element.cityID == widget.city.name) {
@@ -41,46 +43,48 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
     }
     return Column(
       children: [
-        (items.isEmpty)
-            ? Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Column(
-                  children: [
-                    Image.asset(
-                      'assets/images/empty-projects.png',
-                      width: size.width * 0.4,
-                    ),
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Text(
-                      'Aún no tienes ningún proyecto',
-                      style: textTheme.headline5,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+        if (items.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/images/empty-projects.png',
+                  width: size.width * 0.4,
                 ),
-              )
-            : StaggeredGridView.countBuilder(
-                crossAxisCount: 3,
-                staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                itemCount: items.length,
-                padding: EdgeInsets.all(12),
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 10,
-                itemBuilder: (context, index) {
-                  final item = items.elementAt(index);
-                  return item;
-                },
-              ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Text(
+                  'Aún no tienes ningún proyecto',
+                  style: textTheme.headline5,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          )
+        else
+          StaggeredGridView.countBuilder(
+            crossAxisCount: 3,
+            staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
+            itemCount: items.length,
+            padding: const EdgeInsets.all(12),
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 10,
+            itemBuilder: (context, index) {
+              final item = items.elementAt(index);
+              return item;
+            },
+          ),
       ],
     );
   }
 
   List<Widget> _gridItemsList(List<PlayerProject> projects) {
-    List<Widget> items = [];
+    final List<Widget> items = [];
+    // ignore: avoid_function_literals_in_foreach_calls
     projects.forEach((project) {
       if (project.cityID == widget.city.name) {
         items.add(_gridItem(project));
@@ -94,7 +98,7 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
       type: MaterialType.transparency,
       child: InkWell(
         onTap: () async {
-          return await showDialog(
+          return showDialog(
               context: context,
               builder: (context) {
                 return fileDialog(project);

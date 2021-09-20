@@ -23,14 +23,14 @@ Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colega
 ''';
 
 class ProjectAwardsProject extends StatefulWidget {
-  static const route = '/medals-maraton';
-
-  final CityModel city;
-
-  ProjectAwardsProject({
+  const ProjectAwardsProject({
     Key? key,
     required this.city,
   }) : super(key: key);
+
+  static const route = '/medals-maraton';
+
+  final CityModel city;
 
   @override
   _ProjectAwardsProjectState createState() => _ProjectAwardsProjectState();
@@ -71,13 +71,14 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
 
     return Scaffold2222.city(
       city: widget.city,
+      // ignore: prefer_const_literals_to_create_immutables
       backgrounds: [BackgroundDecorationStyle.bottomRight],
       route: ProjectAwardsProject.route,
       body: ListView(
         children: [
           /// icon item
           Padding(
-            padding: EdgeInsets.only(bottom: 32.0),
+            padding: const EdgeInsets.only(bottom: 32.0),
             child: LogosHeader(showStageLogoCity: widget.city),
           ),
 
@@ -100,7 +101,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
             child: Center(
               child: Image(
-                image: CoinsImages.hackaton(),
+                image: const CoinsImages.hackaton(),
                 alignment: Alignment.bottomRight,
                 fit: BoxFit.contain,
                 width: min(160, size.width * 0.4),
@@ -111,14 +112,14 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
           /// explanation
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
-            child: Markdown2222(
+            child: const Markdown2222(
               data: explanationText,
             ),
           ),
 
           ///If players no load
           if (allPlayers == null)
-            AppLoading()
+            const AppLoading()
 
           /// show a list of all players of group
           else ...[

@@ -4,6 +4,7 @@ class CompetenceModel {
   final Map<String, dynamic> image;
   final String? id;
 
+  // ignore: sort_constructors_first
   CompetenceModel({
     required this.name,
     this.kind,
