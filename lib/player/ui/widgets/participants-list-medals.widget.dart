@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-maraton-medal.service.dart';
 
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -10,6 +11,8 @@ class ParticipantsListMedalsItem extends ListTile {
     required BuildContext context,
     Color color = Colors2222.black,
     Color primaryColor = Colors2222.red,
+
+    
   }) : super(
           contentPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,
