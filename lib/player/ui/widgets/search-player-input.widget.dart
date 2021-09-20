@@ -58,9 +58,9 @@ class _SearchPlayersWidgetState extends State<SearchPlayersWidget> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     _searchValue.close();
-    super.deactivate();
+    super.dispose();
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'package:lab_movil_2222/models/asset.dto.dart';
 
-class ProjectDto {
-  ProjectDto.fromJson(Map<String, dynamic> payload)
+class ProjectScreenModel {
+  ProjectScreenModel.fromJson(Map<String, dynamic> payload)
       : activity =
             payload['activity'] as String? ?? 'No hay actividad definida',
         explanation = payload['explanation'] as String? ??

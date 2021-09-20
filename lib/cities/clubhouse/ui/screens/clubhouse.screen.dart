@@ -62,16 +62,11 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
   }
 
   @override
-  void deactivate() {
-    clubhousesSub?.cancel();
-    _loadClubhousesActivitiesSub?.cancel();
-    super.deactivate();
-  }
-
-  @override
   void dispose() {
     clubhousesSub?.cancel();
+    clubhousesSub = null;
     _loadClubhousesActivitiesSub?.cancel();
+    _loadClubhousesActivitiesSub = null;
     super.dispose();
   }
 

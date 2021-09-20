@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class BackgroundVideo extends StatefulWidget {
-  BackgroundVideo({
+  const BackgroundVideo({
     Key? key,
     required this.controller,
     this.lopping = true,
@@ -27,34 +27,30 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
   @override
   void initState() {
     super.initState();
-    final VideoPlayerController ctrl = widget.controller;
 
-    ctrl.initialize().then((value) async {
+    widget.controller.initialize().then((_) async {
       /// add event listeners
       if (widget.onComplete != null) {
-        ctrl.addListener(() {
-          /// add completed callback
-          if (ctrl.value.isInitialized &&
-              (ctrl.value.duration == ctrl.value.position)) {
-            widget.onComplete!();
-          }
-        });
+        widget.controller.addListener(_videoCompletedListener);
       }
 
       /// set looping if enabled
-      if (widget.lopping) await ctrl.setLooping(true);
+      if (widget.lopping) {
+        await widget.controller.setLooping(true);
+      }
 
       /// set volume to 0 in case the video has volume
-      await ctrl.setVolume(0);
-      await ctrl.play();
+      await widget.controller.setVolume(0);
+      await widget.controller.play();
       setState(() {});
     });
   }
 
-  @override
+  @override 
   void dispose() {
-    super.dispose();
+    widget.controller.removeListener(_videoCompletedListener);
     widget.controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -70,7 +66,7 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
               height: widget.controller.value.size.height,
               child: AnimatedOpacity(
                   opacity: widget.controller.value.isInitialized ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: VideoPlayer(widget.controller)),
             ),
           ),
@@ -92,5 +88,15 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
           ),
       ],
     );
+  }
+
+  /// listener to run callback when the video completed
+  /// add completed callback
+  void _videoCompletedListener() {
+    if (widget.controller.value.isInitialized &&
+        (widget.controller.value.duration ==
+            widget.controller.value.position)) {
+      widget.onComplete!();
+    }
   }
 }

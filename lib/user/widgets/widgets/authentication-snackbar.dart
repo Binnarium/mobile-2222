@@ -77,7 +77,7 @@ class AuthenticationSnackbar extends SnackBar {
           content: Text('No se encontro información del jugador'),
         );
 
-  /// This snackbar will appear if the account is deactivated
+  /// This snackbar will appear if the account is disposed
   AuthenticationSnackbar.disabledAccount({
     Key? key,
   }) : super(

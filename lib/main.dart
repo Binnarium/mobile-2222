@@ -16,10 +16,10 @@ import 'package:lab_movil_2222/app-222.dart';
 ///
 ///   All right reserved Binnarium SAS.
 ///
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// TODO: configure name with production and development stages
+  /// initialize firebase services
   await Firebase.initializeApp();
 
   /// main entry point to build application
