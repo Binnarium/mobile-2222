@@ -120,10 +120,14 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
             const AppLoading()
           else ...[
             Padding(
-              padding: const EdgeInsets.only(bottom: 34.0),
+              padding: EdgeInsets.only(
+                left: size.width * 0.08,
+                right: size.width * 0.08,
+                bottom: 40,
+              ),
               child: Text(
                 clubhouseActivity!.thematic,
-                style: textTheme.headline5,
+                style: textTheme.headline6,
                 textAlign: TextAlign.center,
               ),
             ),
