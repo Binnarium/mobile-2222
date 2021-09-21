@@ -39,40 +39,56 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
       : super(
           builder: (context) {
             print('called router at: ${settings.name}');
-            if (settings.name == SplashScreen.route) return SplashScreen();
+            if (settings.name == SplashScreen.route) {
+              return const SplashScreen();
+            }
 
             if (settings.name == StartVideoScreen.route)
               return StartVideoScreen();
 
-            if (settings.name == WelcomeScreen.route) return WelcomeScreen();
+            if (settings.name == WelcomeScreen.route) {
+              return WelcomeScreen();
+            }
 
-            if (settings.name == TeamScreen.route) return TeamScreen();
+            if (settings.name == TeamScreen.route) {
+              return TeamScreen();
+            }
 
-            if (settings.name == LoginScreen.route) return LoginScreen();
+            if (settings.name == LoginScreen.route) {
+              return const LoginScreen();
+            }
 
-            if (settings.name == RegisterScreen.route) return RegisterScreen();
+            if (settings.name == RegisterScreen.route) {
+              return RegisterScreen();
+            }
 
-            if (settings.name == HomeScreen.route) return HomeScreen();
+            if (settings.name == HomeScreen.route) {
+              return const HomeScreen();
+            }
 
-            if (settings.name == ProfileScreen.route) return ProfileScreen();
+            if (settings.name == ProfileScreen.route) {
+              return ProfileScreen();
+            }
 
             /// all chats screens
-            if (settings.name == ChatsScreen.route) return ChatsScreen();
+            if (settings.name == ChatsScreen.route) {
+              return const ChatsScreen();
+            }
 
             if (settings.name == CityIntroductionScreen.route) {
-              final args = settings.arguments as CityIntroductionScreen;
+              final args = settings.arguments! as CityIntroductionScreen;
               return CityIntroductionScreen(
                 city: args.city,
               );
             }
             if (settings.name == MessagesScreen.route) {
-              final args = settings.arguments as MessagesScreen;
+              final args = settings.arguments! as MessagesScreen;
               return MessagesScreen(
                 chat: args.chat,
               );
             }
             if (settings.name == ChatParticipantsScreen.route) {
-              final args = settings.arguments as ChatParticipantsScreen;
+              final args = settings.arguments! as ChatParticipantsScreen;
               return ChatParticipantsScreen(
                 chat: args.chat,
               );
@@ -80,55 +96,55 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
 
             /// to go to the multimedia detailed screen in the chat
             if (settings.name == DetailedMultimediaScreen.route) {
-              final args = settings.arguments as DetailedMultimediaScreen;
+              final args = settings.arguments! as DetailedMultimediaScreen;
               return DetailedMultimediaScreen(
                 multimedia: args.multimedia,
               );
             }
             if (settings.name == IntroductoryVideoScreen.route) {
-              final args = settings.arguments as IntroductoryVideoScreen;
+              final args = settings.arguments! as IntroductoryVideoScreen;
               return IntroductoryVideoScreen(
                 city: args.city,
               );
             }
             if (settings.name == StageHistoryScreen.route) {
-              final args = settings.arguments as StageHistoryScreen;
+              final args = settings.arguments! as StageHistoryScreen;
               return StageHistoryScreen(
                 city: args.city,
               );
             }
             if (settings.name == StageMonsterScreen.route) {
-              final args = settings.arguments as StageMonsterScreen;
+              final args = settings.arguments! as StageMonsterScreen;
               return StageMonsterScreen(
                 city: args.city,
               );
             }
             if (settings.name == ArgumentIdeasScreen.route) {
-              final args = settings.arguments as ArgumentIdeasScreen;
+              final args = settings.arguments! as ArgumentIdeasScreen;
               return ArgumentIdeasScreen(
                 city: args.city,
               );
             }
             if (settings.name == StageObjetivesScreen.route) {
-              final args = settings.arguments as StageObjetivesScreen;
+              final args = settings.arguments! as StageObjetivesScreen;
               return StageObjetivesScreen(
                 city: args.city,
               );
             }
             if (settings.name == ContentScreen.route) {
-              final args = settings.arguments as ContentScreen;
+              final args = settings.arguments! as ContentScreen;
               return ContentScreen(
                 city: args.city,
               );
             }
             if (settings.name == ResourcesScreen.route) {
-              final args = settings.arguments as ResourcesScreen;
+              final args = settings.arguments! as ResourcesScreen;
               return ResourcesScreen(
                 city: args.city,
               );
             }
             if (settings.name == ActivitiesScreen.route) {
-              final args = settings.arguments as ActivitiesScreen;
+              final args = settings.arguments! as ActivitiesScreen;
               return ActivitiesScreen(
                 city: args.city,
               );
@@ -136,7 +152,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
 
             ///
             if (settings.name == ContributionExplanationScreen.route) {
-              final args = settings.arguments as ContributionExplanationScreen;
+              final args = settings.arguments! as ContributionExplanationScreen;
               return ContributionExplanationScreen(
                 city: args.city,
               );
@@ -144,62 +160,62 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
 
             ///
             if (settings.name == ContributionScreen.route) {
-              final args = settings.arguments as ContributionScreen;
+              final args = settings.arguments! as ContributionScreen;
               return ContributionScreen(
                 city: args.city,
               );
             }
             if (settings.name == ClubhouseExplanationScreen.route) {
-              final args = settings.arguments as ClubhouseExplanationScreen;
+              final args = settings.arguments! as ClubhouseExplanationScreen;
               return ClubhouseExplanationScreen(
                 city: args.city,
               );
             }
             if (settings.name == ClubhouseScreen.route) {
-              final args = settings.arguments as ClubhouseScreen;
+              final args = settings.arguments! as ClubhouseScreen;
               return ClubhouseScreen(
                 city: args.city,
               );
             }
             if (settings.name == AddClubhouseScreen.route) {
-              final args = settings.arguments as AddClubhouseScreen;
+              final args = settings.arguments! as AddClubhouseScreen;
               return AddClubhouseScreen(
                 city: args.city,
               );
             }
 
             if (settings.name == MicroMesoMacroScreen.route) {
-              final args = settings.arguments as MicroMesoMacroScreen;
+              final args = settings.arguments! as MicroMesoMacroScreen;
               return MicroMesoMacroScreen(
                 city: args.city,
               );
             }
             if (settings.name == ProjectVideoScreen.route) {
-              final args = settings.arguments as ProjectVideoScreen;
+              final args = settings.arguments! as ProjectVideoScreen;
               return ProjectVideoScreen(
                 city: args.city,
               );
             }
             if (settings.name == CityProjectScreen.route) {
-              final args = settings.arguments as CityProjectScreen;
+              final args = settings.arguments! as CityProjectScreen;
               return CityProjectScreen(
                 city: args.city,
               );
             }
             if (settings.name == ProjectAwardsProject.route) {
-              final args = settings.arguments as ProjectAwardsProject;
+              final args = settings.arguments! as ProjectAwardsProject;
               return ProjectAwardsProject(
                 city: args.city,
               );
             }
             if (settings.name == ManualVideoScreen.route) {
-              final args = settings.arguments as ManualVideoScreen;
+              final args = settings.arguments! as ManualVideoScreen;
               return ManualVideoScreen(
                 city: args.city,
               );
             }
             if (settings.name == FinalVideoScreen.route) {
-              final args = settings.arguments as FinalVideoScreen;
+              final args = settings.arguments! as FinalVideoScreen;
               return FinalVideoScreen(
                 city: args.city,
               );

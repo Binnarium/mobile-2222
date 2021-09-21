@@ -53,9 +53,20 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
 
   @override
+  void deactivate() {
+    print('Entrando en deactivate');
+    _currentPlayerSub?.pause();
+    audioProvider.player.pause();
+    print('podcast pausado');
+    super.deactivate();
+  }
+
+  @override
   void dispose() {
+    print('Entrando en dispose');
     _currentPlayerSub?.cancel();
     audioProvider.close();
+    print('podcast detenido');
     super.dispose();
   }
 
