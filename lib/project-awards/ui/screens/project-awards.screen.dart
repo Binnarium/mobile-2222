@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-maraton-medal.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -41,6 +42,9 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
   StreamSubscription? _groupSub;
 
   ///
+  StreamSubscription? _medalSub;
+
+  ///
   List<PlayerModel>? allPlayers;
 
   ///
@@ -49,6 +53,8 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
   ListPlayerOfGroupService get _playersGroupService =>
       Provider.of<ListPlayerOfGroupService>(context, listen: false);
 
+  UploadMaratonMedalService get _createMaratonMedalService =>
+      Provider.of<UploadMaratonMedalService>(this.context, listen: false);
   @override
   void initState() {
     super.initState();
@@ -59,7 +65,8 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
 
   @override
   void dispose() {
-    _groupSub?.cancel();
+    this._groupSub?.cancel();
+    _medalSub?.cancel();
     super.dispose();
   }
 
@@ -124,11 +131,38 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
           /// show a list of all players of group
           else ...[
             /// chats items
-            for (PlayerModel player in allPlayers!)
-              ParticipantsListMedalsItem(participant: player, context: context),
+            for (PlayerModel player in this.allPlayers!)
+              ParticipantsListMedalsItem(
+                participant: player,
+                context: context,
+                createChatCallback: _medalSub == null
+                    ? (context) => _createMedal(player.uid)
+                    : null,
+              ),
           ],
         ],
       ),
     );
+  }
+
+  void _createMedal(String playerId) {
+    bool isSend;
+    if (this._medalSub != null) return;
+
+    setState(() {
+      _medalSub = _createMaratonMedalService.medal$(playerId).listen(
+        (response) async {
+          /// validate chat was found
+        },
+
+        /// clean stream
+        onDone: () {
+          setState(() {
+            _medalSub?.cancel();
+            _medalSub = null;
+          });
+        },
+      );
+    });
   }
 }

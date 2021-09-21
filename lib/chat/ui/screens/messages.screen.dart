@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
@@ -69,15 +70,21 @@ class _MessagesScreenState extends State<MessagesScreen> {
           ),
 
           /// send text area
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: size.width * 0.04,
-              vertical: 12,
+          /// TODO: fix use the service instead of direct access to firebaseAuth
+          if (widget.chat.participants
+                  .firstWhere((element) =>
+                      element.uid == FirebaseAuth.instance.currentUser?.uid)
+                  .canSendMessage ==
+              true)
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.04,
+                vertical: 12,
+              ),
+              child: MessageTextInput(
+                chat: widget.chat,
+              ),
             ),
-            child: MessageTextInput(
-              chat: widget.chat,
-            ),
-          ),
         ],
       ),
     );

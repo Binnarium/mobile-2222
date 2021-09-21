@@ -111,9 +111,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
             ParticipantsListItem(
               context: context,
               participant: participant,
-              createChatCallback: _createChatSub == null
-                  ? (context) => _createChat(participant.uid)
-                  : null,
+              createChatCallback: (context) => _createChat(participant.uid),
             ),
         ],
       ),
@@ -121,42 +119,39 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
   }
 
   void _createChat(String playerId) {
+    print(playerId);
     if (_createChatSub != null) {
       return;
     }
 
-    setState(() {
-      _createChatSub = _createPersonalChatService.create$(playerId).listen(
-        (response) async {
-          /// validate chat was found
-          if (response.chatId == null) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const ChatSnackbar.couldNotCreateChat());
-            return;
-          }
+    _createChatSub = _createPersonalChatService.create$(playerId).listen(
+      (response) async {
+        /// validate chat was found
+        if (response.chatId == null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const ChatSnackbar.couldNotCreateChat());
+          return;
+        }
 
-          /// load chat
-          final ChatModel? chat =
-              await _getChatService.getChatWithId(response.chatId!);
-          if (chat == null) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const ChatSnackbar.chatNotFound());
-            return;
-          }
+        /// load chat
+        final ChatModel? chat =
+            await _getChatService.getChatWithId(response.chatId!);
+        if (chat == null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const ChatSnackbar.chatNotFound());
+          return;
+        }
 
-          Navigator.pushNamed(context, MessagesScreen.route,
-              arguments: MessagesScreen(chat: chat));
-        },
+        Navigator.pushNamed(context, MessagesScreen.route,
+            arguments: MessagesScreen(chat: chat));
+      },
 
-        /// clean stream
-        onDone: () {
-          setState(() {
-            _createChatSub?.cancel();
-            _createChatSub = null;
-          });
-        },
-      );
-    });
+      /// clean stream
+      onDone: () {
+        _createChatSub?.cancel();
+        _createChatSub = null;
+      },
+    );
   }
 }
 

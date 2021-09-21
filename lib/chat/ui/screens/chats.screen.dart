@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
@@ -118,12 +117,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 primaryColor: Colors2222.white,
                 participant: ChatParticipantModel(
                     displayName: player.displayName, uid: player.uid),
-                createChatCallback: _createChatSub == null
-                    ? (context) =>
-
-                        /// TODO: fix this
-                        _createChat(FirebaseAuth.instance.currentUser!.uid)
-                    : null,
+                createChatCallback: (context) => _createChat(player.uid),
               ),
           ]
 
@@ -144,41 +138,38 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   /// TODO: remove duplicated code
   void _createChat(String playerId) {
+    print(playerId);
     if (_createChatSub != null) {
       return;
     }
 
-    setState(() {
-      _createChatSub = _createPersonalChatService.create$(playerId).listen(
-        (response) async {
-          /// validate chat was found
-          if (response.chatId == null) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const ChatSnackbar.couldNotCreateChat());
-            return;
-          }
+    _createChatSub = _createPersonalChatService.create$(playerId).listen(
+      (response) async {
+        /// validate chat was found
+        if (response.chatId == null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const ChatSnackbar.couldNotCreateChat());
+          return;
+        }
 
-          /// load chat
-          final ChatModel? chat =
-              await _getChatService.getChatWithId(response.chatId!);
-          if (chat == null) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const ChatSnackbar.chatNotFound());
-            return;
-          }
+        /// load chat
+        final ChatModel? chat =
+            await _getChatService.getChatWithId(response.chatId!);
+        if (chat == null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const ChatSnackbar.chatNotFound());
+          return;
+        }
 
-          Navigator.pushNamed(context, MessagesScreen.route,
-              arguments: MessagesScreen(chat: chat));
-        },
+        Navigator.pushNamed(context, MessagesScreen.route,
+            arguments: MessagesScreen(chat: chat));
+      },
 
-        /// clean stream
-        onDone: () {
-          setState(() {
-            _createChatSub?.cancel();
-            _createChatSub = null;
-          });
-        },
-      );
-    });
+      /// clean stream
+      onDone: () {
+        _createChatSub?.cancel();
+        _createChatSub = null;
+      },
+    );
   }
 }

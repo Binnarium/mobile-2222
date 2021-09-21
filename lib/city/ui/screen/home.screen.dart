@@ -81,7 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   SingleChildScrollView(
                     clipBehavior: Clip.none,
                     controller: _scrollController,
-                    child: CitiesMap(citiesWithPositions: _cities!),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 32.0),
+                      child: CitiesMap(citiesWithPositions: _cities!),
+                    ),
                   ),
                 ],
               ),
