@@ -12,7 +12,7 @@ class PlayerModel {
   final List<AwardModel> projectAwards;
   final List<AwardModel> contributionsAwards;
   final List<AwardModel> clubhouseAwards;
-  final List<AwardModel> hackatonAwards;
+  final List<AwardModel> maratonAwards;
 
   // ignore: sort_constructors_first
   PlayerModel._({
@@ -22,7 +22,7 @@ class PlayerModel {
     required this.projectAwards,
     required this.contributionsAwards,
     required this.clubhouseAwards,
-    required this.hackatonAwards,
+    required this.maratonAwards,
     required this.avatarImage,
     required this.groupId,
   });
@@ -39,11 +39,11 @@ class PlayerModel {
           path: '',
           url: '',
         ),
-        groupId = '',
-        projectAwards = const [],
-        contributionsAwards = const [],
-        hackatonAwards = const [],
-        clubhouseAwards = const [];
+        this.groupId = '',
+        this.projectAwards = const [],
+        this.contributionsAwards = const [],
+        this.maratonAwards = const [],
+        this.clubhouseAwards = const [];
 
   // ignore: sort_constructors_first
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
@@ -59,8 +59,8 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:
           PlayerModel._getAwardsFromPayload(payload['contributionsAwards']),
-      hackatonAwards:
-          PlayerModel._getAwardsFromPayload(payload['hackatonAwards']),
+      maratonAwards:
+          PlayerModel._getAwardsFromPayload(payload['maratonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
     );
@@ -76,7 +76,7 @@ class PlayerModel {
       'projectAwards': projectAwards,
       'contributionsAwards': contributionsAwards,
       'clubhouseAwards': clubhouseAwards,
-      'hackatonAwards': hackatonAwards,
+      'maratonAwards': maratonAwards,
       'uid': uid,
       'displayName': displayName,
       'email': email,

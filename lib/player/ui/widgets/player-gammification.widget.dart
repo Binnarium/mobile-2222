@@ -66,7 +66,7 @@ class PlayerGamification extends StatelessWidget {
         const SizedBox(height: 25),
 
         GamificationWidget(
-          numberOfMedals: player.hackatonAwards.length,
+          numberOfMedals: player.maratonAwards.length,
           label: 'Maratón Proyectos'.toUpperCase(),
           image: const CoinsImages.hackaton(),
           numberColor: Colors2222.darkGrey,

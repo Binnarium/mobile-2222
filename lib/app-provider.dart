@@ -16,6 +16,7 @@ import 'package:lab_movil_2222/cities/contribution/services/contribution-activit
 import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
+import 'package:lab_movil_2222/cities/project/services/upload-maraton-medal.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
@@ -106,7 +107,11 @@ class AppProvider extends MultiProvider {
 
             /// project services
             Provider(create: (ctx) => LoadProjectFiles(ctx)),
+
+            Provider(create: (ctx) => UploadMaratonMedalService(ctx)),
+
             Provider(create: (ctx) => UploadProjectService(ctx)),
+
 
             /// chat services
             Provider(create: (ctx) => SendMessagesService(ctx)),
