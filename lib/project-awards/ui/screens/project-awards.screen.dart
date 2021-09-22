@@ -40,12 +40,14 @@ class ProjectAwardsProject extends StatefulWidget {
 class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
   ///
   StreamSubscription? _groupSub;
+  StreamSubscription? _awardedSub;
 
   ///
   StreamSubscription? _medalSub;
 
   ///
   List<PlayerModel>? allPlayers;
+  String? awardedPlayerUID;
 
   ///
   List<PlayerModel>? foundPlayers;
@@ -61,11 +63,14 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
     _groupSub = _playersGroupService.group$.listen(
       (players) => setState(() => allPlayers = players),
     );
+    // _createMaratonMedalService.loadAwardedUID('s').then((value) => awardedPlayerUID=value);
+        
   }
 
   @override
   void dispose() {
-    this._groupSub?.cancel();
+    _groupSub?.cancel();
+    _awardedSub?.cancel();
     _medalSub?.cancel();
     super.dispose();
   }
@@ -125,7 +130,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
           ),
 
           ///If players no load
-          if (allPlayers == null)
+          if (allPlayers==null)
             const AppLoading()
 
           /// show a list of all players of group

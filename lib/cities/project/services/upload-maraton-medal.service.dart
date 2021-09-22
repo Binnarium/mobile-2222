@@ -37,7 +37,10 @@ class UploadMaratonMedalService {
         /// create medal to upload
         ///
         bool isSend = false;
+        String awardedUID = '';
+      
         await loadMaratonMedal(user.uid).then((value) => isSend = value);
+        await loadAwardedUID().then((uid) => awardedUID = uid);
         if (!isSend) {
           writeMedal(createMessageCallback.call(user).playerId, user.uid);
           final MaratonMedalProject newMedal = createMessageCallback(user);
@@ -70,6 +73,8 @@ class UploadMaratonMedalService {
     );
   }
 
+  
+
   static Future<bool> loadMaratonMedal(String userUID) async {
     bool isSend = false;
     await FirebaseFirestore.instance
@@ -82,6 +87,43 @@ class UploadMaratonMedalService {
 
     return isSend;
   }
+
+  Future<String> loadAwardedUID() async {
+    String awardedUID = '';
+    Future<PlayerModel?> a;
+    String userUID = 'a';
+    _currentPlayerService.player$.take(1).asyncMap((event) async {
+      print('EVENTO${event!.uid}');
+    });
+
+    print('CONSIGUIENDO ID$userUID');
+    await FirebaseFirestore.instance
+        .collection('players')
+        .doc(userUID)
+        .collection('maraton-awards')
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              awardedUID = element.data().values.last.toString();
+              print('VALOR DOCS$awardedUID');
+            }));
+
+    return awardedUID;
+  }
+
+  // Stream<PlayerModel?> loadAwardedPlayer$() {
+  //   String awardedUID = '';
+  //   loadAwardedUID().then((value) => awardedUID = value);
+  //   return FirebaseFirestore.instance
+  //       .collection('players')
+  //       .doc(awardedUID)
+  //       .snapshots()
+
+  //       /// turn snapshot into document data or null
+  //       .map((snapshot) => snapshot.data())
+
+  //       /// turn snapshot data into player object, if props found
+  //       .map((objet) => objet == null ? null : PlayerModel.fromMap(objet));
+  // }
 
   static void writeMedal(String ownerUID, String senderUID) async {
     final Map<String, dynamic> medal = <String, dynamic>{
@@ -111,4 +153,5 @@ class UploadMaratonMedalService {
 
   //   print('File ${project.id} successfully deleted from firestore');
   // }
+
 }
