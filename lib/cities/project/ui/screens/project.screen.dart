@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/cities/project/services/load-project-files.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
+import 'package:lab_movil_2222/cities/project/ui/widgets/coins_check.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project-screen.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
@@ -45,15 +45,36 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   /// project screen information
   ProjectScreenModel? projectScreen;
 
+  /// user information loader
+  StreamSubscription? _userServiceSub;
+
+  /// user projects loader
   StreamSubscription? _userProjectsSub;
   StreamSubscription? _loadProjectDtoSub;
-  String? userUID;
+  PlayerModel? currentPlayer;
+  bool hasMedal = false;
+
+  CurrentPlayerService get _currentPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
+    _userServiceSub = _currentPlayerService.player$.listen((player) {
+      if (mounted) {
+        setState(() {
+          currentPlayer = player;
+        });
+      }
 
-    userUID = FirebaseAuth.instance.currentUser!.uid;
+      /// seeks for all medals in the medals array
+      currentPlayer!.projectAwards.asMap().forEach((key, value) {
+        if (value.cityId == widget.city.name) {
+          hasMedal = true;
+          print('hay medalla');
+        }
+      });
+    });
 
     /// load the provider to load the projectDTO
     final LoadProjectDtoService loadProjectDtoService =
@@ -86,6 +107,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
   @override
   void dispose() {
+    _userServiceSub?.cancel();
     _userProjectsSub?.cancel();
     _loadProjectDtoSub?.cancel();
     super.dispose();
@@ -97,19 +119,23 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
-
       backgrounds: const [
         BackgroundDecorationStyle.topRight,
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
       body: _projectSheet(
-          context, size, widget.city.color, userUID, playerProjects),
+          context,
+          size,
+          widget.city.color,
+          playerProjects,
+          currentPlayer ??
+              PlayerModel.empty(uid: '', displayName: '', email: '')),
     );
   }
 
   Widget _projectSheet(BuildContext context, Size size, Color color,
-      String? userUID, List<PlayerProject>? playerProjects) {
+      List<PlayerProject>? playerProjects, PlayerModel player) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final horizontalPadding =
         EdgeInsets.symmetric(horizontal: size.width * 0.08);
@@ -142,11 +168,9 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         ),
 
         Center(
-          child: Image(
-            image: const CoinsImages.project(),
-            alignment: Alignment.bottomRight,
-            fit: BoxFit.contain,
-            width: min(160, size.width * 0.4),
+          child: CoinsCheckWidget(
+            coin: const CoinsImages.project(),
+            hasMedal: hasMedal,
           ),
         ),
 
@@ -209,17 +233,13 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
               padding: horizontalPadding,
               child: ProjectGalleryWidget(
                   city: widget.city,
-                  userUID: userUID ?? '',
+                  userUID: currentPlayer?.uid ?? '',
                   projects: playerProjects!),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 50),
-              child: _taskButton(
-                context,
-                color,
-                widget.city,
-                projectScreen!,
-              ),
+              child: _taskButton(context, color, widget.city, projectScreen!,
+                  player, hasMedal),
             )
           ],
         ],
@@ -228,10 +248,8 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   }
 }
 
-
-Widget _taskButton(
-    BuildContext context, Color color, CityModel city,
-    ProjectScreenModel project) {
+Widget _taskButton(BuildContext context, Color color, CityModel city,
+    ProjectScreenModel project, PlayerModel player, bool hasMedal) {
   final double buttonWidth = MediaQuery.of(context).size.width;
   return Container(
     width: buttonWidth,
@@ -252,6 +270,8 @@ Widget _taskButton(
                 city: city,
                 color: color,
                 projectDto: project,
+                currentPlayer: player,
+                hasMedal: hasMedal,
               );
             });
       },
@@ -274,40 +294,34 @@ class UploadFileDialog extends StatefulWidget {
     required this.color,
     required this.city,
     required this.projectDto,
+    required this.currentPlayer,
+    required this.hasMedal,
   }) : super(key: key);
 
   final Color color;
   final CityModel city;
   final ProjectScreenModel projectDto;
+  final PlayerModel currentPlayer;
+  final bool hasMedal;
 
   @override
   _UploadFileDialogState createState() => _UploadFileDialogState();
 }
 
 class _UploadFileDialogState extends State<UploadFileDialog> {
-  StreamSubscription? _userServiceSub;
   StreamSubscription? _uploadFileSub;
-  PlayerModel? currentPlayer;
-
-  CurrentPlayerService get _currentPlayerService =>
-      Provider.of<CurrentPlayerService>(context, listen: false);
 
   UploadProjectService get _uploadProjectService =>
       Provider.of<UploadProjectService>(context, listen: false);
 
   @override
   void initState() {
+    print('current player: ${widget.currentPlayer.displayName}');
     super.initState();
-    _userServiceSub = _currentPlayerService.player$.listen((player) {
-      setState(() {
-        currentPlayer = player;
-      });
-    });
   }
 
   @override
   void dispose() {
-    _userServiceSub?.cancel();
     _uploadFileSub?.cancel();
     super.dispose();
   }
@@ -354,7 +368,7 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
         Provider.of<UploadFileService>(context, listen: false);
 
     _uploadFileSub = uploadFileService
-        .uploadFile$('players/${currentPlayer!.uid}/${widget.city.name}/',
+        .uploadFile$('players/${widget.currentPlayer.uid}/${widget.city.name}/',
             widget.projectDto)
         .switchMap((projectFile) => _uploadProjectService.project$(
               widget.city,
@@ -363,20 +377,21 @@ class _UploadFileDialogState extends State<UploadFileDialog> {
             ))
         .listen((sended) {
       if (sended) {
-        bool medalFound = false;
+        // bool medalFound = false;
 
-        /// seeks for all medals in the medals array
-        currentPlayer!.projectAwards.asMap().forEach((key, value) {
-          if (value.cityId == widget.city.name) {
-            medalFound = true;
-            print('hay medalla');
-          }
-        });
+        // /// seeks for all medals in the medals array
+        // widget.currentPlayer.projectAwards.asMap().forEach((key, value) {
+        //   if (value.cityId == widget.city.name) {
+        //     medalFound = true;
+        //     print('hay medalla');
+        //   }
+        // });
 
         /// if there is no medal with the city name, creates new one
-        if (!medalFound) {
+        if (!widget.hasMedal) {
           print('no hay medalla');
-          UploadProjectService.writeMedal(currentPlayer!.uid, widget.city.name);
+          UploadProjectService.writeMedal(
+              widget.currentPlayer.uid, widget.city.name);
         }
       }
     }, onDone: () {
