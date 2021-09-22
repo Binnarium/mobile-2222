@@ -9,7 +9,8 @@ class Colors2222 {
 
   static const Color white = Color(0xfffefefe);
   static const Color mapColor = Color(0xffefefef);
-
+  static const Color yellow = Color(0xffFFEF78);
+ 
   static const Color red = Color(0xffD52027);
   static const Color black = Color(0xff000000);
 
