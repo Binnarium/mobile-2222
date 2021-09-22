@@ -7,7 +7,7 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/shared/widgets/content-title.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -106,7 +106,12 @@ class _ContentScreenState extends State<ContentScreen> {
                 padding: const EdgeInsets.only(
                   bottom: 32,
                 ),
-                child: _titleContainer(size, c.author, c.title, ' - vídeo'),
+                child: ContentTitleWidget(
+                  author: c.author,
+                  title: c.title,
+                  kind: ' - vídeo',
+                  textColor: widget.city.color,
+                ),
               ),
 
               /// text content
@@ -135,7 +140,12 @@ class _ContentScreenState extends State<ContentScreen> {
                 padding: const EdgeInsets.only(
                   bottom: 32,
                 ),
-                child: _titleContainer(size, c.author, c.title, ' - podcast'),
+                child: ContentTitleWidget(
+                  author: c.author,
+                  title: c.title,
+                  kind: ' - podcast',
+                  textColor: widget.city.color,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -161,46 +171,5 @@ class _ContentScreenState extends State<ContentScreen> {
         ],
       );
     }
-  }
-
-  Container _titleContainer(
-      Size size, String? author, String? title, String kind) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
-      color: Colors2222.white,
-      width: double.infinity,
-      padding:
-          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 32),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RichText(
-              text: TextSpan(
-                  text: (author == null)
-                      ? 'No author available'
-                      : author.toUpperCase(),
-                  style: textTheme.subtitle1?.apply(
-                    color: Colors.black,
-                  ),
-                  children: [
-                TextSpan(
-                  text: kind.toUpperCase(),
-                  style: textTheme.subtitle2?.apply(
-                    color: Colors.black45,
-                  ),
-                )
-              ])),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            (title == null) ? 'No title Available' : title.toUpperCase(),
-            style: textTheme.headline6?.apply(
-              color: widget.city.color,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
