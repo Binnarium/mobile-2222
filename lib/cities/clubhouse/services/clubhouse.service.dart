@@ -24,6 +24,6 @@ class ClubhouseActivityService {
     );
 
     return thematic.map((event) => ClubhouseActivityModel(thematic: event));
-    
+
   }
 }

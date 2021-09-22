@@ -125,7 +125,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
               ),
               child: Text(
                 _contribution!.thematic,
-                style: textTheme.headline5,
+                style: textTheme.headline6,
                 textAlign: TextAlign.center,
               ),
             ),

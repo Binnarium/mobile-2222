@@ -8,14 +8,14 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 
 class UploadMaratonMedalService {
-  final CurrentPlayerService _currentPlayerService;
-
-  final FirebaseFirestore _fFirestore;
-
   UploadMaratonMedalService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
+
+  final CurrentPlayerService _currentPlayerService;
+
+  final FirebaseFirestore _fFirestore;
 
   Stream<bool> medal$(String id) {
     return _uploadMedal(
@@ -30,7 +30,9 @@ class UploadMaratonMedalService {
   }) {
     return _currentPlayerService.player$.take(1).asyncMap<bool>(
       (user) async {
-        if (user == null) return false;
+        if (user == null) {
+          return false;
+        }
 
         /// create medal to upload
         ///
@@ -41,7 +43,7 @@ class UploadMaratonMedalService {
         await loadAwardedUID().then((uid) => awardedUID = uid);
         if (!isSend) {
           writeMedal(createMessageCallback.call(user).playerId, user.uid);
-          MaratonMedalProject newMedal = createMessageCallback(user);
+          final MaratonMedalProject newMedal = createMessageCallback(user);
           final CollectionReference<Map<String, dynamic>> messagesDoc =
               _fFirestore
                   .collection('players')
@@ -124,7 +126,7 @@ class UploadMaratonMedalService {
   // }
 
   static void writeMedal(String ownerUID, String senderUID) async {
-    Map<String, dynamic> medal = <String, dynamic>{
+    final Map<String, dynamic> medal = <String, dynamic>{
       'cityRef': 'Project-Award',
       'obtained': true,
       'obtainedDate': Timestamp.now(),
