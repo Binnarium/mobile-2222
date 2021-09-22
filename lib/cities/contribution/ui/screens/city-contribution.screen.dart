@@ -6,8 +6,10 @@ import 'package:flutter/widgets.dart';
 import 'package:lab_movil_2222/cities/contribution/models/contribution.model.dart';
 import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
 import 'package:lab_movil_2222/cities/contribution/ui/widget/goto-pub-button.dart';
+import 'package:lab_movil_2222/cities/project/ui/widgets/coins_check.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
+import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
@@ -34,12 +36,18 @@ class ContributionScreen extends StatefulWidget {
 }
 
 class _ContributionScreenState extends State<ContributionScreen> {
-  late List<CityModel> chapters;
   CollaborationModel? _contribution;
   StreamSubscription? collaborationActivitySub;
+  StreamSubscription? _userServiceSub;
+
+  late List<CityModel> chapters;
+  bool hasMedal = false;
 
   ContributionActivityService get _contributionService =>
       Provider.of<ContributionActivityService>(context, listen: false);
+
+  CurrentPlayerService get _currentPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
 
   @override
   void initState() {
@@ -53,11 +61,27 @@ class _ContributionScreenState extends State<ContributionScreen> {
         });
       },
     );
+    _userServiceSub = _currentPlayerService.player$.listen((player) {
+      if (mounted) {
+        setState(() {
+          /// seeks for all medals in the medals array
+          player!.contributionsAwards.asMap().forEach((key, value) {
+            if (value.cityId.toLowerCase() == widget.city.name.toLowerCase()) {
+              hasMedal = true;
+              print('hay medalla contribución');
+            }
+          });
+
+          print('hasMedal contribution: $hasMedal');
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
     collaborationActivitySub?.cancel();
+    _userServiceSub?.cancel();
     super.dispose();
   }
 
@@ -97,16 +121,12 @@ class _ContributionScreenState extends State<ContributionScreen> {
           ),
 
           /// medal icon
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32),
-            child: Center(
-              child: Image(
-                image: const CoinsImages.contribution(),
-                alignment: Alignment.bottomRight,
-                fit: BoxFit.contain,
-                width: min(160, size.width * 0.4),
-              ),
-            ),
+          Center(
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: CoinsCheckWidget(
+                    coin: const CoinsImages.contribution(),
+                    hasMedal: hasMedal)),
           ),
 
           /// collaboration data loading state
