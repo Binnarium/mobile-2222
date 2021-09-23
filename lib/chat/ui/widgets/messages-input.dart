@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/upload-video.service.dart';
@@ -138,15 +139,15 @@ class _MessageTextInputState extends State<MessageTextInput> {
     });
   }
 
+  /// calls the provider to upload image.
+  UploadImageService get uploadImageService =>
+      Provider.of<UploadImageService>(context, listen: false);
+
   void _sendImageMessage() {
     /// checks if the stream is bussy
     if (_sendMessageSub != null) {
       return;
     }
-
-    /// calls the provider to upload image.
-    final UploadImageService uploadImageService =
-        Provider.of<UploadImageService>(context, listen: false);
 
     /// use the message sub stream with the upload$ stream
     _sendMessageSub = uploadImageService
@@ -159,27 +160,32 @@ class _MessageTextInputState extends State<MessageTextInput> {
         )
 
         /// checks if the video is sended or not
-        .listen((sended) {
-      if (!sended) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const ChatSnackbarMessages.textNotSended(),
-        );
-      }
-      // ignore: argument_type_not_assignable_to_error_handler
-    }, onError: (Exception error) {
-      if (error.runtimeType == ImageNotLoaded) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const ChatSnackbarMessages.imageNotLoaded(),
-        );
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const ChatSnackbarMessages.textNotSended(),
-      );
-    }, onDone: () {
-      _sendMessageSub?.cancel();
-      _sendMessageSub = null;
-      widget.messageInput.clear();
-    });
+        .listen(
+      (sended) {
+        if (!sended) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const ChatSnackbarMessages.textNotSended(),
+          );
+        }
+        // ignore: argument_type_not_assignable_to_error_handler
+      },
+      onError: (Object error) {
+        print(error);
+        if (error.runtimeType == ImageNotLoaded)
+          ScaffoldMessenger.of(context).showSnackBar(
+            const ChatSnackbarMessages.imageNotLoaded(),
+          );
+        else
+          ScaffoldMessenger.of(context).showSnackBar(
+            const ChatSnackbarMessages.textNotSended(),
+          );
+      },
+      onDone: () {
+        _sendMessageSub?.cancel();
+        _sendMessageSub = null;
+        widget.messageInput.clear();
+      },
+    );
   }
 
   /// method to send a video message
@@ -204,27 +210,31 @@ class _MessageTextInputState extends State<MessageTextInput> {
         )
 
         /// checks if the video is sended or not
-        .listen((sended) {
-      if (!sended) {
+        .listen(
+      (sended) {
+        if (!sended) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const ChatSnackbarMessages.textNotSended(),
+          );
+        }
+        // ignore: argument_type_not_assignable_to_error_handler
+      },
+      onError: (Object error) {
+        if (error.runtimeType == VideoNotLoaded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const ChatSnackbarMessages.videoNotLoaded(),
+          );
+        }
         ScaffoldMessenger.of(context).showSnackBar(
-          const ChatSnackbarMessages.textNotSended(),
+          const ChatSnackbarMessages.videoNotSended(),
         );
-      }
-      // ignore: argument_type_not_assignable_to_error_handler
-    }, onError: (Exception error) {
-      if (error.runtimeType == VideoNotLoaded) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const ChatSnackbarMessages.videoNotLoaded(),
-        );
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const ChatSnackbarMessages.videoNotSended(),
-      );
-    }, onDone: () {
-      _sendMessageSub?.cancel();
-      _sendMessageSub = null;
-      widget.messageInput.clear();
-    });
+      },
+      onDone: () {
+        _sendMessageSub?.cancel();
+        _sendMessageSub = null;
+        widget.messageInput.clear();
+      },
+    );
   }
 }
 
