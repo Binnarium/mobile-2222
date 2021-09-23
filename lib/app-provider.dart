@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
@@ -16,7 +15,6 @@ import 'package:lab_movil_2222/cities/contribution/services/contribution-activit
 import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
-import 'package:lab_movil_2222/cities/project/services/upload-maraton-medal.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
@@ -24,6 +22,7 @@ import 'package:lab_movil_2222/player/services/list-players-of-group.service.dar
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
+import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
@@ -108,7 +107,7 @@ class AppProvider extends MultiProvider {
             /// project services
             Provider(create: (ctx) => LoadProjectFiles(ctx)),
 
-            Provider(create: (ctx) => UploadMaratonMedalService(ctx)),
+            Provider(create: (ctx) => MedalsService(ctx)),
 
             Provider(create: (ctx) => UploadProjectService(ctx)),
 

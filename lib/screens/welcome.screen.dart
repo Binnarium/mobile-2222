@@ -7,6 +7,7 @@ import 'package:lab_movil_2222/models/welcome.dto.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/content-title.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -86,13 +87,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   ///Cuerpo de la pantalla
   ListView _loginBody(Size size, BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final horizontalPadding = size.width * 0.08;
     return ListView(
-      padding:
-          EdgeInsets.symmetric(horizontal: size.width * 0.08, vertical: 64),
+      padding: const EdgeInsets.symmetric(vertical: 64),
       children: [
         /// app logo
         Padding(
-          padding: const EdgeInsets.only(bottom: 40),
+          padding: EdgeInsets.only(
+              left: horizontalPadding, right: horizontalPadding, bottom: 40),
           child: Center(
             child: AppLogo(
               kind: AppImage.defaultAppLogo,
@@ -103,7 +105,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
         /// App Title
         Padding(
-          padding: const EdgeInsets.only(bottom: 32),
+          padding: EdgeInsets.only(
+              left: horizontalPadding, right: horizontalPadding, bottom: 32),
           child: Text(
             'Lab Móvil 2222'.toUpperCase(),
             style: textTheme.headline6!.apply(fontSizeFactor: 1.3),
@@ -122,7 +125,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         else ...[
           /// principal text
           Padding(
-            padding: const EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.only(
+                left: horizontalPadding, right: horizontalPadding, bottom: 20),
             child: Text(
               loginPayload!.pageTitle,
               style: textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
@@ -130,30 +134,44 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
           ),
 
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32),
+            child: ContentTitleWidget(
+                author: 'Santiago Acosta Aide',
+                title: 'Bienvenida del Rector UTPL',
+                kind: ' - vídeo'),
+          ),
+
           /// video container
           Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(
+                  left: horizontalPadding,
+                  right: horizontalPadding,
+                  bottom: 20),
               child: VideoPlayer(
                 video: loginPayload!.welcomeVideo,
               )),
 
           /// profundity text
           Padding(
-            padding: const EdgeInsets.only(bottom: 28),
+            padding: EdgeInsets.only(
+                left: horizontalPadding, right: horizontalPadding, bottom: 28),
             child: Markdown2222(
               data: loginPayload!.profundityText,
             ),
           ),
 
           /// team button
-          const Padding(
-            padding: EdgeInsets.only(bottom: 24),
-            child: GotoTeamButton(),
+          Padding(
+            padding: EdgeInsets.only(
+                left: horizontalPadding, right: horizontalPadding, bottom: 24),
+            child: const GotoTeamButton(),
           ),
 
           /// white container text
           Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: EdgeInsets.only(
+                left: horizontalPadding, right: horizontalPadding, bottom: 16),
             child: MarkdownCard(
               content: loginPayload!.workloadText,
             ),

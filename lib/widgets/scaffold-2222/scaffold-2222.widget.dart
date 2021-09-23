@@ -20,7 +20,6 @@ class Scaffold2222 extends StatelessWidget {
         _showBottomNavigationBar = true,
         appBar = null,
         _backgroundColor = city.color,
-        backButton = true,
         activePage = null,
         super(key: key);
 
@@ -34,7 +33,6 @@ class Scaffold2222 extends StatelessWidget {
     this.backgrounds = const [],
   })  : _nextRoute = CityNavigator.getNextPage(route, city),
         _showBottomNavigationBar = true,
-        backButton = true,
         _backgroundColor = color ?? city.color,
         appBar = null,
         activePage = null,
@@ -48,7 +46,6 @@ class Scaffold2222 extends StatelessWidget {
     this.appBar,
     this.backgrounds = const [],
   })  : _nextRoute = null,
-        backButton = false,
         _showBottomNavigationBar = false,
         _backgroundColor = backgroundColor,
         activePage = null,
@@ -59,7 +56,6 @@ class Scaffold2222 extends StatelessWidget {
     Key? key,
     required this.body,
     this.backgrounds = const [],
-    this.backButton = false,
     this.appBar,
     required this.activePage,
   })  : _nextRoute = null,
@@ -79,9 +75,6 @@ class Scaffold2222 extends StatelessWidget {
   /// navigator next route
   final ScaffoldRouteBuilder? _nextRoute;
 
-  /// enable back button
-  final bool backButton;
-
   /// enable bottom navbar
   final bool _showBottomNavigationBar;
 
@@ -93,11 +86,10 @@ class Scaffold2222 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// back button
-    final VoidCallback? prevPage =
-        backButton ? () => Navigator.pop(context) : null;
-
     /// next page button
+    final VoidCallback? prevPage =
+        Navigator.of(context).canPop() ? () => Navigator.pop(context) : null;
+
     final VoidCallback? nextPage =
         _nextRoute == null ? null : () => _nextRoute!.builder(context);
 

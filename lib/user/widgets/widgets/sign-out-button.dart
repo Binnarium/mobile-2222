@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/services/sign-out.service.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
+import 'package:lab_movil_2222/user/widgets/splash.screen.dart';
 import 'package:provider/provider.dart';
 
 class LogOutButton extends StatefulWidget {
@@ -50,7 +50,8 @@ class _LogOutButtonState extends State<LogOutButton> {
         (_) {
           /// shows snackbar
           ScaffoldMessenger.of(context).showSnackBar(_SignOutSnackBar(context));
-          Navigator.of(context).pushReplacementNamed(LoginScreen.route);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(SplashScreen.route, (route) => false);
         },
         onDone: () {
           setState(() {

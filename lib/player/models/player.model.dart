@@ -60,7 +60,7 @@ class PlayerModel {
       contributionsAwards:
           PlayerModel._getAwardsFromPayload(payload['contributionsAwards']),
       maratonAwards:
-          PlayerModel._getAwardsFromPayload(payload['maratonAwards']),
+          PlayerModel._getAwardsFromPayload(payload['marathonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
     );
@@ -76,7 +76,7 @@ class PlayerModel {
       'projectAwards': projectAwards,
       'contributionsAwards': contributionsAwards,
       'clubhouseAwards': clubhouseAwards,
-      'maratonAwards': maratonAwards,
+      'marathonAwards': maratonAwards,
       'uid': uid,
       'displayName': displayName,
       'email': email,

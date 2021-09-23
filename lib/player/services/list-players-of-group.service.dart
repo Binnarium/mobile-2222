@@ -16,6 +16,7 @@ class ListPlayerOfGroupService {
   final FirebaseFirestore _firestore;
   final CurrentPlayerService _currentPlayerService;
 
+  /// load teammates of the group payer is currently at
   Stream<List<PlayerModel>> get group$ =>
       _currentPlayerService.player$.switchMap((currentUser) {
         if (currentUser == null) {
