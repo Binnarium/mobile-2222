@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/content-title.widget.dart';
 import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/models/login-form.model.dart';
@@ -66,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final horizontalPadding = size.width * 0.08;
 
     ///safeArea para dispositivos con pantalla notch
     return Form(
@@ -78,12 +80,14 @@ class _LoginScreenState extends State<LoginScreen> {
           // ignore: prefer_const_literals_to_create_immutables
           backgroundDecorationsStyles: [BackgroundDecorationStyle.topLeft],
           child: ListView(
-            padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.08, vertical: 64),
+            padding: const EdgeInsets.symmetric(vertical: 64),
             children: [
               /// app logo
               Padding(
-                padding: const EdgeInsets.only(bottom: 40),
+                padding: EdgeInsets.only(
+                    left: horizontalPadding,
+                    right: horizontalPadding,
+                    bottom: 40),
                 child: Center(
                   child: AppLogo(
                     kind: AppImage.defaultAppLogo,
@@ -94,7 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
               /// App Title
               Padding(
-                padding: const EdgeInsets.only(bottom: 32),
+                padding: EdgeInsets.only(
+                    left: horizontalPadding,
+                    right: horizontalPadding,
+                    bottom: 32),
                 child: Text(
                   'Lab Móvil 2222'.toUpperCase(),
                   style: textTheme.headline6!.apply(fontSizeFactor: 1.3),
@@ -113,7 +120,10 @@ class _LoginScreenState extends State<LoginScreen> {
               else ...[
                 /// principal text
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: 32),
                   child: Text(
                     loginPayload!.pageTitle,
                     style: textTheme.subtitle2?.apply(fontSizeFactor: 1.2),
@@ -122,29 +132,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 /// video container
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 32),
+                  child: ContentTitleWidget(
+                      author: 'Santiago Acosta Aide',
+                      title: 'Bienvenida del Rector UTPL',
+                      kind: ' - vídeo'),
+                ),
                 Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
+                    padding: EdgeInsets.only(
+                        left: horizontalPadding,
+                        right: horizontalPadding,
+                        bottom: 20),
                     child: VideoPlayer(
                       video: loginPayload!.welcomeVideo,
                     )),
 
                 /// profundity text
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 28),
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: 28),
                   child: Markdown2222(
                     data: loginPayload!.profundityText,
                   ),
                 ),
 
                 /// team button
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 24),
-                  child: GotoTeamButton(),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: 24),
+                  child: const GotoTeamButton(),
                 ),
 
                 /// profundity text
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: 16),
                   child: MarkdownCard(
                     content: loginPayload!.workloadText,
                   ),
@@ -162,7 +191,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// email input
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: 15),
                   child: TextFormField222(
                     label: 'Correo Electrónico',
                     keyboardType: TextInputType.emailAddress,
@@ -172,7 +204,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: 15),
                   child: TextFormField222.password(
                     label: 'Contraseña',
                     onValueChanged: (password) =>
@@ -182,13 +217,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 /// sign in button
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors2222.black,
-                    elevation: 5,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors2222.black,
+                      elevation: 5,
+                    ),
+                    onPressed: _handleLogin,
+                    child: const Text('Iniciar Sesión'),
                   ),
-                  onPressed: _handleLogin,
-                  child: const Text('Iniciar Sesión'),
                 ),
 
                 /// register

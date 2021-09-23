@@ -9,8 +9,10 @@ import 'package:lab_movil_2222/cities/clubhouse/services/load-available-clubhous
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
+import 'package:lab_movil_2222/cities/project/ui/widgets/coins_check.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
+import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -32,10 +34,14 @@ class ClubhouseScreen extends StatefulWidget {
 class _ClubhouseScreenState extends State<ClubhouseScreen> {
   StreamSubscription? clubhousesSub;
   StreamSubscription? _loadClubhousesActivitiesSub;
+  StreamSubscription? _userServiceSub;
 
   List<ClubhouseModel>? clubhouses;
   ClubhouseActivityModel? clubhouseActivity;
+  bool hasMedal = false;
 
+  CurrentPlayerService get _currentPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
   @override
   void initState() {
     super.initState();
@@ -43,6 +49,22 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
       setState(() {
         clubhouses = event;
       });
+    });
+
+    _userServiceSub = _currentPlayerService.player$.listen((player) {
+      if (mounted) {
+        setState(() {
+          /// seeks for all medals in the medals array
+          player!.clubhouseAwards.asMap().forEach((key, value) {
+            if (value.cityId.toLowerCase() == widget.city.name.toLowerCase()) {
+              hasMedal = true;
+              print('hay medalla clubhouse');
+            }
+          });
+
+          print('hasMedal clubhouse: $hasMedal');
+        });
+      }
     });
 
     /// loads clubhouse
@@ -65,6 +87,8 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
   void dispose() {
     clubhousesSub?.cancel();
     clubhousesSub = null;
+    _userServiceSub?.cancel();
+    _userServiceSub = null;
     _loadClubhousesActivitiesSub?.cancel();
     _loadClubhousesActivitiesSub = null;
     super.dispose();
@@ -102,15 +126,12 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.only(bottom: 32),
             child: Center(
-              child: Image(
-                image: const CoinsImages.clubhouse(),
-                alignment: Alignment.bottomRight,
-                fit: BoxFit.contain,
-                width: min(160, size.width * 0.4),
+              child: CoinsCheckWidget(
+                coin: const CoinsImages.clubhouse(),
+                hasMedal: hasMedal,
               ),
             ),
           ),
