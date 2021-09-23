@@ -48,8 +48,11 @@ class Lab2222BottomNavigationBar extends StatelessWidget {
               Lab2222BottomNavigationBarItem(
                 onTap: activePage == Lab2222NavigationBarPages.home
                     ? () {}
-                    : () => Navigator.pushReplacementNamed(
-                        context, HomeScreen.route),
+                    : () => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          HomeScreen.route,
+                          (route) => route.settings.name == HomeScreen.route,
+                        ),
                 icon: const AssetImage('assets/navbar/boat.png'),
                 active: activePage == Lab2222NavigationBarPages.home,
               ),
