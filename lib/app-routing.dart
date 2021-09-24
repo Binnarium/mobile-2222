@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
@@ -95,10 +96,16 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
 
             /// to go to the multimedia detailed screen in the chat
-            if (settings.name == DetailedMultimediaScreen.route) {
-              final args = settings.arguments! as DetailedMultimediaScreen;
-              return DetailedMultimediaScreen(
-                multimedia: args.multimedia,
+            if (settings.name == DetailedVideoScreen.route) {
+              final args = settings.arguments! as DetailedVideoScreen;
+              return DetailedVideoScreen(
+                video: args.video,
+              );
+            }
+            if (settings.name == DetailedImageScreen.route) {
+              final args = settings.arguments! as DetailedImageScreen;
+              return DetailedImageScreen(
+                image: args.image,
               );
             }
             if (settings.name == IntroductoryVideoScreen.route) {

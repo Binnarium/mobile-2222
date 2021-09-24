@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
-import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -141,12 +141,11 @@ class _ImageMessageCard extends _MessageCard<ImageMessageModel> {
       width: double.infinity,
       child: InkWell(
         onTap: () {
-          Navigator.push<MaterialPageRoute>(
+          Navigator.pushNamed(
             context,
-            MaterialPageRoute(
-              builder: (context) => DetailedMultimediaScreen(
-                multimedia: message.asset!,
-              ),
+            DetailedImageScreen.route,
+            arguments: DetailedImageScreen(
+              image: message.asset! as ImageDto,
             ),
           );
         },

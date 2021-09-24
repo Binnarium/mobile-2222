@@ -7,20 +7,20 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:video_player/video_player.dart';
 
-class DetailedMultimediaScreen extends StatelessWidget {
+class DetailedVideoScreen extends StatelessWidget {
   /// constructor
-  DetailedMultimediaScreen({
+  DetailedVideoScreen({
     Key? key,
-    required this.multimedia,
-  })  : isVideo = multimedia.runtimeType == VideoDto,
+    required this.video,
+  })  : controller = VideoPlayerController.network(video.url),
         super(key: key);
 
   /// params
-  static const String route = '/detailed-multimedia';
+  static const String route = '/detailed-video';
 
-  final AssetDto multimedia;
+  final VideoDto video;
 
-  final bool isVideo;
+  final VideoPlayerController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +28,17 @@ class DetailedMultimediaScreen extends StatelessWidget {
       // backgroundColor: Colors2222.darkGrey,
       backgroundColor: Colors2222.black,
       body: SizedBox.expand(
-        child: !isVideo
-            ? Center(child: Image.network(multimedia.url))
-            : Lab2222VideoPlayer(video: multimedia as VideoDto),
+        child: Lab2222VideoPlayer(controller: controller),
       ),
     );
   }
 }
 
 class Lab2222VideoPlayer extends StatefulWidget {
-  Lab2222VideoPlayer({
+  const Lab2222VideoPlayer({
     Key? key,
-    required VideoDto video,
-  })  : controller = VideoPlayerController.network(video.url),
-        super(key: key);
+    required this.controller,
+  }) : super(key: key);
 
   final VideoPlayerController controller;
 
@@ -52,12 +49,18 @@ class Lab2222VideoPlayer extends StatefulWidget {
 class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   bool showControls = true;
 
+  Timer? currentTimer;
+
   @override
   void initState() {
+    super.initState();
+
+    /// update interface with updated data
     widget.controller.addListener(() {
       if (mounted) setState(() {});
     });
-    super.initState();
+
+    /// initialize video auto play
     widget.controller.initialize().then((_) {
       widget.controller.play();
       _startTimerHideControls();
@@ -79,12 +82,15 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _startTimerHideControls(),
-      child: Stack(
-        children: [
-          /// video
-          SizedBox.expand(
+    final Size size = MediaQuery.of(context).size;
+
+    return Stack(
+      children: [
+        /// video
+        SizedBox.expand(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _startTimerHideControls(),
             child: FittedBox(
               fit: BoxFit.contain,
               child: SizedBox(
@@ -98,50 +104,55 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
               ),
             ),
           ),
+        ),
 
-          /// loading indicator
-          if (widget.controller.value.isBuffering ||
-              !widget.controller.value.isInitialized)
-            const Positioned.fill(
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Colors2222.white,
-                ),
+        /// loading indicator
+        if (widget.controller.value.isBuffering ||
+            !widget.controller.value.isInitialized)
+          const Positioned.fill(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors2222.white,
               ),
             ),
+          ),
 
-          Positioned.fill(
-            child: AnimatedOpacity(
-              opacity: showControls ? 1 : 0,
-              duration: const Duration(milliseconds: 500),
-              child: Stack(
-                children: [
-                  /// close button
-                  Positioned(
+        Positioned.fill(
+          child: AnimatedOpacity(
+            opacity: showControls ? 1 : 0,
+            duration: const Duration(milliseconds: 500),
+            child: Stack(
+              children: [
+                /// close button
+                Positioned(
+                  left: size.width * 0.02,
+                  top: size.width * 0.02,
+                  child: Material(
+                    color: Colors2222.darkGrey.withOpacity(0.8),
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: BorderRadius.circular(4),
                     child: IconButton(
                       icon: const Icon(Icons.close_rounded),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
+                ),
 
-                  /// controls
-                  VideoPlayerControls(controller: widget.controller),
-                ],
-              ),
+                /// controls
+                VideoPlayerControls(controller: widget.controller),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Timer? currTimer;
-
   void _startTimerHideControls() {
     showControls = true;
-    currTimer?.cancel();
-    currTimer = null;
-    currTimer = Timer(const Duration(seconds: 5), () {
+    currentTimer?.cancel();
+    currentTimer = null;
+    currentTimer = Timer(const Duration(seconds: 5), () {
       if (mounted)
         setState(() {
           showControls = false;
