@@ -15,11 +15,13 @@ import 'package:lab_movil_2222/user/models/login-form.model.dart';
 import 'package:lab_movil_2222/user/services/login-user.service.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/authentication-snackbar.dart';
+import 'package:lab_movil_2222/user/widgets/widgets/listSocialNetworks.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -147,6 +149,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: MarkdownCard(
                     content: loginPayload!.workloadText,
+                  ),
+                ),
+
+                ///Social Networks
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26, top: 26),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      // ignore: prefer_const_constructors
+                      ListSocialNetwork(iconURL: 'facebook'),
+                      // ignore: prefer_const_constructors
+                      ListSocialNetwork(iconURL: 'instagram'),
+                      // ignore: prefer_const_constructors
+                      ListSocialNetwork(iconURL: 'twitter'),
+                    ],
                   ),
                 ),
 
