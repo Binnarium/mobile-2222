@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'dart:math';
 
@@ -25,7 +27,6 @@ class DetailedVideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.empty(
-      // backgroundColor: Colors2222.darkGrey,
       backgroundColor: Colors2222.black,
       body: SizedBox.expand(
         child: Lab2222VideoPlayer(controller: controller),
@@ -84,13 +85,13 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Stack(
-      children: [
-        /// video
-        SizedBox.expand(
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => _startTimerHideControls(),
+    return GestureDetector(
+      onTap: _startTimerHideControls,
+      behavior: HitTestBehavior.opaque,
+      child: Stack(
+        children: [
+          /// video
+          SizedBox.expand(
             child: FittedBox(
               fit: BoxFit.contain,
               child: SizedBox(
@@ -104,60 +105,108 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
               ),
             ),
           ),
-        ),
 
-        /// loading indicator
-        if (widget.controller.value.isBuffering ||
-            !widget.controller.value.isInitialized)
-          const Positioned.fill(
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Colors2222.white,
+          /// loading indicator
+          ///
+          /// overlay of a spinner progress displayed only when a video is
+          /// buffering or is not being initialized yet
+          if (widget.controller.value.isBuffering ||
+              !widget.controller.value.isInitialized)
+            const Positioned.fill(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Colors2222.white,
+                ),
+              ),
+            ),
+
+          /// controls
+          ///
+          /// overlay with controls and actions
+          Positioned.fill(
+            child: AnimatedOpacity(
+              opacity: showControls ? 1 : 0,
+              duration: const Duration(milliseconds: 500),
+              child: Stack(
+                children: [
+                  /// leading actions
+                  Positioned(
+                    left: size.width * 0.02,
+                    top: size.width * 0.02,
+                    child: Material(
+                      color: Colors2222.darkGrey.withOpacity(0.8),
+                      clipBehavior: Clip.hardEdge,
+                      borderRadius: BorderRadius.circular(4),
+                      child: IconButton(
+                        icon: const Icon(Icons.close_rounded),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ),
+
+                  /// trailing actions
+                  Positioned(
+                    right: size.width * 0.02,
+                    top: size.width * 0.02,
+                    child: Material(
+                      color: Colors2222.darkGrey.withOpacity(0.8),
+                      clipBehavior: Clip.hardEdge,
+                      borderRadius: BorderRadius.circular(4),
+                      child: IconButton(
+                        icon: const Icon(Icons.warning_amber_rounded),
+                        onPressed: _handleBottomSheet,
+                      ),
+                    ),
+                  ),
+
+                  /// bottom controls
+                  Positioned(
+                    left: size.width * 0.02,
+                    right: size.width * 0.02,
+                    bottom: size.width * 0.03,
+                    child: VideoPlayerControls(controller: widget.controller),
+                  ),
+                ],
               ),
             ),
           ),
-
-        Positioned.fill(
-          child: AnimatedOpacity(
-            opacity: showControls ? 1 : 0,
-            duration: const Duration(milliseconds: 500),
-            child: Stack(
-              children: [
-                /// close button
-                Positioned(
-                  left: size.width * 0.02,
-                  top: size.width * 0.02,
-                  child: Material(
-                    color: Colors2222.darkGrey.withOpacity(0.8),
-                    clipBehavior: Clip.hardEdge,
-                    borderRadius: BorderRadius.circular(4),
-                    child: IconButton(
-                      icon: const Icon(Icons.close_rounded),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ),
-                ),
-
-                /// controls
-                VideoPlayerControls(controller: widget.controller),
-              ],
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   void _startTimerHideControls() {
-    showControls = true;
-    currentTimer?.cancel();
-    currentTimer = null;
+    setState(() {
+      showControls = true;
+      currentTimer?.cancel();
+    });
     currentTimer = Timer(const Duration(seconds: 5), () {
       if (mounted)
         setState(() {
           showControls = false;
         });
     });
+  }
+
+  /// handle bottom drawer
+  void _handleBottomSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            title: Text('El video no se carga, o carga demasiado lento'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('El video se queda en negro'),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -179,92 +228,86 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
     final Size size = MediaQuery.of(context).size;
     final double space = size.width * 0.02;
 
-    return Positioned(
-      left: space,
-      right: space,
-      bottom: space,
-      child: Container(
-        padding: EdgeInsets.all(space),
-        decoration: BoxDecoration(
-          color: Colors2222.darkGrey.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Column(
-          children: [
-            VideoPlayerSlider(
-              controller: widget.controller,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                /// rewind 5 min button
+    return Container(
+      padding: EdgeInsets.all(space),
+      decoration: BoxDecoration(
+        color: Colors2222.darkGrey.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Column(
+        children: [
+          VideoPlayerSlider(
+            controller: widget.controller,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              /// rewind 5 seconds button
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Material(
+                  color: Colors2222.transparent,
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(4),
+                  child: IconButton(
+                    onPressed: () async {
+                      final currentPos = await widget.controller.position;
+                      final Duration newDuration = Duration(
+                          seconds: max(0, (currentPos?.inSeconds ?? 0) - 5));
+                      widget.controller.seekTo(newDuration);
+                    },
+                    icon: const Icon(Icons.replay_5_rounded),
+                  ),
+                ),
+              ),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Material(
-                    color: Colors2222.transparent,
-                    clipBehavior: Clip.hardEdge,
-                    borderRadius: BorderRadius.circular(4),
-                    child: IconButton(
-                      onPressed: () async {
-                        final currentPos = await widget.controller.position;
-                        final Duration newDuration = Duration(
-                            seconds: max(0, (currentPos?.inSeconds ?? 0) - 5));
-                        widget.controller.seekTo(newDuration);
-                      },
-                      icon: const Icon(Icons.replay_5_rounded),
+              /// play button
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Material(
+                  color: Colors2222.transparent,
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(4),
+                  child: IconButton(
+                    onPressed: () {
+                      if (widget.controller.value.isPlaying)
+                        widget.controller.pause();
+                      else
+                        widget.controller.play();
+                    },
+                    iconSize: 28,
+                    icon: Icon(
+                      widget.controller.value.isPlaying
+                          ? Icons.pause_rounded
+                          : Icons.play_arrow_rounded,
                     ),
                   ),
                 ),
+              ),
 
-                /// play button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Material(
-                    color: Colors2222.transparent,
-                    clipBehavior: Clip.hardEdge,
-                    borderRadius: BorderRadius.circular(4),
-                    child: IconButton(
-                      onPressed: () {
-                        if (widget.controller.value.isPlaying)
-                          widget.controller.pause();
-                        else
-                          widget.controller.play();
-                      },
-                      iconSize: 28,
-                      icon: Icon(
-                        widget.controller.value.isPlaying
-                            ? Icons.pause_rounded
-                            : Icons.play_arrow_rounded,
-                      ),
-                    ),
+              /// forward 5 seconds button
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Material(
+                  color: Colors2222.transparent,
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(4),
+                  child: IconButton(
+                    onPressed: () async {
+                      final currentPos = await widget.controller.position;
+                      final Duration newDuration = Duration(
+                          seconds: min(
+                              widget.controller.value.duration.inSeconds,
+                              (currentPos?.inSeconds ?? 0) + 5));
+                      widget.controller.seekTo(newDuration);
+                    },
+                    icon: const Icon(Icons.forward_5_rounded),
                   ),
                 ),
-
-                /// rewind 5 min button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Material(
-                    color: Colors2222.transparent,
-                    clipBehavior: Clip.hardEdge,
-                    borderRadius: BorderRadius.circular(4),
-                    child: IconButton(
-                      onPressed: () async {
-                        final currentPos = await widget.controller.position;
-                        final Duration newDuration = Duration(
-                            seconds: min(
-                                widget.controller.value.duration.inSeconds,
-                                (currentPos?.inSeconds ?? 0) + 5));
-                        widget.controller.seekTo(newDuration);
-                      },
-                      icon: const Icon(Icons.forward_5_rounded),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -308,7 +351,8 @@ class VideoPlayerSlider extends StatelessWidget {
               inactiveColor: Colors2222.white.withOpacity(0.5),
               min: 0.0,
               max: controller.value.duration.inSeconds.toDouble(),
-              value: controller.value.position.inSeconds.toDouble(),
+              value: min(controller.value.duration.inSeconds.toDouble(),
+                  controller.value.position.inSeconds.toDouble()),
               onChanged: (value) {
                 controller.seekTo(Duration(seconds: value.toInt()));
               },

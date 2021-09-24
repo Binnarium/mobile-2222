@@ -17,8 +17,6 @@ class LoadContentsScreenInformationService {
         .snapshots()
         .map((snapshot) => snapshot.data())
         .map((event) => event?['content'] as List<dynamic>)
-        .first
-        .asStream()
         .map((event) => event
             .map((dynamic e) => ContentDto.fromJson(e as Map<String, dynamic>))
             .toList());
