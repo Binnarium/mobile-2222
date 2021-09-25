@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ListSocialNetwork extends StatefulWidget {
+class ListSocialNetwork extends StatelessWidget {
   /// constructor
   const ListSocialNetwork({
     Key? key,
@@ -12,31 +12,24 @@ class ListSocialNetwork extends StatefulWidget {
   final String iconURL;
 
   @override
-  _ListSocialNetworkState createState() => _ListSocialNetworkState();
-}
-
-class _ListSocialNetworkState extends State<ListSocialNetwork> {
-  @override
   Widget build(BuildContext context) {
     String pageURL = '';
-    if (widget.iconURL == 'facebook') {
+
+    /// TODO: refactor use static compiling
+    if (iconURL == 'facebook') {
       pageURL = 'https://www.facebook.com/Labmovil2222/';
-    } else if (widget.iconURL == 'instagram') {
+    } else if (iconURL == 'instagram') {
       pageURL = 'https://www.instagram.com/labmovil2222/';
-    } else if (widget.iconURL == 'twitter') {
+    } else if (iconURL == 'twitter') {
       pageURL = 'https://twitter.com/labmovil2222/';
     }
-    return ElevatedButton(
+    return IconButton(
       onPressed: () {
         launch(pageURL);
       },
-      style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(),
-          primary: Colors.black,
-          onPrimary: Colors.white,
-          elevation: 0),
-      child: ImageIcon(
-        AssetImage('assets/images/${widget.iconURL}.png'),
+      iconSize: 36,
+      icon: ImageIcon(
+        AssetImage('assets/images/${iconURL}.png'),
       ),
     );
   }

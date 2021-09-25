@@ -179,7 +179,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           ///Social Networks
           Padding(
-            padding: const EdgeInsets.only(bottom: 26, top: 26),
+            padding: const EdgeInsets.only(top: 26),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               // ignore: prefer_const_literals_to_create_immutables
