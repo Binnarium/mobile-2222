@@ -30,6 +30,7 @@ class MessageTextInput extends StatefulWidget {
 class _MessageTextInputState extends State<MessageTextInput> {
   StreamSubscription? _sendMessageSub;
   bool showOtherSendOptions = false;
+  bool sendingMessage = false;
 
   SendMessagesService get _sendMessagesService =>
       Provider.of<SendMessagesService>(context, listen: false);
@@ -111,6 +112,17 @@ class _MessageTextInputState extends State<MessageTextInput> {
               ),
             ),
           ),
+
+        if (sendingMessage)
+          Positioned.fill(
+            left: 0,
+            right: 0,
+            top: -15,
+            child: Text(
+              'Enviando mensaje ...',
+              style: Theme.of(context).primaryTextTheme.overline,
+            ),
+          ),
       ],
     );
   }
@@ -124,6 +136,10 @@ class _MessageTextInputState extends State<MessageTextInput> {
       return;
     }
 
+    setState(() {
+      sendingMessage = true;
+    });
+
     _sendMessageSub = _sendMessagesService
         .text$(widget.chat, widget.messageInput.text)
         .listen((sended) {
@@ -136,6 +152,10 @@ class _MessageTextInputState extends State<MessageTextInput> {
       _sendMessageSub?.cancel();
       _sendMessageSub = null;
       widget.messageInput.clear();
+    }, onDone: () {
+      setState(() {
+        sendingMessage = false;
+      });
     });
   }
 
@@ -148,6 +168,10 @@ class _MessageTextInputState extends State<MessageTextInput> {
     if (_sendMessageSub != null) {
       return;
     }
+
+    setState(() {
+      sendingMessage = true;
+    });
 
     /// use the message sub stream with the upload$ stream
     _sendMessageSub = uploadImageService
@@ -181,6 +205,10 @@ class _MessageTextInputState extends State<MessageTextInput> {
           );
       },
       onDone: () {
+        setState(() {
+          sendingMessage = false;
+        });
+
         _sendMessageSub?.cancel();
         _sendMessageSub = null;
         widget.messageInput.clear();
@@ -194,6 +222,9 @@ class _MessageTextInputState extends State<MessageTextInput> {
     if (_sendMessageSub != null) {
       return;
     }
+    setState(() {
+      sendingMessage = true;
+    });
 
     /// calls the provider to upload image.
     final UploadVideoService uploadVideoService =
@@ -224,12 +255,15 @@ class _MessageTextInputState extends State<MessageTextInput> {
           ScaffoldMessenger.of(context).showSnackBar(
             const ChatSnackbarMessages.videoNotLoaded(),
           );
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          const ChatSnackbarMessages.videoNotSended(),
-        );
+        } else
+          ScaffoldMessenger.of(context).showSnackBar(
+            const ChatSnackbarMessages.videoNotSended(),
+          );
       },
       onDone: () {
+        setState(() {
+          sendingMessage = false;
+        });
         _sendMessageSub?.cancel();
         _sendMessageSub = null;
         widget.messageInput.clear();
