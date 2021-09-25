@@ -8,7 +8,7 @@ class GetContributionExplanationService {
 
   Stream<ContributionExplanationModel?> get explanation$ => _firestore
       .collection('application')
-      .doc('collaboration-explanation')
+      .doc('contribution-explanation')
       .snapshots()
 
       /// turn snapshot into document data or null

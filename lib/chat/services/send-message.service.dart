@@ -8,23 +8,27 @@ import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 import 'package:provider/provider.dart';
 
 class SendMessagesService {
   SendMessagesService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
-        _fFirestore = FirebaseFirestore.instance;
+        _fFirestore = FirebaseFirestore.instance,
+        _random = Random();
 
   final CurrentPlayerService _currentPlayerService;
 
   final FirebaseFirestore _fFirestore;
 
+  final Random _random;
+
   Stream<bool> text$(ChatModel chat, String content) {
     return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => TextMessageModel(
-        id: _generateId(),
+        id: _random.generateString(),
         senderId: user.uid,
         text: content,
         sendedDate: DateTime.now(),
@@ -40,7 +44,7 @@ class SendMessagesService {
     return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => ImageMessageModel(
-        id: _generateId(),
+        id: _random.generateString(),
         senderId: user.uid,
         image: image,
         sendedDate: DateTime.now(),
@@ -56,7 +60,7 @@ class SendMessagesService {
     return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => VideoMessageModel(
-        id: _generateId(),
+        id: _random.generateString(),
         senderId: user.uid,
         video: videoDto,
         sendedDate: DateTime.now(),
@@ -97,19 +101,5 @@ class SendMessagesService {
         }
       },
     );
-  }
-
-  String _generateId({int size = 10}) {
-    const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    final Random _rnd = Random();
-
-    final String id = String.fromCharCodes(
-      Iterable.generate(
-        size,
-        (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)),
-      ),
-    );
-    return id;
   }
 }
