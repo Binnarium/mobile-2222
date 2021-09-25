@@ -114,7 +114,7 @@ class _MessageTextInputState extends State<MessageTextInput> {
           ),
 
         if (sendingMessage)
-          Positioned.fill(
+          Positioned(
             left: 0,
             right: 0,
             top: -15,
@@ -147,15 +147,14 @@ class _MessageTextInputState extends State<MessageTextInput> {
         ScaffoldMessenger.of(context).showSnackBar(
           const ChatSnackbarMessages.textNotSended(),
         );
-      }
-
-      _sendMessageSub?.cancel();
-      _sendMessageSub = null;
-      widget.messageInput.clear();
+      } else
+        widget.messageInput.clear();
     }, onDone: () {
       setState(() {
         sendingMessage = false;
       });
+      _sendMessageSub?.cancel();
+      _sendMessageSub = null;
     });
   }
 
