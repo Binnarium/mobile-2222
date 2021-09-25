@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -49,8 +50,19 @@ class _ApproveTextState extends State<ApproveText> {
   Widget build(BuildContext context) {
     return pointsExplanation == null
         ? const AppLoading()
-        : MarkdownCard(
-            content: pointsExplanation!.explanation,
+        : Column(
+            children: [
+              MarkdownCard(
+                content: pointsExplanation!.explanation,
+              ),
+
+              /// audio
+              if (pointsExplanation!.audio != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: AudioPlayerWidget(audio: pointsExplanation!.audio!),
+                )
+            ],
           );
   }
 }
