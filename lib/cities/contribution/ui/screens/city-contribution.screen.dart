@@ -65,14 +65,8 @@ class _ContributionScreenState extends State<ContributionScreen> {
       if (mounted) {
         setState(() {
           /// seeks for all medals in the medals array
-          player!.contributionsAwards.asMap().forEach((key, value) {
-            if (value.cityId.toLowerCase() == widget.city.name.toLowerCase()) {
-              hasMedal = true;
-              print('hay medalla contribución');
-            }
-          });
-
-          print('hasMedal contribution: $hasMedal');
+          hasMedal = player!.contributionsAwards
+              .any((el) => el.cityId == widget.city.id);
         });
       }
     });
