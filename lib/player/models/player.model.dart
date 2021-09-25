@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/award.model.dart';
+import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 
 class PlayerModel {
   final String uid;
@@ -14,6 +17,10 @@ class PlayerModel {
   final List<AwardModel> clubhouseAwards;
   final List<AwardModel> maratonAwards;
 
+  /// player pub
+  final String pubCode;
+  final String? pubUserId;
+
   // ignore: sort_constructors_first
   PlayerModel._({
     required this.uid,
@@ -25,6 +32,8 @@ class PlayerModel {
     required this.maratonAwards,
     required this.avatarImage,
     required this.groupId,
+    required this.pubCode,
+    this.pubUserId,
   });
 
   // ignore: sort_constructors_first
@@ -40,6 +49,8 @@ class PlayerModel {
           url: '',
         ),
         this.groupId = '',
+        this.pubCode = Random().generateString(size: 8),
+        this.pubUserId = null,
         this.projectAwards = const [],
         this.contributionsAwards = const [],
         this.maratonAwards = const [],
@@ -53,6 +64,8 @@ class PlayerModel {
               <String, dynamic>{}),
       uid: payload['uid'] as String,
       email: payload['email'] as String,
+      pubCode: payload['pubCode'] as String,
+      pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       groupId: payload['groupId'] as String,
       clubhouseAwards:

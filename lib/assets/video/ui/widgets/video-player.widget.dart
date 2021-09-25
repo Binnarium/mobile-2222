@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/ui/screens/detailed-multimedia.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Class that creates a video player depending on video URL and the description
 /// of the video
@@ -50,16 +49,11 @@ class _VideoPlayerState extends State<VideoPlayer> {
               child: Material(
                 color: Colors2222.transparent,
                 child: InkWell(
-                  onTap: () => (kIsWeb)
-                      ? launch(widget.video.url)
-                      : Navigator.push<MaterialPageRoute>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailedMultimediaScreen(
-                              multimedia: widget.video,
-                            ),
-                          ),
-                        ),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    DetailedVideoScreen.route,
+                    arguments: DetailedVideoScreen(video: widget.video),
+                  ),
                 ),
               ),
             ),
