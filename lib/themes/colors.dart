@@ -14,7 +14,7 @@ class Colors2222 {
   static const Color red = Color(0xffD52027);
   static const Color black = Color(0xff000000);
 
-  static Color darkGrey = Colors2222.black.withOpacity(0.6);
+  static Color darkGrey = Color(0xff444444);
   static const Color lightGrey = Color(0xffdddddd);
 
   static const Color backgroundOrange = Color(0xffF1682A);

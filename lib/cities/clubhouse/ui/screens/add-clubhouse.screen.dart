@@ -11,6 +11,7 @@ import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-explanation.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -115,7 +116,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                       CreateClubhouseModel(
                     cityId: widget.city.id,
                     clubhouseUrl: clubhouseUrl!,
-                    id: _generateId(size: 15),
+                    id: Random().generateString(size: 15),
                     uploaderId: _fAuth.currentUser!.uid,
                   );
 
@@ -180,20 +181,6 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
         ],
       ),
     );
-  }
-
-  String _generateId({int size = 10}) {
-    const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    final Random _rnd = Random();
-
-    final String id = String.fromCharCodes(
-      Iterable.generate(
-        size,
-        (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)),
-      ),
-    );
-    return id;
   }
 
   String? clubhouseUrl;

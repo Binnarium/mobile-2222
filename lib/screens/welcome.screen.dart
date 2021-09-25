@@ -11,6 +11,7 @@ import 'package:lab_movil_2222/shared/widgets/content-title.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/user/widgets/widgets/listSocialNetworks.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
@@ -174,6 +175,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 left: horizontalPadding, right: horizontalPadding, bottom: 16),
             child: MarkdownCard(
               content: loginPayload!.workloadText,
+            ),
+          ),
+          ///Social Networks
+          Padding(
+            padding: const EdgeInsets.only(top: 26),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                // ignore: prefer_const_constructors
+                ListSocialNetwork(iconURL: 'facebook'),
+                // ignore: prefer_const_constructors
+                ListSocialNetwork(iconURL: 'instagram'),
+                // ignore: prefer_const_constructors
+                ListSocialNetwork(iconURL: 'twitter'),
+              ],
             ),
           ),
         ],

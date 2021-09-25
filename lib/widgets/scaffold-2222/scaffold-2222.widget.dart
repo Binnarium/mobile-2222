@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
-import 'package:provider/provider.dart';
 
 import 'bottom-navigation-bar-widget.dart';
 
@@ -18,6 +16,7 @@ class Scaffold2222 extends StatelessWidget {
     this.backgrounds = const [],
   })  : _nextRoute = CityNavigator.getNextPage(route, city),
         _showBottomNavigationBar = true,
+        _enableBack = true,
         appBar = null,
         _backgroundColor = city.color,
         activePage = null,
@@ -32,6 +31,7 @@ class Scaffold2222 extends StatelessWidget {
     Color? color,
     this.backgrounds = const [],
   })  : _nextRoute = CityNavigator.getNextPage(route, city),
+        _enableBack = true,
         _showBottomNavigationBar = true,
         _backgroundColor = color ?? city.color,
         appBar = null,
@@ -47,6 +47,7 @@ class Scaffold2222 extends StatelessWidget {
     this.backgrounds = const [],
   })  : _nextRoute = null,
         _showBottomNavigationBar = false,
+        _enableBack = false,
         _backgroundColor = backgroundColor,
         activePage = null,
         super(key: key);
@@ -60,6 +61,7 @@ class Scaffold2222 extends StatelessWidget {
     required this.activePage,
   })  : _nextRoute = null,
         _showBottomNavigationBar = true,
+        _enableBack = true,
         _backgroundColor = Colors2222.red,
         super(key: key);
 
@@ -75,6 +77,9 @@ class Scaffold2222 extends StatelessWidget {
   /// navigator next route
   final ScaffoldRouteBuilder? _nextRoute;
 
+  /// enable back button and gestures
+  final bool _enableBack;
+
   /// enable bottom navbar
   final bool _showBottomNavigationBar;
 
@@ -87,15 +92,12 @@ class Scaffold2222 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// next page button
-    final VoidCallback? prevPage =
-        Navigator.of(context).canPop() ? () => Navigator.pop(context) : null;
+    final VoidCallback? prevPage = _enableBack && Navigator.of(context).canPop()
+        ? () => Navigator.pop(context)
+        : null;
 
     final VoidCallback? nextPage =
         _nextRoute == null ? null : () => _nextRoute!.builder(context);
-
-    /// podcast provider
-    final CurrentAudioProvider audioProvider =
-        Provider.of<CurrentAudioProvider>(context, listen: false);
 
     /// page layout
     return Scaffold(
@@ -123,15 +125,7 @@ class Scaffold2222 extends StatelessWidget {
 
           /// right
           if (nextPage != null && details.delta.dx < -5) {
-            try {
-              if (audioProvider.player.playing) {
-                audioProvider.player.pause();
-              }
-            } catch (e) {
-              print('Error al pausar podcast $e');
-            } finally {
-              nextPage();
-            }
+            nextPage();
           }
         },
         child: BackgroundDecoration(

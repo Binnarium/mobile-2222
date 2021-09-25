@@ -31,6 +31,7 @@ class Markdown2222 extends StatelessWidget {
 
     return fmd.MarkdownBody(
       data: data,
+      selectable: true,
       styleSheet: fmd.MarkdownStyleSheet.fromTheme(theme).copyWith(
         h1Align: contentAlignment,
         h2Align: contentAlignment,
@@ -40,6 +41,9 @@ class Markdown2222 extends StatelessWidget {
         h6Align: contentAlignment,
         textAlign: contentAlignment,
         blockSpacing: 20,
+        blockquoteDecoration: BoxDecoration(
+          color: Colors2222.primary.withOpacity(0.2),
+        ),
       ),
     );
   }
