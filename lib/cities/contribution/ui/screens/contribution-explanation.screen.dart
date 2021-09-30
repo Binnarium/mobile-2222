@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/cities/contribution/models/contribution-explanation.model.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
+import 'package:lab_movil_2222/cities/contribution/ui/widget/contribution-code-copy.dart';
 import 'package:lab_movil_2222/cities/contribution/ui/widget/goto-pub-button.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -157,66 +156,6 @@ class _ContributionExplanationScreenState
                   GotoPubButton(pubUrl: contributionExplanation!.manifestUrl),
             ),
           ],
-        ],
-      ),
-    );
-  }
-}
-
-/// TODO: Move to propper file
-class ContributionCodeCopy extends StatelessWidget {
-  const ContributionCodeCopy({
-    Key? key,
-    required this.codeExplanation,
-    required String pubCode,
-  })  : playerCode = 'C2222-$pubCode',
-        super(key: key);
-
-  final String codeExplanation;
-
-  final String playerCode;
-
-  String? get codeMessage =>
-      codeExplanation.replaceAll(RegExp('SHOW-CODE'), playerCode);
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.04,
-        vertical: size.width * 0.04,
-      ),
-      decoration: BoxDecoration(
-        color: Colors2222.white,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      alignment: Alignment.center,
-      child: Column(
-        children: [
-          Markdown2222(
-            data: codeMessage!,
-            color: Colors2222.black,
-          ),
-
-          /// copy button
-          OutlinedButton.icon(
-            onPressed: () {
-              FlutterClipboard.copy(playerCode).then((result) {
-                const snackBar = SnackBar(
-                  content: Text('Código copiado'),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              });
-            },
-            style: OutlinedButton.styleFrom(
-              primary: Colors2222.primary,
-            ),
-            label: const Text('Copiar'),
-            icon: const Icon(
-              Icons.copy_all_rounded,
-            ),
-          ),
         ],
       ),
     );

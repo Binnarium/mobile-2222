@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
 
 class DetailedVideoScreen extends StatelessWidget {
   /// constructor
@@ -59,6 +60,9 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   void initState() {
     super.initState();
 
+    /// to avoid the screen to sleep
+    Wakelock.enable();
+
     /// update interface with updated data
     widget.controller.addListener(() {
       if (mounted) setState(() {});
@@ -75,6 +79,9 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   @override
   void dispose() {
     widget.controller.dispose();
+
+    /// to allow the screen to sleep
+    Wakelock.disable();
     super.dispose();
   }
 
@@ -183,7 +190,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
       showControls = true;
       currentTimer?.cancel();
     });
-    currentTimer = Timer(const Duration(seconds: 5), () {
+    currentTimer = Timer(const Duration(seconds: 3), () {
       if (mounted)
         setState(() {
           showControls = false;
