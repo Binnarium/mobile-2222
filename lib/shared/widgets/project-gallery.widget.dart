@@ -50,14 +50,14 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
               children: [
                 Image.asset(
                   'assets/images/empty-projects.png',
-                  width: size.width * 0.4,
+                  width: size.width * 0.3,
                 ),
                 const SizedBox(
                   height: 18,
                 ),
                 Text(
                   'Aún no tienes ningún proyecto',
-                  style: textTheme.headline5,
+                  style: textTheme.headline5?.apply(fontSizeFactor: 0.8),
                   textAlign: TextAlign.center,
                 ),
               ],

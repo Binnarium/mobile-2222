@@ -44,13 +44,16 @@ FutureBuilder<String> _introductionBody(BuildContext context, Size size) {
         return Column(
           children: [
             //Texto cambiar por funcionalidad de cuenta de días
-            Text('FALTAN',
+            Text('FALTA',
                 style: textTheme.headline6
                     ?.apply(fontSizeFactor: size.height * 0.001)),
             SizedBox(height: size.height * 0.01),
             //Texto cambiar por funcionalidad de cuenta de días
 
-            Text(days.data! + ' DÍAS',
+            Text(
+                (int.parse(days.data!) >= 0)
+                    ? (days.data! + ' DÍAS')
+                    : '0 DÍAS',
                 style:
                     textTheme.headline3?.apply(fontSizeFactor: daysLeftSize)),
 

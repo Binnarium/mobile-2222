@@ -87,6 +87,15 @@ abstract class MessageModel {
         sendedByMe: sendedByMe,
       );
     }
+    if (kind == 'MESSAGE#DELETED') {
+      return DeletedMessageModel(
+        id: id,
+        senderId: senderId,
+        sendedDate: sendedDate,
+        sender: sender,
+        sendedByMe: sendedByMe,
+      );
+    }
 
     throw UnimplementedError();
   }
@@ -105,7 +114,6 @@ abstract class MessageModel {
   }
 }
 
-// ignore: comment_references
 /// Message of type [MessageKind.video]
 class VideoMessageModel extends MessageModel {
   VideoMessageModel({
@@ -128,7 +136,6 @@ class VideoMessageModel extends MessageModel {
         );
 }
 
-// ignore: comment_references
 /// Message of type [MessageKind.image]
 class ImageMessageModel extends MessageModel {
   ImageMessageModel({
@@ -151,7 +158,6 @@ class ImageMessageModel extends MessageModel {
         );
 }
 
-// ignore: comment_references
 /// Message of type [MessageKind.text]
 class TextMessageModel extends MessageModel {
   TextMessageModel({
@@ -174,7 +180,6 @@ class TextMessageModel extends MessageModel {
         );
 }
 
-// ignore: comment_references
 /// Message of type [MessageKind.banned]
 class BannedMessageModel extends MessageModel {
   BannedMessageModel({
@@ -191,6 +196,27 @@ class BannedMessageModel extends MessageModel {
           banned: true,
           sendedDate: sendedDate,
           text: null,
+          senderId: senderId,
+          sender: sender,
+        );
+}
+
+/// Message of type deleted [MessageKind.deleted]
+class DeletedMessageModel extends MessageModel {
+  DeletedMessageModel({
+    required String id,
+    required String senderId,
+    required DateTime sendedDate,
+    required ChatParticipantModel sender,
+    bool sendedByMe = false,
+  }) : super(
+          sendedByMe: sendedByMe,
+          kind: 'MESSAGE#DELETED',
+          id: id,
+          asset: null,
+          banned: false,
+          sendedDate: sendedDate,
+          text: 'Mensaje eliminado',
           senderId: senderId,
           sender: sender,
         );

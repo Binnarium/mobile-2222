@@ -4,8 +4,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CurrentVideoProvider {
-  // TODO: remove comment
-  // ignore: close_sinks
   final BehaviorSubject<VideoDto?> _currentVideoSink =
       BehaviorSubject<VideoDto?>.seeded(null);
 

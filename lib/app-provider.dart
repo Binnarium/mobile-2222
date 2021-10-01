@@ -3,6 +3,7 @@ import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
 import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
+import 'package:lab_movil_2222/chat/services/delete-message.service.dart';
 import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
 import 'package:lab_movil_2222/chat/services/list-player-chats.service.dart';
@@ -111,13 +112,13 @@ class AppProvider extends MultiProvider {
 
             Provider(create: (ctx) => UploadProjectService(ctx)),
 
-
             /// chat services
             Provider(create: (ctx) => SendMessagesService(ctx)),
             Provider(create: (ctx) => CreatePersonalChatService(ctx)),
             Provider(create: (ctx) => GetChatService(ctx)),
             Provider(create: (ctx) => ListPlayerChatsService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
+            Provider(create: (ctx) => DeleteMessageService(ctx)),
           ],
 
           /// main application
