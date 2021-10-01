@@ -29,7 +29,7 @@ class ListSocialNetwork extends StatelessWidget {
       },
       iconSize: 36,
       icon: ImageIcon(
-        AssetImage('assets/images/${iconURL}.png'),
+        AssetImage('assets/images/$iconURL.png'),
       ),
     );
   }
