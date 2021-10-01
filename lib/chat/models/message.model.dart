@@ -216,7 +216,7 @@ class DeletedMessageModel extends MessageModel {
           asset: null,
           banned: false,
           sendedDate: sendedDate,
-          text: 'Mensaje eliminado',
+          text: null,
           senderId: senderId,
           sender: sender,
         );

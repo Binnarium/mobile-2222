@@ -1,15 +1,12 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
-import 'package:lab_movil_2222/chat/services/delete-message.service.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
-import 'package:provider/provider.dart';
 
 class MessageWidget extends StatelessWidget {
   /// constructor
@@ -171,11 +168,11 @@ class _DeletedMessageCard extends _MessageCard<DeletedMessageModel> {
       padding: padding,
       decoration: decoration,
       child: Text(
-        message.text!,
+        'Mensaje Eliminado',
         style: Theme.of(context)
             .textTheme
             .bodyText2
-            ?.apply(color: Colors2222.black, fontStyle: FontStyle.italic),
+            ?.apply(color: Colors2222.darkGrey, fontStyle: FontStyle.italic),
       ),
     );
   }

@@ -5,23 +5,7 @@ import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 
 class PlayerModel {
-  final String uid;
-  final String displayName;
-  final String email;
-  final String groupId;
 
-  final ImageDto avatarImage;
-
-  final List<AwardModel> projectAwards;
-  final List<AwardModel> contributionsAwards;
-  final List<AwardModel> clubhouseAwards;
-  final List<AwardModel> maratonAwards;
-
-  /// player pub
-  final String pubCode;
-  final String? pubUserId;
-
-  // ignore: sort_constructors_first
   PlayerModel._({
     required this.uid,
     required this.displayName,
@@ -36,7 +20,6 @@ class PlayerModel {
     this.pubUserId,
   });
 
-  // ignore: sort_constructors_first
   PlayerModel.empty({
     required this.uid,
     required this.displayName,
@@ -48,15 +31,14 @@ class PlayerModel {
           path: '',
           url: '',
         ),
-        this.groupId = '',
-        this.pubCode = Random().generateString(size: 8),
-        this.pubUserId = null,
-        this.projectAwards = const [],
-        this.contributionsAwards = const [],
-        this.maratonAwards = const [],
-        this.clubhouseAwards = const [];
+        groupId = '',
+        pubCode = Random().generateString(size: 8),
+        pubUserId = null,
+        projectAwards = const [],
+        contributionsAwards = const [],
+        maratonAwards = const [],
+        clubhouseAwards = const [];
 
-  // ignore: sort_constructors_first
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
     return PlayerModel._(
       avatarImage: ImageDto.fromMap(
@@ -78,6 +60,23 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
     );
   }
+
+  final String uid;
+  final String displayName;
+  final String email;
+  final String groupId;
+
+  final ImageDto avatarImage;
+
+  final List<AwardModel> projectAwards;
+  final List<AwardModel> contributionsAwards;
+  final List<AwardModel> clubhouseAwards;
+  final List<AwardModel> maratonAwards;
+
+  /// player pub
+  final String pubCode;
+  final String? pubUserId;
+
   static List<AwardModel> _getAwardsFromPayload(dynamic payload) {
     return ((payload ?? <dynamic>[]) as List)
         .map((dynamic e) => AwardModel.fromMap(e as Map<String, dynamic>))

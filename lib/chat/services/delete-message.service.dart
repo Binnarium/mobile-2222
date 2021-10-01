@@ -28,10 +28,11 @@ class DeleteMessageService {
 
         /// creates a deleted message from deletedMessageModel
         final MessageModel deletedMessage = DeletedMessageModel(
-            id: message.id,
-            senderId: message.senderId,
-            sendedDate: message.sendedDate,
-            sender: message.sender);
+          id: message.id,
+          senderId: message.senderId,
+          sendedDate: message.sendedDate,
+          sender: message.sender,
+        );
 
         final DocumentReference<Map<String, dynamic>> messagesDoc = _fFirestore
             .collection('chats')
