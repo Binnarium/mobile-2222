@@ -30,6 +30,8 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.da
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
+import 'package:lab_movil_2222/thanks-videos/widgets/game-over.screen.dart';
+import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
 import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:lab_movil_2222/user/widgets/register.screen.dart';
 import 'package:lab_movil_2222/user/widgets/splash.screen.dart';
@@ -41,16 +43,18 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
   Lab2222Routing(RouteSettings settings)
       : super(
           builder: (context) {
-                /// podcast provider
+            /// podcast provider
             final CurrentAudioProvider audioProvider =
                 Provider.of<CurrentAudioProvider>(context, listen: false);
+
             try {
-              if (audioProvider.player.playing) {
+              if (audioProvider.player != null &&
+                  audioProvider.player.playing) {
                 audioProvider.player.pause();
               }
             } catch (e) {
               print('Error al pausar podcast $e');
-            } 
+            }
 
             print('called router at: ${settings.name}');
             if (settings.name == SplashScreen.route) {
@@ -234,6 +238,19 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
                 city: args.city,
               );
             }
+            if (settings.name == NextPhaseVideoScreen.route) {
+              final args = settings.arguments! as NextPhaseVideoScreen;
+              return NextPhaseVideoScreen(
+                city: args.city,
+              );
+            }
+            if (settings.name == GameOverScreen.route) {
+              final args = settings.arguments! as GameOverScreen;
+              return GameOverScreen(
+                city: args.city,
+              );
+            }
+
             if (settings.name == FinalVideoScreen.route) {
               final args = settings.arguments! as FinalVideoScreen;
               return FinalVideoScreen(

@@ -9,6 +9,7 @@ class PlayerModel {
   final String displayName;
   final String email;
   final String groupId;
+  final String courseStatus;
 
   final ImageDto avatarImage;
 
@@ -33,6 +34,7 @@ class PlayerModel {
     required this.avatarImage,
     required this.groupId,
     required this.pubCode,
+    required this.courseStatus,
     this.pubUserId,
   });
 
@@ -48,13 +50,14 @@ class PlayerModel {
           path: '',
           url: '',
         ),
-        this.groupId = '',
-        this.pubCode = Random().generateString(size: 8),
-        this.pubUserId = null,
-        this.projectAwards = const [],
-        this.contributionsAwards = const [],
-        this.maratonAwards = const [],
-        this.clubhouseAwards = const [];
+        groupId = '',
+        pubCode = Random().generateString(size: 8),
+        pubUserId = null,
+        projectAwards = const [],
+        contributionsAwards = const [],
+        maratonAwards = const [],
+        courseStatus = 'COURSE#NOT_STARTED',
+        clubhouseAwards = const [];
 
   // ignore: sort_constructors_first
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
@@ -68,6 +71,7 @@ class PlayerModel {
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       groupId: payload['groupId'] as String,
+      courseStatus: payload['courseStatus'] as String? ?? 'COURSE#NOT_STARTED',
       clubhouseAwards:
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:
@@ -93,6 +97,7 @@ class PlayerModel {
       'uid': uid,
       'displayName': displayName,
       'email': email,
+      'courseStatus': courseStatus,
     };
   }
 }
