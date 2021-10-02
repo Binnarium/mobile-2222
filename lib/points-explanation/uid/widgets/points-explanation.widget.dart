@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
-import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
-import 'package:provider/provider.dart';
 
 class ApproveText extends StatefulWidget {
   const ApproveText({
