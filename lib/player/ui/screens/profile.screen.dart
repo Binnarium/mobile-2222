@@ -5,6 +5,8 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dart';
+import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
+import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
@@ -24,7 +26,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _loadPlayerSub;
+  StreamSubscription? _explanationSub;
   PlayerModel? player;
+  PointsExplanationModel? _pointsExplanation;
 
   CurrentPlayerService get _currentPlayerService =>
       Provider.of<CurrentPlayerService>(context, listen: false);
@@ -39,11 +43,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         this.player = player;
       });
     });
+
+    final GetPointsExplanationService loadExplanationService =
+        Provider.of<GetPointsExplanationService>(context, listen: false);
+
+    _explanationSub = loadExplanationService.explanation$().listen(
+      (pointsExplanationModel) {
+        if (mounted) {
+          setState(() {
+            _pointsExplanation = pointsExplanationModel;
+          });
+        }
+      },
+    );
   }
 
   @override
   void dispose() {
     _loadPlayerSub?.cancel();
+    _explanationSub?.cancel();
     super.dispose();
   }
 
@@ -154,12 +172,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               /// widget that contains a list of the player's gammification
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
-                child: PlayerGamification(player: player!),
+                child: PlayerGamification(
+                  player: player!,
+                  pointsExplanation: _pointsExplanation,
+                ),
               ),
 
-              const Padding(
-                padding: EdgeInsets.only(bottom: 25),
-                child: ApproveText(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: ApproveText(
+                  pointsExplanation: _pointsExplanation,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
