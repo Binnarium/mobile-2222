@@ -15,7 +15,7 @@ Este chart sirve para las primeras interacciones entre docentes y grupos.
 Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp** y **Telegram**.
 """,
           contentAlignment: WrapAlignment.center,
-          color: color ?? Colors2222.black.withOpacity(0.6),
+          textColor: color ?? Colors2222.black.withOpacity(0.6),
         );
 
   ///
@@ -26,7 +26,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
           data:
               'Si tienes dudas o problemas, **desde aquí te comunicas con los gestores de la plataforma**. O también desde info@labmovil2222.utpl.edu.ec',
           contentAlignment: WrapAlignment.center,
-          color: color ?? Colors2222.black.withOpacity(0.6),
+          textColor: color ?? Colors2222.black.withOpacity(0.6),
         );
 
   ///
@@ -37,7 +37,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
           data:
               'Aquí puedes iniciar la **conversación con tu grupo**, para ayudarse mutuamente en el desarrollo del viaje y sus actividades.',
           contentAlignment: WrapAlignment.center,
-          color: color ?? Colors2222.black.withOpacity(0.6),
+          textColor: color ?? Colors2222.black.withOpacity(0.6),
         );
 
   ///
@@ -48,7 +48,7 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
           data:
               'Aquí puedes iniciar **la conversación con otros viajeros fuera de tu grupo**, para ayudarse mutuamente en el desarrollo del viaje y sus actividades.',
           contentAlignment: WrapAlignment.center,
-          color: color ?? Colors2222.black.withOpacity(0.6),
+          textColor: color ?? Colors2222.black.withOpacity(0.6),
         );
 
   factory ChatTextDescription.getChatText({

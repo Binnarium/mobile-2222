@@ -58,7 +58,7 @@ class ActivityCardWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 16),
                       child: Markdown2222(
                         data: content,
-                        color: Colors2222.black,
+                        textColor: Colors2222.black,
                         contentAlignment: WrapAlignment.center,
                       ),
                     ),

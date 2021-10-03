@@ -145,7 +145,7 @@ class _TextMessageCard extends _MessageCard<TextMessageModel> {
           data: message.text!,
           contentAlignment:
               message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
-          color: message.sendedByMe ? Colors2222.black : Colors2222.white,
+          textColor: message.sendedByMe ? Colors2222.black : Colors2222.white,
         ),
       ),
     );
