@@ -5,7 +5,6 @@ import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 
 class PlayerModel {
-
   PlayerModel._({
     required this.uid,
     required this.displayName,
@@ -92,6 +91,10 @@ class PlayerModel {
       'uid': uid,
       'displayName': displayName,
       'email': email,
+      'pubCode': pubCode,
+      'avatarImage': avatarImage.toMap(),
+      'groupId': groupId,
+      'pubUserId': pubUserId,
     };
   }
 }
