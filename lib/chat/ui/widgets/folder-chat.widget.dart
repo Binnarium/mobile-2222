@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/ui/screens/generalChats.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/groupChats.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/personalChats.screen.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 
+import 'package:lab_movil_2222/chat/ui/screens/personalChats.screen.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 
 class ListFolderChat extends StatelessWidget {
   /// constructor
@@ -14,13 +13,12 @@ class ListFolderChat extends StatelessWidget {
 
   /// Name of social network
   final String route;
-
+  final String type = 'Personal';
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
-    
 
     return Padding(
         padding: EdgeInsets.fromLTRB(sidePadding, 15, sidePadding, 20),
@@ -30,26 +28,19 @@ class ListFolderChat extends StatelessWidget {
           type: MaterialType.transparency,
           child: InkWell(
             onTap: () {
-              if (route == 'Personal') {
+              if (route == type) {
                 Navigator.pushNamed(context, PersonalChatsScreen.route);
-              } else if (route == 'General') {
-                Navigator.pushNamed(context, GeneralChatsScreen.route);
-              } else {
-                Navigator.pushNamed(context, GroupChatsScreen.route);
               }
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.folder_shared_rounded,
-                  size: 45,
-                ),
+                ChatImageWidget.personal(size: 60,),
                 Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      'Chat $route',
-                      style: textTheme.headline5,
+                      'Otros Viajeros',
+                      style: textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ))
               ],

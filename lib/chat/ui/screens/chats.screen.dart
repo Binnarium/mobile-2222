@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/services/list-general-chats.service.dart';
+import 'package:lab_movil_2222/chat/services/list-group-chats.service.dart';
+import 'package:lab_movil_2222/chat/ui/widgets/chat-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/folder-chat.widget.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
@@ -22,28 +25,35 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  List<ChatModel>? allChats;
+  List<ChatModel>? generalChats;
+  List<ChatModel>? groupChats;
 
   /// list of chats founds
   List<PlayerModel>? foundPlayers;
 
   StreamSubscription? _createChatSub;
-  StreamSubscription? _chatsSub;
+  StreamSubscription? _generalchatsSub;
+  StreamSubscription? _groupchatsSub;
 
-  ListGeneralPlayerChatsService get _listPlayerChatsService =>
+  ListGeneralPlayerChatsService get _listGeneralChatsService =>
       Provider.of<ListGeneralPlayerChatsService>(context, listen: false);
+  ListGroupPlayerChatsService get _listGroupChatsService =>
+      Provider.of<ListGroupPlayerChatsService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-    _chatsSub = _listPlayerChatsService.chats$
-        .listen((event) => setState(() => allChats = event));
+    _generalchatsSub = _listGeneralChatsService.chats$
+        .listen((event) => setState(() => generalChats = event));
+    _groupchatsSub = _listGroupChatsService.chats$
+        .listen((event) => setState(() => groupChats = event));
   }
 
   @override
   void dispose() {
     _createChatSub?.cancel();
-    _chatsSub?.cancel();
+    _generalchatsSub?.cancel();
+    _groupchatsSub?.cancel();
     super.dispose();
   }
 
@@ -82,9 +92,26 @@ class _ChatsScreenState extends State<ChatsScreen> {
               color: Colors2222.white.withOpacity(0.8),
             ),
           ),
+          if (generalChats == null)
+            const AppLoading()
+
+          /// show a list of all chats
+          else ...[
+            /// chats items
+            for (ChatModel chat in generalChats!)
+              ChatListItem(chat: chat, context: context),
+          ],
+          if (groupChats == null)
+            const AppLoading()
+
+          /// show a list of all chats
+          else ...[
+            /// chats items
+            for (ChatModel chat in groupChats!)
+              ChatListItem(chat: chat, context: context),
+          ],
+
           const ListFolderChat(route: 'Personal'),
-          const ListFolderChat(route: 'General'),
-          const ListFolderChat(route: 'Grupal'),
         ],
       ),
     );

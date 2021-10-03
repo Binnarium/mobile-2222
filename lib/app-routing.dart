@@ -5,8 +5,7 @@ import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/generalChats.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/groupChats.screen.dart';
+
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/personalChats.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
@@ -93,12 +92,6 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
             if (settings.name == PersonalChatsScreen.route) {
               return const PersonalChatsScreen();
-            }
-            if (settings.name == GroupChatsScreen.route) {
-              return const GroupChatsScreen();
-            }
-            if (settings.name == GeneralChatsScreen.route) {
-              return const GeneralChatsScreen();
             }
 
             if (settings.name == CityIntroductionScreen.route) {
