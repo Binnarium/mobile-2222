@@ -64,7 +64,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => LoginService(ctx)),
 
             /// player services
-            Provider(create: (ctx) => CurrentPlayerService(ctx)),
+            Provider(create: (_) => CurrentPlayerService()),
             Provider(create: (_) => CurrentAudioProvider()),
             Provider(create: (_) => CurrentVideoProvider()),
             Provider(create: (_) => UploadImageService()),

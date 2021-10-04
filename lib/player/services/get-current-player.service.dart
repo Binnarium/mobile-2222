@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CurrentPlayerService {
-  CurrentPlayerService(BuildContext context);
 
   /// services
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  @Deprecated('Dont Use')
   static PlayerModel? player;
 
   Stream<PlayerModel?> get player$ => _auth
