@@ -5,7 +5,9 @@ import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
+
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
+import 'package:lab_movil_2222/chat/ui/screens/personalChats.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
@@ -41,7 +43,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
   Lab2222Routing(RouteSettings settings)
       : super(
           builder: (context) {
-                /// podcast provider
+            /// podcast provider
             final CurrentAudioProvider audioProvider =
                 Provider.of<CurrentAudioProvider>(context, listen: false);
             try {
@@ -50,7 +52,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               }
             } catch (e) {
               print('Error al pausar podcast $e');
-            } 
+            }
 
             print('called router at: ${settings.name}');
             if (settings.name == SplashScreen.route) {
@@ -87,6 +89,9 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             /// all chats screens
             if (settings.name == ChatsScreen.route) {
               return const ChatsScreen();
+            }
+            if (settings.name == PersonalChatsScreen.route) {
+              return const PersonalChatsScreen();
             }
 
             if (settings.name == CityIntroductionScreen.route) {

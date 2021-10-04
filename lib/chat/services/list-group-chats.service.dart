@@ -5,8 +5,8 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ListPlayerChatsService {
-  ListPlayerChatsService(BuildContext context)
+class ListGroupPlayerChatsService {
+  ListGroupPlayerChatsService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false);
 
@@ -24,6 +24,7 @@ class ListPlayerChatsService {
         final Query chatsCollection = _firestore
             .collection('chats')
             .where('participantsUids', arrayContains: currentUser.uid)
+            .where('kind',isEqualTo: 'CHAT#GROUP' )
             .orderBy('lastActivity', descending: true);
 
         return chatsCollection
