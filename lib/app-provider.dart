@@ -5,9 +5,8 @@ import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart
 import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/delete-message.service.dart';
 import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
-import 'package:lab_movil_2222/chat/services/list-general-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
-import 'package:lab_movil_2222/chat/services/list-personal-chats.service.dart';
+import 'package:lab_movil_2222/chat/services/list-player-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
@@ -42,7 +41,6 @@ import 'package:lab_movil_2222/user/services/user.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
-import 'chat/services/list-group-chats.service.dart';
 import 'cities/clubhouse/services/clubhouse.service.dart';
 import 'cities/final-video/services/load-final-video.service.dart';
 import 'cities/manual-video/services/load-manual-video.service.dart';
@@ -118,9 +116,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => SendMessagesService(ctx)),
             Provider(create: (ctx) => CreatePersonalChatService(ctx)),
             Provider(create: (ctx) => GetChatService(ctx)),
-            Provider(create: (ctx) => ListPersonalPlayerChatsService(ctx)),
-            Provider(create: (ctx) => ListGroupPlayerChatsService(ctx)),
-            Provider(create: (ctx) => ListGeneralPlayerChatsService(ctx)),
+            Provider(create: (ctx) => ListPlayerChatsService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
           ],
