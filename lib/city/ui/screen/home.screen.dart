@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/city/ui/widgets/cities-map.dart';
 import 'package:lab_movil_2222/city/ui/widgets/home-background.dart';
+import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
@@ -29,12 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
   CitiesMapPositionsService get _allCitiesLoader =>
       Provider.of<CitiesMapPositionsService>(context, listen: false);
 
+  CurrentPlayerService get _currentPlayerLoader =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
+
   /// list of cities with their position in the map
   List<CityWithMapPositionModel>? _cities;
 
   final ScrollController _scrollController = ScrollController();
 
   StreamSubscription? _citiesSub;
+  StreamSubscription? _currentPlayerSub;
 
   @override
   void initState() {
@@ -49,11 +54,16 @@ class _HomeScreenState extends State<HomeScreen> {
         Timer(const Duration(microseconds: 0), _scrollMapBottom);
       }
     });
+
+    _currentPlayerSub = _currentPlayerLoader.player$.listen((event) {
+      print(event?.courseStatus);
+    });
   }
 
   @override
   void dispose() {
     _citiesSub?.cancel();
+    _currentPlayerSub?.cancel();
     super.dispose();
   }
 

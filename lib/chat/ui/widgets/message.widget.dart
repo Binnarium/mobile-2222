@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';

@@ -16,6 +16,7 @@ class PlayerModel {
     required this.avatarImage,
     required this.groupId,
     required this.pubCode,
+    required this.courseStatus,
     this.pubUserId,
   });
 
@@ -36,6 +37,7 @@ class PlayerModel {
         projectAwards = const [],
         contributionsAwards = const [],
         maratonAwards = const [],
+        courseStatus = 'COURSE#NOT_STARTED',
         clubhouseAwards = const [];
 
   factory PlayerModel.fromMap(final Map<String, dynamic> payload) {
@@ -49,6 +51,7 @@ class PlayerModel {
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       groupId: payload['groupId'] as String,
+      courseStatus: payload['courseStatus'] as String? ?? 'COURSE#NOT_STARTED',
       clubhouseAwards:
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:
@@ -91,6 +94,7 @@ class PlayerModel {
       'uid': uid,
       'displayName': displayName,
       'email': email,
+      'courseStatus': courseStatus,
       'pubCode': pubCode,
       'avatarImage': avatarImage.toMap(),
       'groupId': groupId,
