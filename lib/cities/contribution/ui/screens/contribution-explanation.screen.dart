@@ -141,6 +141,7 @@ class _ContributionExplanationScreenState
                 child: ContributionCodeCopy(
                   codeExplanation: contributionExplanation!.codeExplanation,
                   pubCode: player!.pubCode,
+                  primaryColor: widget.city.color,
                 ),
               ),
 

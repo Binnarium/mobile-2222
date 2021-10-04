@@ -72,7 +72,7 @@ class _ClubhouseExplanationWidgetState
                   ),
                   child: Markdown2222(
                     data: clubhouseExplanation!.explanation,
-                    color: Colors2222.black,
+                    textColor: Colors2222.black,
                   ),
                 ),
 

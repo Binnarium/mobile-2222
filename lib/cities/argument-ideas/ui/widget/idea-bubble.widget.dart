@@ -65,7 +65,7 @@ class IdeaBubbleWidget extends StatelessWidget {
             child: Center(
               child: Markdown2222(
                 data: text,
-                color: Colors2222.black,
+                textColor: Colors2222.black,
                 contentAlignment: WrapAlignment.center,
               ),
             ),

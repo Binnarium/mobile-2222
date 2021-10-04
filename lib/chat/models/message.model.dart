@@ -112,6 +112,8 @@ abstract class MessageModel {
       'sender': sender.toMap(),
     };
   }
+
+  bool get canDelete => runtimeType != DeletedMessageModel;
 }
 
 /// Message of type [MessageKind.video]

@@ -18,6 +18,34 @@ class ListMessagesService {
 
   final FirebaseFirestore _fFirestore;
 
+  Stream<List<MessageWithSnapshotModel>> listAll$(
+    ChatModel chat, {
+    DocumentSnapshot? lastLoadedMessageSnapshot,
+  }) {
+    return Rx.combineLatest2(
+      _currentPlayerService.player$.take(1),
+      _fFirestore
+          .collection('chats')
+          .doc(chat.id)
+          .collection('messages')
+          .orderBy('sendedDate')
+          .limitToLast(15)
+          .snapshots(),
+      (PlayerModel? player, QuerySnapshot<Map<String, dynamic>> snapshot) =>
+          snapshot.docs
+              .map(
+                (docSnap) => MessageWithSnapshotModel(
+                  message: MessageModel.fromMap(
+                    docSnap.data(),
+                    currentUid: player?.uid ?? '',
+                  ),
+                  snapshot: docSnap,
+                ),
+              )
+              .toList(),
+    );
+  }
+
   Future<List<MessageWithSnapshotModel>> list$(
     ChatModel chat, {
     DocumentSnapshot? lastLoadedMessageSnapshot,

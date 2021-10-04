@@ -59,10 +59,11 @@ class Scaffold2222 extends StatelessWidget {
     this.backgrounds = const [],
     this.appBar,
     required this.activePage,
+    Color? backgroundColor,
   })  : _nextRoute = null,
         _showBottomNavigationBar = true,
         _enableBack = true,
-        _backgroundColor = Colors2222.red,
+        _backgroundColor = backgroundColor ?? Colors2222.red,
         super(key: key);
 
   /// An app bar to display at the top of the scaffold.
