@@ -6,6 +6,8 @@ import 'package:lab_movil_2222/city/services/load-cities-with-map-position.servi
 import 'package:lab_movil_2222/city/ui/widgets/cities-map.dart';
 import 'package:lab_movil_2222/city/ui/widgets/home-background.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
+import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.navigation(
+      backgroundColor: Colors2222.black,
       activePage: Lab2222NavigationBarPages.home,
+      
       body: (_cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
@@ -69,24 +73,27 @@ class _HomeScreenState extends State<HomeScreen> {
             )
 
           /// otherwise load the map with cities
-          : SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Stack(
-                children: [
-                  /// background content to fill whitespace
-                  HomeBackground(),
+          : FadeInDelayed(
+              delay: const Duration(milliseconds: 200),
+              child: SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
+                  children: [
+                    /// background content to fill whitespace
+                    HomeBackground(),
 
-                  /// scroll content
-                  SingleChildScrollView(
-                    clipBehavior: Clip.none,
-                    controller: _scrollController,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 32.0),
-                      child: CitiesMap(citiesWithPositions: _cities!),
+                    /// scroll content
+                    SingleChildScrollView(
+                      clipBehavior: Clip.none,
+                      controller: _scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: CitiesMap(citiesWithPositions: _cities!),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
     );
