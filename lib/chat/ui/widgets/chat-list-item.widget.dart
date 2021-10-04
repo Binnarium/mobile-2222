@@ -67,7 +67,9 @@ String _getSubtitle(ChatModel chat) {
               ? 'envió un video'
               : (chat.lastMessage.runtimeType == BannedMessageModel)
                   ? '<<Mensaje ha sido eliminado>>'
-                  : '...';
+                  : (chat.lastMessage.runtimeType == DeletedMessageModel)
+                      ? 'Mensaje eliminado'
+                      : '...';
 
   return '$prefix$suffix';
 }
