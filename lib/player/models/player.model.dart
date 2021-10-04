@@ -68,6 +68,7 @@ class PlayerModel {
   final String email;
   final String groupId;
 
+  final String courseStatus;
   final ImageDto avatarImage;
 
   final List<AwardModel> projectAwards;
