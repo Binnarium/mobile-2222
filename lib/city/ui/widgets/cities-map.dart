@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/city/ui/widgets/city-map-button.dart';
+import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class CitiesMap extends StatelessWidget {
@@ -28,9 +29,23 @@ class CitiesMap extends StatelessWidget {
 
         /// map image in this context is used as a background
         const Image(
-          image: AssetImage('assets/images/map-with-no-icons.png'),
+          image: AssetImage('assets/images/map.png'),
           fit: BoxFit.fill,
           width: double.infinity,
+        ),
+
+        /// animate path appearance
+        /// durations is calculated by taking time of the cities to apear and then apear the path
+        Positioned.fill(
+          child: FadeInDelayed(
+            delay:
+                Duration(milliseconds: citiesWithPositions.length * 100 + 800),
+            child: const Image(
+              image: AssetImage('assets/images/map_path.png'),
+              fit: BoxFit.fill,
+              width: double.infinity,
+            ),
+          ),
         ),
 
         /// overlay of items on top of map
@@ -48,14 +63,16 @@ class CitiesMap extends StatelessWidget {
               return Stack(
                 children: [
                   /// draw all cities with positions
-                  for (CityWithMapPositionModel cityPos in citiesWithPositions)
+                  for (int i = 0; i < citiesWithPositions.length; i++)
                     Positioned(
-                      top: cityPos.top * vh,
-                      left: cityPos.left * vw,
+                      top: citiesWithPositions[i].top * vh,
+                      left: citiesWithPositions[i].left * vw,
                       child: CityMapButton(
-                        city: cityPos.city,
-                        size: cityPos.size * vw,
-                        textOnTop: cityPos.textOnTop,
+                        city: citiesWithPositions[i].city,
+                        size: citiesWithPositions[i].size * vw,
+                        textOnTop: citiesWithPositions[i].textOnTop,
+                        fadeInDelay:
+                            Duration(milliseconds: 100 * (i + 1) + 500),
                       ),
                     ),
                 ],

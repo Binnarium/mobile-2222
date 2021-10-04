@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/models/message-with-snapshot.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
@@ -17,25 +18,68 @@ class ListMessagesService {
 
   final FirebaseFirestore _fFirestore;
 
-  Stream<List<MessageModel>> list$(ChatModel chat) {
-    final Stream<List<Map<String, dynamic>>> snapshots$ = _fFirestore
+  Stream<List<MessageWithSnapshotModel>> listAll$(
+    ChatModel chat, {
+    DocumentSnapshot? lastLoadedMessageSnapshot,
+  }) {
+    return Rx.combineLatest2(
+      _currentPlayerService.player$.take(1),
+      _fFirestore
+          .collection('chats')
+          .doc(chat.id)
+          .collection('messages')
+          .orderBy('sendedDate')
+          .limitToLast(15)
+          .snapshots(),
+      (PlayerModel? player, QuerySnapshot<Map<String, dynamic>> snapshot) =>
+          snapshot.docs
+              .map(
+                (docSnap) => MessageWithSnapshotModel(
+                  message: MessageModel.fromMap(
+                    docSnap.data(),
+                    currentUid: player?.uid ?? '',
+                  ),
+                  snapshot: docSnap,
+                ),
+              )
+              .toList(),
+    );
+  }
+
+  Future<List<MessageWithSnapshotModel>> list$(
+    ChatModel chat, {
+    DocumentSnapshot? lastLoadedMessageSnapshot,
+  }) {
+    Query<Map<String, dynamic>> query = _fFirestore
         .collection('chats')
         .doc(chat.id)
         .collection('messages')
         .orderBy('sendedDate')
-        .snapshots()
-        .map((snaps) => snaps.docs.map((e) => e.data()).toList());
+        .limitToLast(15);
 
-    final Stream<List<MessageModel>> messages$ = Rx.combineLatest2(
+    if (lastLoadedMessageSnapshot != null)
+      query = query.endBeforeDocument(lastLoadedMessageSnapshot);
+
+    final Stream<QuerySnapshot<Map<String, dynamic>>> snapshots$ =
+        query.snapshots().take(1);
+
+    final Stream<List<MessageWithSnapshotModel>> messages$ = Rx.combineLatest2(
       _currentPlayerService.player$.take(1),
       snapshots$,
-      (PlayerModel? player, List<Map<String, dynamic>> data) => data
-          .map(
-            (e) => MessageModel.fromMap(e, currentUid: player?.uid ?? ''),
-          )
-          .toList(),
+      (PlayerModel? player, QuerySnapshot<Map<String, dynamic>> snapshot) =>
+          snapshot.docs
+              .map(
+                (docSnap) => MessageWithSnapshotModel(
+                  message: MessageModel.fromMap(
+                    docSnap.data(),
+                    currentUid: player?.uid ?? '',
+                  ),
+                  snapshot: docSnap,
+                ),
+              )
+              .toList(),
     );
 
-    return messages$;
+    return messages$.single;
   }
 }

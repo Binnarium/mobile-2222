@@ -3,11 +3,13 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
 
 class DetailedVideoScreen extends StatelessWidget {
   /// constructor
@@ -29,7 +31,7 @@ class DetailedVideoScreen extends StatelessWidget {
     return Scaffold2222.empty(
       backgroundColor: Colors2222.black,
       body: SizedBox.expand(
-        child: Lab2222VideoPlayer(controller: controller),
+        child: Lab2222VideoPlayer(controller: controller, videoDto: video),
       ),
     );
   }
@@ -39,9 +41,11 @@ class Lab2222VideoPlayer extends StatefulWidget {
   const Lab2222VideoPlayer({
     Key? key,
     required this.controller,
+    required this.videoDto,
   }) : super(key: key);
 
   final VideoPlayerController controller;
+  final VideoDto videoDto;
 
   @override
   State<Lab2222VideoPlayer> createState() => _Lab2222VideoPlayerState();
@@ -55,6 +59,9 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   @override
   void initState() {
     super.initState();
+
+    /// to avoid the screen to sleep
+    Wakelock.enable();
 
     /// update interface with updated data
     widget.controller.addListener(() {
@@ -72,6 +79,9 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   @override
   void dispose() {
     widget.controller.dispose();
+
+    /// to allow the screen to sleep
+    Wakelock.disable();
     super.dispose();
   }
 
@@ -180,7 +190,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
       showControls = true;
       currentTimer?.cancel();
     });
-    currentTimer = Timer(const Duration(seconds: 5), () {
+    currentTimer = Timer(const Duration(seconds: 3), () {
       if (mounted)
         setState(() {
           showControls = false;
@@ -192,19 +202,62 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   void _handleBottomSheet() {
     showModalBottomSheet<void>(
       context: context,
-      builder: (context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text('El video no se carga, o carga demasiado lento'),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text('El video se queda en negro'),
-            onTap: () {},
-          ),
-        ],
+      builder: (context) => SafeArea(
+        bottom: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text('El video no se carga, o carga demasiado lento'),
+              onTap: () async {
+                final HttpsCallable callable =
+                    FirebaseFunctions.instance.httpsCallable('reportVideo');
+                try {
+                  await callable.call<dynamic>([
+                    {
+                      'problem': 'Video not loading',
+                      'payload': widget.videoDto.toMap()
+                    }
+                  ]);
+                } catch (e) {}
+                Navigator.pop(context);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Gracias por reportar tu problema. Pronto lo resolveremos',
+                    ),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('El video se queda en negro'),
+              onTap: () async {
+                final HttpsCallable callable =
+                    FirebaseFunctions.instance.httpsCallable('reportVideo');
+                try {
+                  await callable.call<dynamic>([
+                    {
+                      'problem': 'Video is black screen',
+                      'payload': widget.videoDto.toMap()
+                    }
+                  ]);
+                } catch (e) {}
+                Navigator.pop(context);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Gracias por reportar tu problema. Pronto lo resolveremos',
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

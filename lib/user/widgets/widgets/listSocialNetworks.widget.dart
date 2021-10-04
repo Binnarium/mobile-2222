@@ -10,18 +10,20 @@ class ListSocialNetwork extends StatelessWidget {
 
   /// Name of social network
   final String iconURL;
+  static const String FACEBOOK_URL = 'https://www.facebook.com/Labmovil2222/';
+  static const String INSTAGRAM_URL = 'https://www.instagram.com/labmovil2222/';
+  static const String TWITTER_URL = 'https://twitter.com/labmovil2222/';
 
   @override
   Widget build(BuildContext context) {
     String pageURL = '';
 
-    /// TODO: refactor use static compiling
     if (iconURL == 'facebook') {
-      pageURL = 'https://www.facebook.com/Labmovil2222/';
+      pageURL = FACEBOOK_URL;
     } else if (iconURL == 'instagram') {
-      pageURL = 'https://www.instagram.com/labmovil2222/';
+      pageURL = INSTAGRAM_URL;
     } else if (iconURL == 'twitter') {
-      pageURL = 'https://twitter.com/labmovil2222/';
+      pageURL = TWITTER_URL;
     }
     return IconButton(
       onPressed: () {
@@ -29,7 +31,7 @@ class ListSocialNetwork extends StatelessWidget {
       },
       iconSize: 36,
       icon: ImageIcon(
-        AssetImage('assets/images/${iconURL}.png'),
+        AssetImage('assets/images/$iconURL.png'),
       ),
     );
   }

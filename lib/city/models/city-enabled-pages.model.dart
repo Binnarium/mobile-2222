@@ -5,6 +5,8 @@ class CityEnabledPagesModel {
   final bool manualVideo;
   final bool projectVideo;
   final bool microMesoMacro;
+  final bool nextPhaseVideo;
+  final bool gameOverMessage;
   final bool finalVideo;
   final bool content;
 
@@ -31,6 +33,8 @@ class CityEnabledPagesModel {
         projectVideo = payload['projectVideo'] == true,
         content = payload['content'] == true,
         microMesoMacro = payload['microMesoMacro'] == true,
+        nextPhaseVideo = payload['nextPhaseVideo'] == true,
+        gameOverMessage = payload['gameOverMessage'] == true,
         finalVideo = payload['finalVideo'] == true,
         project = payload['project'] == true,
         hackatonMedals = payload['hackatonMedals'] == true;
