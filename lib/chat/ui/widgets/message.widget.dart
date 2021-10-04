@@ -167,11 +167,11 @@ class _DeletedMessageCard extends _MessageCard<DeletedMessageModel> {
       padding: padding,
       decoration: decoration,
       child: Text(
-        message.text!,
+        'Mensaje Eliminado',
         style: Theme.of(context)
             .textTheme
             .bodyText2
-            ?.apply(color: Colors2222.black, fontStyle: FontStyle.italic),
+            ?.apply(color: Colors2222.darkGrey, fontStyle: FontStyle.italic),
       ),
     );
   }

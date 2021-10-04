@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/ui/widgets/gamification-item.widget.dart';
+import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 /// widget that contains a list of the player's gamification
@@ -10,9 +12,11 @@ class PlayerGamification extends StatelessWidget {
   const PlayerGamification({
     Key? key,
     required this.player,
+    required this.pointsExplanation,
   }) : super(key: key);
 
   final PlayerModel player;
+  final PointsExplanationModel? pointsExplanation;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,13 @@ class PlayerGamification extends StatelessWidget {
                   : const CoinsImages.greenCoin(),
           numberColor: Colors2222.black,
         ),
+
+        /// audio
+        if (pointsExplanation!.audio != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 25.0),
+            child: AudioPlayerWidget(audio: pointsExplanation!.audio!),
+          ),
 
         Divider(
           thickness: 2,
