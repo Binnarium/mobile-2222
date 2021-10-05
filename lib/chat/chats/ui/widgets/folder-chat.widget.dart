@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:lab_movil_2222/chat/ui/screens/personalChats.screen.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat-kind.enum.dart';
+import 'package:lab_movil_2222/chat/chats/ui/screens/personal-chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -35,7 +35,10 @@ class ListFolderChat extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ChatImageWidget.personal(size: 60,),
+                ChatImageWidget(
+                  kind: ChatKind.personal,
+                  size: 60,
+                ),
                 Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(

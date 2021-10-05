@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/list-chats.service.dart';
+import 'package:lab_movil_2222/chat/chats/ui/widgets/personal-chat-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
-import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
-import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
-import 'package:lab_movil_2222/chat/services/list-personal-chats.service.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
-import 'package:lab_movil_2222/chat/ui/widgets/chat-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-item.widget.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
@@ -42,13 +42,13 @@ class _PersonalChatsScreenState extends State<PersonalChatsScreen> {
   GetChatService get _getChatService =>
       Provider.of<GetChatService>(context, listen: false);
 
-  ListPersonalPlayerChatsService get _listPlayerChatsService =>
-      Provider.of<ListPersonalPlayerChatsService>(context, listen: false);
+  ListChatsService get _listChatsService =>
+      Provider.of<ListChatsService>(context, listen: false);
 
   @override
   void initState() {
     super.initState();
-    _chatsSub = _listPlayerChatsService.chats$
+    _chatsSub = _listChatsService.personalChats$
         .listen((event) => setState(() => allChats = event));
   }
 
@@ -71,11 +71,9 @@ class _PersonalChatsScreenState extends State<PersonalChatsScreen> {
       ),
       body: ListView(
         children: [
-          
-
           /// page title
           Padding(
-            padding: const EdgeInsets.only(bottom: 40,top: 50),
+            padding: const EdgeInsets.only(bottom: 40, top: 50),
             child: Center(
               child: Text(
                 'CHAT PERSONAL DE VIAJEROS',
@@ -87,7 +85,7 @@ class _PersonalChatsScreenState extends State<PersonalChatsScreen> {
           /// description text
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
-            child: ChatTextDescription.informationText(
+            child: ChatTextDescription.personalText(
               color: Colors2222.white.withOpacity(0.8),
             ),
           ),
@@ -124,7 +122,7 @@ class _PersonalChatsScreenState extends State<PersonalChatsScreen> {
           else ...[
             /// chats items
             for (ChatModel chat in allChats!)
-              ChatListItem(chat: chat, context: context),
+              PersonalChatListItem(chat: chat, context: context),
           ],
         ],
       ),

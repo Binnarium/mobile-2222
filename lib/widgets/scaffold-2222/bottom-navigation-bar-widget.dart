@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
+import 'package:lab_movil_2222/chat/chats/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';

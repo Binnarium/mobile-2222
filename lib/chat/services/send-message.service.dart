@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';

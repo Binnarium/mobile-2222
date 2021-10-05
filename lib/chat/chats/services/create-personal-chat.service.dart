@@ -1,7 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/models/create-personal-chat-query.model.dart';
-import 'package:lab_movil_2222/chat/models/create-personal-chat-response.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/create-personal-chat.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:provider/provider.dart';
 

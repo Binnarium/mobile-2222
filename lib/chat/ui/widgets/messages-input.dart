@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/upload-video.service.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';

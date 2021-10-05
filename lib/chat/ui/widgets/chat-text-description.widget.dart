@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat-kind.enum.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
@@ -56,17 +57,17 @@ Para hilos y conversaciones más extendidas, recomendamos el uso de **WhatsApp**
     required Color? color,
   }) {
     ///
-    if (chat.isGeneralChat) {
+    if (ChatKind.general == chat.kind) {
       return ChatTextDescription.generalText(color: color);
     }
 
     ///
-    if (chat.isGroupChat) {
+    if (ChatKind.group == chat.kind) {
       return ChatTextDescription.groupText(color: color);
     }
 
     ///
-    if (chat.isPersonalChat) {
+    if (ChatKind.personal == chat.kind) {
       return ChatTextDescription.personalText(color: color);
     }
 
