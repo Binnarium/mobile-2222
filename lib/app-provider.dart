@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
-import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/list-chats-folders.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/list-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/delete-message.service.dart';
-import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
-import 'package:lab_movil_2222/chat/services/list-general-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
-import 'package:lab_movil_2222/chat/services/list-personal-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
@@ -43,7 +43,6 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
-import 'chat/services/list-group-chats.service.dart';
 import 'cities/clubhouse/services/clubhouse.service.dart';
 import 'cities/final-video/services/load-final-video.service.dart';
 import 'cities/manual-video/services/load-manual-video.service.dart';
@@ -117,12 +116,11 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => UploadProjectService(ctx)),
 
             /// chat services
+            Provider(create: (ctx) => ListChatsService(ctx)),
             Provider(create: (ctx) => SendMessagesService(ctx)),
             Provider(create: (ctx) => CreatePersonalChatService(ctx)),
             Provider(create: (ctx) => GetChatService(ctx)),
-            Provider(create: (ctx) => ListPersonalPlayerChatsService(ctx)),
-            Provider(create: (ctx) => ListGroupPlayerChatsService(ctx)),
-            Provider(create: (ctx) => ListGeneralPlayerChatsService(ctx)),
+            Provider(create: (ctx) => ListChatsFoldersService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
           ],

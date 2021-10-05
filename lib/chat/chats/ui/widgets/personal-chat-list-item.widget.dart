@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
-import 'package:lab_movil_2222/chat/models/message.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
 
-class ChatListItem extends ListTile {
+class PersonalChatListItem extends ListTile {
   // ignore: use_key_in_widget_constructors
-  ChatListItem({
+  PersonalChatListItem({
     required ChatModel chat,
     required BuildContext context,
   }) : super(
-          leading: ChatImageWidget.fromChat(chat),
+          leading: ChatImageWidget(kind: chat.kind),
           contentPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,
           ),
@@ -37,7 +36,7 @@ class ChatListItem extends ListTile {
 
           /// show last message chat
           subtitle: Text(
-            _getSubtitle(chat),
+            chat.chatContent,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -50,26 +49,4 @@ class ChatListItem extends ListTile {
             ),
           ),
         );
-}
-
-String _getSubtitle(ChatModel chat) {
-  if (chat.lastMessage == null) {
-    return 'No hay mensajes';
-  }
-  final String prefix =
-      '${chat.lastMessage!.sender.displayName.split(' ').first}: ';
-
-  final String suffix = (chat.lastMessage.runtimeType == TextMessageModel)
-      ? chat.lastMessage!.text!
-      : (chat.lastMessage.runtimeType == ImageMessageModel)
-          ? 'envió una imagen'
-          : (chat.lastMessage.runtimeType == VideoMessageModel)
-              ? 'envió un video'
-              : (chat.lastMessage.runtimeType == BannedMessageModel)
-                  ? '<<Mensaje ha sido eliminado>>'
-                  : (chat.lastMessage.runtimeType == DeletedMessageModel)
-                      ? 'Mensaje eliminado'
-                      : '...';
-
-  return '$prefix$suffix';
 }

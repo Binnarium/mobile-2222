@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message-with-snapshot.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/services/delete-message.service.dart';
