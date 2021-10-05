@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 
 class GameOverScreen extends StatefulWidget {
   const GameOverScreen({

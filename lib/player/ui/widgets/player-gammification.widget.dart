@@ -39,7 +39,7 @@ class PlayerGamification extends StatelessWidget {
         ),
 
         /// audio
-        if (pointsExplanation!.audio != null)
+        if (pointsExplanation?.audio != null)
           Padding(
             padding: const EdgeInsets.only(top: 25.0),
             child: AudioPlayerWidget(audio: pointsExplanation!.audio!),

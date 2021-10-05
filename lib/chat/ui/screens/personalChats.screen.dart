@@ -15,7 +15,7 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/ui/widgets/search-player-input.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class PersonalChatsScreen extends StatefulWidget {
@@ -71,11 +71,9 @@ class _PersonalChatsScreenState extends State<PersonalChatsScreen> {
       ),
       body: ListView(
         children: [
-          
-
           /// page title
           Padding(
-            padding: const EdgeInsets.only(bottom: 40,top: 50),
+            padding: const EdgeInsets.only(bottom: 40, top: 50),
             child: Center(
               child: Text(
                 'CHAT PERSONAL DE VIAJEROS',

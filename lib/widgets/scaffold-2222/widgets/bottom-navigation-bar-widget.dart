@@ -4,7 +4,8 @@ import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-item.widget.dart';
+
+import 'bottom-navigation-bar-item.widget.dart';
 
 enum Lab2222NavigationBarPages {
   home,

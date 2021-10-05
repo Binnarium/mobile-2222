@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/models/city-resources.dto.dart';
 
 class LoadCityResourcesService {
   LoadCityResourcesService() : _firestore = FirebaseFirestore.instance;
