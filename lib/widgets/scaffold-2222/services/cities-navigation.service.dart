@@ -14,6 +14,7 @@ import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
 import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -280,6 +281,16 @@ class CityNavigator {
               arguments: MicroMesoMacroScreen(city: city),
             ),
           ),
+
+        ///
+        if (enabledPagesDto.hackatonMedals)
+          ScaffoldRouteBuilder(
+              route: ScoreboardPlayersScreen.route,
+              builder: (context) => Navigator.pushNamed(
+                    context,
+                    ScoreboardPlayersScreen.route,
+                    arguments: ScoreboardPlayersScreen(city: city),
+                  )),
 
         /// next Phase screen
         if (enabledPagesDto.nextPhaseVideo &&

@@ -8,6 +8,7 @@ import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dar
 import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
+import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/sign-out-button.dart';
@@ -27,12 +28,15 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _loadPlayerSub;
   StreamSubscription? _explanationSub;
+  StreamSubscription? _scoreboardSub;
   PlayerModel? player;
+  List<PlayerModel>? players;
   PointsExplanationModel? _pointsExplanation;
 
   CurrentPlayerService get _currentPlayerService =>
       Provider.of<CurrentPlayerService>(context, listen: false);
 
+  
   @override
   void initState() {
     super.initState();
@@ -43,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         this.player = player;
       });
     });
+   
 
     final GetPointsExplanationService loadExplanationService =
         Provider.of<GetPointsExplanationService>(context, listen: false);

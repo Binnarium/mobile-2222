@@ -32,6 +32,7 @@ import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
+import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/start-video/services/load-start-video.service.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
@@ -74,6 +75,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => UploadFileService()),
             Provider(create: (_) => SearchPlayersService()),
             Provider(create: (_) => LoadPlayerService()),
+            Provider(create: (_) => LoadPlayerScoreboardService()),
             Provider(create: (_) => WelcomeService()),
             Provider(create: (_) => LoadStartVideoService()),
             Provider(create: (_) => LoadTeamService()),
@@ -121,6 +123,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => ListChatsFoldersService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
+
           ],
 
           /// main application
