@@ -7,9 +7,9 @@ import 'package:lab_movil_2222/chat/chats/ui/widgets/chat-folder-list-item.widge
 import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatsScreen extends StatefulWidget {

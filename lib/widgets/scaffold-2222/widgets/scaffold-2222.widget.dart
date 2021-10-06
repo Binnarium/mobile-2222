@@ -1,12 +1,18 @@
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/connectivity-snackbar.widget.dart';
+import 'package:provider/provider.dart';
 
 import 'bottom-navigation-bar-widget.dart';
 
-class Scaffold2222 extends StatelessWidget {
+class Scaffold2222 extends StatefulWidget {
   @Deprecated('use a proper constructor instead')
   Scaffold2222({
     Key? key,
@@ -91,29 +97,100 @@ class Scaffold2222 extends StatelessWidget {
   final Lab2222NavigationBarPages? activePage;
 
   @override
+  State<Scaffold2222> createState() => _Scaffold2222State();
+}
+
+class _Scaffold2222State extends State<Scaffold2222> {
+  /// connectivity subscription to listen whether the phone is connected
+  StreamSubscription? _connectivitySub;
+
+  /// default connectivity type
+  ConnectivityResult? oldConnectivityresult = ConnectivityResult.none;
+
+  /// provider of the connectivity check service
+  late final ConnectivityCheckService conectivityProvider;
+
+  @override
+  void didChangeDependencies() {
+    /// initialize the provider (needs to be on this method)
+    conectivityProvider = Provider.of<ConnectivityCheckService>(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// stream that listen the connectivity
+    _connectivitySub = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult newConnection) {
+      setState(() {
+        print('NEVER SHOW AGAIN?: ${conectivityProvider.neverShowAgain}');
+
+        /// if there is no connection this will appear
+        if (newConnection == ConnectivityResult.none &&
+            oldConnectivityresult != newConnection &&
+            conectivityProvider.neverShowAgain == false) {
+          /// shows the no connection snackbar
+          ScaffoldMessenger.of(context)
+              .showSnackBar(ConnectivityStatusSnackbar.none(context));
+
+          /// if the phone reaches connection, it will enter in this block
+        } else if (oldConnectivityresult == ConnectivityResult.none &&
+            conectivityProvider.neverShowAgain == false) {
+          /// shows the wifi  connection snackbar
+          if (newConnection == ConnectivityResult.wifi &&
+              conectivityProvider.neverShowAgain == false) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(ConnectivityStatusSnackbar.wifi(context));
+
+            /// shows the mobile  connection snackbar
+          } else if (newConnection == ConnectivityResult.mobile &&
+              conectivityProvider.neverShowAgain == false) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(ConnectivityStatusSnackbar.mobile(context));
+          }
+        }
+
+        /// reset the connection type to listen changes
+        oldConnectivityresult = newConnection;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySub?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     /// next page button
-    final VoidCallback? prevPage = _enableBack && Navigator.of(context).canPop()
-        ? () => Navigator.pop(context)
-        : null;
+    final VoidCallback? prevPage =
+        widget._enableBack && Navigator.of(context).canPop()
+            ? () => Navigator.pop(context)
+            : null;
 
-    final VoidCallback? nextPage =
-        _nextRoute == null ? null : () => _nextRoute!.builder(context);
+    final VoidCallback? nextPage = widget._nextRoute == null
+        ? null
+        : () => widget._nextRoute!.builder(context);
 
     /// page layout
     return Scaffold(
-      backgroundColor: _backgroundColor,
+      backgroundColor: widget._backgroundColor,
 
       /// add bottom navigation if enabled
-      bottomNavigationBar: _showBottomNavigationBar
+      bottomNavigationBar: widget._showBottomNavigationBar
           ? Lab2222BottomNavigationBar(
               nextPage: nextPage,
               prevPage: prevPage,
-              activePage: activePage,
+              activePage: widget.activePage,
             )
           : null,
 
-      appBar: appBar,
+      appBar: widget.appBar,
 
       /// wrap everything in a gesture detector to move across cities
       body: GestureDetector(
@@ -130,11 +207,11 @@ class Scaffold2222 extends StatelessWidget {
           }
         },
         child: BackgroundDecoration(
-          backgroundDecorationsStyles: backgrounds,
+          backgroundDecorationsStyles: widget.backgrounds,
           child: SafeArea(
-            top: appBar == null,
-            bottom: !_showBottomNavigationBar,
-            child: body,
+            top: widget.appBar == null,
+            bottom: !widget._showBottomNavigationBar,
+            child: widget.body,
           ),
         ),
       ),

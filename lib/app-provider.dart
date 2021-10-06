@@ -32,6 +32,7 @@ import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
+import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/start-video/services/load-start-video.service.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
@@ -39,6 +40,7 @@ import 'package:lab_movil_2222/user/services/login-user.service.dart';
 import 'package:lab_movil_2222/user/services/register-user.service.dart';
 import 'package:lab_movil_2222/user/services/sign-out.service.dart';
 import 'package:lab_movil_2222/user/services/user.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
@@ -61,6 +63,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => SignOutService(ctx)),
             Provider(create: (ctx) => RegisterService(ctx)),
             Provider(create: (ctx) => LoginService(ctx)),
+            Provider(create: (_) => ConnectivityCheckService()),
 
             /// player services
             Provider(create: (_) => CurrentPlayerService()),
@@ -74,6 +77,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => UploadFileService()),
             Provider(create: (_) => SearchPlayersService()),
             Provider(create: (_) => LoadPlayerService()),
+            Provider(create: (_) => LoadPlayerScoreboardService()),
             Provider(create: (_) => WelcomeService()),
             Provider(create: (_) => LoadStartVideoService()),
             Provider(create: (_) => LoadTeamService()),
@@ -121,6 +125,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => ListChatsFoldersService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
+
           ],
 
           /// main application

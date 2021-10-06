@@ -21,6 +21,7 @@ import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
+import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
 import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -245,6 +246,14 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == NextPhaseVideoScreen.route) {
               final args = settings.arguments! as NextPhaseVideoScreen;
               return NextPhaseVideoScreen(
+                city: args.city,
+              );
+            }
+
+            ///Scoreboard Screen
+            if (settings.name == ScoreboardPlayersScreen.route) {
+              final args = settings.arguments! as ScoreboardPlayersScreen;
+              return ScoreboardPlayersScreen(
                 city: args.city,
               );
             }
