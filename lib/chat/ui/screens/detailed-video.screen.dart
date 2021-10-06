@@ -7,7 +7,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -55,6 +57,17 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   bool showControls = true;
 
   Timer? currentTimer;
+
+  /// provider of the connectivity check service
+  late final ConnectivityCheckService conectivityProvider;
+
+  @override
+  void didChangeDependencies() {
+    /// initialize the provider (needs to be on this method)
+    conectivityProvider = Provider.of<ConnectivityCheckService>(context);
+    conectivityProvider.checkConnectionType$(context);
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
