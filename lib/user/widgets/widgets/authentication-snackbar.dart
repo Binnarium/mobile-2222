@@ -17,14 +17,14 @@ class AuthenticationSnackbar extends SnackBar {
       : super(
           key: key,
           content: const Text(
-              'Tu contraseña es muy devil, ingresa una nueva contraseña'),
+              'Tu contraseña es muy débil, ingresa una nueva contraseña'),
         );
 
   /// This snackbar will appear if the user is not registered
   const AuthenticationSnackbar.notInscribed({Key? key})
       : super(
           key: key,
-          content: const Text('No estas inscrito para acceder al recorrido'),
+          content: const Text('No estás inscrito para acceder al recorrido'),
         );
 
   /// This snackbar will appear if the account of the user is not created
@@ -56,7 +56,7 @@ class AuthenticationSnackbar extends SnackBar {
     Key? key,
   }) : super(
           key: key,
-          content: const Text('Aun no tienes una cuenta'),
+          content: const Text('Aún no tienes una cuenta'),
           action: SnackBarAction(
             label: 'Registrate ahora',
             onPressed: () =>
@@ -69,7 +69,7 @@ class AuthenticationSnackbar extends SnackBar {
     Key? key,
   }) : super(
           key: key,
-          content: const Text('Correo electrónico no valido'),
+          content: const Text('Correo electrónico no válido'),
         );
 
   /// This snackbar will appear if the user is not in the Database
@@ -77,7 +77,7 @@ class AuthenticationSnackbar extends SnackBar {
     Key? key,
   }) : super(
           key: key,
-          content: const Text('No se encontro información del jugador'),
+          content: const Text('No se encontró información del jugador'),
         );
 
   /// This snackbar will appear if the account is deactivated
@@ -85,7 +85,7 @@ class AuthenticationSnackbar extends SnackBar {
     Key? key,
   }) : super(
           key: key,
-          content: const Text('Esta cuenta esta desactivada'),
+          content: const Text('Esta cuenta está desactivada'),
         );
 
   /// This snackbar will appear if the password is wrong

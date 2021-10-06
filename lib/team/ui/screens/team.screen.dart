@@ -6,7 +6,7 @@ import 'package:lab_movil_2222/team/services/load-team.service.dart';
 import 'package:lab_movil_2222/team/ui/widgets/team-content-markdown.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 // ignore: use_key_in_widget_constructors

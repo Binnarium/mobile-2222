@@ -13,8 +13,8 @@ import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/sign-out-button.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 // ignore: use_key_in_widget_constructors

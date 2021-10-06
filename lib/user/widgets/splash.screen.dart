@@ -6,7 +6,7 @@ import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/services/user.service.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 

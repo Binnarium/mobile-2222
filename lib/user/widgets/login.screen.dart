@@ -22,7 +22,6 @@ import 'package:lab_movil_2222/widgets/form/text-form-field-2222.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

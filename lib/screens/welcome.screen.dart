@@ -14,8 +14,8 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/listSocialNetworks.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -177,6 +177,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               content: loginPayload!.workloadText,
             ),
           ),
+
           ///Social Networks
           Padding(
             padding: const EdgeInsets.only(top: 26),
