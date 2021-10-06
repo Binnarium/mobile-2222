@@ -87,6 +87,7 @@ class ChatModel {
               .map((name) => name.split(' ').sublist(0, 1).join(' '))
               .join(', ');
 
+  /// TODO: remove this from chat since chat has a responsabilitiy not necessary
   String get chatContent {
     if (lastMessage == null) {
       return 'No hay mensajes';
@@ -94,17 +95,7 @@ class ChatModel {
     final String prefix =
         '${lastMessage!.sender.displayName.split(' ').first}: ';
 
-    final String suffix = (lastMessage.runtimeType == TextMessageModel)
-        ? lastMessage!.text!
-        : (lastMessage.runtimeType == ImageMessageModel)
-            ? 'envió una imagen'
-            : (lastMessage.runtimeType == VideoMessageModel)
-                ? 'envió un video'
-                : (lastMessage.runtimeType == BannedMessageModel)
-                    ? '<<Mensaje ha sido eliminado>>'
-                    : (lastMessage.runtimeType == DeletedMessageModel)
-                        ? 'Mensaje eliminado'
-                        : '...';
+    final String suffix = lastMessage!.minifiedMessageContent;
 
     return '$prefix$suffix';
   }
