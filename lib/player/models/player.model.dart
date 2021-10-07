@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
@@ -50,7 +49,7 @@ class PlayerModel {
       uid: payload['uid'] as String,
       email: payload['email'] as String,
       pubCode: payload['pubCode'] as String,
-      proactivity: payload['proactivity'] as int,
+      proactivity: payload['proactivity'] as int? ?? 0,
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       groupId: payload['groupId'] as String,

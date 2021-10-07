@@ -8,7 +8,8 @@ import 'package:lab_movil_2222/themes/colors.dart';
 
 /// widget that contains a list of the player's gamification
 /// - [player] is required to avoid the use of the user stream service
-class PlayerGamification extends StatelessWidget {
+class 
+PlayerGamification extends StatelessWidget {
   const PlayerGamification({
     Key? key,
     required this.player,

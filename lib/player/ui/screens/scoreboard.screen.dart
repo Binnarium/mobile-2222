@@ -1,26 +1,20 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/list-scoreboard.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ScoreboardPlayersScreen extends StatefulWidget {
   const ScoreboardPlayersScreen({
     Key? key,
-    required this.city,
   }) : super(key: key);
 
   static const route = '/score-board';
-
-  final CityModel city;
 
   @override
   _ScoreboardPlayersState createState() => _ScoreboardPlayersState();
@@ -39,6 +33,7 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
   @override
   void initState() {
     super.initState();
+
     ///load list of players in order by proactivity
     _scoreboardSub = _playersScoreBoard.loadScoreboard$().listen((players) {
       setState(() {
@@ -60,24 +55,16 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
     final Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
 
-    return Scaffold2222.city(
-      city: widget.city,
+    return Scaffold2222.empty(
       backgrounds: const [BackgroundDecorationStyle.bottomRight],
-      route: ScoreboardPlayersScreen.route,
       body: ListView(
         children: [
-          /// icon item
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
-            child: LogosHeader(showStageLogoCity: widget.city),
-          ),
-
           /// title
           Container(
             constraints: BoxConstraints(
               maxWidth: min(size.width * 0.8, 300),
             ),
-            padding: const EdgeInsets.only(bottom: 24),
+            padding: const EdgeInsets.only(bottom: 24, top: 60),
             alignment: Alignment.center,
             child: Text(
               'Tabla de Puntuacion'.toUpperCase(),
@@ -94,7 +81,11 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
           else ...[
             /// players items
             for (PlayerModel player in teammates!)
-              ListScoreboardPlayers(participant: player, context: context)
+              ListScoreboardPlayers(
+                participant: player,
+                context: context,
+                numberProactivity: player.proactivity,
+              ),
           ],
         ],
       ),

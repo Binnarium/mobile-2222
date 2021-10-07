@@ -252,10 +252,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
 
             ///Scoreboard Screen
             if (settings.name == ScoreboardPlayersScreen.route) {
-              final args = settings.arguments! as ScoreboardPlayersScreen;
-              return ScoreboardPlayersScreen(
-                city: args.city,
-              );
+              return const ScoreboardPlayersScreen();
             }
             if (settings.name == GameOverScreen.route) {
               final args = settings.arguments! as GameOverScreen;
