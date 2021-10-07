@@ -97,7 +97,14 @@ abstract class MessageModel {
       );
     }
 
-    throw UnimplementedError();
+    return UnsupportedMessageModel(
+      id: id,
+      kind: kind,
+      senderId: senderId,
+      sendedDate: sendedDate,
+      sender: sender,
+      sendedByMe: sendedByMe,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -114,6 +121,8 @@ abstract class MessageModel {
   }
 
   bool get canDelete => runtimeType != DeletedMessageModel;
+
+  String get minifiedMessageContent;
 }
 
 /// Message of type [MessageKind.video]
@@ -136,6 +145,9 @@ class VideoMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => 'Envio un video';
 }
 
 /// Message of type [MessageKind.image]
@@ -158,6 +170,8 @@ class ImageMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+  @override
+  String get minifiedMessageContent => 'Envio una imagen';
 }
 
 /// Message of type [MessageKind.text]
@@ -180,6 +194,9 @@ class TextMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => text!;
 }
 
 /// Message of type [MessageKind.banned]
@@ -201,6 +218,9 @@ class BannedMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => 'El mensaje ha sido prohibido';
 }
 
 /// Message of type deleted [MessageKind.deleted]
@@ -222,4 +242,32 @@ class DeletedMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => 'Mensaje Eliminado';
+}
+
+class UnsupportedMessageModel extends MessageModel {
+  UnsupportedMessageModel({
+    required String id,
+    required String senderId,
+    required String kind,
+    required DateTime sendedDate,
+    required ChatParticipantModel sender,
+    bool sendedByMe = false,
+  }) : super(
+          sendedByMe: sendedByMe,
+          kind: kind,
+          id: id,
+          asset: null,
+          banned: false,
+          sendedDate: sendedDate,
+          text: null,
+          senderId: senderId,
+          sender: sender,
+        );
+
+  @override
+  String get minifiedMessageContent =>
+      'Mensaje no soportado, actualiza tu aplicación';
 }

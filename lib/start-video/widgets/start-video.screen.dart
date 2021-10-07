@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class StartVideoScreen extends StatefulWidget {
-  StartVideoScreen({
+  const StartVideoScreen({
     Key? key,
   }) : super(key: key);
 

@@ -9,8 +9,8 @@ import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 /// flag to enable or disable auto scroll on page load
@@ -74,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold2222.navigation(
       backgroundColor: Colors2222.black,
       activePage: Lab2222NavigationBarPages.home,
-      
       body: (_cities == null)
 
           /// if cities data is still loading, replace everything this a loading text
