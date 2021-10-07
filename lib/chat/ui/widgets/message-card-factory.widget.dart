@@ -17,7 +17,7 @@ abstract class MessageCardFactory<T extends MessageModel>
     required this.deleteCallback,
   })  : padding = const EdgeInsets.all(12),
         decoration = BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
           color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
         ),
         super(key: key);
@@ -67,8 +67,8 @@ abstract class MessageCardFactory<T extends MessageModel>
       );
     }
 
-    return _TextMessageCard(
-      message: message as TextMessageModel,
+    return _UnsupportedMessageCard(
+      message: message as UnsupportedMessageModel,
       deleteCallback: deleteCallback,
     );
   }
@@ -97,6 +97,7 @@ abstract class MessageCardFactory<T extends MessageModel>
             children: [
               /// date
               Text(
+                /// TODO: make an extencion with dateformat
                 '$prefix${DateFormat('HH:mm').format(message.sendedDate)}',
                 style: textTheme.caption!.copyWith(color: Colors2222.black),
               ),
@@ -196,6 +197,37 @@ class _TextMessageCard extends MessageCardFactory<TextMessageModel> {
   }
 }
 
+class _UnsupportedMessageCard
+    extends MessageCardFactory<UnsupportedMessageModel> {
+  _UnsupportedMessageCard({
+    Key? key,
+    required UnsupportedMessageModel message,
+    required Function(MessageModel) deleteCallback,
+  }) : super._(
+          key: key,
+          message: message,
+          deleteCallback: deleteCallback,
+        );
+
+  @override
+  Widget buildCardContent(BuildContext context) {
+    return InkWell(
+      onLongPress: () => showOptionsDialog(context),
+      child: Container(
+        padding: padding,
+        decoration: decoration,
+        child: Markdown2222(
+          data:
+              '_Este mensaje no es soportado, actualiza tu aplicación para acceder a las últimas funcionalidades del **Lab Móvil 2222**_',
+          contentAlignment:
+              message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
+          textColor: message.sendedByMe ? Colors2222.black : Colors2222.white,
+        ),
+      ),
+    );
+  }
+}
+
 /// text message card
 class _DeletedMessageCard extends MessageCardFactory<DeletedMessageModel> {
   _DeletedMessageCard({
@@ -219,7 +251,7 @@ class _DeletedMessageCard extends MessageCardFactory<DeletedMessageModel> {
           'Mensaje Eliminado',
           style: Theme.of(context)
               .textTheme
-              .bodyText2
+              .caption
               ?.apply(color: Colors2222.darkGrey, fontStyle: FontStyle.italic),
         ),
       ),
