@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';

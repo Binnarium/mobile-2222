@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
+import 'package:lab_movil_2222/player/ui/widgets/goto-scoreboard-button.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dart';
 import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
-import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/sign-out-button.dart';
@@ -28,7 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _loadPlayerSub;
   StreamSubscription? _explanationSub;
-  StreamSubscription? _scoreboardSub;
+  
   PlayerModel? player;
   List<PlayerModel>? players;
   PointsExplanationModel? _pointsExplanation;
@@ -36,7 +36,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   CurrentPlayerService get _currentPlayerService =>
       Provider.of<CurrentPlayerService>(context, listen: false);
 
-  
   @override
   void initState() {
     super.initState();
@@ -47,7 +46,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         this.player = player;
       });
     });
-   
 
     final GetPointsExplanationService loadExplanationService =
         Provider.of<GetPointsExplanationService>(context, listen: false);
@@ -193,6 +191,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.only(bottom: 25),
                 child: DaysLeftWidget(),
               ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 25),
+                child: GotoScoreboardButton(),
+              )
             ],
             const LogOutButton(),
           ],
