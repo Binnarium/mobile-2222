@@ -1,14 +1,8 @@
-import 'dart:async';
-
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/connectivity-snackbar.widget.dart';
-import 'package:provider/provider.dart';
 
 import 'bottom-navigation-bar-widget.dart';
 
@@ -101,70 +95,6 @@ class Scaffold2222 extends StatefulWidget {
 }
 
 class _Scaffold2222State extends State<Scaffold2222> {
-  /// connectivity subscription to listen whether the phone is connected
-  StreamSubscription? _connectivitySub;
-
-  /// default connectivity type
-  ConnectivityResult? oldConnectivityresult = ConnectivityResult.none;
-
-  /// provider of the connectivity check service
-  late final ConnectivityCheckService conectivityProvider;
-
-  @override
-  void didChangeDependencies() {
-    /// initialize the provider (needs to be on this method)
-    conectivityProvider = Provider.of<ConnectivityCheckService>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    /// stream that listen the connectivity
-    _connectivitySub = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult newConnection) {
-      setState(() {
-        print('NEVER SHOW AGAIN?: ${conectivityProvider.neverShowAgain}');
-
-        /// if there is no connection this will appear
-        if (newConnection == ConnectivityResult.none &&
-            oldConnectivityresult != newConnection &&
-            conectivityProvider.neverShowAgain == false) {
-          /// shows the no connection snackbar
-          ScaffoldMessenger.of(context)
-              .showSnackBar(ConnectivityStatusSnackbar.none(context));
-
-          /// if the phone reaches connection, it will enter in this block
-        } else if (oldConnectivityresult == ConnectivityResult.none &&
-            conectivityProvider.neverShowAgain == false) {
-          /// shows the wifi  connection snackbar
-          if (newConnection == ConnectivityResult.wifi &&
-              conectivityProvider.neverShowAgain == false) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(ConnectivityStatusSnackbar.wifi(context));
-
-            /// shows the mobile  connection snackbar
-          } else if (newConnection == ConnectivityResult.mobile &&
-              conectivityProvider.neverShowAgain == false) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(ConnectivityStatusSnackbar.mobile(context));
-          }
-        }
-
-        /// reset the connection type to listen changes
-        oldConnectivityresult = newConnection;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _connectivitySub?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     /// next page button
