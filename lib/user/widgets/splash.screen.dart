@@ -22,7 +22,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   /// splash video controller
   final VideoPlayerController _controller =
-      VideoPlayerController.asset('assets/videos/splash-video.mp4');
+      VideoPlayerController.asset('assets/videos/splash-video.mov');
 
   StreamSubscription? navigatingSub;
 
