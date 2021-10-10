@@ -19,22 +19,24 @@ class MedalsService {
   final FirebaseFirestore _fFirestore;
 
   /// load assigned medals
-  Stream<List<MarathonMedalModel>> get awards$ => _currentPlayerService.player$
-      .switchMap<List<QueryDocumentSnapshot>>(
-        (user) => user == null
-            ? Stream.value([])
-            : _getMarathonAwardsCollectionRef(user.uid)
-                .snapshots()
-                .map((snap) => snap.docs),
-      )
-      .map((docs) => docs
-          .map((d) =>
-              MarathonMedalModel.fromMap(d.data() as Map<String, dynamic>))
-          .toList())
-      .shareReplay();
+  Stream<List<MarathonMedalModel>> get marathonAwards$ =>
+      _currentPlayerService.player$
+          .switchMap<List<QueryDocumentSnapshot>>(
+            (user) => user == null
+                ? Stream.value([])
+                : _getMarathonAwardsCollectionRef(user.uid)
+                    .snapshots()
+                    .map((snap) => snap.docs),
+          )
+          .map((docs) => docs
+              .map((d) =>
+                  MarathonMedalModel.fromMap(d.data() as Map<String, dynamic>))
+              .toList())
+          .shareReplay();
 
-  Stream<bool> get canAssignMedal$ =>
-      awards$.map((awards) => awards.length < MEDALS_LIMIT).shareReplay();
+  Stream<bool> get canAssignMarathonAwards$ => marathonAwards$
+      .map((awards) => awards.length < MEDALS_LIMIT)
+      .shareReplay();
 
   /// assign teammate award
   Stream<bool> assignMedal$({
@@ -48,7 +50,7 @@ class MedalsService {
         }
 
         /// validate player can send medals
-        final bool canSendAward = await canAssignMedal$.first;
+        final bool canSendAward = await canAssignMarathonAwards$.first;
         if (!canSendAward) {
           return false;
         }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
@@ -9,6 +10,7 @@ class AssignMedalListItem extends ListTile {
     required PlayerModel participant,
     required BuildContext context,
     required bool isAssigned,
+    required bool canAssign,
   }) : super(
           key: key,
           contentPadding: EdgeInsets.symmetric(
@@ -24,10 +26,11 @@ class AssignMedalListItem extends ListTile {
 
           /// add button when callback is sended
           trailing: IconButton(
-            onPressed: isAssigned ? () {} : () => callback(),
-            icon: Icon(
-              isAssigned ? Icons.star_rounded : Icons.card_giftcard_rounded,
-              color: isAssigned ? Colors2222.yellow : Colors2222.darkGrey,
+            onPressed: canAssign ? () => callback() : null,
+            icon: Image(
+              image: isAssigned
+                  ? const MedalImage.marathon()
+                  : const MedalImage.marathonGrey(),
             ),
           ),
         );

@@ -10,7 +10,7 @@ class CoinsCheckWidget extends StatefulWidget {
     required this.hasMedal,
   }) : super(key: key);
 
-  final CoinsImages coin;
+  final MedalImage coin;
   final bool hasMedal;
 
   @override

@@ -119,7 +119,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 32),
                 child: CoinsCheckWidget(
-                    coin: const CoinsImages.contribution(),
+                    coin: const MedalImage.contribution(),
                     hasMedal: hasMedal)),
           ),
 

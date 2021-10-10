@@ -169,7 +169,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
 
         Center(
           child: CoinsCheckWidget(
-            coin: const CoinsImages.project(),
+            coin: const MedalImage.project(),
             hasMedal: hasMedal,
           ),
         ),

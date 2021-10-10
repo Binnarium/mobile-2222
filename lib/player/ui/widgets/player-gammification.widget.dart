@@ -32,10 +32,10 @@ PlayerGamification extends StatelessWidget {
           numberOfMedals: numberProactivity,
           label: 'Nivel de Proactividad'.toUpperCase(),
           image: (numberProactivity < 10)
-              ? const CoinsImages.redCoin()
+              ? const MedalImage.redCoin()
               : (numberProactivity < 20)
-                  ? const CoinsImages.yellowCoin()
-                  : const CoinsImages.greenCoin(),
+                  ? const MedalImage.yellowCoin()
+                  : const MedalImage.greenCoin(),
           numberColor: Colors2222.black,
         ),
 
@@ -55,7 +55,7 @@ PlayerGamification extends StatelessWidget {
         GamificationWidget(
           numberOfMedals: player.contributionsAwards.length,
           label: 'Manifiesto -\nWiki'.toUpperCase(),
-          image: const CoinsImages.contribution(),
+          image: const MedalImage.contribution(),
           numberColor: Colors2222.darkGrey,
         ),
 
@@ -64,7 +64,7 @@ PlayerGamification extends StatelessWidget {
         GamificationWidget(
           numberOfMedals: player.clubhouseAwards.length,
           label: 'Eventos Clubhouse'.toUpperCase(),
-          image: const CoinsImages.clubhouse(),
+          image: const MedalImage.clubhouse(),
           numberColor: Colors2222.darkGrey,
         ),
         const SizedBox(height: 25),
@@ -72,7 +72,7 @@ PlayerGamification extends StatelessWidget {
         GamificationWidget(
           numberOfMedals: player.projectAwards.length,
           label: 'Proyecto \nPersonal'.toUpperCase(),
-          image: const CoinsImages.project(),
+          image: const MedalImage.project(),
           numberColor: Colors2222.darkGrey,
         ),
         const SizedBox(height: 25),
@@ -80,7 +80,7 @@ PlayerGamification extends StatelessWidget {
         GamificationWidget(
           numberOfMedals: player.maratonAwards.length,
           label: 'Maratón \nFinal'.toUpperCase(),
-          image: const CoinsImages.hackaton(),
+          image: const MedalImage.marathon(),
           numberColor: Colors2222.darkGrey,
         ),
       ],

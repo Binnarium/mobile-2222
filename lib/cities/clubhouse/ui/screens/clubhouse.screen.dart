@@ -130,7 +130,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
             padding: const EdgeInsets.only(bottom: 32),
             child: Center(
               child: CoinsCheckWidget(
-                coin: const CoinsImages.clubhouse(),
+                coin: const MedalImage.clubhouse(),
                 hasMedal: hasMedal,
               ),
             ),
