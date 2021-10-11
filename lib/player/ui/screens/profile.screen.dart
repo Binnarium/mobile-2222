@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/goto-scoreboard-button.widget.dart';
+import 'package:lab_movil_2222/player/ui/widgets/player-course-status.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dart';
 import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/days_left_widget.dart';
+import 'package:lab_movil_2222/user/widgets/widgets/avatar-image.widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/sign-out-button.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
@@ -28,7 +29,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _loadPlayerSub;
   StreamSubscription? _explanationSub;
-  
+
   PlayerModel? player;
   List<PlayerModel>? players;
   PointsExplanationModel? _pointsExplanation;
@@ -106,41 +107,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   children: [
                     /// player icon
-                    Material(
-                      type: MaterialType.transparency,
-                      child: InkWell(
-                          borderRadius: BorderRadius.circular(40),
-                          onTap: () async {
-                            return showAvatarImage(context);
-                          },
-                          child: SizedBox(
-                            height: 80,
-                            child: Stack(children: [
-                              if (player?.avatarImage.url == '')
-                                const CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      'assets/backgrounds/decorations/elipse_profile.png'),
-                                  maxRadius: 40,
-                                )
-                              else
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    player!.avatarImage.url,
-                                  ),
-                                  maxRadius: 40,
-                                ),
-                              Positioned(
-                                bottom: -6,
-                                right: -14,
+                    SizedBox(
+                      height: 80,
+                      child: Stack(children: [
+                        AvatarImage(image: player?.avatarImage),
+                        Positioned(
+                          bottom: -6,
+                          right: -14,
 
-                                /// implements the widget to change the avatar
-                                /// logic is implemented on the button
-                                child: ChangeAvatarButton(
-                                  player: player!,
-                                ),
-                              ),
-                            ]),
-                          )),
+                          /// implements the widget to change the avatar
+                          /// logic is implemented on the button
+                          child: ChangeAvatarButton(
+                            player: player!,
+                          ),
+                        ),
+                      ]),
                     ),
 
                     /// spacing between picture and information
@@ -189,7 +170,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
-                child: DaysLeftWidget(),
+                child: PlayerCourseStatus(
+                  status: player!.courseStatus,
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(bottom: 25),
@@ -201,33 +184,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> showAvatarImage(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-              child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.7,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (player?.avatarImage.url == '')
-                  const Image(
-                    image: AssetImage(
-                        'assets/backgrounds/decorations/elipse_profile.png'),
-                  )
-                else
-                  Image.network(
-                    player!.avatarImage.url,
-                  ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ));
-        });
   }
 }

@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/cities/contribution/ui/widget/contribution-code-c
 import 'package:lab_movil_2222/cities/contribution/ui/widget/goto-pub-button.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';

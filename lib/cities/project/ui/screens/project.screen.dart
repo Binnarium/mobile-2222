@@ -12,7 +12,7 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/project-screen.model.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/project-gallery.widget.dart';
@@ -124,13 +124,15 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
-      body: _projectSheet(
-          context,
-          size,
-          widget.city.color,
-          playerProjects,
-          currentPlayer ??
-              PlayerModel.empty(uid: '', displayName: '', email: '')),
+      body: currentPlayer == null
+          ? const AppLoading()
+          : _projectSheet(
+              context,
+              size,
+              widget.city.color,
+              playerProjects,
+              currentPlayer!,
+            ),
     );
   }
 

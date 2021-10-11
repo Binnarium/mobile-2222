@@ -47,7 +47,7 @@ class _ChangeAvatarButtonState extends State<ChangeAvatarButton> {
     if (_uploadFileSub != null) {
       return;
     }
-    final String oldUrl = widget.player.avatarImage.url;
+    final String oldUrl = widget.player.avatarImage?.url ?? '';
     print('old image url');
     final UploadImageService uploadImageService =
         Provider.of<UploadImageService>(context, listen: false);

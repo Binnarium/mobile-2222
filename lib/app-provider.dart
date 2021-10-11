@@ -19,7 +19,7 @@ import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';

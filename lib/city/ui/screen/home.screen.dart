@@ -5,7 +5,7 @@ import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/city/ui/widgets/cities-map.dart';
 import 'package:lab_movil_2222/city/ui/widgets/home-background.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';

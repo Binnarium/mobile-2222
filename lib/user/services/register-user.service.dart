@@ -37,15 +37,14 @@ class RegisterService {
     /// create account
     final User user = await _createAccount(formModel.email, formModel.password);
 
-    /// create new player account
-    final PlayerModel newPlayer = PlayerModel.empty(
+    /// create player
+    final Map<String, dynamic> newPlayerMap = createNewPlayerMap(
       uid: user.uid,
       displayName: '${playerInscribed.name} ${playerInscribed.lastName}',
       email: formModel.email,
     );
 
-    /// create player
-    await _createPlayer(newPlayer);
+    final PlayerModel newPlayer = await _createPlayer(user.uid, newPlayerMap);
 
     /// return new created player
     return newPlayer;
@@ -68,12 +67,14 @@ class RegisterService {
   }
 
   /// add player to database
-  Future<void> _createPlayer(PlayerModel player) async {
+  Future<PlayerModel> _createPlayer(
+      String uid, Map<String, dynamic> player) async {
     try {
-      await _fFirestore
-          .collection('players')
-          .doc(player.uid)
-          .set(player.toMap());
+      await _fFirestore.collection('players').doc(uid).set(player);
+
+      /// get player data from firebase
+      final PlayerModel newPlayer = PlayerModel.fromMap(player);
+      return newPlayer;
     } catch (e) {
       print(e);
       throw RegisterException(RegisterErrorCode.other);

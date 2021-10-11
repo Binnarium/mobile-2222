@@ -16,7 +16,7 @@ class ListScoreboardPlayers extends ListTile {
               horizontal: MediaQuery.of(context).size.width * 0.08,
               vertical: 5,
             ),
-            leading: AvatarImage(participant: participant),
+            leading: AvatarImage(image: participant.avatarImage),
             title: Text(
               participant.displayName,
               overflow: TextOverflow.ellipsis,

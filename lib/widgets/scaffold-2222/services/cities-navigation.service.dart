@@ -13,7 +13,7 @@ import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -284,7 +284,7 @@ class CityNavigator {
       
         /// next Phase screen
         if (enabledPagesDto.nextPhaseVideo &&
-            CurrentPlayerService.player?.courseStatus ==
+            CurrentPlayerService.currentPlayer?.courseStatus ==
                 'COURSE#CONTINUE_NEXT_PHASE')
           ScaffoldRouteBuilder(
             route: NextPhaseVideoScreen.route,
@@ -297,7 +297,7 @@ class CityNavigator {
 
         /// game over screen
         if (enabledPagesDto.gameOverMessage &&
-            CurrentPlayerService.player?.courseStatus ==
+            CurrentPlayerService.currentPlayer?.courseStatus ==
                 'COURSE#CAN_NOT_CONTINUE_NEXT_PHASE')
           ScaffoldRouteBuilder(
             route: GameOverScreen.route,

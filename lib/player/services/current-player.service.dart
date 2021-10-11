@@ -4,12 +4,20 @@ import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CurrentPlayerService {
+  CurrentPlayerService()
+      : _firestore = FirebaseFirestore.instance,
+        _auth = FirebaseAuth.instance;
 
   /// services
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  @Deprecated('Dont Use')
-  static PlayerModel? player;
+  final FirebaseFirestore _firestore;
+  final FirebaseAuth _auth;
+
+  /// Last player status cashed value
+  /// access to its value using the [CurrentPlayerService.currentPlayer]
+  static PlayerModel? _player;
+
+  /// get sync access to the current signed in player
+  static PlayerModel? get currentPlayer => CurrentPlayerService._player;
 
   Stream<PlayerModel?> get player$ => _auth
           .userChanges()
@@ -29,14 +37,11 @@ class CurrentPlayerService {
           /// turn snapshot data into player object, if props found
           .map((object) {
         if (object == null) {
+          CurrentPlayerService._player = null;
           return null;
         } else {
-          player = PlayerModel.fromMap(object);
-          return player;
+          CurrentPlayerService._player = PlayerModel.fromMap(object);
+          return CurrentPlayerService._player;
         }
       }).shareReplay();
-
-  // void setPlayer(PlayerModel newPlayer) {
-  //   player = newPlayer;
-  // }
 }

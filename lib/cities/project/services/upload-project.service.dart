@@ -5,7 +5,7 @@ import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart'
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
 
 /// Class that uploads the project to the database reference
