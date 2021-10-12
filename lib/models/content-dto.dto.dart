@@ -1,4 +1,5 @@
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 abstract class ContentDto<T> {
   final String kind;
@@ -25,7 +26,7 @@ abstract class ContentDto<T> {
         author: payload['author'] as String? ?? 'Author not available',
         description:
             payload['description'] as String? ?? 'Description not available',
-        video: VideoDto.fromMap(payload),
+        video: VideoModel.fromMap(payload),
       );
     } else {
       return PodcastContentDto(
@@ -40,13 +41,13 @@ abstract class ContentDto<T> {
   }
 }
 
-class VideoContentDto extends ContentDto<VideoDto> {
+class VideoContentDto extends ContentDto<VideoModel> {
   VideoContentDto({
     required String kind,
     required String author,
     required String description,
     required String title,
-    required VideoDto video,
+    required VideoModel video,
   }) : super._(
           kind: kind,
           author: author,

@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
@@ -56,7 +57,7 @@ class SendMessagesService {
     );
   }
 
-  Stream<bool> video$(ChatModel chat, VideoDto videoDto) {
+  Stream<bool> video$(ChatModel chat, VideoModel videoDto) {
     return _sendMessage(
       chat: chat,
       createMessageCallback: (user) => VideoMessageModel(

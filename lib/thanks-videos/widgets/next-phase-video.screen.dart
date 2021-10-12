@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/thanks-videos/model/city-thanks-video.model.dart';
 import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';

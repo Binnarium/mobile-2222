@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 ///
 /// use the specific kind of asset like:
 /// - [ImageDto] for image kind of assets
-/// - [VideoDto] for video kind of assets
+/// - [VideoModel] for video kind of assets
 /// - [AudioDto] for audio kind of assets
 abstract class AssetDto {
   AssetDto({
@@ -23,51 +23,6 @@ abstract class AssetDto {
       'path': path,
       'name': name,
     };
-  }
-}
-
-/// Video asset
-class VideoDto extends AssetDto {
-  final int duration;
-  final String format;
-
-  /// defaault constructor
-  // ignore: sort_constructors_first
-  VideoDto({
-    required this.duration,
-    required this.format,
-    required String name,
-    required String path,
-    required String url,
-  }) : super(
-          name: name,
-          path: path,
-          url: url,
-        );
-
-  // ignore: sort_constructors_first
-  VideoDto.fromMap(final Map<String, dynamic> payload)
-      : format = payload['format'] as String? ?? '',
-        duration = payload['duration'] as int? ?? 0,
-        super(
-          name: payload['name'] as String? ?? '',
-          path: payload['path'] as String? ?? '',
-          url: payload['url'] as String? ?? '',
-        );
-
-  ImageProvider get placeholderImage =>
-      const AssetImage('assets/images/video-placeholder.png');
-
-  @override
-  Map<String, dynamic> toMap() {
-    final Map<String, dynamic> map = super.toMap();
-
-    map.addAll(<String, dynamic>{
-      'duration': duration,
-      'format': format,
-    });
-
-    return map;
   }
 }
 

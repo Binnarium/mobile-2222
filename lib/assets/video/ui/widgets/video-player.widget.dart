@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
+import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 /// Class that creates a video player depending on video URL and the description
@@ -14,7 +14,7 @@ class VideoPlayer extends StatefulWidget {
     required this.video,
   }) : super(key: key);
 
-  final VideoDto video;
+  final VideoModel video;
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();

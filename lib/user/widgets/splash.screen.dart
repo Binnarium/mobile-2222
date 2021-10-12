@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
-import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/services/user.service.dart';

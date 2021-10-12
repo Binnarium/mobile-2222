@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/models/project-screen.model.dart';
 
 class FileNotSelected implements Exception {}

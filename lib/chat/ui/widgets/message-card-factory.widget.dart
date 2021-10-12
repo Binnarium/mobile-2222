@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
@@ -318,7 +319,7 @@ class _VideoMessageCard extends MessageCardFactory<VideoMessageModel> {
         padding: padding,
         decoration: decoration,
         width: double.infinity,
-        child: VideoPlayer(video: message.asset! as VideoDto),
+        child: VideoPlayer(video: message.asset! as VideoModel),
       ),
     );
   }
