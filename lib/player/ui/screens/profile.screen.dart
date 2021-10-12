@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
-import 'package:lab_movil_2222/player/ui/widgets/goto-scoreboard-button.widget.dart';
+
 import 'package:lab_movil_2222/player/ui/widgets/player-course-status.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dart';
 import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
@@ -174,10 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   status: player!.courseStatus,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 25),
-                child: GotoScoreboardButton(),
-              )
+              
             ],
             const LogOutButton(),
           ],
