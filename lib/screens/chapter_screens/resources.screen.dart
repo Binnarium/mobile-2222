@@ -100,7 +100,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             ),
 
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40),
+            padding: const EdgeInsets.symmetric(vertical: 30),
             child: ChapterTitleSection(
               title: 'RECURSOS ONLINE',
             ),
@@ -108,12 +108,12 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
           /// external links
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04,vertical: 5),
 
             ///Creates a grid with the necesary online resources
             child: StaggeredGridView.countBuilder(
               ///general spacing per resource
-              crossAxisCount: 2,
+              crossAxisCount:1,
               staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
               itemCount: resourcesDto!.externalLinks.length,
 
