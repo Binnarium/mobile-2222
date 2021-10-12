@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/video/models/better-video.model.dart';
 import 'package:lab_movil_2222/assets/video/models/video.model.dart';
+import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:provider/provider.dart';
 
 /// Class that creates a video player depending on video URL and the description
 /// of the video
@@ -21,6 +26,27 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
+  BetterVideoModel? betterVideo;
+  StreamSubscription? _loadBetterVideoSub;
+
+  LoadBetterVideoService get loadBetterVideoService =>
+      Provider.of<LoadBetterVideoService>(context, listen: false);
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBetterVideoSub =
+        loadBetterVideoService.loadFromPath$(widget.video.path).listen((event) {
+      betterVideo = event;
+    });
+  }
+
+  @override
+  void dispose() {
+    _loadBetterVideoSub?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -30,8 +56,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
         // child: _Lab2222BetterPlayer(video: widget.video)
         child: Stack(
           children: [
-            Image(
-              image: widget.video.placeholderImage,
+            Image.asset(
+              'assets/images/video-placeholder.png',
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,

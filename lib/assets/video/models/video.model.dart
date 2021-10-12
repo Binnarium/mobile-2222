@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
 /// Video asset
@@ -27,9 +26,6 @@ class VideoModel extends AssetDto {
 
   final int duration;
   final String format;
-
-  ImageProvider get placeholderImage =>
-      const AssetImage('assets/images/video-placeholder.png');
 
   @override
   Map<String, dynamic> toMap() {
