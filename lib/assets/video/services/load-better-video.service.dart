@@ -9,15 +9,11 @@ class LoadBetterVideoService {
 
   Stream<BetterVideoModel?> loadFromPath$(String path) {
     final String validPath = path.removeSpecialCharacters();
-    print(validPath);
-    print(validPath);
-    print(validPath);
-    print(validPath);
     final DatabaseReference ref =
         _database.reference().child('videos').child(validPath);
-    return ref.onValue.map((event) {
-      print(event.snapshot.value);
-      return null;
-    });
+    return ref.onValue.map(
+      (event) => BetterVideoModel.fromMap(
+          event.snapshot.value as Map<String, dynamic>),
+    );
   }
 }
