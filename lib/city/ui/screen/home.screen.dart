@@ -9,6 +9,7 @@ import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/keys/keysToBeInheritedProvider.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   StreamSubscription? _citiesSub;
   StreamSubscription? _currentPlayerSub;
+
+  late final KeysToBeInheritedProvider keysProvider;
+
+  @override
+  void didChangeDependencies() {
+    /// initialize the provider (needs to be on this method)
+    keysProvider = Provider.of<KeysToBeInheritedProvider>(context);
+    keysProvider.displayGuide();
+    print('USER GUIDE? : ${keysProvider.showUserGuide}');
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
