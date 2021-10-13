@@ -65,7 +65,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   void dispose() {
     print('Entrando en dispose');
     _currentPlayerSub?.cancel();
-    audioProvider.close();
+    // audioProvider.close();
     print('podcast detenido');
     super.dispose();
   }
