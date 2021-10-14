@@ -3,6 +3,9 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/user-guide.screen.dart';
+import 'package:provider/provider.dart';
 
 import 'bottom-navigation-bar-widget.dart';
 
@@ -19,6 +22,7 @@ class Scaffold2222 extends StatefulWidget {
         _enableBack = true,
         appBar = null,
         _backgroundColor = city.color,
+        _canShowNavigationGuides = false,
         activePage = null,
         super(key: key);
 
@@ -34,6 +38,7 @@ class Scaffold2222 extends StatefulWidget {
         _enableBack = true,
         _showBottomNavigationBar = true,
         _backgroundColor = color ?? city.color,
+        _canShowNavigationGuides = true,
         appBar = null,
         activePage = null,
         super(key: key);
@@ -47,6 +52,7 @@ class Scaffold2222 extends StatefulWidget {
     this.backgrounds = const [],
   })  : _nextRoute = null,
         _showBottomNavigationBar = false,
+        _canShowNavigationGuides = false,
         _enableBack = false,
         _backgroundColor = backgroundColor,
         activePage = null,
@@ -62,6 +68,7 @@ class Scaffold2222 extends StatefulWidget {
     Color? backgroundColor,
   })  : _nextRoute = null,
         _showBottomNavigationBar = true,
+        _canShowNavigationGuides = false,
         _enableBack = true,
         _backgroundColor = backgroundColor ?? Colors2222.red,
         super(key: key);
@@ -84,6 +91,10 @@ class Scaffold2222 extends StatefulWidget {
   /// enable bottom navbar
   final bool _showBottomNavigationBar;
 
+  /// flag to allow widget to display navigation controls usage
+  ///  on top of screen
+  final bool _canShowNavigationGuides;
+
   /// set a background color for the scaffold
   final Color _backgroundColor;
 
@@ -95,6 +106,10 @@ class Scaffold2222 extends StatefulWidget {
 }
 
 class _Scaffold2222State extends State<Scaffold2222> {
+  /// initialize the user-guide provider
+  ShowUserGuideService get _showUserGuideService =>
+      Provider.of<ShowUserGuideService>(context, listen: false);
+
   @override
   Widget build(BuildContext context) {
     /// next page button
@@ -123,27 +138,37 @@ class _Scaffold2222State extends State<Scaffold2222> {
       appBar: widget.appBar,
 
       /// wrap everything in a gesture detector to move across cities
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onPanUpdate: (details) {
-          /// left
-          if (prevPage != null && details.delta.dx > 5) {
-            prevPage();
-          }
+      body: Stack(
+        children: [
+          /// main content
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onPanUpdate: (details) {
+              /// left
+              if (prevPage != null && details.delta.dx > 5) {
+                prevPage();
+              }
 
-          /// right
-          if (nextPage != null && details.delta.dx < -5) {
-            nextPage();
-          }
-        },
-        child: BackgroundDecoration(
-          backgroundDecorationsStyles: widget.backgrounds,
-          child: SafeArea(
-            top: widget.appBar == null,
-            bottom: !widget._showBottomNavigationBar,
-            child: widget.body,
+              /// right
+              if (nextPage != null && details.delta.dx < -5) {
+                nextPage();
+              }
+            },
+            child: BackgroundDecoration(
+              backgroundDecorationsStyles: widget.backgrounds,
+              child: SafeArea(
+                top: widget.appBar == null,
+                bottom: !widget._showBottomNavigationBar,
+                child: widget.body,
+              ),
+            ),
           ),
-        ),
+
+          /// decorations on top of the main content
+          if (widget._canShowNavigationGuides == true &&
+              _showUserGuideService.showUserGuide == true)
+            const UserGuideScreen(),
+        ],
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.d
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/services/user.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -17,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
-}       
+}
 
 class _SplashScreenState extends State<SplashScreen> {
   /// splash video controller
@@ -26,18 +27,39 @@ class _SplashScreenState extends State<SplashScreen> {
 
   StreamSubscription? navigatingSub;
 
+  StreamSubscription? _currentPlayerSub;
+
   IsUserSignInService get _userService =>
       Provider.of<IsUserSignInService>(context, listen: false);
+
+  /// initialize the user-guide provider
+  ShowUserGuideService get _showUserGuideService =>
+      Provider.of<ShowUserGuideService>(context, listen: false);
+
+  CurrentPlayerService get _currentPlayerLoader =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentPlayerSub = _currentPlayerLoader.player$.listen((event) {
+      print(event?.courseStatus);
+    });
+  }
 
   @override
   void dispose() {
     navigatingSub?.cancel();
     navigatingSub = null;
+    _currentPlayerSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    /// feeds the provider with local data
+    _showUserGuideService.displayGuide();
     //tamaño de la pantalla
     return Scaffold2222.empty(
       backgroundColor: Colors2222.red,
