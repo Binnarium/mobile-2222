@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/services/load-city-resources.service.dart';
@@ -17,11 +16,11 @@ import 'package:provider/provider.dart';
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
-        super(key: key);
+    required this.city,
+  }) : super(key: key);
 
   static const String route = '/resources';
+
   final CityModel city;
 
   @override
@@ -107,36 +106,16 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
 
           /// external links
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.04,vertical: 5),
 
-            ///Creates a grid with the necesary online resources
-            child: StaggeredGridView.countBuilder(
-              ///general spacing per resource
-              crossAxisCount:1,
-              staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
-              itemCount: resourcesDto!.externalLinks.length,
-
-              /// property that sizes the container automatically according
-              /// the items
-              shrinkWrap: true,
-
-              ///to avoid the scroll
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final item = resourcesDto!.externalLinks.elementAt(index);
-                // print(item);
-                // print(item.kind);
-
-                ///calls the custom widget with the item parameters
-                if (item is ExternalLinkDto) {
-                  return ExternalLinkCard(externalLinkDto: item);
-                }
-
-                return const Text('Kind of content not found');
-              },
-            ),
-          )
+          Column(
+            children: [
+              for (ExternalLinkDto item in resourcesDto!.externalLinks)
+                Padding(
+                  padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+                  child: ExternalLinkCard(externalLinkDto: item),
+                ),
+            ],
+          ),
         ],
       ],
     );

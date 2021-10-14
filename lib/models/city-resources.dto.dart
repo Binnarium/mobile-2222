@@ -14,6 +14,7 @@ class CityResourcesDto {
 
   /// params
   final List<ExternalLinkDto> externalLinks;
+  
   final List<ReadingDto> readings;
 }
 
