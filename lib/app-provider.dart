@@ -41,8 +41,8 @@ import 'package:lab_movil_2222/user/services/login-user.service.dart';
 import 'package:lab_movil_2222/user/services/register-user.service.dart';
 import 'package:lab_movil_2222/user/services/sign-out.service.dart';
 import 'package:lab_movil_2222/user/services/user.service.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/keys/keysToBeInheritedProvider.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
@@ -90,7 +90,7 @@ class AppProvider extends MultiProvider {
 
             ///cities screens loaders
             Provider(create: (_) => LoadCityActivitiesService()),
-            Provider(create: (_) => KeysToBeInheritedProvider()),
+            Provider(create: (_) => ShowUserGuideService()),
             Provider(create: (_) => LoadFinalVideoService()),
             Provider(create: (_) => LoadManualVideoService()),
             Provider(create: (_) => LoadThanksVideoService()),

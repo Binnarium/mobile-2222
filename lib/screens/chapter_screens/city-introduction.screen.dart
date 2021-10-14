@@ -8,11 +8,9 @@ import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/keys/keysToBeInheritedProvider.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
-import 'package:showcaseview/showcaseview.dart';
 
 class CityIntroductionScreen extends StatefulWidget {
   const CityIntroductionScreen({
@@ -100,24 +98,9 @@ class _CityIntroductionBody extends StatefulWidget {
 }
 
 class _CityIntroductionBodyState extends State<_CityIntroductionBody> {
-  late final KeysToBeInheritedProvider? keysProvider;
-
   @override
   void initState() {
     super.initState();
-
-    keysProvider =
-        Provider.of<KeysToBeInheritedProvider>(context, listen: false);
-    if (keysProvider!.showUserGuide!) {
-      /// starts the user guide when the page renders
-      WidgetsBinding.instance!.addPostFrameCallback((_) async {
-        ShowCaseWidget.of(context)!.startShowCase([
-          /// the keys of the widgets to be showed
-          /// leftArrowIconKey references to the horizontal drag
-          keysProvider!.leftArrowIconKey,
-        ]);
-      });
-    }
   }
 
   @override
@@ -181,40 +164,6 @@ class _CityIntroductionBodyState extends State<_CityIntroductionBody> {
                   filterQuality: FilterQuality.high,
                 ),
               ),
-            ),
-            Showcase(
-              key: keysProvider!.leftArrowIconKey,
-              description:
-                  'Puedes deslizar hacia la derecha o izquierda para navegar en la ciudad.',
-              onTargetClick: () {
-                setState(() {
-                  keysProvider!.showUserGuide = false;
-                });
-              },
-              onToolTipClick: () {
-                setState(() {
-                  keysProvider!.showUserGuide = false;
-                });
-              },
-              disposeOnTap: true,
-              child: (keysProvider!.showUserGuide!)
-                  ? Center(
-                      child: Container(
-                        height: 200,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const <Icon>[
-                            Icon(
-                              Icons.chevron_left,
-                              size: 80,
-                            ),
-                            Icon(Icons.chevron_right, size: 80)
-                          ],
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        ),
-                      ),
-                    )
-                  : Container(),
             ),
           ],
         ),

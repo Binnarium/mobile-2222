@@ -38,8 +38,7 @@ dependencies:
   wakelock: ^0.5.6
   transparent_image: ^2.0.0
   shared_preferences: ^2.0.8
-  # package to highlight widgets, used for user guide on the first time
-  showcaseview: ^1.1.1
+  
 
 dev_dependencies:
   flutter_test:
