@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
         controller: _controller,
         lopping: false,
         onComplete: () => navigateNextPage(context),
-        onPressed: () => navigateNextPage(context),
+        onPress: () => navigateNextPage(context),
       ),
     );
   }
