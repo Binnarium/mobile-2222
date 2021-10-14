@@ -10,22 +10,6 @@ import 'package:provider/provider.dart';
 import 'bottom-navigation-bar-widget.dart';
 
 class Scaffold2222 extends StatefulWidget {
-  @Deprecated('use a proper constructor instead')
-  Scaffold2222({
-    Key? key,
-    required this.body,
-    required CityModel city,
-    required String route,
-    this.backgrounds = const [],
-  })  : _nextRoute = CityNavigator.getNextPage(route, city),
-        _showBottomNavigationBar = true,
-        _enableBack = true,
-        appBar = null,
-        _backgroundColor = city.color,
-        _canShowNavigationGuides = false,
-        activePage = null,
-        super(key: key);
-
   /// scaffold for cities with right and left navigation buttons
   Scaffold2222.city({
     Key? key,
@@ -110,6 +94,16 @@ class _Scaffold2222State extends State<Scaffold2222> {
   ShowUserGuideService get _showUserGuideService =>
       Provider.of<ShowUserGuideService>(context, listen: false);
 
+  bool showGuides = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget._canShowNavigationGuides)
+      showGuides = _showUserGuideService.displayGuide;
+  }
+
   @override
   Widget build(BuildContext context) {
     /// next page button
@@ -126,6 +120,9 @@ class _Scaffold2222State extends State<Scaffold2222> {
     return Scaffold(
       backgroundColor: widget._backgroundColor,
 
+      /// app bar in case an appBar widget is provided
+      appBar: widget.appBar,
+
       /// add bottom navigation if enabled
       bottomNavigationBar: widget._showBottomNavigationBar
           ? Lab2222BottomNavigationBar(
@@ -135,12 +132,13 @@ class _Scaffold2222State extends State<Scaffold2222> {
             )
           : null,
 
-      appBar: widget.appBar,
-
-      /// wrap everything in a gesture detector to move across cities
+      /// content of screen encapsulated in a gesture detector
+      /// so content can have an overlay if required
       body: Stack(
         children: [
-          /// main content
+          /// main content wrapped in a gesture detector to move across cities
+          /// apply [HitTestBehavior.opaque] so the gestures are detected in
+          /// any part of the screen
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onPanUpdate: (details) {
@@ -165,9 +163,13 @@ class _Scaffold2222State extends State<Scaffold2222> {
           ),
 
           /// decorations on top of the main content
-          if (widget._canShowNavigationGuides == true &&
-              _showUserGuideService.showUserGuide == true)
-            const UserGuideScreen(),
+          if (showGuides)
+            UserGuideScreen(
+              dismissGuide: () async {
+                _showUserGuideService.dismissGuide();
+                setState(() => showGuides = false);
+              },
+            ),
         ],
       ),
     );

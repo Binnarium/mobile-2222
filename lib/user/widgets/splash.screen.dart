@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
+import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/user/services/user.service.dart';
@@ -58,8 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /// feeds the provider with local data
-    _showUserGuideService.displayGuide();
+    _showUserGuideService.load();
     //tamaño de la pantalla
     return Scaffold2222.empty(
       backgroundColor: Colors2222.red,

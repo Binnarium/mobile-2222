@@ -54,7 +54,7 @@ class _ArgumentIdeasScreenState extends State<ArgumentIdeasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold2222(
+    return Scaffold2222.city(
       city: widget.city,
       backgrounds: const [BackgroundDecorationStyle.topRight],
       route: ArgumentIdeasScreen.route,
