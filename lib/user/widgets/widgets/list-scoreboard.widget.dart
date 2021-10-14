@@ -20,7 +20,7 @@ class ListScoreboardPlayers extends ListTile {
             title: Text(
               participant.displayName,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     color: Colors2222.white,
                   ),
             ),

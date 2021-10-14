@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
@@ -24,7 +24,7 @@ class DetailedVideoScreen extends StatelessWidget {
   /// params
   static const String route = '/detailed-video';
 
-  final VideoDto video;
+  final VideoModel video;
 
   final VideoPlayerController controller;
 
@@ -47,7 +47,7 @@ class Lab2222VideoPlayer extends StatefulWidget {
   }) : super(key: key);
 
   final VideoPlayerController controller;
-  final VideoDto videoDto;
+  final VideoModel videoDto;
 
   @override
   State<Lab2222VideoPlayer> createState() => _Lab2222VideoPlayerState();

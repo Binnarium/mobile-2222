@@ -1,6 +1,6 @@
 import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:rxdart/subjects.dart';
 
 class CurrentAudioProvider {

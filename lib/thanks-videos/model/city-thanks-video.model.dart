@@ -1,9 +1,9 @@
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 class CityThanksVideoModel {
   CityThanksVideoModel.fromMap(Map<String, dynamic> payload)
-      : video = VideoDto.fromMap(
+      : video = VideoModel.fromMap(
             payload['video'] as Map<String, dynamic>? ?? <String, dynamic>{});
 
-  final VideoDto video;
+  final VideoModel video;
 }

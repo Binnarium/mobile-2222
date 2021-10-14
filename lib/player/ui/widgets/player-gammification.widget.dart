@@ -30,13 +30,14 @@ PlayerGamification extends StatelessWidget {
         /// player's gammification
         GamificationWidget(
           numberOfMedals: numberProactivity,
-          label: 'Nivel de Proactividad'.toUpperCase(),
+          label: 'Nivel de Proactivi dad'.toUpperCase(),
           image: (numberProactivity < 10)
               ? const MedalImage.redCoin()
               : (numberProactivity < 20)
                   ? const MedalImage.yellowCoin()
                   : const MedalImage.greenCoin(),
           numberColor: Colors2222.black,
+          button: true,
         ),
 
         /// audio

@@ -1,4 +1,4 @@
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
 class ProjectScreenModel {
   final String activity;

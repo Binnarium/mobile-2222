@@ -5,7 +5,7 @@ import 'package:lab_movil_2222/chat/chats/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/personal-chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
+import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';

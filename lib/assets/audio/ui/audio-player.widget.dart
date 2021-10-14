@@ -6,7 +6,7 @@ import 'package:lab_movil_2222/assets/audio/model/audio-player.extension.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-controls.widget.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-slider.widget.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -65,7 +65,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   void dispose() {
     print('Entrando en dispose');
     _currentPlayerSub?.cancel();
-    audioProvider.close();
+    // audioProvider.close();
     print('podcast detenido');
     super.dispose();
   }

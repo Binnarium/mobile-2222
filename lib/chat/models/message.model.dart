@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
 
 /// base model of a chat message
 abstract class MessageModel {
@@ -66,8 +67,8 @@ abstract class MessageModel {
     }
 
     if (kind == 'MESSAGE#VIDEO') {
-      final VideoDto video =
-          VideoDto.fromMap(data['asset'] as Map<String, dynamic>);
+      final VideoModel video =
+          VideoModel.fromMap(data['asset'] as Map<String, dynamic>);
       return VideoMessageModel(
         id: id,
         senderId: senderId,
@@ -132,7 +133,7 @@ class VideoMessageModel extends MessageModel {
     required String senderId,
     required DateTime sendedDate,
     required ChatParticipantModel sender,
-    required VideoDto video,
+    required VideoModel video,
     bool sendedByMe = false,
   }) : super(
           sendedByMe: sendedByMe,

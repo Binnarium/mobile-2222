@@ -1,10 +1,10 @@
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 class WelcomeDto {
   final String pageTitle;
   final String profundityText;
   final String workloadText;
-  final VideoDto welcomeVideo;
+  final VideoModel welcomeVideo;
 
   // ignore: sort_constructors_first
   WelcomeDto.fromMap(Map<String, dynamic> payload)
@@ -14,5 +14,5 @@ class WelcomeDto {
         workloadText = payload['workloadText'] as String? ??
             'No hay texto de carga horaria',
         welcomeVideo =
-            VideoDto.fromMap(payload['welcomeVideo'] as Map<String, dynamic>);
+            VideoModel.fromMap(payload['welcomeVideo'] as Map<String, dynamic>);
 }

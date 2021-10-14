@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
-import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
+import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/list-chats-folders.service.dart';
@@ -70,9 +70,7 @@ class AppProvider extends MultiProvider {
             /// player services
             Provider(create: (_) => CurrentPlayerService()),
             Provider(create: (_) => CurrentAudioProvider()),
-            Provider(create: (_) => CurrentVideoProvider()),
             Provider(create: (_) => UploadImageService()),
-            Provider(create: (_) => UploadVideoService()),
             Provider(create: (_) => GetContributionExplanationService()),
             Provider(create: (_) => GetClubhouseExplanationService()),
             Provider(create: (_) => LoadMonsterService()),
@@ -129,6 +127,12 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => ListChatsFoldersService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
+
+            /// video assets services
+            ...[
+              Provider(create: (_) => LoadBetterVideoService()),
+              Provider(create: (_) => UploadVideoService()),
+            ],
           ],
 
           /// main application

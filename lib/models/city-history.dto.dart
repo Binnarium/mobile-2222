@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
 class CityHistoryDto {
   CityHistoryDto.fromMap(Map<String, dynamic> payload)
