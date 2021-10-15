@@ -49,18 +49,6 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
   }
 
   @override
-  void activate() {
-    super.activate();
-    widget.controller.play();
-  }
-
-  @override
-  void deactivate() {
-    widget.controller.pause();
-    super.deactivate();
-  }
-
-  @override
   void dispose() {
     widget.controller.removeListener(_videoCompletedListener);
     widget.controller.dispose();

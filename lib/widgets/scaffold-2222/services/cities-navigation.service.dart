@@ -281,11 +281,8 @@ class CityNavigator {
             ),
           ),
 
-      
         /// next Phase screen
-        if (enabledPagesDto.nextPhaseVideo &&
-            CurrentPlayerService.currentPlayer?.courseStatus ==
-                'COURSE#CONTINUE_NEXT_PHASE')
+        if (enabledPagesDto.nextPhaseVideo)
           ScaffoldRouteBuilder(
             route: NextPhaseVideoScreen.route,
             builder: (context) => Navigator.pushNamed(
