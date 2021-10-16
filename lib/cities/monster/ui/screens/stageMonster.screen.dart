@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/cities/monster/model/monster.model.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
@@ -98,7 +97,8 @@ class MonsterImage extends StatelessWidget {
             vertical: constraints.maxHeight * 0.08,
           ),
           child: FadeInImage(
-            placeholder: getAppLogo(AppImage.loadingLogo),
+            placeholder:
+                const AssetImage('assets/loaders/monster-placeholder.png'),
             fit: BoxFit.contain,
             width: double.infinity,
             height: double.infinity,
