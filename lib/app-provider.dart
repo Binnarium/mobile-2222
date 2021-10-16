@@ -19,11 +19,11 @@ import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/player/gamification-explanation/services/gamification-explanation.service.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
-import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
@@ -81,7 +81,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => WelcomeService()),
             Provider(create: (_) => LoadStartVideoService()),
             Provider(create: (_) => LoadTeamService()),
-            Provider(create: (_) => GetPointsExplanationService()),
+            Provider(create: (_) => GamificationExplanationService()),
             Provider(create: (_) => CitiesService()),
             Provider(create: (ctx) => CitiesMapPositionsService(ctx)),
             Provider(create: (ctx) => ListPlayerOfGroupService(ctx)),

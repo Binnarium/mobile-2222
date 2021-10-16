@@ -1,15 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/player/gamification-explanation/uid/gamification-text-explanation.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
-
 import 'package:lab_movil_2222/player/ui/widgets/player-course-status.dart';
-import 'package:lab_movil_2222/player/ui/widgets/player-gammification.widget.dart';
-import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
-import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
-import 'package:lab_movil_2222/points-explanation/uid/widgets/points-explanation.widget.dart';
+import 'package:lab_movil_2222/player/ui/widgets/player-gamification.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/avatar-image.widget.dart';
 import 'package:lab_movil_2222/user/widgets/widgets/sign-out-button.dart';
@@ -28,11 +25,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   StreamSubscription? _loadPlayerSub;
-  StreamSubscription? _explanationSub;
 
+  /// current signed in player information
   PlayerModel? player;
-  List<PlayerModel>? players;
-  PointsExplanationModel? _pointsExplanation;
 
   CurrentPlayerService get _currentPlayerService =>
       Provider.of<CurrentPlayerService>(context, listen: false);
@@ -47,25 +42,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         this.player = player;
       });
     });
-
-    final GetPointsExplanationService loadExplanationService =
-        Provider.of<GetPointsExplanationService>(context, listen: false);
-
-    _explanationSub = loadExplanationService.explanation$().listen(
-      (pointsExplanationModel) {
-        if (mounted) {
-          setState(() {
-            _pointsExplanation = pointsExplanationModel;
-          });
-        }
-      },
-    );
   }
 
   @override
   void dispose() {
     _loadPlayerSub?.cancel();
-    _explanationSub?.cancel();
     super.dispose();
   }
 
@@ -76,8 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold2222.navigation(
       activePage: Lab2222NavigationBarPages.profile,
       body: BackgroundDecoration(
-        // ignore: prefer_const_literals_to_create_immutables
-        backgroundDecorationsStyles: [
+        backgroundDecorationsStyles: const [
           BackgroundDecorationStyle.path,
           BackgroundDecorationStyle.topLeft
         ],
@@ -90,96 +70,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const Center(child: AppLoading())
             else ...[
               /// title
-              Padding(
-                padding: const EdgeInsets.only(bottom: 32),
-                child: Text(
-                  'Mi viaje al día'.toUpperCase(),
-                  style: Theme.of(context).textTheme.headline3,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              ProfileScreenTitle(context: context),
+
+              const SizedBox(height: 32),
 
               /// player profile
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 64,
-                ),
-                child: Row(
-                  children: [
-                    /// player icon
-                    SizedBox(
-                      height: 80,
-                      child: Stack(children: [
-                        AvatarImage(image: player?.avatarImage),
-                        Positioned(
-                          bottom: -6,
-                          right: -14,
+              Row(
+                children: [
+                  /// player icon
+                  SizedBox(
+                    height: 80,
+                    child: Stack(children: [
+                      AvatarImage(image: player?.avatarImage),
+                      Positioned(
+                        bottom: -6,
+                        right: -14,
 
-                          /// implements the widget to change the avatar
-                          /// logic is implemented on the button
-                          child: ChangeAvatarButton(
-                            player: player!,
-                          ),
+                        /// implements the widget to change the avatar
+                        /// logic is implemented on the button
+                        child: ChangeAvatarButton(
+                          player: player!,
                         ),
-                      ]),
-                    ),
-
-                    /// spacing between picture and information
-                    const SizedBox(width: 10),
-
-                    /// page content
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /// player name
-                          Text(
-                            player!.displayName,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-
-                          /// spacing
-                          const SizedBox(height: 4),
-
-                          /// email
-                          Text(
-                            player!.email,
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ],
                       ),
+                    ]),
+                  ),
+
+                  /// spacing between picture and information
+                  const SizedBox(width: 10),
+
+                  /// page content
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// player name
+                        Text(
+                          player!.displayName,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+
+                        /// spacing
+                        const SizedBox(height: 4),
+
+                        /// email
+                        Text(
+                          player!.email,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+
+              const SizedBox(height: 64),
 
               /// widget that contains a list of the player's gammification
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: PlayerGamification(
                   player: player!,
-                  pointsExplanation: _pointsExplanation,
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(bottom: 25),
-                child: ApproveText(
-                  pointsExplanation: _pointsExplanation,
-                ),
+              GamificationTextExplanation(),
+              const SizedBox(height: 25),
+              PlayerCourseStatus(
+                status: player!.courseStatus,
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 25),
-                child: PlayerCourseStatus(
-                  status: player!.courseStatus,
-                ),
-              ),
-              
             ],
+
+            /// spacer
+            const SizedBox(height: 25),
+
+            /// bottom to close current session
+            /// always to be displayed even if player profile is never loaded
             const LogOutButton(),
           ],
         ),
       ),
     );
   }
+}
+
+class ProfileScreenTitle extends Text {
+  ProfileScreenTitle({
+    Key? key,
+    required BuildContext context,
+  }) : super(
+          'Mi viaje al día'.toUpperCase(),
+          key: key,
+          style: Theme.of(context).textTheme.headline3,
+          textAlign: TextAlign.center,
+        );
 }

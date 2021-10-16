@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
+import 'package:lab_movil_2222/player/gamification-explanation/uid/aprove-audio-explanation.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
 import 'package:lab_movil_2222/player/ui/widgets/gamification-item.widget.dart';
-import 'package:lab_movil_2222/points-explanation/models/points-explanation.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 /// widget that contains a list of the player's gamification
 /// - [player] is required to avoid the use of the user stream service
-class 
-PlayerGamification extends StatelessWidget {
+class PlayerGamification extends StatelessWidget {
   const PlayerGamification({
     Key? key,
     required this.player,
-    required this.pointsExplanation,
   }) : super(key: key);
 
   final PlayerModel player;
-  final PointsExplanationModel? pointsExplanation;
 
   @override
   Widget build(BuildContext context) {
@@ -27,33 +24,29 @@ PlayerGamification extends StatelessWidget {
 
     return Column(
       children: [
-        /// player's gammification
-        GamificationWidget(
+        /// player's gamification
+        ObtainedMedalsCardWidget(
           numberOfMedals: numberProactivity,
-          label: 'Nivel de Proactivi dad'.toUpperCase(),
+          label: 'Nivel de Proactividad'.toUpperCase(),
           image: (numberProactivity < 10)
               ? const MedalImage.redCoin()
               : (numberProactivity < 20)
                   ? const MedalImage.yellowCoin()
                   : const MedalImage.greenCoin(),
           numberColor: Colors2222.black,
-          button: true,
+          actionCallback: () =>
+              Navigator.pushNamed(context, ScoreboardPlayersScreen.route),
+          actionLabel: 'Tabla de Puntuaciones',
         ),
-
-        /// audio
-        if (pointsExplanation?.audio != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 25.0),
-            child: AudioPlayerWidget(audio: pointsExplanation!.audio!),
-          ),
-
+        const SizedBox(height: 25),
+        AprobeAudioExplanation(),
         Divider(
           thickness: 2,
           height: 75,
           color: Colors2222.white.withOpacity(0.5),
         ),
 
-        GamificationWidget(
+        ObtainedMedalsCardWidget(
           numberOfMedals: player.contributionsAwards.length,
           label: 'Manifiesto -\nWiki'.toUpperCase(),
           image: const MedalImage.contribution(),
@@ -62,7 +55,7 @@ PlayerGamification extends StatelessWidget {
 
         const SizedBox(height: 25),
 
-        GamificationWidget(
+        ObtainedMedalsCardWidget(
           numberOfMedals: player.clubhouseAwards.length,
           label: 'Eventos Clubhouse'.toUpperCase(),
           image: const MedalImage.clubhouse(),
@@ -70,7 +63,7 @@ PlayerGamification extends StatelessWidget {
         ),
         const SizedBox(height: 25),
 
-        GamificationWidget(
+        ObtainedMedalsCardWidget(
           numberOfMedals: player.projectAwards.length,
           label: 'Proyecto \nPersonal'.toUpperCase(),
           image: const MedalImage.project(),
@@ -78,7 +71,7 @@ PlayerGamification extends StatelessWidget {
         ),
         const SizedBox(height: 25),
 
-        GamificationWidget(
+        ObtainedMedalsCardWidget(
           numberOfMedals: player.maratonAwards.length,
           label: 'Maratón \nFinal'.toUpperCase(),
           image: const MedalImage.marathon(),

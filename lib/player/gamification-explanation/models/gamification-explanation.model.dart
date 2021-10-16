@@ -1,7 +1,7 @@
 import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
-class PointsExplanationModel {
-  PointsExplanationModel.fromMap(Map<String, dynamic> data)
+class GamificationExplanationModel {
+  GamificationExplanationModel.fromMap(Map<String, dynamic> data)
       : explanation = data['explanation'] as String? ?? '',
         audio = data['audio']?['url'] == null
             ? null
