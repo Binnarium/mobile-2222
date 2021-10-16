@@ -50,7 +50,7 @@ class ShowUserGuideService {
       final SharedPreferences preferences =
           await SharedPreferences.getInstance();
 
-      await preferences.setBool('displayGuide', true);
+      await preferences.setBool('displayGuide', false);
     } finally {
       _displayGuide = false;
     }
