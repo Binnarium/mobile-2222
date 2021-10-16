@@ -98,7 +98,7 @@ class MonsterImage extends StatelessWidget {
           ),
           child: FadeInImage(
             placeholder:
-                const AssetImage('assets/loaders/monster-placeholder.png'),
+                const AssetImage('assets/loaders/monster-placeholder.gif'),
             fit: BoxFit.contain,
             width: double.infinity,
             height: double.infinity,
