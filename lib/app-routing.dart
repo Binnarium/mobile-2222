@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
+import 'package:lab_movil_2222/authentication/register/register.screen.dart';
+import 'package:lab_movil_2222/authentication/widgets/login.screen.dart';
+import 'package:lab_movil_2222/authentication/widgets/splash.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/personal-chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
@@ -34,9 +37,6 @@ import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/game-over.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
-import 'package:lab_movil_2222/user/widgets/register.screen.dart';
-import 'package:lab_movil_2222/user/widgets/splash.screen.dart';
 import 'package:provider/provider.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
@@ -74,11 +74,11 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
 
             if (settings.name == LoginScreen.route) {
-              return const LoginScreen();
+              return LoginScreen();
             }
 
             if (settings.name == RegisterScreen.route) {
-              return RegisterScreen();
+              return const RegisterScreen();
             }
 
             if (settings.name == HomeScreen.route) {

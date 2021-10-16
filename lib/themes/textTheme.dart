@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-/// Achivo que contiene los themes y fontstyles
-/// Font Korolev
+/// Primary app font
 class KorolevFont extends TextTheme {
   static const String fontFamily = 'Korolev';
 
@@ -48,17 +47,19 @@ class KorolevFont extends TextTheme {
             fontWeight: FontWeight.w700,
           ),
           subtitle1: TextStyle(
-              fontFamily: fontFamily,
-              fontSize: 16,
-              color: textColor,
-              fontWeight: FontWeight.w700,
-              height: 1.1),
+            fontFamily: fontFamily,
+            fontSize: 16,
+            color: textColor,
+            fontWeight: FontWeight.w700,
+            height: 1.1,
+          ),
           subtitle2: TextStyle(
-              fontFamily: fontFamily,
-              fontSize: 14,
-              color: textColor,
-              fontWeight: FontWeight.w700,
-              height: 1.1),
+            fontFamily: fontFamily,
+            fontSize: 14,
+            color: textColor,
+            fontWeight: FontWeight.w700,
+            height: 1.1,
+          ),
           bodyText1: TextStyle(
             fontFamily: fontFamily,
             fontSize: 16,
@@ -89,7 +90,7 @@ class KorolevFont extends TextTheme {
           ),
           overline: TextStyle(
             fontFamily: fontFamily,
-            fontSize: 10,
+            fontSize: 12,
             color: textColor,
             fontWeight: FontWeight.w500,
             height: 1.2,

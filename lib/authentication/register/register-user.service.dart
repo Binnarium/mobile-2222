@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/authentication/models/registered-player.model.dart';
+import 'package:lab_movil_2222/authentication/register/register-form.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/user/models/register-form.model.dart';
-import 'package:lab_movil_2222/user/models/registered-player.model.dart';
 
 enum RegisterErrorCode {
   notInscribed,
   emailAlreadyInUse,
   notCreated,
   weakPassword,
+  invalidForm,
   other,
 }
 
@@ -19,7 +19,7 @@ class RegisterException implements Exception {
 }
 
 class RegisterService {
-  RegisterService(BuildContext context)
+  RegisterService()
       : _fAuth = FirebaseAuth.instance,
         _fFirestore = FirebaseFirestore.instance;
 
@@ -30,18 +30,23 @@ class RegisterService {
   ///
   /// A [RegisterException] maybe thrown
   Future<PlayerModel> register(RegisterFormModel formModel) async {
+    if (formModel.email == null || formModel.password == null) {
+      throw RegisterException(RegisterErrorCode.invalidForm);
+    }
+
     /// get player inscription information
     final PlayerInscription playerInscribed =
-        await _getUserInscription(formModel.email);
+        await _getUserInscription(formModel.email!);
 
     /// create account
-    final User user = await _createAccount(formModel.email, formModel.password);
+    final User user =
+        await _createAccount(formModel.email!, formModel.password!);
 
     /// create player
     final Map<String, dynamic> newPlayerMap = createNewPlayerMap(
       uid: user.uid,
       displayName: '${playerInscribed.name} ${playerInscribed.lastName}',
-      email: formModel.email,
+      email: formModel.email!,
     );
 
     final PlayerModel newPlayer = await _createPlayer(user.uid, newPlayerMap);

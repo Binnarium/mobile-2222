@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
-import 'package:lab_movil_2222/user/widgets/register.screen.dart';
+import 'package:lab_movil_2222/authentication/register/register.screen.dart';
+import 'package:lab_movil_2222/authentication/widgets/login.screen.dart';
 
 /// Snackbar that is used to inform the user the state of the login function
 class AuthenticationSnackbar extends SnackBar {
@@ -103,5 +103,13 @@ class AuthenticationSnackbar extends SnackBar {
   }) : super(
           key: key,
           content: Text('Bienvenido $displayName'),
+        );
+
+  /// show invalid form values where provided
+  const AuthenticationSnackbar.invalidForm({
+    Key? key,
+  }) : super(
+          key: key,
+          content: const Text('Los datos del formulario son invalidos'),
         );
 }

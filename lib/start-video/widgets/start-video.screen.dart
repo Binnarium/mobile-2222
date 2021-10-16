@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
+import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/start-video/model/start-video.model.dart';
 import 'package:lab_movil_2222/start-video/services/load-start-video.service.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -73,6 +73,6 @@ class _StartVideoScreenState extends State<StartVideoScreen> {
   }
 
   void navigateNextPage(BuildContext context) {
-    Navigator.pushReplacementNamed(context, LoginScreen.route);
+    Navigator.pushReplacementNamed(context, RegisterScreen.route);
   }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/app-provider.dart';
 import 'package:lab_movil_2222/app-routing.dart';
+import 'package:lab_movil_2222/authentication/widgets/splash.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
-import 'package:lab_movil_2222/user/widgets/splash.screen.dart';
 
 // ignore: use_key_in_widget_constructors
 class App2222 extends StatelessWidget {

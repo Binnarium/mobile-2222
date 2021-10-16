@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/authentication/models/login-form.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/user/models/login-form.model.dart';
 
 enum LoginErrorCode {
   playerNotFound,
@@ -10,6 +9,7 @@ enum LoginErrorCode {
   userNotFound,
   wrongPassword,
   invalidEmail,
+  invalidForm,
   other,
 }
 
@@ -19,7 +19,7 @@ class LoginException implements Exception {
 }
 
 class LoginService {
-  LoginService(BuildContext context)
+  LoginService()
       : _fAuth = FirebaseAuth.instance,
         _fFirestore = FirebaseFirestore.instance;
 
@@ -27,9 +27,13 @@ class LoginService {
   final FirebaseFirestore _fFirestore;
 
   Future<PlayerModel> login(LoginFormModel formModel) async {
+    if (formModel.email == null || formModel.password == null) {
+      throw LoginException(LoginErrorCode.invalidForm);
+    }
+
     final User user = await _signIn(
-      formModel.email,
-      formModel.password,
+      formModel.email!,
+      formModel.password!,
     );
 
     final payload = await _fFirestore.collection('players').doc(user.uid).get();

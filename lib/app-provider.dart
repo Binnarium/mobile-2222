@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
+import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
+import 'package:lab_movil_2222/authentication/services/login-user.service.dart';
+import 'package:lab_movil_2222/authentication/services/sign-out.service.dart';
+import 'package:lab_movil_2222/authentication/services/user.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/list-chats-folders.service.dart';
@@ -37,10 +41,6 @@ import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/start-video/services/load-start-video.service.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
 import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.dart';
-import 'package:lab_movil_2222/user/services/login-user.service.dart';
-import 'package:lab_movil_2222/user/services/register-user.service.dart';
-import 'package:lab_movil_2222/user/services/sign-out.service.dart';
-import 'package:lab_movil_2222/user/services/user.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
 import 'package:provider/provider.dart';
@@ -63,8 +63,8 @@ class AppProvider extends MultiProvider {
             /// user services
             Provider(create: (_) => IsUserSignInService()),
             Provider(create: (ctx) => SignOutService(ctx)),
-            Provider(create: (ctx) => RegisterService(ctx)),
-            Provider(create: (ctx) => LoginService(ctx)),
+            Provider(create: (ctx) => RegisterService()),
+            Provider(create: (ctx) => LoginService()),
             Provider(create: (_) => ConnectivityCheckService()),
 
             /// player services

@@ -82,7 +82,7 @@ class ObtainedMedalsCardWidget extends StatelessWidget {
                 const SizedBox(width: 8),
 
                 /// number of medals
-                _GamificationNumber(
+                GamificationNumber(
                   number: numberOfMedals,
                   color: numberColor,
                 ),
@@ -123,11 +123,11 @@ class ObtainedMedalsCardWidget extends StatelessWidget {
   }
 }
 
-class _GamificationNumber extends StatelessWidget {
+class GamificationNumber extends StatelessWidget {
   final int number;
   final Color color;
   // ignore: sort_constructors_first
-  const _GamificationNumber({
+  const GamificationNumber({
     Key? key,
     required this.number,
     required this.color,
