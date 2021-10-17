@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/authentication/services/sign-out.service.dart';
-import 'package:lab_movil_2222/authentication/widgets/splash.screen.dart';
+import 'package:lab_movil_2222/authentication/sign-out/sign-out.service.dart';
+import 'package:lab_movil_2222/authentication/splash/splash.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 

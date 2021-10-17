@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
-import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/login/login.screen.dart';
-import 'package:lab_movil_2222/authentication/widgets/splash.screen.dart';
+import 'package:lab_movil_2222/authentication/register/register.screen.dart';
+import 'package:lab_movil_2222/authentication/splash/splash.screen.dart';
+import 'package:lab_movil_2222/authentication/start-video/start-video.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/personal-chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
@@ -33,7 +34,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
-import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/game-over.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
@@ -63,7 +63,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
 
             if (settings.name == StartVideoScreen.route)
-              return StartVideoScreen();
+              return const StartVideoScreen();
 
             if (settings.name == WelcomeScreen.route) {
               return WelcomeScreen();

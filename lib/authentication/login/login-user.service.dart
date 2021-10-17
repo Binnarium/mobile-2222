@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab_movil_2222/authentication/models/login-form.model.dart';
+import 'package:lab_movil_2222/authentication/login/login-form.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 
 enum LoginErrorCode {

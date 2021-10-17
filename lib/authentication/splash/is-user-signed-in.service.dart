@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 /// access authenticated user information, and credentials
-class IsUserSignInService {
-  IsUserSignInService() : _auth = FirebaseAuth.instance;
+class IsUserSignedInService {
+  IsUserSignedInService() : _auth = FirebaseAuth.instance;
 
   final FirebaseAuth _auth;
 

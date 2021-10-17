@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab_movil_2222/authentication/models/registered-player.model.dart';
 import 'package:lab_movil_2222/authentication/register/register-form.model.dart';
+import 'package:lab_movil_2222/authentication/register/registered-player.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 
 enum RegisterErrorCode {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/login/login.screen.dart';
+import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 
 /// Snackbar that is used to inform the user the state of the login function
 class AuthenticationSnackbar extends SnackBar {

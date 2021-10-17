@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/authentication/widgets/widgets/avatar-image.widget.dart';
-import 'package:lab_movil_2222/authentication/widgets/widgets/sign-out-button.dart';
+import 'package:lab_movil_2222/authentication/sign-out/sign-out-button.dart';
 import 'package:lab_movil_2222/player/gamification-explanation/uid/gamification-text-explanation.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
+import 'package:lab_movil_2222/player/ui/widgets/avatar-image.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/changeAvatarButton.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-course-status.dart';
 import 'package:lab_movil_2222/player/ui/widgets/player-gamification.widget.dart';

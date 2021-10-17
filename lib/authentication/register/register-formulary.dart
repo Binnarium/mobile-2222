@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/authentication/login/login.screen.dart';
 import 'package:lab_movil_2222/authentication/register/register-form.model.dart';
 import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
-import 'package:lab_movil_2222/authentication/widgets/widgets/authentication-snackbar.dart';
+import 'package:lab_movil_2222/authentication/widgets/authentication-snackbar.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/shared/forms/forms-validators.dart';

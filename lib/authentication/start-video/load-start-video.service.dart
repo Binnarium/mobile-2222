@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/start-video/model/start-video.model.dart';
+import 'package:lab_movil_2222/authentication/start-video/start-video.model.dart';
 
 class LoadStartVideoService {
   LoadStartVideoService() : _firestore = FirebaseFirestore.instance;

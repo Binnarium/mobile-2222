@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
-import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
 import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
-import 'package:lab_movil_2222/authentication/services/sign-out.service.dart';
-import 'package:lab_movil_2222/authentication/services/user.service.dart';
+import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
+import 'package:lab_movil_2222/authentication/sign-out/sign-out.service.dart';
+import 'package:lab_movil_2222/authentication/splash/is-user-signed-in.service.dart';
+import 'package:lab_movil_2222/authentication/start-video/load-start-video.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/list-chats-folders.service.dart';
@@ -38,7 +39,6 @@ import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
 import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
-import 'package:lab_movil_2222/start-video/services/load-start-video.service.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
 import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
@@ -61,7 +61,7 @@ class AppProvider extends MultiProvider {
   }) : super(
           providers: [
             /// user services
-            Provider(create: (_) => IsUserSignInService()),
+            Provider(create: (_) => IsUserSignedInService()),
             Provider(create: (ctx) => SignOutService(ctx)),
             Provider(create: (ctx) => RegisterService()),
             Provider(create: (ctx) => LoginService()),

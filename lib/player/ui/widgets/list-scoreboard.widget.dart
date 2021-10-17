@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/authentication/widgets/widgets/avatar-image.widget.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/ui/widgets/avatar-image.widget.dart';
 import 'package:lab_movil_2222/player/ui/widgets/gamification-item.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
