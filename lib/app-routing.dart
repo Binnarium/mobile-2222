@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/authentication/register/register.screen.dart';
-import 'package:lab_movil_2222/authentication/widgets/login.screen.dart';
+import 'package:lab_movil_2222/authentication/login/login.screen.dart';
 import 'package:lab_movil_2222/authentication/widgets/splash.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/chats/ui/screens/personal-chats.screen.dart';

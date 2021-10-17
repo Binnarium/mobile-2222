@@ -3,7 +3,7 @@ import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
 import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
-import 'package:lab_movil_2222/authentication/services/login-user.service.dart';
+import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
 import 'package:lab_movil_2222/authentication/services/sign-out.service.dart';
 import 'package:lab_movil_2222/authentication/services/user.service.dart';
 import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';

@@ -68,9 +68,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             /// app logo
             Center(
-              child: AppLogo(
-                kind: AppImage.defaultAppLogo,
-                width: min(350, size.width * 0.6),
+              child: Hero(
+                tag: 'app-logo',
+                child: AppLogo(
+                  kind: AppImage.defaultAppLogo,
+                  width: min(350, size.width * 0.6),
+                ),
               ),
             ),
 
