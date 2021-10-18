@@ -8,8 +8,8 @@ import 'package:lab_movil_2222/themes/colors.dart';
 /// Depending on the status this widget will display
 /// - [CourseStatus.notStarted] message with the course is next to start
 /// - [CourseStatus.inProgress] remaining days til the course finalized, of course finalized
-/// - [CourseStatus.continueNextPhase] finalized course and message of having approved the course
-/// - [CourseStatus.canNotContinueNextPhase] finalized course with message not cant continue next phase
+/// - [CourseStatus.approvedContinueNextPhaseWithContentAccess] finalized course and message of having approved the course
+/// - [CourseStatus.approvedCanNotContinueNextPhaseNoContentAccess] finalized course with message not cant continue next phase
 class PlayerCourseStatus extends StatelessWidget {
   const PlayerCourseStatus({
     Key? key,
@@ -25,15 +25,23 @@ class PlayerCourseStatus extends StatelessWidget {
       return const Center(
           child:
               Text('El curso aún no ha empezado', textAlign: TextAlign.center));
-    if (status == CourseStatus.continueNextPhase)
+    if ([
+      CourseStatus.approvedContinueNextPhaseWithContentAccess,
+      CourseStatus.approvedCanContinueNextPhaseNoContentAccess
+    ].contains(status))
       return const Center(
           child: Text('Continuas a la siguiente fase de los 200',
               textAlign: TextAlign.center));
-    if (status == CourseStatus.canNotContinueNextPhase)
+    if (status == CourseStatus.approvedCanNotContinueNextPhase)
       return const Center(
         child: Text(
-            'Muchas gracias por participar del viaje de los 2000, pero no has aprobado para continuar a la siguiente fase',
-            textAlign: TextAlign.center),
+          'Aprobaste el curso, pronto recibiras tu certificado',
+          textAlign: TextAlign.center,
+        ),
+      );
+    if (status == CourseStatus.notApproved)
+      return const Center(
+        child: Text('No has aprobado el curso', textAlign: TextAlign.center),
       );
     return const _DaysCounter();
   }

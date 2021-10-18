@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/player/models/course-status.enum.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
+import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
@@ -71,10 +75,7 @@ class CityMapButton extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 child: InkWell(
                   splashColor: city.color.withOpacity(0.5),
-                  onTap: () {
-                    final route = CityNavigator.getFirsScreenOfCity(city);
-                    route.builder(context);
-                  },
+                  onTap: () => _accessCourse(context),
                   child: Container(),
                 ),
               ),
@@ -97,6 +98,60 @@ class CityMapButton extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  /// when postulants has access let them access to the city
+  /// otherwise show them a explanation of what to do
+  /// or where to check their results
+  void _accessCourse(BuildContext context) {
+    final PlayerModel? currentPlayer = CurrentPlayerService.currentPlayer;
+
+    /// let them in
+    if ([
+      CourseStatus.inProgress,
+      CourseStatus.approvedContinueNextPhaseWithContentAccess
+    ].contains(currentPlayer?.courseStatus)) {
+      final route = CityNavigator.getFirsScreenOfCity(city);
+      route.builder(context);
+      return;
+    }
+
+    /// show them course has not started yet
+    if (currentPlayer?.courseStatus == CourseStatus.notStarted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('El viaje aún no ha comenzado.'),
+        ),
+      );
+      return;
+    }
+
+    /// course has concluded
+    if ([
+      CourseStatus.notApproved,
+      CourseStatus.approvedCanContinueNextPhaseNoContentAccess,
+      CourseStatus.approvedCanNotContinueNextPhase,
+    ].contains(currentPlayer?.courseStatus)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'El viaje ha finalizado, accede a tus resultados en tu perfil.',
+          ),
+          action: SnackBarAction(
+            label: 'Mi viaje al día',
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, ProfileScreen.route),
+          ),
+        ),
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Necesitas actualizar tu aplicación.'),
       ),
     );
   }

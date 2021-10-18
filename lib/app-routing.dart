@@ -35,7 +35,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart'
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
-import 'package:lab_movil_2222/thanks-videos/widgets/game-over.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
 import 'package:provider/provider.dart';
 
@@ -252,12 +251,6 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             ///Scoreboard Screen
             if (settings.name == ScoreboardPlayersScreen.route) {
               return const ScoreboardPlayersScreen();
-            }
-            if (settings.name == GameOverScreen.route) {
-              final args = settings.arguments! as GameOverScreen;
-              return GameOverScreen(
-                city: args.city,
-              );
             }
 
             if (settings.name == FinalVideoScreen.route) {

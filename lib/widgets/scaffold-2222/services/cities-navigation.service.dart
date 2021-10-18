@@ -13,7 +13,6 @@ import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -21,7 +20,6 @@ import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen
 import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
-import 'package:lab_movil_2222/thanks-videos/widgets/game-over.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
 
 class ScaffoldRouteBuilder {
@@ -289,19 +287,6 @@ class CityNavigator {
               context,
               NextPhaseVideoScreen.route,
               arguments: NextPhaseVideoScreen(city: city),
-            ),
-          ),
-
-        /// game over screen
-        if (enabledPagesDto.gameOverMessage &&
-            CurrentPlayerService.currentPlayer?.courseStatus ==
-                'COURSE#CAN_NOT_CONTINUE_NEXT_PHASE')
-          ScaffoldRouteBuilder(
-            route: GameOverScreen.route,
-            builder: (context) => Navigator.pushNamed(
-              context,
-              GameOverScreen.route,
-              arguments: GameOverScreen(city: city),
             ),
           ),
 
