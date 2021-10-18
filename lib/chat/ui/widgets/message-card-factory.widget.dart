@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
+import 'package:lab_movil_2222/shared/pipes/color.extension.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 
@@ -16,21 +17,23 @@ abstract class MessageCardFactory<T extends MessageModel>
     Key? key,
     required this.message,
     required this.deleteCallback,
-  })  : padding = const EdgeInsets.all(12),
-        decoration = BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          color: message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
-        ),
+  })  : innerPadding = const EdgeInsets.all(12),
+        borderRadius = const BorderRadius.all(Radius.circular(8)),
+        backgroundColor =
+            message.sendedByMe ? Colors2222.lightGrey : Colors2222.red,
         super(key: key);
 
   /// message to be displayed
   final T message;
 
   /// padding shared among all cards
-  final EdgeInsets padding;
+  final EdgeInsets innerPadding;
 
-  /// decoration shared among all cards
-  final BoxDecoration decoration;
+  /// main color decoration
+  final Color backgroundColor;
+
+  /// border decorations
+  final BorderRadius borderRadius;
 
   /// callback to delete a message
   final Function(MessageModel) deleteCallback;
@@ -182,16 +185,21 @@ class _TextMessageCard extends MessageCardFactory<TextMessageModel> {
 
   @override
   Widget buildCardContent(BuildContext context) {
-    return InkWell(
-      onLongPress: () => showOptionsDialog(context),
-      child: Container(
-        padding: padding,
-        decoration: decoration,
-        child: Markdown2222(
-          data: message.text!,
-          contentAlignment:
-              message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
-          textColor: message.sendedByMe ? Colors2222.black : Colors2222.white,
+    return Material(
+      borderRadius: borderRadius,
+      color: backgroundColor,
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        splashColor: backgroundColor.darken(),
+        onLongPress: () => showOptionsDialog(context),
+        child: Container(
+          padding: innerPadding,
+          child: Markdown2222(
+            data: message.text!,
+            contentAlignment:
+                message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
+            textColor: message.sendedByMe ? Colors2222.black : Colors2222.white,
+          ),
         ),
       ),
     );
@@ -212,17 +220,22 @@ class _UnsupportedMessageCard
 
   @override
   Widget buildCardContent(BuildContext context) {
-    return InkWell(
-      onLongPress: () => showOptionsDialog(context),
-      child: Container(
-        padding: padding,
-        decoration: decoration,
-        child: Markdown2222(
-          data:
-              '_Este mensaje no es soportado, actualiza tu aplicación para acceder a las últimas funcionalidades del **Lab Móvil 2222**_',
-          contentAlignment:
-              message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
-          textColor: message.sendedByMe ? Colors2222.black : Colors2222.white,
+    return Material(
+      borderRadius: borderRadius,
+      color: backgroundColor,
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        splashColor: backgroundColor.darken(),
+        onLongPress: () => showOptionsDialog(context),
+        child: Container(
+          padding: innerPadding,
+          child: Markdown2222(
+            data:
+                '_Este mensaje no es soportado, actualiza tu aplicación para acceder a las últimas funcionalidades del **Lab Móvil 2222**_',
+            contentAlignment:
+                message.sendedByMe ? WrapAlignment.end : WrapAlignment.start,
+            textColor: message.sendedByMe ? Colors2222.black : Colors2222.white,
+          ),
         ),
       ),
     );
@@ -243,17 +256,20 @@ class _DeletedMessageCard extends MessageCardFactory<DeletedMessageModel> {
 
   @override
   Widget buildCardContent(BuildContext context) {
-    return InkWell(
-      onLongPress: () => showOptionsDialog(context),
-      child: Container(
-        padding: padding,
-        decoration: decoration,
-        child: Text(
-          'Mensaje Eliminado',
-          style: Theme.of(context)
-              .textTheme
-              .caption
-              ?.apply(color: Colors2222.darkGrey, fontStyle: FontStyle.italic),
+    return Material(
+      borderRadius: borderRadius,
+      color: backgroundColor,
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        splashColor: backgroundColor.darken(),
+        onLongPress: () => showOptionsDialog(context),
+        child: Container(
+          padding: innerPadding,
+          child: Text(
+            'Mensaje Eliminado',
+            style: Theme.of(context).textTheme.caption?.apply(
+                color: Colors2222.darkGrey, fontStyle: FontStyle.italic),
+          ),
         ),
       ),
     );
@@ -274,11 +290,12 @@ class _ImageMessageCard extends MessageCardFactory<ImageMessageModel> {
 
   @override
   Widget buildCardContent(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: decoration,
-      width: double.infinity,
+    return Material(
+      borderRadius: borderRadius,
+      color: backgroundColor,
+      clipBehavior: Clip.hardEdge,
       child: InkWell(
+        splashColor: backgroundColor.darken(),
         onTap: () {
           Navigator.pushNamed(
             context,
@@ -289,10 +306,13 @@ class _ImageMessageCard extends MessageCardFactory<ImageMessageModel> {
           );
         },
         onLongPress: () => showOptionsDialog(context),
-        child: Image.network(
-          message.asset!.url,
-          height: 140,
-          fit: BoxFit.cover,
+        child: Container(
+          padding: innerPadding,
+          child: Image.network(
+            message.asset!.url,
+            height: 140,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -313,13 +333,17 @@ class _VideoMessageCard extends MessageCardFactory<VideoMessageModel> {
 
   @override
   Widget buildCardContent(BuildContext context) {
-    return InkWell(
-      onLongPress: () => showOptionsDialog(context),
-      child: Container(
-        padding: padding,
-        decoration: decoration,
-        width: double.infinity,
-        child: VideoPlayer(video: message.asset! as VideoModel),
+    return Material(
+      borderRadius: borderRadius,
+      color: backgroundColor,
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        splashColor: backgroundColor.darken(),
+        onLongPress: () => showOptionsDialog(context),
+        child: Container(
+          padding: innerPadding,
+          child: VideoPlayer(video: message.asset! as VideoModel),
+        ),
       ),
     );
   }
