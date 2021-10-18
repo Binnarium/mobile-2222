@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
 
 class DeleteMessageService {

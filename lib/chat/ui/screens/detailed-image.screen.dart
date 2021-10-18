@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 
 class DetailedImageScreen extends StatelessWidget {
   /// constructor

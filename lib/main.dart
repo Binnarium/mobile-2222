@@ -14,7 +14,12 @@ import 'package:lab_movil_2222/app-222.dart';
 ///   Made with love at binnarium, in collaboration with UTPL and
 ///   Outliers Schools.
 ///
-///   All right reserved Binnarium SAS.
+///   All right reserved Binnarium S.A.S.
+///
+///   Authors:
+///   - Bruno Esparza (Development Director)
+///   - Daniel Novillo
+///   - Jossue Larrea
 ///
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

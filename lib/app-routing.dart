@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
+import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
+import 'package:lab_movil_2222/authentication/login/login.screen.dart';
+import 'package:lab_movil_2222/authentication/register/register.screen.dart';
+import 'package:lab_movil_2222/authentication/splash/splash.screen.dart';
+import 'package:lab_movil_2222/authentication/start-video/start-video.screen.dart';
+import 'package:lab_movil_2222/chat/chats/ui/screens/chats.screen.dart';
+import 'package:lab_movil_2222/chat/chats/ui/screens/personal-chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/chats.screen.dart';
 import 'package:lab_movil_2222/chat/ui/screens/detailed-image.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/detailed-video.screen.dart';
-
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
-import 'package:lab_movil_2222/chat/ui/screens/personalChats.screen.dart';
 import 'package:lab_movil_2222/cities/activity/widgets/activities.screen.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/ui/screens/argument-ideas.screen.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/screens/add-clubhouse.screen.dart';
@@ -22,6 +25,7 @@ import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
+import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
 import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
@@ -30,13 +34,8 @@ import 'package:lab_movil_2222/screens/chapter_screens/resources.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageHistory.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.dart';
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
-import 'package:lab_movil_2222/start-video/widgets/start-video.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
-import 'package:lab_movil_2222/thanks-videos/widgets/game-over.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
-import 'package:lab_movil_2222/user/widgets/login.screen.dart';
-import 'package:lab_movil_2222/user/widgets/register.screen.dart';
-import 'package:lab_movil_2222/user/widgets/splash.screen.dart';
 import 'package:provider/provider.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
@@ -58,13 +57,12 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               print('Error al pausar podcast $e');
             }
 
-            print('called router at: ${settings.name}');
             if (settings.name == SplashScreen.route) {
               return const SplashScreen();
             }
 
             if (settings.name == StartVideoScreen.route)
-              return StartVideoScreen();
+              return const StartVideoScreen();
 
             if (settings.name == WelcomeScreen.route) {
               return WelcomeScreen();
@@ -75,11 +73,11 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
 
             if (settings.name == LoginScreen.route) {
-              return const LoginScreen();
+              return LoginScreen();
             }
 
             if (settings.name == RegisterScreen.route) {
-              return RegisterScreen();
+              return const RegisterScreen();
             }
 
             if (settings.name == HomeScreen.route) {
@@ -249,11 +247,10 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
                 city: args.city,
               );
             }
-            if (settings.name == GameOverScreen.route) {
-              final args = settings.arguments! as GameOverScreen;
-              return GameOverScreen(
-                city: args.city,
-              );
+
+            ///Scoreboard Screen
+            if (settings.name == ScoreboardPlayersScreen.route) {
+              return const ScoreboardPlayersScreen();
             }
 
             if (settings.name == FinalVideoScreen.route) {

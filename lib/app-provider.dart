@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
-import 'package:lab_movil_2222/assets/video/services/current-video.provider.dart';
-import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
+import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
+import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
+import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
+import 'package:lab_movil_2222/authentication/sign-out/sign-out.service.dart';
+import 'package:lab_movil_2222/authentication/splash/is-user-signed-in.service.dart';
+import 'package:lab_movil_2222/authentication/start-video/load-start-video.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/list-chats-folders.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/list-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/delete-message.service.dart';
-import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
-import 'package:lab_movil_2222/chat/services/list-general-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
-import 'package:lab_movil_2222/chat/services/list-personal-chats.service.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
@@ -19,11 +24,11 @@ import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/city/services/cities.service.dart';
 import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/gamification-explanation/services/gamification-explanation.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
-import 'package:lab_movil_2222/points-explanation/services/get-points-explanation.service.dart';
 import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
@@ -32,17 +37,15 @@ import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
+import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
-import 'package:lab_movil_2222/start-video/services/load-start-video.service.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
-import 'package:lab_movil_2222/user/services/login-user.service.dart';
-import 'package:lab_movil_2222/user/services/register-user.service.dart';
-import 'package:lab_movil_2222/user/services/sign-out.service.dart';
-import 'package:lab_movil_2222/user/services/user.service.dart';
+import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
-import 'chat/services/list-group-chats.service.dart';
 import 'cities/clubhouse/services/clubhouse.service.dart';
 import 'cities/final-video/services/load-final-video.service.dart';
 import 'cities/manual-video/services/load-manual-video.service.dart';
@@ -58,35 +61,37 @@ class AppProvider extends MultiProvider {
   }) : super(
           providers: [
             /// user services
-            Provider(create: (_) => IsUserSignInService()),
+            Provider(create: (_) => IsUserSignedInService()),
             Provider(create: (ctx) => SignOutService(ctx)),
-            Provider(create: (ctx) => RegisterService(ctx)),
-            Provider(create: (ctx) => LoginService(ctx)),
+            Provider(create: (ctx) => RegisterService()),
+            Provider(create: (ctx) => LoginService()),
+            Provider(create: (_) => ConnectivityCheckService()),
 
             /// player services
             Provider(create: (_) => CurrentPlayerService()),
             Provider(create: (_) => CurrentAudioProvider()),
-            Provider(create: (_) => CurrentVideoProvider()),
             Provider(create: (_) => UploadImageService()),
-            Provider(create: (_) => UploadVideoService()),
             Provider(create: (_) => GetContributionExplanationService()),
             Provider(create: (_) => GetClubhouseExplanationService()),
             Provider(create: (_) => LoadMonsterService()),
             Provider(create: (_) => UploadFileService()),
             Provider(create: (_) => SearchPlayersService()),
             Provider(create: (_) => LoadPlayerService()),
+            Provider(create: (_) => LoadPlayerScoreboardService()),
             Provider(create: (_) => WelcomeService()),
             Provider(create: (_) => LoadStartVideoService()),
             Provider(create: (_) => LoadTeamService()),
-            Provider(create: (_) => GetPointsExplanationService()),
+            Provider(create: (_) => GamificationExplanationService()),
             Provider(create: (_) => CitiesService()),
             Provider(create: (ctx) => CitiesMapPositionsService(ctx)),
             Provider(create: (ctx) => ListPlayerOfGroupService(ctx)),
 
             ///cities screens loaders
             Provider(create: (_) => LoadCityActivitiesService()),
+            Provider(create: (_) => ShowUserGuideService()),
             Provider(create: (_) => LoadFinalVideoService()),
             Provider(create: (_) => LoadManualVideoService()),
+            Provider(create: (_) => LoadThanksVideoService()),
             Provider(create: (_) => LoadMicroMesoMacroService()),
             Provider(create: (_) => LoadProjectVideoService()),
             Provider(create: (_) => LoadCityIntroductionService()),
@@ -115,14 +120,19 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => UploadProjectService(ctx)),
 
             /// chat services
+            Provider(create: (ctx) => ListChatsService(ctx)),
             Provider(create: (ctx) => SendMessagesService(ctx)),
             Provider(create: (ctx) => CreatePersonalChatService(ctx)),
             Provider(create: (ctx) => GetChatService(ctx)),
-            Provider(create: (ctx) => ListPersonalPlayerChatsService(ctx)),
-            Provider(create: (ctx) => ListGroupPlayerChatsService(ctx)),
-            Provider(create: (ctx) => ListGeneralPlayerChatsService(ctx)),
+            Provider(create: (ctx) => ListChatsFoldersService(ctx)),
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
+
+            /// video assets services
+            ...[
+              Provider(create: (_) => LoadBetterVideoService()),
+              Provider(create: (_) => UploadVideoService()),
+            ],
           ],
 
           /// main application

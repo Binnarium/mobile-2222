@@ -11,12 +11,12 @@ import 'package:lab_movil_2222/shared/widgets/content-title.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/user/widgets/widgets/listSocialNetworks.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/bottom-navigation-bar-widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: use_key_in_widget_constructors
 class WelcomeScreen extends StatefulWidget {
@@ -177,24 +177,72 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               content: loginPayload!.workloadText,
             ),
           ),
+
           ///Social Networks
-          Padding(
-            padding: const EdgeInsets.only(top: 26),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                // ignore: prefer_const_constructors
-                ListSocialNetwork(iconURL: 'facebook'),
-                // ignore: prefer_const_constructors
-                ListSocialNetwork(iconURL: 'instagram'),
-                // ignore: prefer_const_constructors
-                ListSocialNetwork(iconURL: 'twitter'),
-              ],
-            ),
+          const Padding(
+            padding: EdgeInsets.only(top: 26),
+            child: SocialNetworks(),
           ),
         ],
       ],
+    );
+  }
+}
+
+class SocialNetworks extends StatelessWidget {
+  const SocialNetworks({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      // ignore: prefer_const_literals_to_create_immutables
+      children: [
+        // ignore: prefer_const_constructors
+        _ListSocialNetwork(iconURL: 'facebook'),
+        // ignore: prefer_const_constructors
+        _ListSocialNetwork(iconURL: 'instagram'),
+        // ignore: prefer_const_constructors
+        _ListSocialNetwork(iconURL: 'twitter'),
+      ],
+    );
+  }
+}
+
+class _ListSocialNetwork extends StatelessWidget {
+  /// constructor
+  const _ListSocialNetwork({
+    Key? key,
+    required this.iconURL,
+  }) : super(key: key);
+
+  /// Name of social network
+  final String iconURL;
+  static const String FACEBOOK_URL = 'https://www.facebook.com/Labmovil2222/';
+  static const String INSTAGRAM_URL = 'https://www.instagram.com/labmovil2222/';
+  static const String TWITTER_URL = 'https://twitter.com/labmovil2222/';
+
+  @override
+  Widget build(BuildContext context) {
+    String pageURL = '';
+
+    if (iconURL == 'facebook') {
+      pageURL = FACEBOOK_URL;
+    } else if (iconURL == 'instagram') {
+      pageURL = INSTAGRAM_URL;
+    } else if (iconURL == 'twitter') {
+      pageURL = TWITTER_URL;
+    }
+    return IconButton(
+      onPressed: () {
+        launch(pageURL);
+      },
+      iconSize: 36,
+      icon: ImageIcon(
+        AssetImage('assets/images/$iconURL.png'),
+      ),
     );
   }
 }

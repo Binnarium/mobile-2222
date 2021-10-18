@@ -15,18 +15,19 @@ class CitiesService {
             (snapshot) =>
                 snapshot.docs.map((e) => CityModel.fromMap(e.data())).toList(),
           )
-          .map(
-        (cities) {
-          for (int i = 0; i < cities.length - 1; i++) {
-            final CityModel current = cities[i];
-            final CityModel? next =
-                (i + 1 == cities.length) ? null : cities[i + 1];
-            if (next != null) {
-              current.addNextCity(next);
-            }
+          .map((cities) {
+        for (int i = 0; i < cities.length - 1; i++) {
+          final CityModel current = cities[i];
+          final CityModel? next =
+              (i + 1 == cities.length) ? null : cities[i + 1];
+          if (next != null) {
+            current.addNextCity(next);
           }
+        }
 
-          return cities;
-        },
-      ).shareReplay();
+        return cities;
+      })
+
+          ///
+          .shareReplay();
 }

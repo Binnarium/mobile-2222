@@ -22,7 +22,7 @@ class PlayButton extends StatefulWidget {
 const Map<PlayerPlayingStateEnum, IconData> PlayerStateIcons = {
   PlayerPlayingStateEnum.playing: Icons.pause,
   PlayerPlayingStateEnum.paused: Icons.play_arrow,
-  PlayerPlayingStateEnum.completed: Icons.replay,
+  PlayerPlayingStateEnum.completed: Icons.stop_rounded,
   PlayerPlayingStateEnum.loading: Icons.downloading,
 };
 
@@ -62,13 +62,13 @@ class PlayerControlIcon extends ElevatedButton {
     required VoidCallback onPressed,
   }) : super(
           key: key,
-          child: Icon(icon),
+          child: Icon(icon, size: 28),
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             onPrimary: color,
             primary: Colors.white,
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(0),
+            padding: const EdgeInsets.all(4),
             shape: const CircleBorder(),
           ),
         );

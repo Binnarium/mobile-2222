@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 class VideoNotSelected implements Exception {}
 
@@ -24,14 +24,14 @@ class UploadVideoService {
   /// - [ImageNotLoaded] when an image could not be loaded
   // ignore: comment_references
   /// - [ImageNotUploaded] when an image could not be uploaded to the cloud
-  Stream<VideoDto> upload$(String path) {
+  Stream<VideoModel> upload$(String path) {
     return FilePicker.platform
         .pickFiles(
           type: FileType.video,
           allowMultiple: false,
         )
         .asStream()
-        .asyncMap<VideoDto>((FilePickerResult? filePickerResult) async {
+        .asyncMap<VideoModel>((FilePickerResult? filePickerResult) async {
       if (filePickerResult == null) {
         throw VideoNotSelected();
       }
@@ -56,7 +56,7 @@ class UploadVideoService {
           throw VideoNotUploaded();
         });
 
-        return VideoDto(
+        return VideoModel(
           duration: 0,
           name: fileName,
           format: '',

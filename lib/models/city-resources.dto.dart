@@ -1,5 +1,5 @@
 import 'package:flutter/rendering.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
 class CityResourcesDto {
   /// constructor
@@ -14,6 +14,7 @@ class CityResourcesDto {
 
   /// params
   final List<ExternalLinkDto> externalLinks;
+  
   final List<ReadingDto> readings;
 }
 

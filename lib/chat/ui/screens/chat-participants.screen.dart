@@ -2,17 +2,17 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
+import 'package:lab_movil_2222/chat/chats/services/create-personal-chat.service.dart';
+import 'package:lab_movil_2222/chat/chats/services/get-chat.service.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/chat/models/chat.model.dart';
-import 'package:lab_movil_2222/chat/services/create-personal-chats.service.dart';
-import 'package:lab_movil_2222/chat/services/get-chat.service.dart';
 import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/participants-list-title.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 class ChatParticipantsScreen extends StatefulWidget {
@@ -66,8 +66,8 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
           /// chat name
           Padding(
             padding: const EdgeInsets.only(top: 64.0),
-            child: ChatImageWidget.fromChat(
-              widget.chat,
+            child: ChatImageWidget(
+              kind: widget.chat.kind,
               color: Colors2222.black,
               size: min(270, size.width * 0.4),
             ),

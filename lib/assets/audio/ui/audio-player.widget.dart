@@ -6,7 +6,7 @@ import 'package:lab_movil_2222/assets/audio/model/audio-player.extension.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-controls.widget.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-slider.widget.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -53,20 +53,9 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
 
   @override
-  void deactivate() {
-    print('Entrando en deactivate');
-    _currentPlayerSub?.pause();
-    audioProvider.player.pause();
-    print('podcast pausado');
-    super.deactivate();
-  }
-
-  @override
   void dispose() {
-    print('Entrando en dispose');
     _currentPlayerSub?.cancel();
-    audioProvider.close();
-    print('podcast detenido');
+    // audioProvider.close();
     super.dispose();
   }
 
@@ -81,6 +70,9 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
           AudioSlider(
             player: player!,
           ),
+
+          ///spacer
+          const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -104,10 +96,18 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                 icon: Icons.forward_5_rounded,
                 onPressed: () => player!.forward(const Duration(seconds: 5)),
               ),
+              PlayerControlIcon(
+                color: widget.color,
+                icon: Icons.speed_rounded,
+                onPressed: _changeVelocity,
+              ),
             ],
           )
         ] else ...[
           const FakeAudioSlider(),
+
+          ///spacer
+          const SizedBox(height: 4),
           PlayerControlIcon(
             color: widget.color,
             icon: Icons.play_arrow,
@@ -115,6 +115,44 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
           ),
         ],
       ],
+    );
+  }
+
+  void _changeVelocity() {
+    final AudioPlayer player = audioProvider.player;
+    final double currentSpeed = player.speed;
+    final Map<Object, double> velocitiesMap = {
+      0.5: 0.5,
+      0.75: 0.75,
+      'Normal': 1,
+      1.15: 1.15,
+      1.25: 1.25,
+      1.5: 1.5,
+      2: 2,
+    };
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => SafeArea(
+        bottom: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ///
+            for (var i = 0; i < velocitiesMap.length; i++)
+              ListTile(
+                leading: currentSpeed == velocitiesMap.values.elementAt(i)
+                    ? const Icon(Icons.chevron_right_rounded)
+                    : null,
+                title: Text(velocitiesMap.keys.elementAt(i).toString()),
+                onTap: () async {
+                  await player.setSpeed(velocitiesMap.values.elementAt(i));
+                  Navigator.pop(context);
+                },
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
-import 'package:lab_movil_2222/player/services/get-current-player.service.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 

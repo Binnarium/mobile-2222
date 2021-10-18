@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
-import 'package:lab_movil_2222/models/asset.dto.dart';
 
 /// base model of a chat message
 abstract class MessageModel {
@@ -66,8 +67,8 @@ abstract class MessageModel {
     }
 
     if (kind == 'MESSAGE#VIDEO') {
-      final VideoDto video =
-          VideoDto.fromMap(data['asset'] as Map<String, dynamic>);
+      final VideoModel video =
+          VideoModel.fromMap(data['asset'] as Map<String, dynamic>);
       return VideoMessageModel(
         id: id,
         senderId: senderId,
@@ -97,7 +98,14 @@ abstract class MessageModel {
       );
     }
 
-    throw UnimplementedError();
+    return UnsupportedMessageModel(
+      id: id,
+      kind: kind,
+      senderId: senderId,
+      sendedDate: sendedDate,
+      sender: sender,
+      sendedByMe: sendedByMe,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -114,6 +122,8 @@ abstract class MessageModel {
   }
 
   bool get canDelete => runtimeType != DeletedMessageModel;
+
+  String get minifiedMessageContent;
 }
 
 /// Message of type [MessageKind.video]
@@ -123,7 +133,7 @@ class VideoMessageModel extends MessageModel {
     required String senderId,
     required DateTime sendedDate,
     required ChatParticipantModel sender,
-    required VideoDto video,
+    required VideoModel video,
     bool sendedByMe = false,
   }) : super(
           sendedByMe: sendedByMe,
@@ -136,6 +146,9 @@ class VideoMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => 'Envio un video';
 }
 
 /// Message of type [MessageKind.image]
@@ -158,6 +171,8 @@ class ImageMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+  @override
+  String get minifiedMessageContent => 'Envio una imagen';
 }
 
 /// Message of type [MessageKind.text]
@@ -180,6 +195,9 @@ class TextMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => text!;
 }
 
 /// Message of type [MessageKind.banned]
@@ -201,6 +219,9 @@ class BannedMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => 'El mensaje ha sido prohibido';
 }
 
 /// Message of type deleted [MessageKind.deleted]
@@ -222,4 +243,32 @@ class DeletedMessageModel extends MessageModel {
           senderId: senderId,
           sender: sender,
         );
+
+  @override
+  String get minifiedMessageContent => 'Mensaje Eliminado';
+}
+
+class UnsupportedMessageModel extends MessageModel {
+  UnsupportedMessageModel({
+    required String id,
+    required String senderId,
+    required String kind,
+    required DateTime sendedDate,
+    required ChatParticipantModel sender,
+    bool sendedByMe = false,
+  }) : super(
+          sendedByMe: sendedByMe,
+          kind: kind,
+          id: id,
+          asset: null,
+          banned: false,
+          sendedDate: sendedDate,
+          text: null,
+          senderId: senderId,
+          sender: sender,
+        );
+
+  @override
+  String get minifiedMessageContent =>
+      'Mensaje no soportado, actualiza tu aplicación';
 }

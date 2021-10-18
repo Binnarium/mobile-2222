@@ -11,9 +11,9 @@ import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/project-awards/ui/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-import 'package:lab_movil_2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
 const String explanationText = '''
@@ -47,11 +47,14 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
 
   ///
   StreamSubscription? _assignAwardSub;
+  StreamSubscription? _canAssignAwardSub;
 
   ///
   List<PlayerModel>? teammates;
 
   List<MarathonMedalModel> awardedMedals = [];
+
+  bool canAssignMarathonAwards = true;
 
   ListPlayerOfGroupService get _playersGroupService =>
       Provider.of<ListPlayerOfGroupService>(context, listen: false);
@@ -67,8 +70,12 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
       (players) => setState(() => teammates = players),
     );
 
-    _medalsAwardedSub = _medalsService.awards$.listen(
+    _medalsAwardedSub = _medalsService.marathonAwards$.listen(
       (awards) => setState(() => awardedMedals = awards),
+    );
+
+    _canAssignAwardSub = _medalsService.canAssignMarathonAwards$.listen(
+      (canAssign) => setState(() => canAssignMarathonAwards = canAssign),
     );
   }
 
@@ -77,6 +84,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
     _teammatesSub?.cancel();
     _assignAwardSub?.cancel();
     _medalsAwardedSub?.cancel();
+    _canAssignAwardSub?.cancel();
     super.dispose();
   }
 
@@ -117,7 +125,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
             child: Center(
               child: Image(
-                image: const CoinsImages.hackaton(),
+                image: const MedalImage.marathon(),
                 alignment: Alignment.bottomRight,
                 fit: BoxFit.contain,
                 width: min(160, size.width * 0.4),
@@ -146,6 +154,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
                 context: context,
                 isAssigned:
                     awardedMedals.any((award) => award.playerUid == player.uid),
+                canAssign: canAssignMarathonAwards,
                 callback: () => _createMedal(player.uid),
               ),
           ],

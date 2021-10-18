@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/cities/manual-video/model/city-manual-video.model.dart';
 import 'package:lab_movil_2222/cities/manual-video/services/load-manual-video.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-import 'package:lab_movil_2222/widgets/scaffold-2222/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -73,7 +73,7 @@ class _ManualVideoScreenState extends State<ManualVideoScreen> {
               controller: VideoPlayerController.network(
                 manualVideo!.video.url,
               ),
-              onPressed: () => launch(manualVideo!.link),
+              onPress: () => launch(manualVideo!.link),
             ),
         ],
       ),
