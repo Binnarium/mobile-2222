@@ -65,15 +65,15 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               return const StartVideoScreen();
 
             if (settings.name == WelcomeScreen.route) {
-              return WelcomeScreen();
+              return const WelcomeScreen();
             }
 
             if (settings.name == TeamScreen.route) {
-              return TeamScreen();
+              return const TeamScreen();
             }
 
             if (settings.name == LoginScreen.route) {
-              return LoginScreen();
+              return const LoginScreen();
             }
 
             if (settings.name == RegisterScreen.route) {
@@ -85,7 +85,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
 
             if (settings.name == ProfileScreen.route) {
-              return ProfileScreen();
+              return const ProfileScreen();
             }
 
             /// all chats screens

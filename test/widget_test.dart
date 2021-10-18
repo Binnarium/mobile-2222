@@ -9,7 +9,7 @@ import 'package:lab_movil_2222/app-222.dart';
 
 void main() {
   test('Should create an app', () {
-    final app = App2222();
+    const app = App2222();
     expect(app, isNot(null));
   });
 }

@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:math';
 
@@ -221,7 +220,8 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text('El video no se carga, o carga demasiado lento'),
+              title:
+                  const Text('El video no se carga, o carga demasiado lento'),
               onTap: () async {
                 final HttpsCallable callable =
                     FirebaseFunctions.instance.httpsCallable('reportVideo');
@@ -232,11 +232,13 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                       'payload': widget.videoDto.toMap()
                     }
                   ]);
-                } catch (e) {}
+                } catch (e) {
+                  print(e);
+                }
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text(
                       'Gracias por reportar tu problema. Pronto lo resolveremos',
                     ),
@@ -245,7 +247,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
               },
             ),
             ListTile(
-              title: Text('El video se queda en negro'),
+              title: const Text('El video se queda en negro'),
               onTap: () async {
                 final HttpsCallable callable =
                     FirebaseFunctions.instance.httpsCallable('reportVideo');
@@ -256,11 +258,13 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                       'payload': widget.videoDto.toMap()
                     }
                   ]);
-                } catch (e) {}
+                } catch (e) {
+                  print(e);
+                }
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text(
                       'Gracias por reportar tu problema. Pronto lo resolveremos',
                     ),

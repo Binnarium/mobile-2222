@@ -59,8 +59,7 @@ class _ManualVideoScreenState extends State<ManualVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.bottomRight],
+      backgrounds: const [BackgroundDecorationStyle.bottomRight],
       route: ManualVideoScreen.route,
       body: Stack(
         children: <Widget>[

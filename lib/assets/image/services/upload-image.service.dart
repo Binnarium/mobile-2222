@@ -33,8 +33,7 @@ class UploadImageService {
         throw ImageNotSelected();
       }
 
-      // ignore: unnecessary_nullable_for_final_variable_declarations
-      final PlatformFile? selectedImage = filePickerResult.files.first;
+      final PlatformFile selectedImage = filePickerResult.files.first;
       if (selectedImage == null) {
         throw ImageNotLoaded();
       }

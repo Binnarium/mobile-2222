@@ -7,11 +7,12 @@ import 'package:lab_movil_2222/chat/ui/screens/messages.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-image.widget.dart';
 
 class ChatFolderListItem extends ListTile {
-  // ignore: use_key_in_widget_constructors
   ChatFolderListItem({
+    Key? key,
     required ChatFolderModel folder,
     required BuildContext context,
   }) : super(
+          key: key,
           leading: ChatImageWidget(kind: folder.kind),
           contentPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,

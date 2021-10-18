@@ -42,8 +42,7 @@ class _ChangeAvatarButtonState extends State<ChangeAvatarButton> {
   }
 
   /// method to change the avatarImage
-  // ignore: avoid_void_async
-  void _changeAvatar() async {
+  Future<void> _changeAvatar() async {
     if (_uploadFileSub != null) {
       return;
     }

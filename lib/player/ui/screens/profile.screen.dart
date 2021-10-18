@@ -15,8 +15,9 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-b
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
-// ignore: use_key_in_widget_constructors
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
   static const String route = '/profile';
 
   @override

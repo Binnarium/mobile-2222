@@ -14,7 +14,6 @@ class VideoModel extends AssetDto {
           url: url,
         );
 
-  // ignore: sort_constructors_first
   VideoModel.fromMap(final Map<String, dynamic> payload)
       : format = payload['format'] as String? ?? '',
         duration = payload['duration'] as int? ?? 0,

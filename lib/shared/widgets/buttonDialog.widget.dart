@@ -4,15 +4,7 @@ import 'package:flutter/material.dart';
 /// with the city color, [text] is the string of the button, [icon] is the icon
 /// at the head of the button, [onClicked] is the function that will be
 /// executed on pressed
-@Deprecated('use [ElevatedButton.icon(...)] instead')
 class ButtonWidget extends StatelessWidget {
-  final Color color;
-  final String? text;
-  final IconData? icon;
-  final Color? iconColor;
-  final VoidCallback? onClicked;
-
-  // ignore: sort_constructors_first
   const ButtonWidget({
     Key? key,
     required this.color,
@@ -21,6 +13,12 @@ class ButtonWidget extends StatelessWidget {
     this.icon,
     this.iconColor = Colors.black,
   }) : super(key: key);
+
+  final Color color;
+  final String? text;
+  final IconData? icon;
+  final Color? iconColor;
+  final VoidCallback? onClicked;
 
   @override
   Widget build(BuildContext context) {

@@ -28,10 +28,6 @@ abstract class AssetDto {
 
 /// Image asset
 class ImageDto extends AssetDto {
-  final int width;
-  final int height;
-
-  // ignore: sort_constructors_first
   ImageDto({
     required this.height,
     required this.width,
@@ -44,7 +40,6 @@ class ImageDto extends AssetDto {
           url: url,
         );
 
-  // ignore: sort_constructors_first
   ImageDto.fromMap(final Map<String, dynamic> payload)
       : height = payload['height'] as int? ?? 0,
         width = payload['width'] as int? ?? 0,
@@ -53,6 +48,9 @@ class ImageDto extends AssetDto {
           path: payload['path'] as String? ?? '',
           url: payload['url'] as String? ?? '',
         );
+
+  final int width;
+  final int height;
 
   ImageProvider get image => NetworkImage(url);
 

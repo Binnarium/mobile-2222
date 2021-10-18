@@ -28,8 +28,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
     super.initState();
   }
 
-  // ignore: avoid_void_async
-  void _asyncLecture() async {
+  Future<void> _asyncLecture() async {
     await _readCompetences();
   }
 
@@ -39,8 +38,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       route: StageObjetivesScreen.route,
       body: _stageBody(size),
     );
@@ -244,8 +242,7 @@ class _StageObjectivesScreenState extends State<StageObjetivesScreen> {
             image: payload['image'] as Map<String, dynamic>);
       }).toList();
 
-      // ignore: unnecessary_await_in_return
-      return await Future.wait(ideasRef);
+      return Future.wait(ideasRef);
     }
 
     return [];

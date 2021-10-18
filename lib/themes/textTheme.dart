@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 
 /// Primary app font
 class KorolevFont extends TextTheme {
-  static const String fontFamily = 'Korolev';
-
-  // ignore: sort_constructors_first
+  /// constructor
   KorolevFont({
     Color textColor = Colors.white,
   }) : super(
@@ -96,4 +94,6 @@ class KorolevFont extends TextTheme {
             height: 1.2,
           ),
         );
+
+  static const String fontFamily = 'Korolev';
 }

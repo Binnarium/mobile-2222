@@ -46,9 +46,7 @@ class UpdateAvatarService {
             print('Succesfully deleted avatar from storage');
           } catch (e) {
             print(
-                // ignore: missing_whitespace_between_adjacent_strings
-                'Error, no se pudo borrar desde storage (puede que no exista el'
-                'archivo) $e');
+                'Error, no se pudo borrar desde storage (puede que no exista el\narchivo) $e');
           }
         }
         print('TODO: add model to update avatar');

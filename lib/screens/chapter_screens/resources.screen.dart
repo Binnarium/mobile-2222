@@ -60,8 +60,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topLeft],
+      backgrounds: const [BackgroundDecorationStyle.topLeft],
       route: ResourcesScreen.route,
       body: _resourcesContent(size),
     );

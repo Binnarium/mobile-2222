@@ -18,11 +18,8 @@ class UploadVideoService {
   /// - [path] storage location to upload image
   ///
   /// Throws these errors:
-  // ignore: comment_references
   /// - [ImageNotSelected] when an image is not selected
-  // ignore: comment_references
   /// - [ImageNotLoaded] when an image could not be loaded
-  // ignore: comment_references
   /// - [ImageNotUploaded] when an image could not be uploaded to the cloud
   Stream<VideoModel> upload$(String path) {
     return FilePicker.platform
@@ -36,8 +33,7 @@ class UploadVideoService {
         throw VideoNotSelected();
       }
 
-      // ignore: unnecessary_nullable_for_final_variable_declarations
-      final PlatformFile? video = filePickerResult.files.first;
+      final PlatformFile video = filePickerResult.files.first;
       if (video == null) {
         throw VideoNotLoaded();
       }

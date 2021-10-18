@@ -65,8 +65,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
 
     return Scaffold2222.empty(
       backgroundColor: widget.city.color,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       appBar: AppBar(
         title: Text(
           'Agrega tu Evento Clubhouse',

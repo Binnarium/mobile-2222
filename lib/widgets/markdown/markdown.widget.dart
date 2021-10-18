@@ -3,9 +3,6 @@ import 'package:flutter_markdown/flutter_markdown.dart' as fmd;
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-@Deprecated('use the Markdown2222 instead')
-typedef Markdown = Markdown2222;
-
 class Markdown2222 extends StatelessWidget {
   const Markdown2222({
     Key? key,

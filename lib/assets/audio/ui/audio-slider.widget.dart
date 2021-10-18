@@ -8,8 +8,7 @@ import 'package:lab_movil_2222/themes/colors.dart';
 
 ///  review how to remove this widget
 class FakeAudioSlider extends AudioSlider {
-  // ignore: use_key_in_widget_constructors
-  const FakeAudioSlider() : super();
+  const FakeAudioSlider({Key? key}) : super(key: key);
 }
 
 class AudioSlider extends StatefulWidget {

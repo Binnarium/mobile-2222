@@ -80,8 +80,7 @@ class _ContributionExplanationScreenState
 
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       route: ContributionExplanationScreen.route,
       body: ListView(
         children: [
@@ -106,8 +105,7 @@ class _ContributionExplanationScreenState
 
           /// page content
           if (contributionExplanation == null)
-            // ignore: prefer_const_constructors
-            AppLoading()
+            const AppLoading()
           else ...[
             /// video provider
             Padding(

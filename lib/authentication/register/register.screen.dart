@@ -61,8 +61,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold2222.empty(
       backgroundColor: Colors2222.red,
       body: BackgroundDecoration(
-        // ignore: prefer_const_literals_to_create_immutables
-        backgroundDecorationsStyles: [BackgroundDecorationStyle.bottomRight],
+        backgroundDecorationsStyles: const [
+          BackgroundDecorationStyle.bottomRight
+        ],
         child: ListView(
           padding: const EdgeInsets.only(top: 84, bottom: 32),
           children: [

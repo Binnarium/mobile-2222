@@ -69,8 +69,7 @@ extension Lab2222AudioPlayerExtension on AudioPlayer {
 
   /// method to play or pause the audio
   Future<void> playOrPause() async {
-    // ignore: prefer_final_locals
-    PlayerPlayingStateEnum? playing = await playing$.first;
+    final PlayerPlayingStateEnum playing = await playing$.first;
 
     /// if playing, then pause
     if (playing == PlayerPlayingStateEnum.playing) {
@@ -91,5 +90,4 @@ extension Lab2222AudioPlayerExtension on AudioPlayer {
       return;
     }
   }
-
 }

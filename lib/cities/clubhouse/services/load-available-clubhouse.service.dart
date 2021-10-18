@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 
-// ignore: non_constant_identifier_names
 Stream<List<ClubhouseModel>> LoadAvailableClubhouseService(CityModel city) {
   final FirebaseFirestore _fFirestore = FirebaseFirestore.instance;
 
