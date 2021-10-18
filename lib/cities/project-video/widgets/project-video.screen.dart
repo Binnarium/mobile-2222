@@ -14,8 +14,8 @@ import 'package:video_player/video_player.dart';
 class ProjectVideoScreen extends StatefulWidget {
   const ProjectVideoScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/project-video';

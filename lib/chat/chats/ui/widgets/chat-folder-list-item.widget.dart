@@ -58,7 +58,7 @@ class ChatFolderListItem extends ListTile {
               : Navigator.of(context).pushNamed(
                   MessagesScreen.route,
                   arguments: MessagesScreen(
-                    chat: folder.chats[0],
+                    chatModel: folder.chats[0],
                   ),
                 ),
         );

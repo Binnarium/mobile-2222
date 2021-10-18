@@ -15,8 +15,8 @@ import 'package:video_player/video_player.dart';
 class ManualVideoScreen extends StatefulWidget {
   const ManualVideoScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/manual-video';

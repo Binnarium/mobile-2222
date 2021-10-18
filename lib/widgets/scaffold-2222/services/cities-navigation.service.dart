@@ -114,7 +114,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               ProjectVideoScreen.route,
-              arguments: ProjectVideoScreen(city: city),
+              arguments: ProjectVideoScreen(cityModel: city),
             ),
           ),
 
@@ -155,7 +155,7 @@ class CityNavigator {
           builder: (context) => Navigator.pushNamed(
             context,
             CityIntroductionScreen.route,
-            arguments: CityIntroductionScreen(city: city),
+            arguments: CityIntroductionScreen(cityModel: city),
           ),
         ),
 
@@ -165,7 +165,7 @@ class CityNavigator {
           builder: (context) => Navigator.pushNamed(
             context,
             StageHistoryScreen.route,
-            arguments: StageHistoryScreen(city: city),
+            arguments: StageHistoryScreen(cityModel: city),
           ),
         ),
 
@@ -176,7 +176,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               IntroductoryVideoScreen.route,
-              arguments: IntroductoryVideoScreen(city: city),
+              arguments: IntroductoryVideoScreen(cityModel: city),
             ),
           ),
 
@@ -222,7 +222,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               ContentScreen.route,
-              arguments: ContentScreen(city: city),
+              arguments: ContentScreen(cityModel: city),
             ),
           ),
 
@@ -264,7 +264,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               ManualVideoScreen.route,
-              arguments: ManualVideoScreen(city: city),
+              arguments: ManualVideoScreen(cityModel: city),
             ),
           ),
 
@@ -275,7 +275,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               MicroMesoMacroScreen.route,
-              arguments: MicroMesoMacroScreen(city: city),
+              arguments: MicroMesoMacroScreen(cityModel: city),
             ),
           ),
 
@@ -286,7 +286,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               NextPhaseVideoScreen.route,
-              arguments: NextPhaseVideoScreen(city: city),
+              arguments: NextPhaseVideoScreen(cityModel: city),
             ),
           ),
 
@@ -297,7 +297,7 @@ class CityNavigator {
             builder: (context) => Navigator.pushNamed(
               context,
               FinalVideoScreen.route,
-              arguments: FinalVideoScreen(city: city),
+              arguments: FinalVideoScreen(cityModel: city),
             ),
           ),
       ];

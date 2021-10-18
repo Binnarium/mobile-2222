@@ -14,8 +14,8 @@ import 'package:video_player/video_player.dart';
 class NextPhaseVideoScreen extends StatefulWidget {
   const NextPhaseVideoScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/next-phase-video';

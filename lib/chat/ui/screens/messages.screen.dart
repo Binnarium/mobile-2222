@@ -11,8 +11,8 @@ class MessagesScreen extends StatefulWidget {
   /// constructor
   const MessagesScreen({
     Key? key,
-    required ChatModel chat,
-  })  : chat = chat,
+    required ChatModel chatModel,
+  })  : chat = chatModel,
         super(key: key);
 
   /// params

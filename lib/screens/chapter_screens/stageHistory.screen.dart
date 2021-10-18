@@ -16,8 +16,8 @@ import 'package:provider/provider.dart';
 class StageHistoryScreen extends StatefulWidget {
   const StageHistoryScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/history';

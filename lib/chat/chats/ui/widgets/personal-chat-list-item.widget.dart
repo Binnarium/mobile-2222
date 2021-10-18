@@ -46,7 +46,7 @@ class PersonalChatListItem extends ListTile {
           onTap: () => Navigator.of(context).pushNamed(
             MessagesScreen.route,
             arguments: MessagesScreen(
-              chat: chat,
+              chatModel: chat,
             ),
           ),
         );
