@@ -28,8 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   StreamSubscription? navigatingSub;
 
-  StreamSubscription? _currentPlayerSub;
-
   IsUserSignedInService get _userService =>
       Provider.of<IsUserSignedInService>(context, listen: false);
 
@@ -44,16 +42,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _currentPlayerSub = _currentPlayerLoader.player$.listen((event) {
-      print(event?.courseStatus);
-    });
+    _currentPlayerLoader.load();
   }
 
   @override
   void dispose() {
     navigatingSub?.cancel();
     navigatingSub = null;
-    _currentPlayerSub?.cancel();
     super.dispose();
   }
 

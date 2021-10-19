@@ -11,9 +11,9 @@ class LoadBetterVideoService {
     final String validPath = path.removeSpecialCharacters();
     final DatabaseReference ref =
         _database.reference().child('videos').child(validPath);
-    return ref.onValue.map(
-      (event) => BetterVideoModel.fromMap(
-          event.snapshot.value as Map<String, dynamic>),
-    );
+    return ref.onValue.map((event) => null
+        // BetterVideoModel.fromMap(
+        //     event.snapshot.value as Map<String, dynamic>),
+        );
   }
 }

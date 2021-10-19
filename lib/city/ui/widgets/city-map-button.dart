@@ -7,6 +7,7 @@ import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class CityMapButton extends StatelessWidget {
@@ -106,7 +107,9 @@ class CityMapButton extends StatelessWidget {
   /// otherwise show them a explanation of what to do
   /// or where to check their results
   void _accessCourse(BuildContext context) {
-    final PlayerModel? currentPlayer = CurrentPlayerService.currentPlayer;
+    final CurrentPlayerService _playerService =
+        Provider.of<CurrentPlayerService>(context, listen: false);
+    final PlayerModel? currentPlayer = _playerService.currentPlayer;
 
     /// let them in
     if ([
