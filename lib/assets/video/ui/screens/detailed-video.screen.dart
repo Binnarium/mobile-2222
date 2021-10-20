@@ -370,9 +370,114 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                   ),
                 ),
               ),
+
+              /// video speed button
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Material(
+                  color: Colors2222.transparent,
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(4),
+                  child: IconButton(
+                    onPressed: _velocityBottomSheet,
+                    icon: const Icon(Icons.speed_rounded),
+                  ),
+                ),
+              ),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  /// handle bottom drawer
+  void _velocityBottomSheet() {
+    final double currentSpeed = widget.controller.value.playbackSpeed;
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => SafeArea(
+        bottom: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Text('Velocidad de reproducción'),
+            ),
+            ListTile(
+              title: const Text('0.75'),
+              minLeadingWidth: 20,
+              leading: (currentSpeed == 0.75)
+                  ? const Icon(
+                      Icons.check_rounded,
+                      size: 20,
+                    )
+                  : const SizedBox(),
+              onTap: () async {
+                widget.controller.setPlaybackSpeed(0.75);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('1.0'),
+              minLeadingWidth: 20,
+              leading: (currentSpeed == 1)
+                  ? const Icon(
+                      Icons.check_rounded,
+                      size: 20,
+                    )
+                  : Container(width: 1),
+              onTap: () async {
+                widget.controller.setPlaybackSpeed(1.0);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('1.25'),
+              minLeadingWidth: 20,
+              leading: (currentSpeed == 1.25)
+                  ? const Icon(
+                      Icons.check_rounded,
+                      size: 20,
+                    )
+                  : Container(width: 1),
+              onTap: () async {
+                widget.controller.setPlaybackSpeed(1.25);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('1.5'),
+              minLeadingWidth: 20,
+              leading: (currentSpeed == 1.5)
+                  ? const Icon(
+                      Icons.check_rounded,
+                      size: 20,
+                    )
+                  : Container(width: 1),
+              onTap: () async {
+                widget.controller.setPlaybackSpeed(1.5);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('2.0'),
+              minLeadingWidth: 20,
+              leading: (currentSpeed == 2.0)
+                  ? const Icon(
+                      Icons.check_rounded,
+                      size: 20,
+                    )
+                  : Container(width: 1),
+              onTap: () async {
+                widget.controller.setPlaybackSpeed(2.0);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
