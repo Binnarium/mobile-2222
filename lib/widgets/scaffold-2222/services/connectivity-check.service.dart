@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/connectivity-snackbar.widget.dart';

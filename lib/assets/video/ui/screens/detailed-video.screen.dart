@@ -231,7 +231,8 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text('El video no se carga, o carga demasiado lento'),
+              title:
+                  const Text('El video no se carga, o carga demasiado lento'),
               onTap: () async {
                 final HttpsCallable callable =
                     FirebaseFunctions.instance.httpsCallable('reportVideo');
@@ -246,7 +247,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text(
                       'Gracias por reportar tu problema. Pronto lo resolveremos',
                     ),
@@ -255,7 +256,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
               },
             ),
             ListTile(
-              title: Text('El video se queda en negro'),
+              title: const Text('El video se queda en negro'),
               onTap: () async {
                 final HttpsCallable callable =
                     FirebaseFunctions.instance.httpsCallable('reportVideo');
@@ -270,7 +271,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text(
                       'Gracias por reportar tu problema. Pronto lo resolveremos',
                     ),
@@ -409,88 +410,45 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
   /// handle bottom drawer
   void _velocityBottomSheet() {
     final double currentSpeed = widget.controller.value.playbackSpeed;
+    final Map<Object, double> velocitiesMap = {
+      0.5: 0.5,
+      0.75: 0.75,
+      1.0: 1,
+      1.25: 1.25,
+      1.5: 1.5,
+      2: 2,
+    };
+
     showModalBottomSheet<void>(
       context: context,
       builder: (context) => SafeArea(
         bottom: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
           children: [
             const Padding(
               padding: EdgeInsets.all(12.0),
-              child: Text('Velocidad de reproducción'),
+              child: Text(
+                'Velocidad de reproducción',
+                textAlign: TextAlign.center,
+              ),
             ),
-            ListTile(
-              title: const Text('0.75'),
-              minLeadingWidth: 20,
-              leading: (currentSpeed == 0.75)
-                  ? const Icon(
-                      Icons.check_rounded,
-                      size: 20,
-                    )
-                  : const SizedBox(),
-              onTap: () async {
-                widget.controller.setPlaybackSpeed(0.75);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('1.0'),
-              minLeadingWidth: 20,
-              leading: (currentSpeed == 1)
-                  ? const Icon(
-                      Icons.check_rounded,
-                      size: 20,
-                    )
-                  : Container(width: 1),
-              onTap: () async {
-                widget.controller.setPlaybackSpeed(1.0);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('1.25'),
-              minLeadingWidth: 20,
-              leading: (currentSpeed == 1.25)
-                  ? const Icon(
-                      Icons.check_rounded,
-                      size: 20,
-                    )
-                  : Container(width: 1),
-              onTap: () async {
-                widget.controller.setPlaybackSpeed(1.25);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('1.5'),
-              minLeadingWidth: 20,
-              leading: (currentSpeed == 1.5)
-                  ? const Icon(
-                      Icons.check_rounded,
-                      size: 20,
-                    )
-                  : Container(width: 1),
-              onTap: () async {
-                widget.controller.setPlaybackSpeed(1.5);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('2.0'),
-              minLeadingWidth: 20,
-              leading: (currentSpeed == 2.0)
-                  ? const Icon(
-                      Icons.check_rounded,
-                      size: 20,
-                    )
-                  : Container(width: 1),
-              onTap: () async {
-                widget.controller.setPlaybackSpeed(2.0);
-                Navigator.pop(context);
-              },
-            ),
+            for (var i = 0; i < velocitiesMap.length; i++) ...{
+              ListTile(
+                title: Text(velocitiesMap.values.elementAt(i).toString()),
+                minLeadingWidth: 20,
+                leading: currentSpeed == velocitiesMap.values.elementAt(i)
+                    ? const Icon(Icons.check_rounded, size: 20)
+                    : const SizedBox(),
+                onTap: () async {
+                  widget.controller
+                      .setPlaybackSpeed(velocitiesMap.values.elementAt(i));
+                  Navigator.pop(context);
+                },
+              ),
+            },
           ],
         ),
       ),
