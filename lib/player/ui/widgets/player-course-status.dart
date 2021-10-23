@@ -20,18 +20,31 @@ class PlayerCourseStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// in progress day counter
     if (status == CourseStatus.inProgress) return const _DaysCounter();
+
+    ///  not started yet
     if (status == CourseStatus.notStarted)
       return const Center(
-          child:
-              Text('El curso aún no ha empezado', textAlign: TextAlign.center));
+        child: Text(
+          'El viaje aún no ha empezado',
+          textAlign: TextAlign.center,
+        ),
+      );
+
+    /// approved course, and continue next phase
     if ([
       CourseStatus.approvedContinueNextPhaseWithContentAccess,
       CourseStatus.approvedCanContinueNextPhaseNoContentAccess
     ].contains(status))
       return const Center(
-          child: Text('Continuas a la siguiente fase de los 200',
-              textAlign: TextAlign.center));
+        child: Text(
+          'Continuas a la siguiente fase de los 200',
+          textAlign: TextAlign.center,
+        ),
+      );
+
+    /// approved and obtained certification, but no continue next phase
     if (status == CourseStatus.approvedCanNotContinueNextPhase)
       return const Center(
         child: Text(
@@ -39,10 +52,17 @@ class PlayerCourseStatus extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       );
+
+    /// not approved
     if (status == CourseStatus.notApproved)
       return const Center(
-        child: Text('No has aprobado el curso', textAlign: TextAlign.center),
+        child: Text(
+          'No has aprobado el curso',
+          textAlign: TextAlign.center,
+        ),
       );
+
+    /// not identifier, by default return days counter
     return const _DaysCounter();
   }
 }
