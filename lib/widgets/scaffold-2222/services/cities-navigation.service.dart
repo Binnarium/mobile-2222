@@ -31,8 +31,7 @@ class ScaffoldRouteBuilder {
   final Future<void> Function(BuildContext) builder;
 }
 
-// ignore: avoid_classes_with_only_static_members
-class CityNavigator {
+mixin CityNavigator {
   /// get pages for the clubhouse
   static List<ScaffoldRouteBuilder> _clubhouseActivities(
     /// enabled pages configuration
