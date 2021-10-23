@@ -143,7 +143,7 @@ class _ChatParticipantsScreenState extends State<ChatParticipantsScreen> {
         }
 
         Navigator.pushNamed(context, MessagesScreen.route,
-            arguments: MessagesScreen(chat: chat));
+            arguments: MessagesScreen(chatModel: chat));
       },
 
       /// clean stream

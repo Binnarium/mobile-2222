@@ -30,7 +30,7 @@ class MedalsService {
           )
           .map((docs) => docs
               .map((d) =>
-                  MarathonMedalModel.fromMap(d.data() as Map<String, dynamic>))
+                  MarathonMedalModel.fromMap(d.data()! as Map<String, dynamic>))
               .toList())
           .shareReplay();
 

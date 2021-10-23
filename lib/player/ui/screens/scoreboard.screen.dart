@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 
+import 'package:lab_movil_2222/player/ui/widgets/list-scoreboard.widget.dart';
 import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
-import 'package:lab_movil_2222/player/ui/widgets/list-scoreboard.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
@@ -73,9 +73,9 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
+
     ///TODO:change value to 10
-    int sizeScoreboard =  2;
-    
+    const int sizeScoreboard = 2;
 
     return Scaffold2222.empty(
       backgrounds: const [BackgroundDecorationStyle.bottomRight],

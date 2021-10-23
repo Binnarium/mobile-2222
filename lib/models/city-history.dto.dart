@@ -33,7 +33,6 @@ abstract class HistoryContentDto {
       return ImageHistoryDto._fromMap(payload);
     }
 
-    // ignore: only_throw_errors
     throw ErrorDescription('Invalid history content');
   }
 }

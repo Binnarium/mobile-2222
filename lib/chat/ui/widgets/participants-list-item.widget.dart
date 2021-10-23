@@ -3,14 +3,15 @@ import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class ParticipantsListItem extends ListTile {
-  // ignore: use_key_in_widget_constructors
   ParticipantsListItem({
+    Key? key,
     Function(BuildContext)? createChatCallback,
     required ChatParticipantModel participant,
     required BuildContext context,
     Color color = Colors2222.black,
     Color primaryColor = Colors2222.red,
   }) : super(
+          key: key,
           contentPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.08,
           ),

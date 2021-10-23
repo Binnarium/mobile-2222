@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CompeResourcesListItem extends StatelessWidget {
-  final String name;
-  final String? kind;
-  final Map<String, dynamic> image;
-  final String? id;
-
-  // ignore: sort_constructors_first
+  /// constructor
   const CompeResourcesListItem({
     Key? key,
     required this.name,
@@ -14,6 +9,11 @@ class CompeResourcesListItem extends StatelessWidget {
     this.kind,
     this.id,
   }) : super(key: key);
+
+  final String name;
+  final String? kind;
+  final Map<String, dynamic> image;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {

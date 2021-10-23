@@ -1,12 +1,7 @@
 import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
 class ProjectScreenModel {
-  final String activity;
-  final String explanation;
-  final String allow;
-  final AudioDto? audio;
-
-  // ignore: sort_constructors_first
+  /// constructor
   ProjectScreenModel.fromJson(Map<String, dynamic> payload)
       : activity =
             payload['activity'] as String? ?? 'No hay actividad definida',
@@ -16,6 +11,11 @@ class ProjectScreenModel {
         audio = payload['audio']?['url'] == null
             ? null
             : AudioDto.fromMap(payload['audio'] as Map<String, dynamic>);
+
+  final String activity;
+  final String explanation;
+  final String allow;
+  final AudioDto? audio;
 
   bool get allowFile => allow == 'ALLOW#FILE';
   bool get allowAudio => allow == 'ALLOW#AUDIO';

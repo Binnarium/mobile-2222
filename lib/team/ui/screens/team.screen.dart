@@ -9,8 +9,9 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
-// ignore: use_key_in_widget_constructors
 class TeamScreen extends StatefulWidget {
+  const TeamScreen({Key? key}) : super(key: key);
+
   static const String route = '/team';
 
   @override
@@ -51,8 +52,7 @@ class _TeamScreenState extends State<TeamScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold2222.empty(
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [
+      backgrounds: const [
         BackgroundDecorationStyle.path,
         BackgroundDecorationStyle.bottomRight
       ],

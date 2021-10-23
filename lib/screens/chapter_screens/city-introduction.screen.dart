@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 class CityIntroductionScreen extends StatefulWidget {
   const CityIntroductionScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/introduction';

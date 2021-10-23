@@ -15,8 +15,8 @@ import 'package:provider/provider.dart';
 class MicroMesoMacroScreen extends StatefulWidget {
   const MicroMesoMacroScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/micro_meso_macro';

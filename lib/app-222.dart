@@ -6,8 +6,9 @@ import 'package:lab_movil_2222/authentication/splash/splash.screen.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/themes/textTheme.dart';
 
-// ignore: use_key_in_widget_constructors
 class App2222 extends StatelessWidget {
+  const App2222({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppProvider(

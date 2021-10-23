@@ -60,7 +60,6 @@ class _DaysCounter extends StatelessWidget {
       ErrorDescription('Document _configuration_ does not exists');
     }
 
-    // ignore: cast_nullable_to_non_nullable
     final Map<String, dynamic> payload = snap.data() as Map<String, dynamic>;
     final DateTime date =
         (payload['courseFinalizationDate'] as Timestamp).toDate();

@@ -87,8 +87,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [
+      backgrounds: const [
         BackgroundDecorationStyle.bottomRight,
         BackgroundDecorationStyle.path
       ],
@@ -119,8 +118,7 @@ class _ContributionScreenState extends State<ContributionScreen> {
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 32),
                 child: CoinsCheckWidget(
-                    coin: const MedalImage.contribution(),
-                    hasMedal: hasMedal)),
+                    coin: const MedalImage.contribution(), hasMedal: hasMedal)),
           ),
 
           /// collaboration data loading state

@@ -14,19 +14,12 @@ class CityResourcesDto {
 
   /// params
   final List<ExternalLinkDto> externalLinks;
-  
+
   final List<ReadingDto> readings;
 }
 
 class ReadingDto {
-  final ImageDto? cover;
-  final String about;
-  final String author;
-  final String name;
-  final String? link;
-  final int? publishedYear;
-
-  // ignore: sort_constructors_first
+  /// constructor
   ReadingDto.fromMap(Map<String, dynamic> payload)
       : name = payload['name'] as String? ?? 'Sin nombre',
         about = payload['about'] as String? ?? 'Sin descripción',
@@ -36,6 +29,13 @@ class ReadingDto {
         cover = (payload['cover']['url'] == null)
             ? null
             : ImageDto.fromMap(payload['cover'] as Map<String, dynamic>);
+
+  final ImageDto? cover;
+  final String about;
+  final String author;
+  final String name;
+  final String? link;
+  final int? publishedYear;
 
   String get validLink => link ?? 'https://www.google.com/search?q=$name';
 
@@ -47,12 +47,7 @@ class ReadingDto {
 }
 
 abstract class ExternalLinkDto {
-  final String kind;
-  final String link;
-  final String title;
-  final String description;
-
-  // ignore: sort_constructors_first
+  /// constructor
   ExternalLinkDto._fromMap(Map<String, dynamic> data)
       : kind = data['kind'] as String,
         link = data['link'] as String? ?? 'https://google.com',
@@ -80,6 +75,11 @@ abstract class ExternalLinkDto {
     }
     return _OtherLinkDto._fromMap(data);
   }
+
+  final String kind;
+  final String link;
+  final String title;
+  final String description;
 
   /// display an image if avalilable, otherise on
   ImageProvider get iconImage;

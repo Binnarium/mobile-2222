@@ -14,14 +14,13 @@ class SearchPlayersService {
 
     final response = await searchPlayers<String>(query.toMap());
 
-    // ignore: unnecessary_nullable_for_final_variable_declarations
-    final List<Map<String, dynamic>>? data =
+    final List<Map<String, dynamic>> data =
         (jsonDecode(response.data) as List<dynamic>)
             .map((dynamic e) => e as Map<String, dynamic>)
             .toList();
 
-    final List<SearchPlayerResultModel>? searchChatsResults = data
-        ?.map(
+    final List<SearchPlayerResultModel> searchChatsResults = data
+        .map(
           (e) => SearchPlayerResultModel.fromMap(e),
         )
         .toList();

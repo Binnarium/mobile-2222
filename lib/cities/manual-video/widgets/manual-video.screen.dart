@@ -15,8 +15,8 @@ import 'package:video_player/video_player.dart';
 class ManualVideoScreen extends StatefulWidget {
   const ManualVideoScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/manual-video';
@@ -59,8 +59,7 @@ class _ManualVideoScreenState extends State<ManualVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.bottomRight],
+      backgrounds: const [BackgroundDecorationStyle.bottomRight],
       route: ManualVideoScreen.route,
       body: Stack(
         children: <Widget>[

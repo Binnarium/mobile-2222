@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,6 @@ class UploadProjectService {
   final CurrentPlayerService _currentPlayerService;
 
   final FirebaseFirestore _fFirestore;
-
 
   Stream<bool> project$(CityModel city, ProjectFileDto file, bool allowAudio) {
     return _uploadProject$(
@@ -71,8 +70,7 @@ class UploadProjectService {
     );
   }
 
-  // ignore: avoid_void_async
-  static void writeMedal(String userUID, String cityRef) async {
+  static Future<void> writeMedal(String userUID, String cityRef) async {
     final Map<String, dynamic> medal = <String, dynamic>{
       'cityId': cityRef,
       'obtained': true,
@@ -86,8 +84,7 @@ class UploadProjectService {
     );
   }
 
-  // ignore: avoid_void_async
-  static void deletePlayerProjectFile(
+  static Future<void> deletePlayerProjectFile(
       String userUID, PlayerProject project) async {
     await FirebaseStorage.instance.refFromURL(project.file.url).delete();
     print('File successfully deleted from storage');

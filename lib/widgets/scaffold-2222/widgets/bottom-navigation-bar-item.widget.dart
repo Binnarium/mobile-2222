@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class Lab2222BottomNavigationBarItem extends StatelessWidget {
-  final ImageProvider icon;
-  final VoidCallback? onTap;
-  final Color iconColor;
-
-  // ignore: sort_constructors_first
   Lab2222BottomNavigationBarItem({
     Key? key,
     required this.icon,
@@ -25,6 +20,10 @@ class Lab2222BottomNavigationBarItem extends StatelessWidget {
                     ? Colors2222.white
                     : Colors2222.white.withOpacity(0.5),
         super(key: key);
+
+  final ImageProvider icon;
+  final VoidCallback? onTap;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {

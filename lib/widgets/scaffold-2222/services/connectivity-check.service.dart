@@ -6,15 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/connectivity-snackbar.widget.dart';
 
 class ConnectivityCheckService {
-  bool _neverShowAgain = false;
-
-  bool get neverShowAgain {
-    return _neverShowAgain;
-  }
-
-  set neverShowAgain(bool value) {
-    _neverShowAgain = value;
-  }
+  bool neverShowAgain = false;
 
   StreamSubscription<ConnectivityResult> checkConnectionType$(
       BuildContext context) {

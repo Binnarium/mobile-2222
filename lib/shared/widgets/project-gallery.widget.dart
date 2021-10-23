@@ -8,16 +8,17 @@ import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectGalleryWidget extends StatefulWidget {
-  final CityModel city;
-  final String userUID;
-  final List<PlayerProject> projects;
-  // ignore: sort_constructors_first
+  /// constructor
   const ProjectGalleryWidget({
     Key? key,
     required this.city,
     required this.userUID,
     required this.projects,
   }) : super(key: key);
+
+  final CityModel city;
+  final String userUID;
+  final List<PlayerProject> projects;
 
   @override
   _ProjectGalleryWidgetState createState() => _ProjectGalleryWidgetState();
@@ -30,14 +31,13 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
     final Size size = MediaQuery.of(context).size;
     final List<PlayerProject> cityProjects = [];
     List<Widget> items = [];
-    // ignore: avoid_function_literals_in_foreach_calls
-    widget.projects.forEach((element) {
+    for (final element in widget.projects) {
       // print(element.cityName);
       if (element.cityID == widget.city.name) {
         cityProjects.add(element);
       }
       // print("PROJECT: $project");
-    });
+    }
     if (cityProjects != <dynamic>[]) {
       items = _gridItemsList(cityProjects);
     }
@@ -84,12 +84,11 @@ class _ProjectGalleryWidgetState extends State<ProjectGalleryWidget> {
 
   List<Widget> _gridItemsList(List<PlayerProject> projects) {
     final List<Widget> items = [];
-    // ignore: avoid_function_literals_in_foreach_calls
-    projects.forEach((project) {
+    for (final project in projects) {
       if (project.cityID == widget.city.name) {
         items.add(_gridItem(project));
       }
-    });
+    }
     return items;
   }
 

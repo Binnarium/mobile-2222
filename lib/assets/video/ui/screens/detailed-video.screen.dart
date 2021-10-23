@@ -243,7 +243,9 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                       'payload': widget.videoDto.toMap()
                     }
                   ]);
-                } catch (e) {}
+                } catch (e) {
+                  print(e);
+                }
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -267,7 +269,9 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                       'payload': widget.videoDto.toMap()
                     }
                   ]);
-                } catch (e) {}
+                } catch (e) {
+                  print(e);
+                }
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(

@@ -1,12 +1,7 @@
 import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 class WelcomeDto {
-  final String pageTitle;
-  final String profundityText;
-  final String workloadText;
-  final VideoModel welcomeVideo;
-
-  // ignore: sort_constructors_first
+  /// constructor
   WelcomeDto.fromMap(Map<String, dynamic> payload)
       : pageTitle = payload['pageTitle'] as String? ?? 'No hay titulo definido',
         profundityText =
@@ -15,4 +10,9 @@ class WelcomeDto {
             'No hay texto de carga horaria',
         welcomeVideo =
             VideoModel.fromMap(payload['welcomeVideo'] as Map<String, dynamic>);
+
+  final String pageTitle;
+  final String profundityText;
+  final String workloadText;
+  final VideoModel welcomeVideo;
 }

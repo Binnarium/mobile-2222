@@ -101,8 +101,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
 
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       route: ClubhouseScreen.route,
       body: ListView(
         children: [
