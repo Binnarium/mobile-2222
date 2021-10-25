@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/video/models/video.model.dart';
+import 'package:lab_movil_2222/assets/video/models/better-video.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
@@ -16,13 +16,16 @@ class DetailedVideoScreen extends StatelessWidget {
   DetailedVideoScreen({
     Key? key,
     required this.video,
-  })  : controller = VideoPlayerController.network(video.url),
+  })  :
+
+        /// TODO: Add safety to this [video.sdUrl!] video might be null
+        controller = VideoPlayerController.network(video.sdUrl!),
         super(key: key);
 
   /// params
   static const String route = '/detailed-video';
 
-  final VideoModel video;
+  final BetterVideoModel video;
 
   final VideoPlayerController controller;
 
@@ -31,7 +34,7 @@ class DetailedVideoScreen extends StatelessWidget {
     return Scaffold2222.empty(
       backgroundColor: Colors2222.black,
       body: SizedBox.expand(
-        child: Lab2222VideoPlayer(controller: controller, videoDto: video),
+        child: Lab2222VideoPlayer(controller: controller, video: video),
       ),
     );
   }
@@ -41,11 +44,11 @@ class Lab2222VideoPlayer extends StatefulWidget {
   const Lab2222VideoPlayer({
     Key? key,
     required this.controller,
-    required this.videoDto,
+    required this.video,
   }) : super(key: key);
 
   final VideoPlayerController controller;
-  final VideoModel videoDto;
+  final BetterVideoModel video;
 
   @override
   State<Lab2222VideoPlayer> createState() => _Lab2222VideoPlayerState();
@@ -240,7 +243,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                   await callable.call<dynamic>([
                     {
                       'problem': 'Video not loading',
-                      'payload': widget.videoDto.toMap()
+                      'payload': widget.video.toMap()
                     }
                   ]);
                 } catch (e) {
@@ -266,7 +269,7 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                   await callable.call<dynamic>([
                     {
                       'problem': 'Video is black screen',
-                      'payload': widget.videoDto.toMap()
+                      'payload': widget.video.toMap()
                     }
                   ]);
                 } catch (e) {
