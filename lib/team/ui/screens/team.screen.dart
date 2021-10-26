@@ -51,14 +51,12 @@ class _TeamScreenState extends State<TeamScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Scaffold2222.empty(
+    return Scaffold2222.navigation(
+      activePage: null,
       backgrounds: const [
         BackgroundDecorationStyle.path,
         BackgroundDecorationStyle.bottomRight
       ],
-      appBar: AppBar(
-        backgroundColor: Colors2222.red,
-      ),
       body: (teamDto == null)
           ? const Center(
               child: CircularProgressIndicator(
@@ -70,7 +68,7 @@ class _TeamScreenState extends State<TeamScreen> {
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.1,
-                vertical: 24,
+                vertical: 80,
               ),
               child: TeamContentMarkdown(
                 teamContent: teamDto!.teamText,
