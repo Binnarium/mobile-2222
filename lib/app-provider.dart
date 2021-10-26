@@ -17,6 +17,7 @@ import 'package:lab_movil_2222/chat/services/list-messages.service.dart';
 import 'package:lab_movil_2222/chat/services/send-message.service.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
+import 'package:lab_movil_2222/cities/clubhouse/services/create-clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/get-clubhouse-explanation.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
@@ -109,8 +110,11 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => ContributionActivityService(ctx)),
 
             /// clubhouse services
-            Provider(create: (ctx) => LoadUserClubhouseService(ctx)),
-            Provider(create: (ctx) => ClubhouseActivityService(ctx)),
+            ...[
+              Provider(create: (ctx) => CreateClubhouseService(ctx)),
+              Provider(create: (ctx) => LoadUserClubhouseService(ctx)),
+              Provider(create: (ctx) => ClubhouseActivityService(ctx)),
+            ],
 
             /// project services
             Provider(create: (ctx) => LoadProjectFiles(ctx)),

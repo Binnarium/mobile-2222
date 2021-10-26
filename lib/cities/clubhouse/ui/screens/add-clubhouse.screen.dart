@@ -1,17 +1,13 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/clubhouse/models/clubhouse.model.dart';
-import 'package:lab_movil_2222/cities/clubhouse/models/create-clubhouse.model.dart';
+import 'package:lab_movil_2222/cities/clubhouse/services/create-clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.service.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-event-card.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-explanation.widget.dart';
 import 'package:lab_movil_2222/cities/clubhouse/ui/widgets/clubhouse-section-title.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -33,13 +29,19 @@ class AddClubhouseScreen extends StatefulWidget {
 }
 
 class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
+  String? clubhouseUrl;
+
   StreamSubscription? clubhousesSub;
+  StreamSubscription? createClubhousesSub;
 
   List<ClubhouseModel>? clubhouses;
+
   final TextEditingController _addClubhouseController = TextEditingController();
 
   LoadUserClubhouseService get _loadUserClubhouseService =>
       Provider.of<LoadUserClubhouseService>(context, listen: false);
+  CreateClubhouseService get _createClubhouseService =>
+      Provider.of<CreateClubhouseService>(context, listen: false);
 
   @override
   void initState() {
@@ -55,6 +57,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
   @override
   void dispose() {
     clubhousesSub?.cancel();
+    createClubhousesSub?.cancel();
     super.dispose();
   }
 
@@ -104,29 +107,7 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
                   primary: Colors2222.black,
                   elevation: 5,
                 ),
-                onPressed: () async {
-                  if (clubhouseUrl == null) {
-                    return;
-                  }
-                  final FirebaseFirestore _fFirestore =
-                      FirebaseFirestore.instance;
-                  final FirebaseAuth _fAuth = FirebaseAuth.instance;
-                  final CreateClubhouseModel createClubhouseModel =
-                      CreateClubhouseModel(
-                    cityId: widget.city.id,
-                    clubhouseUrl: clubhouseUrl!,
-                    id: Random().generateString(size: 15),
-                    uploaderId: _fAuth.currentUser!.uid,
-                  );
-
-                  await _fFirestore
-                      .collection('clubhouse')
-                      .doc(createClubhouseModel.id)
-                      .set(createClubhouseModel.toMap());
-
-                  clubhouseUrl = null;
-                  _addClubhouseController.clear();
-                },
+                onPressed: _createClubhouse,
                 child: const Text('Agregar Evento'),
               ),
             ),
@@ -182,5 +163,45 @@ class _AddClubhouseScreenState extends State<AddClubhouseScreen> {
     );
   }
 
-  String? clubhouseUrl;
+  void _createClubhouse() {
+    if (clubhouseUrl == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Se esta guardando el evento',
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (createClubhousesSub != null) return;
+
+    createClubhousesSub = _createClubhouseService
+        .create$(city: widget.city, url: clubhouseUrl!)
+        .listen((created) {
+      if (created) {
+        clubhouseUrl = null;
+        _addClubhouseController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Evento guardado',
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'No se pudo guardar el evento',
+            ),
+          ),
+        );
+      }
+    }, onDone: () {
+      createClubhousesSub!.cancel();
+      createClubhousesSub = null;
+    });
+  }
 }

@@ -26,7 +26,7 @@ class LoadUserClubhouseService {
         }
 
         final Query<Map<String, dynamic>> query = _fFirestore
-            .collection('clubhouse')
+            .collectionGroup('clubhouse')
             .where('cityId', isEqualTo: city.id)
             .where('uploaderId', isEqualTo: user.uid)
             .orderBy('date', descending: false);

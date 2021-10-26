@@ -11,7 +11,10 @@ class LoadPlayerScoreboardService {
     /// select players whit the highest level of [proactivity],
     /// limit select to 30 players
     final Query groupQuery =
-        _fFirestore.collection('players').orderBy('proactivity', descending: true).limit(200);
+        _fFirestore
+        .collection('players')
+        .orderBy('proactivity', descending: true)
+        .limit(10);
     return groupQuery
         .snapshots()
 
