@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/audio/services/upload-audio.service.dart';
 import 'package:lab_movil_2222/cities/project/models/project-activity.model.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
@@ -46,10 +47,10 @@ class _UploadFileButtonState extends State<UploadFileButton> {
   UploadProjectService get _uploadProjectService =>
       Provider.of<UploadProjectService>(context, listen: false);
 
-  UploadPdfService get uploadFileService =>
-      // (widget.projectFileAllowed == ProjectFileAllowed.AUDIO)
-      //     ? Provider.of<UploadAudioService>(context, listen: false)
-      //     :
+  UploadAudioService get uploadAudioService =>
+      Provider.of<UploadAudioService>(context, listen: false);
+
+  UploadPdfService get uploadPdfService =>
       Provider.of<UploadPdfService>(context, listen: false);
 
   CurrentPlayerService get currentPlayerService =>
@@ -67,96 +68,62 @@ class _UploadFileButtonState extends State<UploadFileButton> {
     if (currentPlayer == null) return;
 
     if (_uploadFileSub != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Ya se esta subiendo un archivo',
+          ),
+        ),
+      );
+
       return;
     }
-
-    _uploadFileSub = uploadFileService
-        .upload$(path: 'players/${currentPlayer.uid}/${widget.city.name}/')
-        .switchMap(
-          (file) => _uploadProjectService.project$(widget.city, file),
-        )
-        .listen(
-      (sended) {
-        /// TODO: catch error when error occurs
-      },
-      onDone: () {
-        _uploadFileSub?.cancel();
-        _uploadFileSub = null;
-        Navigator.pop(context);
-      },
-    );
+    if (widget.projectFileAllowed == ProjectFileAllowed.AUDIO) {
+      _uploadFileSub = uploadAudioService
+          .upload$(path: 'players/${currentPlayer.uid}/${widget.city.id}/')
+          .switchMap(
+            (file) => _uploadProjectService.project$(widget.city, file),
+          )
+          .listen(
+        (sended) {
+          ScaffoldMessenger.of(context).clearSnackBars();
+          if (!sended)
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'No se pudo subir el documento, vuelve a intentarlo',
+                ),
+              ),
+            );
+        },
+        onDone: () {
+          _uploadFileSub?.cancel();
+          _uploadFileSub = null;
+        },
+      );
+    } else {
+      _uploadFileSub = uploadPdfService
+          .upload$(path: 'players/${currentPlayer.uid}/${widget.city.id}/')
+          .switchMap(
+            (file) => _uploadProjectService.project$(widget.city, file),
+          )
+          .listen(
+        (sended) {
+          ScaffoldMessenger.of(context).clearSnackBars();
+          if (!sended)
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'No se pudo subir el documento, vuelve a intentarlo',
+                ),
+              ),
+            );
+        },
+        onDone: () {
+          _uploadFileSub?.cancel();
+          _uploadFileSub = null;
+        },
+      );
+    }
   }
 }
-
-// /// Creates alert dialog to upload file [color] is needed to create the button
-// /// with the city color
-// class UploadFileDialog extends StatefulWidget {
-//   const UploadFileDialog({
-//     Key? key,
-//     required this.color,
-//     required this.city,
-//     required this.projectDto,
-//     required this.currentPlayer,
-//     required this.hasMedal,
-//   }) : super(key: key);
-
-//   final Color color;
-//   final CityModel city;
-//   final ProjectScreenModel projectDto;
-//   final PlayerModel currentPlayer;
-//   final bool hasMedal;
-
-//   @override
-//   _UploadFileDialogState createState() => _UploadFileDialogState();
-// }
-
-// class _UploadFileDialogState extends State<UploadFileDialog> {
-//   StreamSubscription? _uploadFileSub;
-
-//   UploadProjectService get _uploadProjectService =>
-//       Provider.of<UploadProjectService>(context, listen: false);
-
-//   @override
-//   void initState() {
-//     print('current player: ${widget.currentPlayer.displayName}');
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     _uploadFileSub?.cancel();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       backgroundColor: Colors2222.black,
-//       content: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Text(
-//             'Elige tu proyecto',
-//             style: Theme.of(context).textTheme.headline6,
-//           ),
-//           const SizedBox(
-//             height: 16,
-//           ),
-//           const SizedBox(height: 8),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//           ButtonWidget(
-//             color: widget.color,
-//             icon: Icons.upload_file_rounded,
-//             text: 'Subir archivo',
-//             onClicked: _uploadFile,
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//         ],
-//       ),
-//     );
-//   }

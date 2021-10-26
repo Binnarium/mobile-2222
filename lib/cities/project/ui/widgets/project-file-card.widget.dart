@@ -21,8 +21,10 @@ class ProjectFileCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Material(
       borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.hardEdge,
       type: MaterialType.transparency,
       child: InkWell(
         onTap: () async {
@@ -33,7 +35,7 @@ class ProjectFileCardWidget extends StatelessWidget {
               });
         },
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(size.width * 0.04),
           child: Column(
             children: [
               Image.asset('assets/icons/upload_project_icon.png'),

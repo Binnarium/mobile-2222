@@ -15,11 +15,9 @@ class FilesGalleryWidget extends StatefulWidget {
   const FilesGalleryWidget({
     Key? key,
     required this.city,
-    required this.userUID,
   }) : super(key: key);
 
   final CityModel city;
-  final String userUID;
 
   @override
   _FilesGalleryWidgetState createState() => _FilesGalleryWidgetState();
@@ -89,14 +87,11 @@ class _FilesGalleryWidgetState extends State<FilesGalleryWidget> {
 
     /// grid with uploaded files
     return StaggeredGridView.countBuilder(
-      crossAxisCount: 2,
+      crossAxisCount: 3,
       staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
       itemCount: projectFiles!.length,
-      padding: const EdgeInsets.all(12),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      mainAxisSpacing: 16,
-      crossAxisSpacing: 10,
       itemBuilder: (context, index) => ProjectFileCardWidget(
         projectFile: projectFiles![index],
         cityModel: widget.city,

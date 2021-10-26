@@ -9,7 +9,6 @@ import 'package:lab_movil_2222/cities/project/ui/widgets/files-gallery.widget.da
 import 'package:lab_movil_2222/cities/project/ui/widgets/upload-file-button.widget.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
-import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
@@ -41,7 +40,7 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
   StreamSubscription? _userServiceSub;
 
   StreamSubscription? _loadProjectDtoSub;
-  PlayerModel? currentPlayer;
+
   bool hasMedal = false;
 
   CurrentPlayerService get _currentPlayerService =>
@@ -53,17 +52,12 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
     _userServiceSub = _currentPlayerService.player$.listen((player) {
       if (mounted) {
         setState(() {
-          currentPlayer = player;
+          /// seeks for all medals in the medals array
+          player!.projectAwards.asMap().forEach((key, value) {
+            if (value.cityId == widget.city.id) hasMedal = true;
+          });
         });
       }
-
-      /// seeks for all medals in the medals array
-      currentPlayer!.projectAwards.asMap().forEach((key, value) {
-        if (value.cityId == widget.city.name) {
-          hasMedal = true;
-          print('hay medalla');
-        }
-      });
     });
 
     /// load the provider to load the projectDTO
@@ -103,122 +97,118 @@ class _CityProjectScreenState extends State<CityProjectScreen> {
         BackgroundDecorationStyle.path
       ],
       route: CityProjectScreen.route,
-      body: currentPlayer == null
+      body: ListView(
+        children: [
+          /// icon item
+          LogosHeader(
+            showStageLogoCity: widget.city,
+          ),
 
-          /// loading state
-          ? const AppLoading()
+          /// spacer
+          const SizedBox(height: 32),
 
-          /// page content
-          : ListView(
-              children: [
-                /// icon item
-                LogosHeader(
-                  showStageLogoCity: widget.city,
-                ),
-
-                /// spacer
-                const SizedBox(height: 32),
-
-                Center(
-                  child: SizedBox(
-                    width: min(300, size.width * 0.9),
-                    child: Text(
-                      'PROYECTO DOCENTE'.toUpperCase(),
-                      style: textTheme.headline4,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-
-                /// spacer
-                const SizedBox(height: 24),
-
-                Center(
-                  child: CoinsCheckWidget(
-                    coin: const MedalImage.project(),
-                    hasMedal: hasMedal,
-                  ),
-                ),
-
-                /// spacer
-                const SizedBox(height: 32),
-
-                ///
-                if (projectScreen == null)
-                  const AppLoading()
-                else ...[
-                  Padding(
-                    padding: horizontalPadding,
-                    child: Text(
-                      projectScreen!.activity,
-                      style: textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  /// spacer
-                  const SizedBox(height: 28),
-
-                  ///
-                  Padding(
-                    padding: horizontalPadding,
-                    child: Markdown2222(
-                      data: projectScreen!.explanation,
-                      contentAlignment: WrapAlignment.start,
-                    ),
-                  ),
-
-                  /// spacer
-                  const SizedBox(height: 20),
-
-                  /// if audio is available then show the audio player
-                  if (projectScreen!.audio != null) ...[
-                    Container(
-                      alignment: Alignment.center,
-                      padding: horizontalPadding,
-                      child: AudioPlayerWidget(
-                        audio: projectScreen!.audio!,
-                        color: widget.city.color,
-                      ),
-                    ),
-
-                    /// spacer
-                    const SizedBox(height: 32),
-                  ],
-
-                  /// upload file couldn't be found
-                  if (projectScreen!.allowed ==
-                      ProjectFileAllowed.NOT_IMPLEMENTED)
-                    const Text('Actualiza tu aplicación')
-
-                  /// allow video or audio file
-                  else if ([ProjectFileAllowed.AUDIO, ProjectFileAllowed.PDF]
-                      .contains(projectScreen!.allowed)) ...[
-                    Padding(
-                      padding: horizontalPadding,
-                      child: FilesGalleryWidget(
-                        city: widget.city,
-                        userUID: currentPlayer?.uid ?? '',
-                      ),
-                    ),
-
-                    Padding(
-                      padding: horizontalPadding,
-                      child: UploadFileButton(
-                        city: widget.city,
-                        projectFileAllowed: projectScreen!.allowed,
-                      ),
-                    ),
-
-                    /// spacer
-                    const SizedBox(height: 40),
-                  ],
-                ],
-              ],
+          Center(
+            child: SizedBox(
+              width: min(300, size.width * 0.9),
+              child: Text(
+                'PROYECTO DOCENTE'.toUpperCase(),
+                style: textTheme.headline4,
+                textAlign: TextAlign.center,
+              ),
             ),
+          ),
+
+          /// spacer
+          const SizedBox(height: 24),
+
+          Center(
+            child: CoinsCheckWidget(
+              coin: const MedalImage.project(),
+              hasMedal: hasMedal,
+            ),
+          ),
+
+          /// spacer
+          const SizedBox(height: 32),
+
+          ///
+          if (projectScreen == null)
+            const AppLoading()
+          else ...[
+            Padding(
+              padding: horizontalPadding,
+              child: Text(
+                projectScreen!.activity,
+                style: textTheme.headline6!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            /// spacer
+            const SizedBox(height: 28),
+
+            ///
+            Padding(
+              padding: horizontalPadding,
+              child: Markdown2222(
+                data: projectScreen!.explanation,
+                contentAlignment: WrapAlignment.start,
+              ),
+            ),
+
+            /// spacer
+            const SizedBox(height: 20),
+
+            /// if audio is available then show the audio player
+            if (projectScreen!.audio != null) ...[
+              Container(
+                alignment: Alignment.center,
+                padding: horizontalPadding,
+                child: AudioPlayerWidget(
+                  audio: projectScreen!.audio!,
+                  color: widget.city.color,
+                ),
+              ),
+
+              /// spacer
+              const SizedBox(height: 32),
+            ],
+
+            /// upload file couldn't be found
+            if (projectScreen!.allowed == ProjectFileAllowed.NOT_IMPLEMENTED)
+              const Text('Actualiza tu aplicación')
+
+            /// allow video or audio file
+            else if ([ProjectFileAllowed.AUDIO, ProjectFileAllowed.PDF]
+                .contains(projectScreen!.allowed)) ...[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                child: FilesGalleryWidget(
+                  city: widget.city,
+                ),
+              ),
+
+              /// spacer
+              const SizedBox(height: 16),
+
+              ///
+              Padding(
+                padding: horizontalPadding,
+                child: UploadFileButton(
+                  city: widget.city,
+                  projectFileAllowed: projectScreen!.allowed,
+                ),
+              ),
+
+              /// spacer
+              const SizedBox(height: 40),
+            ],
+          ],
+        ],
+      ),
     );
   }
 }
