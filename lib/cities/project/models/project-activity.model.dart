@@ -1,8 +1,15 @@
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 
-class ProjectScreenModel {
+enum ProjectFileAllowed {
+  PDF,
+  AUDIO,
+  NONE,
+  NOT_IMPLEMENTED,
+}
+
+class ProjectActivityModel {
   /// constructor
-  ProjectScreenModel.fromJson(Map<String, dynamic> payload)
+  ProjectActivityModel.fromJson(Map<String, dynamic> payload)
       : activity =
             payload['activity'] as String? ?? 'No hay actividad definida',
         explanation = payload['explanation'] as String? ??
@@ -17,7 +24,10 @@ class ProjectScreenModel {
   final String allow;
   final AudioDto? audio;
 
-  bool get allowFile => allow == 'ALLOW#FILE';
-  bool get allowAudio => allow == 'ALLOW#AUDIO';
-  bool get allowNone => allow == 'ALLOW#NONE';
+  ProjectFileAllowed get allowed {
+    if (allow == 'ALLOW#FILE') return ProjectFileAllowed.PDF;
+    if (allow == 'ALLOW#AUDIO') return ProjectFileAllowed.AUDIO;
+    if (allow == 'ALLOW#NONE') return ProjectFileAllowed.NONE;
+    return ProjectFileAllowed.NOT_IMPLEMENTED;
+  }
 }

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/player/models/course-status.enum.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';

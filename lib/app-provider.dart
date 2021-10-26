@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
+import 'package:lab_movil_2222/assets/audio/services/upload-audio.service.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
 import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
@@ -70,11 +71,10 @@ class AppProvider extends MultiProvider {
             /// player services
             Provider(create: (_) => CurrentPlayerService()),
             Provider(create: (_) => CurrentAudioProvider()),
-            Provider(create: (_) => UploadImageService()),
             Provider(create: (_) => GetContributionExplanationService()),
             Provider(create: (_) => GetClubhouseExplanationService()),
             Provider(create: (_) => LoadMonsterService()),
-            Provider(create: (_) => UploadFileService()),
+
             Provider(create: (_) => SearchPlayersService()),
             Provider(create: (_) => LoadPlayerService()),
             Provider(create: (_) => LoadPlayerScoreboardService()),
@@ -128,10 +128,17 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => ListMessagesService(ctx)),
             Provider(create: (ctx) => DeleteMessageService(ctx)),
 
+            /// upload services
+            ...[
+              Provider(create: (_) => UploadImageService()),
+              Provider(create: (_) => UploadPdfService()),
+              Provider(create: (_) => UploadAudioService()),
+              Provider(create: (_) => UploadVideoService()),
+            ],
+
             /// video assets services
             ...[
               Provider(create: (_) => LoadBetterVideoService()),
-              Provider(create: (_) => UploadVideoService()),
             ],
           ],
 

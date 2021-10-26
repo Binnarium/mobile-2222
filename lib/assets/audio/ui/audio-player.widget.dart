@@ -6,7 +6,7 @@ import 'package:lab_movil_2222/assets/audio/model/audio-player.extension.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-controls.widget.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-slider.widget.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:provider/provider.dart';
 

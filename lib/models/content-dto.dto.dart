@@ -1,4 +1,4 @@
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 abstract class ContentDto<T> {

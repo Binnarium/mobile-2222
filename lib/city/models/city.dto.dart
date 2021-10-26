@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/city/models/city-configuration.model.dart';
 import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
 

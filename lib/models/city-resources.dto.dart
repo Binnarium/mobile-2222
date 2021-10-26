@@ -1,5 +1,5 @@
 import 'package:flutter/rendering.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 
 class CityResourcesDto {
   /// constructor

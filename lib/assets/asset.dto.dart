@@ -69,17 +69,7 @@ class ImageDto extends AssetDto {
 
 /// Audio asset
 class AudioDto extends AssetDto {
-  AudioDto.fromMap(final Map<String, dynamic> payload)
-      : super(
-          name: payload['name'] as String,
-          path: payload['path'] as String,
-          url: payload['url'] as String,
-        );
-}
-
-/// Project File asset
-class ProjectFileDto extends AssetDto {
-  ProjectFileDto({
+  AudioDto({
     required String name,
     required String path,
     required String url,
@@ -89,7 +79,27 @@ class ProjectFileDto extends AssetDto {
           url: url,
         );
 
-  ProjectFileDto.fromMap(final Map<String, dynamic> payload)
+  AudioDto.fromMap(final Map<String, dynamic> payload)
+      : super(
+          name: payload['name'] as String,
+          path: payload['path'] as String,
+          url: payload['url'] as String,
+        );
+}
+
+/// Project File asset
+class PdfDto extends AssetDto {
+  PdfDto({
+    required String name,
+    required String path,
+    required String url,
+  }) : super(
+          name: name,
+          path: path,
+          url: url,
+        );
+
+  PdfDto.fromMap(final Map<String, dynamic> payload)
       : super(
           name: payload['name'] as String? ?? '',
           path: payload['path'] as String? ?? '',
