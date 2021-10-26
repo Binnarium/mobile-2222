@@ -21,7 +21,7 @@ const Map<AppImage, ImageProvider> _AppImages = {
   AppImage.defaultAppLogo: AssetImage('assets/images/logo-2222.png'),
   AppImage.animatedAppLogo: AssetImage('assets/images/logo-2222.png'),
   AppImage.utplLogo: AssetImage('assets/images/logo-utpl.png'),
-  AppImage.loadingLogo: AssetImage('assets/gifs/loading.gif'),
+  AppImage.loadingLogo: AssetImage('assets/loaders/monster-placeholder.gif'),
 };
 
 /// wrapper to get an app logo
