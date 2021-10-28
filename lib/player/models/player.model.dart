@@ -13,7 +13,7 @@ class PlayerModel {
     required this.projectAwards,
     required this.contributionsAwards,
     required this.clubhouseAwards,
-    required this.maratonAwards,
+    required this.marathonAwards,
     required this.avatarImage,
     required this.groupId,
     required this.pubCode,
@@ -40,7 +40,7 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
       contributionsAwards:
           PlayerModel._getAwardsFromPayload(payload['contributionsAwards']),
-      maratonAwards:
+      marathonAwards:
           PlayerModel._getAwardsFromPayload(payload['marathonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
@@ -58,7 +58,7 @@ class PlayerModel {
   final List<AwardModel> projectAwards;
   final List<AwardModel> contributionsAwards;
   final List<AwardModel> clubhouseAwards;
-  final List<AwardModel> maratonAwards;
+  final List<AwardModel> marathonAwards;
 
   /// player pub
   final String pubCode;

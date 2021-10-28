@@ -18,19 +18,16 @@ class PlayerGamification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int numberProactivity = player.clubhouseAwards.length +
-        player.projectAwards.length +
-        player.contributionsAwards.length;
 
     return Column(
       children: [
         /// player's gamification
         ObtainedMedalsCardWidget(
-          numberOfMedals: numberProactivity,
+          numberOfMedals: player.proactivity,
           label: 'Nivel de Proactividad'.toUpperCase(),
-          image: (numberProactivity < 10)
+          image: (player.proactivity < 10)
               ? const MedalImage.redCoin()
-              : (numberProactivity < 20)
+              : (player.proactivity < 20)
                   ? const MedalImage.yellowCoin()
                   : const MedalImage.greenCoin(),
           numberColor: Colors2222.black,
@@ -72,7 +69,7 @@ class PlayerGamification extends StatelessWidget {
         const SizedBox(height: 25),
 
         ObtainedMedalsCardWidget(
-          numberOfMedals: player.maratonAwards.length,
+          numberOfMedals: player.marathonAwards.length,
           label: 'Maratón \nFinal'.toUpperCase(),
           image: const MedalImage.marathon(),
           numberColor: Colors2222.darkGrey,

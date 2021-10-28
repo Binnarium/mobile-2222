@@ -56,7 +56,7 @@ class _ClubhouseScreenState extends State<ClubhouseScreen> {
         setState(() {
           /// seeks for all medals in the medals array
           player!.clubhouseAwards.asMap().forEach((key, value) {
-            if (value.cityId.toLowerCase() == widget.city.name.toLowerCase()) {
+            if (value.cityId == widget.city.id) {
               hasMedal = true;
               print('hay medalla clubhouse');
             }
