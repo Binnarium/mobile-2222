@@ -117,32 +117,6 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
                 context: context,
                 numberProactivity: teammates![i].proactivity,
               ),
-
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.1,
-                vertical: 15,
-              ),
-              child: Text(
-                'El último de los 200',
-                style:
-                    textTheme.headline5!.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-
-            ListScoreboardPlayers(
-              participant: teammates!.last,
-              context: context,
-              numberProactivity: teammates!.last.proactivity,
-            ),
-            if (playerScore == null)
-              const AppLoading()
-            else ...[
-              ListScoreboardPlayers(
-                  participant: playerScore!,
-                  context: context,
-                  numberProactivity: playerScore!.proactivity)
-            ]
           ],
         ],
       ),
