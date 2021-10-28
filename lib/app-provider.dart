@@ -29,6 +29,7 @@ import 'package:lab_movil_2222/city/services/load-cities-with-map-position.servi
 import 'package:lab_movil_2222/player/gamification-explanation/services/gamification-explanation.service.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
+import 'package:lab_movil_2222/player/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
 import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
@@ -39,7 +40,6 @@ import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/services/load-player-information.service.dart';
-import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/services/load-project-activity.service.dart';
 import 'package:lab_movil_2222/team/services/load-team.service.dart';
 import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.dart';
@@ -78,7 +78,7 @@ class AppProvider extends MultiProvider {
 
             Provider(create: (_) => SearchPlayersService()),
             Provider(create: (_) => LoadPlayerService()),
-            Provider(create: (_) => LoadPlayerScoreboardService()),
+            Provider(create: (ctx) => LoadPlayerScoreboardService(ctx)),
             Provider(create: (_) => WelcomeService()),
             Provider(create: (_) => LoadStartVideoService()),
             Provider(create: (_) => LoadTeamService()),

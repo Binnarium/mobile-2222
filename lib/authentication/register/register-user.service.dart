@@ -47,6 +47,7 @@ class RegisterService {
       uid: user.uid,
       displayName: '${playerInscribed.name} ${playerInscribed.lastName}',
       email: formModel.email!,
+      playerType: playerInscribed.playerType,
     );
 
     final PlayerModel newPlayer = await _createPlayer(user.uid, newPlayerMap);

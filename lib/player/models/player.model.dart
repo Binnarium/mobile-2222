@@ -19,6 +19,7 @@ class PlayerModel {
     required this.pubCode,
     required this.courseStatus,
     required this.proactivity,
+    required this.playerType,
     this.pubUserId,
   });
 
@@ -34,6 +35,7 @@ class PlayerModel {
       proactivity: payload['proactivity'] as int? ?? 0,
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
+      playerType: payload['playerType'] as String?,
       groupId: payload['groupId'] as String,
       courseStatus: courseStatusFromString(payload['courseStatus'] as String?),
       clubhouseAwards:
@@ -66,6 +68,7 @@ class PlayerModel {
 
   /// course status
   final CourseStatus courseStatus;
+  final String? playerType;
 
   static List<AwardModel> _getAwardsFromPayload(dynamic payload) {
     return ((payload ?? <dynamic>[]) as List)
@@ -78,11 +81,13 @@ Map<String, dynamic> createNewPlayerMap({
   required String uid,
   required String displayName,
   required String email,
+  String? playerType,
 }) {
   return <String, dynamic>{
     'uid': uid,
     'displayName': displayName,
     'email': email,
+    'playerType': playerType,
     'projectAwards': <void>[],
     'contributionsAwards': <void>[],
     'clubhouseAwards': <void>[],

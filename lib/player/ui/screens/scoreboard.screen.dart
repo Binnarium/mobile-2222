@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
+import 'package:lab_movil_2222/player/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/list-scoreboard.widget.dart';
-import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
@@ -46,7 +46,7 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
     super.initState();
 
     ///load list of players in order by proactivity
-    _scoreboardSub = _playersScoreBoard.loadScoreboard$().listen((players) {
+    _scoreboardSub = _playersScoreBoard.loadScoreboard$.listen((players) {
       setState(() {
         teammates = players;
       });
