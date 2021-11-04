@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/models/better-video.model.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -11,30 +12,52 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
-class DetailedVideoScreen extends StatelessWidget {
+class DetailedVideoScreen extends StatefulWidget {
   /// constructor
-  DetailedVideoScreen({
+  const DetailedVideoScreen({
     Key? key,
     required this.video,
-  })  :
-
-        /// TODO: Add safety to this [video.sdUrl!] video might be null
-        controller = VideoPlayerController.network(video.sdUrl!),
-        super(key: key);
+  }) : super(key: key);
 
   /// params
   static const String route = '/detailed-video';
 
   final BetterVideoModel video;
 
-  final VideoPlayerController controller;
+  @override
+  State<DetailedVideoScreen> createState() => _DetailedVideoScreenState();
+}
+
+class _DetailedVideoScreenState extends State<DetailedVideoScreen> {
+  /// provider of the connectivity check service
+  late final ConnectivityCheckService connectivityProvider;
+  late final VideoPlayerController controller;
+
+  /// variable that will allow us to know the current connection type
+  late final ConnectivityResult connectionStatus;
+
+  @override
+  void didChangeDependencies() {
+    /// initialize the provider (needs to be on this method)
+    connectivityProvider = Provider.of<ConnectivityCheckService>(context);
+    connectivityProvider.checkConnectionType$();
+    connectionStatus = connectivityProvider.connectionType;
+
+    /// initializes the controller depending on user connection type
+    if (connectionStatus == ConnectivityResult.wifi) {
+      controller = VideoPlayerController.network(widget.video.hdUrl!);
+    } else {
+      controller = VideoPlayerController.network(widget.video.sdUrl!);
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold2222.empty(
       backgroundColor: Colors2222.black,
       body: SizedBox.expand(
-        child: Lab2222VideoPlayer(controller: controller, video: video),
+        child: Lab2222VideoPlayer(controller: controller, video: widget.video),
       ),
     );
   }
@@ -58,17 +81,6 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   bool showControls = true;
 
   Timer? currentTimer;
-
-  /// provider of the connectivity check service
-  late final ConnectivityCheckService conectivityProvider;
-
-  @override
-  void didChangeDependencies() {
-    /// initialize the provider (needs to be on this method)
-    conectivityProvider = Provider.of<ConnectivityCheckService>(context);
-    conectivityProvider.checkConnectionType$(context);
-    super.didChangeDependencies();
-  }
 
   @override
   void initState() {
@@ -102,6 +114,17 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    /// the video quality
+    bool isHD = false;
+
+    /// checks the link of the video depending on quality
+    if (widget.video.sdUrl == widget.controller.dataSource) {
+      isHD = false;
+    }
+    if (widget.video.hdUrl == widget.controller.dataSource) {
+      isHD = true;
+    }
 
     return Stack(
       children: [
@@ -199,7 +222,8 @@ class _Lab2222VideoPlayerState extends State<Lab2222VideoPlayer> {
                   left: size.width * 0.02,
                   right: size.width * 0.02,
                   bottom: size.width * 0.03,
-                  child: VideoPlayerControls(controller: widget.controller),
+                  child: VideoPlayerControls(
+                      controller: widget.controller, isHD: isHD),
                 ),
               ],
             ),
@@ -297,9 +321,11 @@ class VideoPlayerControls extends StatefulWidget {
   const VideoPlayerControls({
     Key? key,
     required this.controller,
+    this.isHD,
   }) : super(key: key);
 
   final VideoPlayerController controller;
+  final bool? isHD;
 
   @override
   State<VideoPlayerControls> createState() => _VideoPlayerControlsState();
@@ -405,6 +431,20 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                     onPressed: _velocityBottomSheet,
                     icon: const Icon(Icons.speed_rounded),
                   ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Material(
+                  color: Colors2222.transparent,
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(4),
+                  child: IconButton(
+                      onPressed: null,
+                      icon: (widget.isHD!)
+                          ? const Icon(Icons.hd_outlined)
+                          : const Icon(Icons.sd_outlined)),
                 ),
               ),
             ],
