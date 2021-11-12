@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/course-status.enum.dart';
@@ -112,7 +113,7 @@ class CityMapButton extends StatelessWidget {
     final PlayerModel? currentPlayer = _playerService.currentPlayer;
 
     /// let them in
-    if (currentPlayer?.allowWebAccess == false) {
+    if (kIsWeb && (currentPlayer?.allowWebAccess == false)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
