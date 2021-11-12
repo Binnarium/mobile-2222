@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/chat/chats/services/list-chats-folders.service.da
 import 'package:lab_movil_2222/chat/chats/ui/widgets/chat-folder-list-item.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/chat-text-description.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/team/ui/widgets/goto-support-form.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
@@ -86,6 +87,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
             for (ChatFolderModel folder in chatFolders!)
               ChatFolderListItem(folder: folder, context: context),
           ],
+
+          Padding(
+            padding: EdgeInsets.fromLTRB(sidePadding, 15, sidePadding, 20),
+            child: const GotoSupportForm()
+          ),
+
+          
         ],
       ),
     );
