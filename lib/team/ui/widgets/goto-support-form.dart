@@ -25,7 +25,7 @@ class GotoSupportForm extends StatelessWidget {
             launch(pageURL);
           },
           child: Text(
-            'Reporta un Problema',
+            'Reportar un problema',
             style: textTheme.button,
           ),
         ),
