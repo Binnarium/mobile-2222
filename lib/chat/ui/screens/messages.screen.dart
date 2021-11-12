@@ -1,18 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/chat/chats/models/chat.model.dart';
 import 'package:lab_movil_2222/chat/ui/screens/chat-participants.screen.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/message-list.widget.dart';
 import 'package:lab_movil_2222/chat/ui/widgets/messages-input.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
+import 'package:provider/provider.dart';
 
 class MessagesScreen extends StatefulWidget {
   /// constructor
   const MessagesScreen({
     Key? key,
-    required ChatModel chat,
-  })  : chat = chat,
+    required ChatModel chatModel,
+  })  : chat = chatModel,
         super(key: key);
 
   /// params
@@ -24,6 +28,30 @@ class MessagesScreen extends StatefulWidget {
 }
 
 class _MessagesScreenState extends State<MessagesScreen> {
+  CurrentPlayerService get currentPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
+
+  PlayerModel? currentPlayer;
+
+  StreamSubscription? playerSub;
+
+  @override
+  void initState() {
+    super.initState();
+
+    playerSub = currentPlayerService.player$.listen((player) {
+      setState(() {
+        currentPlayer = player;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    playerSub?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -70,12 +98,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
           ),
 
           /// send text area
-          /// TODO: fix use the service instead of direct access to firebaseAuth
-          if (widget.chat.participants
-                  .firstWhere((element) =>
-                      element.uid == FirebaseAuth.instance.currentUser?.uid)
-                  .canSendMessage ==
-              true)
+          if (currentPlayer != null &&
+              widget.chat.participants
+                      .firstWhere(
+                          (element) => element.uid == currentPlayer?.uid)
+                      .canSendMessage ==
+                  true)
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.04,

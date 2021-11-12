@@ -1,14 +1,8 @@
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 
 abstract class ContentDto<T> {
-  final String kind;
-  final String description;
-  final String author;
-  final String title;
-  final T content;
-
-  // ignore: sort_constructors_first
+  /// constructor
   ContentDto._({
     required this.kind,
     required this.author,
@@ -16,6 +10,12 @@ abstract class ContentDto<T> {
     required this.content,
     required this.title,
   });
+
+  final String kind;
+  final String description;
+  final String author;
+  final String title;
+  final T content;
 
   static ContentDto fromJson(Map<String, dynamic> payload) {
     final String kind = payload['kind'] as String;

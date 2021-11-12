@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 const bool enableAutoScroll = false;
 
 /// main screen of the app to navigate any city or content
-// ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 

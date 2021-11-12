@@ -1,17 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ClubhouseModel {
-  final String clubhouseUrl;
-  final String clubhouseId;
-  final DateTime date;
-  final String name;
-  final String cityId;
-  final String uploaderId;
-  final DateTime scraped;
-  final String id;
-  final String? uploaderDisplayName;
-
-  // ignore: sort_constructors_first
+  /// constructor
   ClubhouseModel({
     required this.clubhouseUrl,
     required this.clubhouseId,
@@ -24,7 +14,7 @@ class ClubhouseModel {
     required this.uploaderDisplayName,
   });
 
-  // ignore: sort_constructors_first
+  /// constructor
   ClubhouseModel.fromMap(Map<String, dynamic> data)
       : clubhouseUrl = data['clubhouseUrl'] as String,
         uploaderDisplayName = data['uploaderDisplayName'] as String?,
@@ -35,4 +25,14 @@ class ClubhouseModel {
         uploaderId = data['uploaderId'] as String,
         scraped = (data['scraped'] as Timestamp).toDate(),
         id = data['id'] as String;
+
+  final String clubhouseUrl;
+  final String clubhouseId;
+  final DateTime date;
+  final String name;
+  final String cityId;
+  final String uploaderId;
+  final DateTime scraped;
+  final String id;
+  final String? uploaderDisplayName;
 }

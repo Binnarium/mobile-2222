@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/chat/models/chat-participant.model.dart';
 
@@ -18,18 +18,7 @@ abstract class MessageModel {
     this.asset,
   });
 
-  /// params
-  final String id;
-  final String kind;
-  final AssetDto? asset;
-  final String? text;
-  final bool banned;
-  final DateTime sendedDate;
-  final String senderId;
-  final ChatParticipantModel sender;
-  final bool sendedByMe;
-
-  // ignore: sort_constructors_first
+  /// constructor
   factory MessageModel.fromMap(
     Map<String, dynamic> data, {
     required String currentUid,
@@ -107,6 +96,17 @@ abstract class MessageModel {
       sendedByMe: sendedByMe,
     );
   }
+
+  /// params
+  final String id;
+  final String kind;
+  final AssetDto? asset;
+  final String? text;
+  final bool banned;
+  final DateTime sendedDate;
+  final String senderId;
+  final ChatParticipantModel sender;
+  final bool sendedByMe;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

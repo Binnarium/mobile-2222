@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/assets/video/models/video.model.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
 import 'package:lab_movil_2222/chat/models/message.model.dart';

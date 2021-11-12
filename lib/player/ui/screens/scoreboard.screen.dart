@@ -1,19 +1,16 @@
 import 'dart:async';
-
 import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
-
-import 'package:lab_movil_2222/services/load-players-scoreboard.service.dart';
-import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
+import 'package:lab_movil_2222/player/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/list-scoreboard.widget.dart';
+import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
-
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
-
 import 'package:provider/provider.dart';
 
 class ScoreboardPlayersScreen extends StatefulWidget {
@@ -49,7 +46,7 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
     super.initState();
 
     ///load list of players in order by proactivity
-    _scoreboardSub = _playersScoreBoard.loadScoreboard$().listen((players) {
+    _scoreboardSub = _playersScoreBoard.loadScoreboard$.listen((players) {
       setState(() {
         teammates = players;
       });
@@ -73,30 +70,38 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
-    ///TODO:change value to 10
-    int sizeScoreboard =  2;
-    
 
-    return Scaffold2222.empty(
-      backgrounds: const [BackgroundDecorationStyle.bottomRight],
-      appBar: AppBar(
-        backgroundColor: Colors2222.red,
-      ),
+    return Scaffold2222.navigation(
+      activePage: null,
+      backgrounds: const [
+        BackgroundDecorationStyle.bottomRight,
+        BackgroundDecorationStyle.topLeft,
+      ],
       body: ListView(
         children: [
+          /// app logo
+          const Padding(
+            padding: EdgeInsets.only(bottom: 40),
+            child: LogosHeader(
+              showAppLogo: true,
+            ),
+          ),
+
           /// title
           Container(
             constraints: BoxConstraints(
               maxWidth: min(size.width * 0.8, 300),
             ),
-            padding: const EdgeInsets.only(bottom: 24, top: 60),
             alignment: Alignment.center,
             child: Text(
-              'Tabla de Puntuacion'.toUpperCase(),
+              'Tabla de Puntuación'.toUpperCase(),
               style: textTheme.headline4,
               textAlign: TextAlign.center,
             ),
           ),
+
+          /// spacer
+          const SizedBox(height: 20),
 
           ///If players no load
           if (teammates == null)
@@ -106,37 +111,12 @@ class _ScoreboardPlayersState extends State<ScoreboardPlayersScreen> {
           else ...[
             /// players items
 
-            for (var i = 0; i < sizeScoreboard; i++)
+            for (var i = 0; i < teammates!.length; i++)
               ListScoreboardPlayers(
-                  participant: teammates![i],
-                  context: context,
-                  numberProactivity: teammates![i].proactivity),
-
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.1,
-                vertical: 15,
+                participant: teammates![i],
+                context: context,
+                numberProactivity: teammates![i].proactivity,
               ),
-              child: Text(
-                'El último de los 200',
-                style:
-                    textTheme.headline5!.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-
-            ListScoreboardPlayers(
-              participant: teammates!.last,
-              context: context,
-              numberProactivity: teammates!.last.proactivity,
-            ),
-            if (playerScore == null)
-              const AppLoading()
-            else ...[
-              ListScoreboardPlayers(
-                  participant: playerScore!,
-                  context: context,
-                  numberProactivity: playerScore!.proactivity)
-            ]
           ],
         ],
       ),

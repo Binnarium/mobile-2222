@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/course-status.enum.dart';
@@ -112,6 +113,16 @@ class CityMapButton extends StatelessWidget {
     final PlayerModel? currentPlayer = _playerService.currentPlayer;
 
     /// let them in
+    if (kIsWeb && (currentPlayer?.allowWebAccess == false)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'El acceso web se encuentra restringido unicamente para usuarios que hayan solicitado el acceso desde la web. Recomendamos el uso de la aplicación móvil para Android e IOS'),
+        ),
+      );
+      return;
+    }
+
     if ([
       CourseStatus.inProgress,
       CourseStatus.approvedContinueNextPhaseWithContentAccess

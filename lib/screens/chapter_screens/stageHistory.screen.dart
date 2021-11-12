@@ -16,8 +16,8 @@ import 'package:provider/provider.dart';
 class StageHistoryScreen extends StatefulWidget {
   const StageHistoryScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/history';
@@ -63,8 +63,7 @@ class _StageHistoryScreenState extends State<StageHistoryScreen> {
     final double spacedBodyContainers = bodyContainerHeight * 0.04;
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [
+      backgrounds: const [
         BackgroundDecorationStyle.bottomLeft,
         BackgroundDecorationStyle.path
       ],

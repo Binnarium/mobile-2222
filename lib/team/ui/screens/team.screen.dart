@@ -9,8 +9,9 @@ import 'package:lab_movil_2222/widgets/decorated-background/background-decoratio
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 
-// ignore: use_key_in_widget_constructors
 class TeamScreen extends StatefulWidget {
+  const TeamScreen({Key? key}) : super(key: key);
+
   static const String route = '/team';
 
   @override
@@ -50,15 +51,12 @@ class _TeamScreenState extends State<TeamScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Scaffold2222.empty(
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [
+    return Scaffold2222.navigation(
+      activePage: null,
+      backgrounds: const [
         BackgroundDecorationStyle.path,
         BackgroundDecorationStyle.bottomRight
       ],
-      appBar: AppBar(
-        backgroundColor: Colors2222.red,
-      ),
       body: (teamDto == null)
           ? const Center(
               child: CircularProgressIndicator(
@@ -70,7 +68,7 @@ class _TeamScreenState extends State<TeamScreen> {
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.1,
-                vertical: 24,
+                vertical: 80,
               ),
               child: TeamContentMarkdown(
                 teamContent: teamDto!.teamText,

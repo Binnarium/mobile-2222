@@ -21,8 +21,11 @@ class LoadProjectFiles {
         return Stream.value([]);
       }
 
-      final Query<Map<String, dynamic>> query =
-          _firestore.collection('players').doc(user.uid).collection('project');
+      final Query<Map<String, dynamic>> query = _firestore
+          .collection('players')
+          .doc(user.uid)
+          .collection('project')
+          .where('cityId', isEqualTo: city.id);
 
       return query
           .snapshots()

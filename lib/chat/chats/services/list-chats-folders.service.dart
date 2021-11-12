@@ -24,7 +24,7 @@ class ListChatsFoldersService {
         for (final ChatModel chat in chats) folders[chat.kind]!.addChat(chat);
 
         final items = folders.values.toList();
-        items.sort((a, b) => a.lastActivity != null || b.lastActivity != null
+        items.sort((a, b) => a.lastActivity != null && b.lastActivity != null
             ? b.lastActivity!.compareTo(a.lastActivity!)
             : 0);
         return items;

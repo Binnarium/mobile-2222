@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/cities/final-video/model/city-final-video.model.dart';
 import 'package:lab_movil_2222/cities/final-video/services/load-final-video.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
-import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +14,8 @@ import 'package:video_player/video_player.dart';
 class FinalVideoScreen extends StatefulWidget {
   const FinalVideoScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/final-video';
@@ -58,8 +58,7 @@ class _FinalVideoScreenState extends State<FinalVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.bottomRight],
+      backgrounds: const [BackgroundDecorationStyle.bottomRight],
       route: FinalVideoScreen.route,
       body: Stack(
         children: <Widget>[

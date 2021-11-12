@@ -8,9 +8,7 @@ import 'package:lab_movil_2222/services/load-login-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/content-title.widget.dart';
-import 'package:lab_movil_2222/shared/widgets/custom-background.dart';
 import 'package:lab_movil_2222/team/ui/widgets/goto-team-button.widget.dart';
-import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown-card.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/bottom-navigation-bar-widget.dart';
@@ -18,8 +16,9 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widge
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// ignore: use_key_in_widget_constructors
 class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
   static const String route = '/welcome';
 
   @override
@@ -68,13 +67,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ///Stack para apilar el background y luego el cuerpo de la pantalla
         body: Stack(
           children: [
-            ///Container del color rojo
-            ///Deprecated ignore cause Scaffold2222 needs city
-            // ignore: deprecated_member_use_from_same_package
-            const CustomBackground(
-              backgroundColor: Colors2222.red,
-            ),
-
             ///contiene todo el cuerpo de la pantalla, se envía el size y el context
             ///para poder controlar varios tamaños de dispositivos y controlar
             ///la fuente
@@ -198,13 +190,9 @@ class SocialNetworks extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      // ignore: prefer_const_literals_to_create_immutables
-      children: [
-        // ignore: prefer_const_constructors
+      children: const [
         _ListSocialNetwork(iconURL: 'facebook'),
-        // ignore: prefer_const_constructors
         _ListSocialNetwork(iconURL: 'instagram'),
-        // ignore: prefer_const_constructors
         _ListSocialNetwork(iconURL: 'twitter'),
       ],
     );

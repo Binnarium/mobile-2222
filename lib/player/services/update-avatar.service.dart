@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
@@ -46,9 +46,7 @@ class UpdateAvatarService {
             print('Succesfully deleted avatar from storage');
           } catch (e) {
             print(
-                // ignore: missing_whitespace_between_adjacent_strings
-                'Error, no se pudo borrar desde storage (puede que no exista el'
-                'archivo) $e');
+                'Error, no se pudo borrar desde storage (puede que no exista el\narchivo) $e');
           }
         }
         print('TODO: add model to update avatar');

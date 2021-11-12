@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/cities/monster/model/monster.model.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
@@ -55,8 +55,7 @@ class _StageMonsterScreenState extends State<StageMonsterScreen> {
   Widget build(BuildContext context) {
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       route: StageMonsterScreen.route,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

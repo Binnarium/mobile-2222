@@ -3,15 +3,19 @@
 /// this model represents a video with more information that can be used,
 class BetterVideoModel {
   BetterVideoModel.fromMap(final Map<String, dynamic> payload)
-      : vimeoId = payload['vimeoId'] as String?,
-        isProcessed = (payload['isProcessed'] as bool?) == true,
-        name = payload['name'] as String,
-        path = payload['path'] as String,
-        url = payload['url'] as String;
+      : hdUrl = payload['hdUrl'] as String?,
+        sdUrl = payload['sdUrl'] as String?,
+        previewUrl = payload['previewUrl'] as String?;
 
-  final bool isProcessed;
-  final String? vimeoId;
-  final String name;
-  final String path;
-  final String url;
+  final String? hdUrl;
+  final String? sdUrl;
+  final String? previewUrl;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'hdUrl': hdUrl,
+      'sdUrl': sdUrl,
+      'previewUrl': previewUrl,
+    };
+  }
 }

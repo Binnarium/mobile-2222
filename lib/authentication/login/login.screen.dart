@@ -25,8 +25,7 @@ class LoginScreen extends StatelessWidget {
 
       ///Stack para apilar el background y luego el cuerpo de la pantalla
       body: BackgroundDecoration(
-        // ignore: prefer_const_literals_to_create_immutables
-        backgroundDecorationsStyles: [BackgroundDecorationStyle.topLeft],
+        backgroundDecorationsStyles: const [BackgroundDecorationStyle.topLeft],
         child: ListView(
           padding: const EdgeInsets.only(top: 84, bottom: 32),
           children: [

@@ -25,12 +25,13 @@ class MedalsService {
             (user) => user == null
                 ? Stream.value([])
                 : _getMarathonAwardsCollectionRef(user.uid)
+                    .orderBy('awardedToUid')
                     .snapshots()
                     .map((snap) => snap.docs),
           )
           .map((docs) => docs
               .map((d) =>
-                  MarathonMedalModel.fromMap(d.data() as Map<String, dynamic>))
+                  MarathonMedalModel.fromMap(d.data()! as Map<String, dynamic>))
               .toList())
           .shareReplay();
 
@@ -56,7 +57,7 @@ class MedalsService {
         }
 
         final MarathonMedalModel assignedMedal =
-            MarathonMedalModel(isAwarded: true, playerUid: teammateUid);
+            MarathonMedalModel(awardedToUid: teammateUid);
 
         final WriteBatch batch = _fFirestore.batch();
 
@@ -64,20 +65,6 @@ class MedalsService {
             _getMarathonAwardsCollectionRef(currentUser.uid);
 
         batch.set(currentPlayerAwards.doc(), assignedMedal.toMap());
-
-        /// update medal in player profile
-        final UpdatePlayerWithMarathonMedal updatePlayerWithMarathonMedal =
-            UpdatePlayerWithMarathonMedal(
-          maratonAward: AwardModel(
-            cityId: cityId,
-            obtained: true,
-            sender: currentUser.uid,
-          ),
-        );
-        final DocumentReference teammateDocRef =
-            _fFirestore.collection('players').doc(teammateUid);
-
-        batch.update(teammateDocRef, updatePlayerWithMarathonMedal.toMap());
 
         /// commit changes
         await batch.commit();

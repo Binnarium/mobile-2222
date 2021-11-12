@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 
 class ImageNotSelected implements Exception {}
 
@@ -28,41 +28,43 @@ class UploadImageService {
           allowMultiple: false,
         )
         .asStream()
-        .asyncMap<ImageDto>((FilePickerResult? filePickerResult) async {
-      if (filePickerResult == null) {
-        throw ImageNotSelected();
-      }
+        .asyncMap<ImageDto>(
+      (FilePickerResult? filePickerResult) async {
+        if (filePickerResult == null) {
+          throw ImageNotSelected();
+        }
 
-      // ignore: unnecessary_nullable_for_final_variable_declarations
-      final PlatformFile? selectedImage = filePickerResult.files.first;
-      if (selectedImage == null) {
-        throw ImageNotLoaded();
-      }
+        final PlatformFile selectedImage = filePickerResult.files.first;
+        
+        if (selectedImage == null) {
+          throw ImageNotLoaded();
+        }
 
-      try {
-        final File imageFile = File(selectedImage.path!);
-        final String fileName = selectedImage.name.split('/').last;
-        final String uploadPath = '$path/$fileName';
+        try {
+          final File imageFile = File(selectedImage.path!);
+          final String fileName = selectedImage.name.split('/').last;
+          final String uploadPath = '$path/$fileName';
 
-        final Reference uploadRef = _fStorage.ref(uploadPath);
-        final UploadTask uploadTask = uploadRef.putFile(imageFile);
-        final String url = await uploadTask.then((snapshot) async {
-          if (snapshot.state == TaskState.success) {
-            return uploadRef.getDownloadURL();
-          }
-          throw ImageNotUploaded();
-        });
+          final Reference uploadRef = _fStorage.ref(uploadPath);
+          final UploadTask uploadTask = uploadRef.putFile(imageFile);
+          final String url = await uploadTask.then((snapshot) async {
+            if (snapshot.state == TaskState.success) {
+              return uploadRef.getDownloadURL();
+            }
+            throw ImageNotUploaded();
+          });
 
-        return ImageDto(
-          height: 0,
-          name: fileName,
-          width: 0,
-          path: uploadPath,
-          url: url,
-        );
-      } catch (e) {
-        throw ImageNotLoaded();
-      }
-    });
+          return ImageDto(
+            height: 0,
+            name: fileName,
+            width: 0,
+            path: uploadPath,
+            url: url,
+          );
+        } catch (e) {
+          throw ImageNotLoaded();
+        }
+      },
+    );
   }
 }

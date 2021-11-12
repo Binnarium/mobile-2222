@@ -9,11 +9,12 @@ class ListFolderChat extends StatelessWidget {
   const ListFolderChat({
     Key? key,
     required this.route,
+    this.type = 'Personal',
   }) : super(key: key);
 
   /// Name of social network
   final String route;
-  final String type = 'Personal';
+  final String type;
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;

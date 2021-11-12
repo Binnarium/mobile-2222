@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/city/models/city-configuration.model.dart';
 import 'package:lab_movil_2222/city/models/city-enabled-pages.model.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 
 class CityModel {
-  final String id;
-  final String name;
-  final int stage;
-  final ImageDto icon;
-  final ImageDto iconMap;
-  final CityConfigurationModel configuration;
-  final CityEnabledPagesModel enabledPages;
-
-  CityModel? nextCity;
-
-  // ignore: sort_constructors_first
+  /// constructor
   CityModel.fromMap(final Map<String, dynamic> payload)
       : id = payload['id'] as String,
         name = payload['name'] as String,
@@ -27,12 +17,19 @@ class CityModel {
         iconMap = ImageDto.fromMap(payload['iconMap'] as Map<String, dynamic>),
         nextCity = null;
 
+  final String id;
+  final String name;
+  final int stage;
+  final ImageDto icon;
+  final ImageDto iconMap;
+  final CityConfigurationModel configuration;
+  final CityEnabledPagesModel enabledPages;
+
+  CityModel? nextCity;
+
   void addNextCity(CityModel next) => nextCity = next;
 
   Color get color => Color(configuration.colorHex);
-
-  @Deprecated('use icon.url instead, or iconImage')
-  String get chapterImageUrl => icon.url;
 
   ImageProvider get iconImage => NetworkImage(icon.url);
   ImageProvider get iconMapImage => NetworkImage(iconMap.url);

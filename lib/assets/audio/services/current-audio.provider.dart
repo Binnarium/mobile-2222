@@ -1,6 +1,6 @@
 import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:rxdart/subjects.dart';
 
 class CurrentAudioProvider {
@@ -21,7 +21,6 @@ class CurrentAudioProvider {
   /// manage controls
   final AudioPlayer player = AudioPlayer();
 
-  // ignore: close_sinks
   final BehaviorSubject<AudioDto?> _currentAudioSink =
       BehaviorSubject<AudioDto?>.seeded(null);
 
@@ -29,8 +28,7 @@ class CurrentAudioProvider {
 
   // late AudioSession player;
 
-  // ignore: avoid_void_async
-  void setAudio(AudioDto audio) async {
+  Future<void> setAudio(AudioDto audio) async {
     try {
       /// load audio to player
       _currentAudioSink.add(audio);
@@ -42,10 +40,8 @@ class CurrentAudioProvider {
   }
 
   /// method to stop and close player, if you want to only stop the current audio
-  // ignore: comment_references
   /// use the [playOrPause] method
-  // ignore: avoid_void_async
-  void close() async {
+  Future<void> close() async {
     _currentAudioSink.add(null);
     await player.stop();
     await player.dispose();

@@ -3,11 +3,11 @@ import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 
 class LogosHeader extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
   const LogosHeader({
+    Key? key,
     this.showAppLogo = false,
     this.showStageLogoCity,
-  });
+  }) : super(key: key);
 
   final bool showAppLogo;
   final CityModel? showStageLogoCity;

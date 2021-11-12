@@ -1,31 +1,34 @@
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 
 class PlayerProject {
+  /// constructor
   PlayerProject({
-    required this.cityID,
+    required this.cityId,
     required this.file,
     required this.kind,
     required this.id,
   });
 
-  final String cityID;
-  final ProjectFileDto file;
+  /// constructor
+  PlayerProject.fromMap(final Map<String, dynamic> payload)
+      : kind = payload['kind'] as String,
+        cityId = payload['cityId'] as String,
+        id = payload['id'] as String,
+
+        /// TODO: fix this
+        file = PdfDto.fromMap(
+            payload['file'] as Map<String, dynamic>? ?? <String, dynamic>{});
+
+  final String cityId;
+  final AssetDto file;
   final String kind;
   final String id;
-
-  // ignore: sort_constructors_first
-  PlayerProject.fromMap(final Map<String, dynamic> payload)
-      : kind = payload['kind'] as String? ?? '',
-        cityID = payload['cityID'] as String? ?? '',
-        id = payload['id'] as String? ?? '',
-        file = ProjectFileDto.fromMap(
-            payload['file'] as Map<String, dynamic>? ?? <String, dynamic>{});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'file': {'path': file.path, 'url': file.url},
       'id': id,
-      'cityID': cityID,
+      'cityId': cityId,
       'kind': kind
     };
   }

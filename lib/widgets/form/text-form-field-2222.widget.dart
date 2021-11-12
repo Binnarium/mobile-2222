@@ -2,6 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 
 class TextFormField222 extends StatelessWidget {
+  /// constructor
+  const TextFormField222({
+    Key? key,
+    this.obscureText = false,
+    this.keyboardType,
+    this.onValueChanged,
+    required this.label,
+    this.validator,
+    this.prefixIcon,
+    this.controller,
+    Color? primaryColor,
+    this.showEnabledBorder = false,
+  })  : primaryColor = primaryColor ?? Colors2222.red,
+        super(key: key);
+
+  /// constructor
+  const TextFormField222.password({
+    Key? key,
+    required this.onValueChanged,
+    required this.label,
+    this.prefixIcon,
+    this.controller,
+    this.validator,
+    this.primaryColor = Colors2222.red,
+  })  : keyboardType = TextInputType.name,
+        showEnabledBorder = false,
+        obscureText = true,
+        super(key: key);
+
   /// description of the input form
   final String label;
 
@@ -26,35 +55,6 @@ class TextFormField222 extends StatelessWidget {
   final TextEditingController? controller;
 
   final bool showEnabledBorder;
-
-  // ignore: sort_constructors_first
-  const TextFormField222({
-    Key? key,
-    this.obscureText = false,
-    this.keyboardType,
-    this.onValueChanged,
-    required this.label,
-    this.validator,
-    this.prefixIcon,
-    this.controller,
-    Color? primaryColor,
-    this.showEnabledBorder = false,
-  })  : primaryColor = primaryColor ?? Colors2222.red,
-        super(key: key);
-
-  // ignore: sort_constructors_first
-  const TextFormField222.password({
-    Key? key,
-    required this.onValueChanged,
-    required this.label,
-    this.prefixIcon,
-    this.controller,
-    this.validator,
-    this.primaryColor = Colors2222.red,
-  })  : keyboardType = TextInputType.name,
-        showEnabledBorder = false,
-        obscureText = true,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {

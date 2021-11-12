@@ -1,4 +1,4 @@
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 
 /// Video asset
 class VideoModel extends AssetDto {
@@ -14,7 +14,6 @@ class VideoModel extends AssetDto {
           url: url,
         );
 
-  // ignore: sort_constructors_first
   VideoModel.fromMap(final Map<String, dynamic> payload)
       : format = payload['format'] as String? ?? '',
         duration = payload['duration'] as int? ?? 0,

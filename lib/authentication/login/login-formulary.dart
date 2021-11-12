@@ -37,7 +37,7 @@ class _LoginFormularyState extends State<LoginFormulary> {
         children: [
           /// formulario (falta aplicar backend)
           Text(
-            'Comienza tu aventura',
+            'Continua tu aventura',
             style: textTheme.headline6,
             textAlign: TextAlign.center,
           ),

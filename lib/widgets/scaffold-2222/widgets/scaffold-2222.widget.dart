@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
+import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-web-warning.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/user-guide.screen.dart';
 import 'package:provider/provider.dart';
 
@@ -93,19 +96,25 @@ class _Scaffold2222State extends State<Scaffold2222> {
   /// initialize the user-guide provider
   ShowUserGuideService get _showUserGuideService =>
       Provider.of<ShowUserGuideService>(context, listen: false);
+  ShowWebWarningService get _showWebWarningService =>
+      Provider.of<ShowWebWarningService>(context, listen: false);
 
   bool showGuides = false;
+  bool showWebWarning = false;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget._canShowNavigationGuides)
-      showGuides = _showUserGuideService.displayGuide;
+    showGuides =
+        widget._canShowNavigationGuides && _showUserGuideService.displayGuide;
+    showWebWarning = _showWebWarningService.showWebWarning;
   }
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     /// next page button
     final VoidCallback? prevPage =
         widget._enableBack && Navigator.of(context).canPop()
@@ -170,6 +179,49 @@ class _Scaffold2222State extends State<Scaffold2222> {
                 setState(() => showGuides = false);
               },
             ),
+
+          if (showWebWarning)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.08,
+                  vertical: 16,
+                ),
+                color: Colors2222.darkGrey,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Flexible(
+                      child: Markdown2222(
+                        data:
+                            'Recomendamos usar la versión movil disponible para [Android](https://play.google.com/store/apps/details?id=ec.edu.utpl.labmovil2222) o [IOS](https://apps.apple.com/us/app/lab-m%C3%B3vil-2222/id1586172216)',
+                      ),
+                    ),
+
+                    /// separator
+                    const SizedBox(width: 12),
+
+                    /// dismiss icon
+                    IconButton(
+                      onPressed: () async {
+                        _showWebWarningService.dismiss();
+                        setState(() {
+                          showWebWarning =
+                              _showWebWarningService.showWebWarning;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.close_rounded,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
         ],
       ),
     );

@@ -28,5 +28,5 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   /// main entry point to build application
-  runApp(App2222());
+  runApp(const App2222());
 }

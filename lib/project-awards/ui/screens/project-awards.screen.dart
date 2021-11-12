@@ -153,7 +153,8 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
                 participant: player,
                 context: context,
                 isAssigned:
-                    awardedMedals.any((award) => award.playerUid == player.uid),
+                    awardedMedals
+                    .any((award) => award.awardedToUid == player.uid),
                 canAssign: canAssignMarathonAwards,
                 callback: () => _createMedal(player.uid),
               ),

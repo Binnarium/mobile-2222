@@ -190,7 +190,6 @@ class _MessageTextInputState extends State<MessageTextInput> {
             const ChatSnackbarMessages.textNotSended(),
           );
         }
-        // ignore: argument_type_not_assignable_to_error_handler
       },
       onError: (Object error) {
         print(error);
@@ -247,7 +246,6 @@ class _MessageTextInputState extends State<MessageTextInput> {
             const ChatSnackbarMessages.textNotSended(),
           );
         }
-        // ignore: argument_type_not_assignable_to_error_handler
       },
       onError: (Object error) {
         if (error.runtimeType == VideoNotLoaded) {

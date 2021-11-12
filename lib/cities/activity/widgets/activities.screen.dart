@@ -63,8 +63,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     final double sidePadding = size.width * 0.08;
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topLeft],
+      backgrounds: const [BackgroundDecorationStyle.topLeft],
       route: ActivitiesScreen.route,
       body: ListView(
         children: [

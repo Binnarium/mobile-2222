@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 
 class CityHistoryDto {
   CityHistoryDto.fromMap(Map<String, dynamic> payload)
@@ -33,7 +33,6 @@ abstract class HistoryContentDto {
       return ImageHistoryDto._fromMap(payload);
     }
 
-    // ignore: only_throw_errors
     throw ErrorDescription('Invalid history content');
   }
 }

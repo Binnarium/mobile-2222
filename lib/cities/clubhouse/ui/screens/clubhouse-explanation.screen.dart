@@ -63,8 +63,7 @@ class _ClubhouseExplanationScreenState
 
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       route: ClubhouseExplanationScreen.route,
       body: ListView(
         children: [

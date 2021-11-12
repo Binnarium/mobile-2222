@@ -4,6 +4,19 @@ import 'package:transparent_image/transparent_image.dart';
 
 /// card to display the number of medals obtained
 class ObtainedMedalsCardWidget extends StatelessWidget {
+  /// constructor
+  const ObtainedMedalsCardWidget({
+    Key? key,
+    required this.numberOfMedals,
+    required this.image,
+    required this.label,
+    required this.numberColor,
+    this.actionCallback,
+    this.actionLabel,
+  })  : assert((actionCallback == null) == (actionLabel == null),
+            'must provide a label and action at the same time to enable the card callback'),
+        super(key: key);
+
   /// number of medals a player has obtained
   final int numberOfMedals;
 
@@ -21,19 +34,6 @@ class ObtainedMedalsCardWidget extends StatelessWidget {
 
   /// action button callback
   final VoidCallback? actionCallback;
-
-  // ignore: sort_constructors_first
-  const ObtainedMedalsCardWidget({
-    Key? key,
-    required this.numberOfMedals,
-    required this.image,
-    required this.label,
-    required this.numberColor,
-    this.actionCallback,
-    this.actionLabel,
-  })  : assert((actionCallback == null) == (actionLabel == null),
-            'must provide a label and action at the same time to enable the card callback'),
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -124,14 +124,14 @@ class ObtainedMedalsCardWidget extends StatelessWidget {
 }
 
 class GamificationNumber extends StatelessWidget {
-  final int number;
-  final Color color;
-  // ignore: sort_constructors_first
   const GamificationNumber({
     Key? key,
     required this.number,
     required this.color,
   }) : super(key: key);
+
+  final int number;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {

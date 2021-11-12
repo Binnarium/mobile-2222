@@ -19,7 +19,6 @@ class MicroMesoMacroDescriptionText extends StatelessWidget {
           fontSize: 28,
         ),
         children: [
-          // ignore: use_raw_strings
           for (String text in this.text!.toLowerCase().split('\\n'))
             TextSpan(
               text: '${text.toUpperCase().trim()}\n',

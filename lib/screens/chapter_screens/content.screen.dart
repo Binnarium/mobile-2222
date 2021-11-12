@@ -17,8 +17,8 @@ import 'package:provider/provider.dart';
 class ContentScreen extends StatefulWidget {
   const ContentScreen({
     Key? key,
-    required CityModel city,
-  })  : city = city,
+    required CityModel cityModel,
+  })  : city = cityModel,
         super(key: key);
 
   static const String route = '/contenido';
@@ -63,8 +63,7 @@ class _ContentScreenState extends State<ContentScreen> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold2222.city(
       city: widget.city,
-      // ignore: prefer_const_literals_to_create_immutables
-      backgrounds: [BackgroundDecorationStyle.topRight],
+      backgrounds: const [BackgroundDecorationStyle.topRight],
       route: ContentScreen.route,
       body: _stageVideoContent(size, context),
     );

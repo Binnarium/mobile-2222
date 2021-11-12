@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
 import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/assets/models/asset.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
@@ -20,13 +20,12 @@ class UploadProjectService {
 
   final FirebaseFirestore _fFirestore;
 
-
-  Stream<bool> project$(CityModel city, ProjectFileDto file, bool allowAudio) {
+  Stream<bool> project$(CityModel city, AssetDto file) {
     return _uploadProject$(
       createMessageCallback: (user) => PlayerProject(
-        cityID: city.name,
+        cityId: city.id,
         file: file,
-        kind: allowAudio ? 'PROJECT#MP3' : 'PROJECT#PDF',
+        kind: file.runtimeType == AudioDto ? 'PROJECT#MP3' : 'PROJECT#PDF',
         id: '',
       ),
     );
@@ -71,33 +70,19 @@ class UploadProjectService {
     );
   }
 
-  // ignore: avoid_void_async
-  static void writeMedal(String userUID, String cityRef) async {
-    final Map<String, dynamic> medal = <String, dynamic>{
-      'cityId': cityRef,
-      'obtained': true,
-      'obtainedDate': Timestamp.now(),
-    };
+  Future<void> deletePlayerProjectFile(PlayerProject project) async {
+    final PlayerModel? currentPlayer = _currentPlayerService.currentPlayer;
 
-    await FirebaseFirestore.instance.collection('players').doc(userUID).update(
-      {
-        'projectAwards': FieldValue.arrayUnion(<dynamic>[medal])
-      },
-    );
-  }
+    /// validate player is signed in
+    if (currentPlayer == null) throw Exception();
 
-  // ignore: avoid_void_async
-  static void deletePlayerProjectFile(
-      String userUID, PlayerProject project) async {
     await FirebaseStorage.instance.refFromURL(project.file.url).delete();
-    print('File successfully deleted from storage');
+
     await FirebaseFirestore.instance
         .collection('players')
-        .doc(userUID)
+        .doc(currentPlayer.uid)
         .collection('project')
         .doc(project.id)
         .delete();
-
-    print('File ${project.id} successfully deleted from firestore');
   }
 }

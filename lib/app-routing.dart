@@ -65,15 +65,15 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               return const StartVideoScreen();
 
             if (settings.name == WelcomeScreen.route) {
-              return WelcomeScreen();
+              return const WelcomeScreen();
             }
 
             if (settings.name == TeamScreen.route) {
-              return TeamScreen();
+              return const TeamScreen();
             }
 
             if (settings.name == LoginScreen.route) {
-              return LoginScreen();
+              return const LoginScreen();
             }
 
             if (settings.name == RegisterScreen.route) {
@@ -85,7 +85,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             }
 
             if (settings.name == ProfileScreen.route) {
-              return ProfileScreen();
+              return const ProfileScreen();
             }
 
             /// all chats screens
@@ -99,13 +99,13 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == CityIntroductionScreen.route) {
               final args = settings.arguments! as CityIntroductionScreen;
               return CityIntroductionScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == MessagesScreen.route) {
               final args = settings.arguments! as MessagesScreen;
               return MessagesScreen(
-                chat: args.chat,
+                chatModel: args.chat,
               );
             }
             if (settings.name == ChatParticipantsScreen.route) {
@@ -131,13 +131,13 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == IntroductoryVideoScreen.route) {
               final args = settings.arguments! as IntroductoryVideoScreen;
               return IntroductoryVideoScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == StageHistoryScreen.route) {
               final args = settings.arguments! as StageHistoryScreen;
               return StageHistoryScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == StageMonsterScreen.route) {
@@ -161,7 +161,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == ContentScreen.route) {
               final args = settings.arguments! as ContentScreen;
               return ContentScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == ResourcesScreen.route) {
@@ -214,13 +214,13 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == MicroMesoMacroScreen.route) {
               final args = settings.arguments! as MicroMesoMacroScreen;
               return MicroMesoMacroScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == ProjectVideoScreen.route) {
               final args = settings.arguments! as ProjectVideoScreen;
               return ProjectVideoScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == CityProjectScreen.route) {
@@ -238,13 +238,13 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == ManualVideoScreen.route) {
               final args = settings.arguments! as ManualVideoScreen;
               return ManualVideoScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
             if (settings.name == NextPhaseVideoScreen.route) {
               final args = settings.arguments! as NextPhaseVideoScreen;
               return NextPhaseVideoScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
 
@@ -256,7 +256,7 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
             if (settings.name == FinalVideoScreen.route) {
               final args = settings.arguments! as FinalVideoScreen;
               return FinalVideoScreen(
-                city: args.city,
+                cityModel: args.city,
               );
             }
 

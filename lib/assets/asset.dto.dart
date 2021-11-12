@@ -28,10 +28,6 @@ abstract class AssetDto {
 
 /// Image asset
 class ImageDto extends AssetDto {
-  final int width;
-  final int height;
-
-  // ignore: sort_constructors_first
   ImageDto({
     required this.height,
     required this.width,
@@ -44,7 +40,6 @@ class ImageDto extends AssetDto {
           url: url,
         );
 
-  // ignore: sort_constructors_first
   ImageDto.fromMap(final Map<String, dynamic> payload)
       : height = payload['height'] as int? ?? 0,
         width = payload['width'] as int? ?? 0,
@@ -53,6 +48,9 @@ class ImageDto extends AssetDto {
           path: payload['path'] as String? ?? '',
           url: payload['url'] as String? ?? '',
         );
+
+  final int width;
+  final int height;
 
   ImageProvider get image => NetworkImage(url);
 
@@ -71,17 +69,7 @@ class ImageDto extends AssetDto {
 
 /// Audio asset
 class AudioDto extends AssetDto {
-  AudioDto.fromMap(final Map<String, dynamic> payload)
-      : super(
-          name: payload['name'] as String,
-          path: payload['path'] as String,
-          url: payload['url'] as String,
-        );
-}
-
-/// Project File asset
-class ProjectFileDto extends AssetDto {
-  ProjectFileDto({
+  AudioDto({
     required String name,
     required String path,
     required String url,
@@ -91,7 +79,27 @@ class ProjectFileDto extends AssetDto {
           url: url,
         );
 
-  ProjectFileDto.fromMap(final Map<String, dynamic> payload)
+  AudioDto.fromMap(final Map<String, dynamic> payload)
+      : super(
+          name: payload['name'] as String,
+          path: payload['path'] as String,
+          url: payload['url'] as String,
+        );
+}
+
+/// Project File asset
+class PdfDto extends AssetDto {
+  PdfDto({
+    required String name,
+    required String path,
+    required String url,
+  }) : super(
+          name: name,
+          path: path,
+          url: url,
+        );
+
+  PdfDto.fromMap(final Map<String, dynamic> payload)
       : super(
           name: payload['name'] as String? ?? '',
           path: payload['path'] as String? ?? '',
