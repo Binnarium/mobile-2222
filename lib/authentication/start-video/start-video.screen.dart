@@ -6,6 +6,7 @@ import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/start-video/load-start-video.service.dart';
 import 'package:lab_movil_2222/authentication/start-video/start-video.model.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
+import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -51,7 +52,7 @@ class _StartVideoScreenState extends State<StartVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold2222.empty(
       body: Stack(
         children: <Widget>[
           /// loading state

@@ -47,6 +47,10 @@ class Markdown2222 extends StatelessWidget {
         h6Align: contentAlignment,
         textAlign: contentAlignment,
         blockSpacing: 20,
+        a: theme.textTheme.bodyText1?.copyWith(
+          color: Colors2222.primary,
+          decoration: TextDecoration.underline,
+        ),
         blockquoteDecoration: BoxDecoration(
           color: primaryColor.withOpacity(0.2),
         ),
