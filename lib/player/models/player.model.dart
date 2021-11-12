@@ -20,6 +20,7 @@ class PlayerModel {
     required this.courseStatus,
     required this.proactivity,
     required this.playerType,
+    required this.allowWebAccess,
     this.pubUserId,
   });
 
@@ -46,6 +47,7 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['marathonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
+      allowWebAccess: (payload['allowWebAccess'] as bool?) == true,
     );
   }
 
@@ -69,6 +71,7 @@ class PlayerModel {
   /// course status
   final CourseStatus courseStatus;
   final String? playerType;
+  final bool allowWebAccess;
 
   static List<AwardModel> _getAwardsFromPayload(dynamic payload) {
     return ((payload ?? <dynamic>[]) as List)
@@ -98,5 +101,6 @@ Map<String, dynamic> createNewPlayerMap({
     'groupId': null,
     'proactivity': 0,
     'pubUserId': null,
+    'allowWebAccess': false,
   };
 }

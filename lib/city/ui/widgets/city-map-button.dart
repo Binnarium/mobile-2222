@@ -112,6 +112,16 @@ class CityMapButton extends StatelessWidget {
     final PlayerModel? currentPlayer = _playerService.currentPlayer;
 
     /// let them in
+    if (currentPlayer?.allowWebAccess == false) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'El acceso web se encuentra restringido unicamente para usuarios que hayan solicitado el acceso desde la web. Recomendamos el uso de la aplicación móvil para Android e IOS'),
+        ),
+      );
+      return;
+    }
+
     if ([
       CourseStatus.inProgress,
       CourseStatus.approvedContinueNextPhaseWithContentAccess
