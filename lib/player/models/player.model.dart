@@ -37,7 +37,7 @@ class PlayerModel {
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       playerType: payload['playerType'] as String?,
-      groupId: payload['groupId'] as String,
+      groupId: payload['groupId'] as String?,
       courseStatus: courseStatusFromString(payload['courseStatus'] as String?),
       clubhouseAwards:
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
@@ -54,7 +54,7 @@ class PlayerModel {
   final String uid;
   final String displayName;
   final String email;
-  final String groupId;
+  final String? groupId;
   final int proactivity;
 
   final ImageDto? avatarImage;

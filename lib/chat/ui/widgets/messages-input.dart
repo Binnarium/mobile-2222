@@ -95,10 +95,11 @@ class _MessageTextInputState extends State<MessageTextInput> {
                     icon: const Icon(Icons.image_rounded),
                     onPressed: _sendImageMessage,
                   ),
-                  IconButton(
-                      color: Colors2222.white,
-                      icon: const Icon(Icons.videocam_rounded),
-                      onPressed: _sendVideoMessage),
+                  // disable video send
+                  // IconButton(
+                  //     color: Colors2222.white,
+                  //     icon: const Icon(Icons.videocam_rounded),
+                  //     onPressed: _sendVideoMessage),
 
                   /// space items away from each other
                   Expanded(child: Container()),
