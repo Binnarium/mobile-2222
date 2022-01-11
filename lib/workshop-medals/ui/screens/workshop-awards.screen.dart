@@ -2,43 +2,42 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
-import 'package:lab_movil_2222/project-awards/models/marathon-medal.model.dart';
-import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/project-awards/ui/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widget.dart';
+import 'package:lab_movil_2222/workshop-medals/models/workshop-medal.model.dart';
+import 'package:lab_movil_2222/workshop-medals/services/workshop-medals.service.dart';
+import 'package:lab_movil_2222/workshop-medals/ui/current-player-workshop-awards.widgets.dart';
 import 'package:provider/provider.dart';
 
 const String explanationText = '''
-Llegó el momento de darle un premio al docente viajero de tu grupo de 10 colegas que consideras haya hecho el proyecto personal más innovador y mejor desarrollado de todos.
+Al finalizar el Taller de Ideación Ágil de 10 horas de duración, cada uno de los viajeros participantes podrá otorgar una medalla de premio a quién estime mejor, dentro de los propios participantes. Esta premiación resultará fundamental para la selección de los 20 viajeros finalistas para la etapa de mentorías con PRENDHO UTPL. La selección saldrá de una combinación entre los mejores desempeños del viaje inicial de 35 días + la elección del coordinador y mentor del Taller de 10 horas + la premiación colaborativa resultante del propio Taller.
 
-1. Elige al viajero que consideras haya tenido mejor desempeño en su proyecto.
+1. Elige al viajero que consideras haya tenido mejor desempeño con su proyecto de innovación personal docente durante el taller.
+
 2. Otórgale el premio a esa persona.
-3. Ese premio se visualizará en la página personal del viajero.
+
+3. Ese premio se verá reflejado en la pagina personal del viajero.
 ''';
 
-class ProjectAwardsProject extends StatefulWidget {
-  const ProjectAwardsProject({
+class WorkshopAwardsScreen extends StatefulWidget {
+  const WorkshopAwardsScreen({
     Key? key,
-    required this.city,
   }) : super(key: key);
 
-  static const route = '/medals-maraton';
-
-  final CityModel city;
+  static const route = '/workshop-medals-screen';
 
   @override
-  _ProjectAwardsProjectState createState() => _ProjectAwardsProjectState();
+  _WorkshopAwardsScreenState createState() => _WorkshopAwardsScreenState();
 }
 
-class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
+class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
   ///
   StreamSubscription? _teammatesSub;
 
@@ -52,15 +51,15 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
   ///
   List<PlayerModel>? teammates;
 
-  List<MarathonMedalModel> awardedMedals = [];
+  List<WorkshopMedalModel> awardedMedals = [];
 
   bool canAssignMarathonAwards = true;
 
   ListPlayerOfGroupService get _playersGroupService =>
       Provider.of<ListPlayerOfGroupService>(context, listen: false);
 
-  MedalsService get _medalsService =>
-      Provider.of<MedalsService>(context, listen: false);
+  WorkshopMedalsService get _workshopMedalsService =>
+      Provider.of<WorkshopMedalsService>(context, listen: false);
 
   @override
   void initState() {
@@ -70,11 +69,11 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
       (players) => setState(() => teammates = players),
     );
 
-    _medalsAwardedSub = _medalsService.marathonAwards$.listen(
+    _medalsAwardedSub = _workshopMedalsService.workshopAwards$.listen(
       (awards) => setState(() => awardedMedals = awards),
     );
 
-    _canAssignAwardSub = _medalsService.canAssignMarathonAwards$.listen(
+    _canAssignAwardSub = _workshopMedalsService.canAssignWorkshopAwards$.listen(
       (canAssign) => setState(() => canAssignMarathonAwards = canAssign),
     );
   }
@@ -94,16 +93,15 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
     final Size size = MediaQuery.of(context).size;
     final double sidePadding = size.width * 0.08;
 
-    return Scaffold2222.city(
-      city: widget.city,
+    return Scaffold2222.navigation(
+      activePage: null,
       backgrounds: const [BackgroundDecorationStyle.bottomRight],
-      route: ProjectAwardsProject.route,
       body: ListView(
         children: [
           /// icon item
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
-            child: LogosHeader(showStageLogoCity: widget.city),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 32.0),
+            child: LogosHeader(showAppLogo: true),
           ),
 
           /// title
@@ -111,10 +109,11 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
             constraints: BoxConstraints(
               maxWidth: min(size.width * 0.8, 300),
             ),
-            padding: const EdgeInsets.only(bottom: 24),
+            padding: EdgeInsets.only(
+                bottom: 24, left: sidePadding, right: sidePadding),
             alignment: Alignment.center,
             child: Text(
-              'Premiación de Proyectos'.toUpperCase(),
+              'PREMIACIÓN\nTaller de Ideación Ágil',
               style: textTheme.headline4,
               textAlign: TextAlign.center,
             ),
@@ -131,6 +130,10 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
                 width: min(160, size.width * 0.4),
               ),
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
+            child: CurrentPlayerWorkshopAwards(),
           ),
 
           /// explanation
@@ -152,8 +155,7 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
               AssignMedalListItem(
                 participant: player,
                 context: context,
-                isAssigned:
-                    awardedMedals
+                isAssigned: awardedMedals
                     .any((award) => award.awardedToUid == player.uid),
                 canAssign: canAssignMarathonAwards,
                 callback: () => _createMedal(player.uid),
@@ -169,8 +171,8 @@ class _ProjectAwardsProjectState extends State<ProjectAwardsProject> {
       return;
     }
 
-    _assignAwardSub = _medalsService
-        .assignMedal$(cityId: widget.city.id, teammateUid: playerId)
+    _assignAwardSub = _workshopMedalsService
+        .assignMedal$(cityId: 'TODO:', teammateUid: playerId)
         .listen(
       (success) async {
         final SnackBar message = success

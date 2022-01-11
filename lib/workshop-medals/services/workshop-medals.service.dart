@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
-import 'package:lab_movil_2222/project-awards/models/marathon-medal.model.dart';
+import 'package:lab_movil_2222/workshop-medals/models/workshop-medal.model.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 const double MEDALS_LIMIT = 1;
 
-class MedalsService {
-  MedalsService(BuildContext context)
+class WorkshopMedalsService {
+  WorkshopMedalsService(BuildContext context)
       : _currentPlayerService =
             Provider.of<CurrentPlayerService>(context, listen: false),
         _fFirestore = FirebaseFirestore.instance;
@@ -18,23 +18,23 @@ class MedalsService {
   final FirebaseFirestore _fFirestore;
 
   /// load assigned medals
-  Stream<List<MarathonMedalModel>> get marathonAwards$ =>
+  Stream<List<WorkshopMedalModel>> get workshopAwards$ =>
       _currentPlayerService.player$
           .switchMap<List<QueryDocumentSnapshot>>(
             (user) => user == null
                 ? Stream.value([])
-                : _getMarathonAwardsCollectionRef(user.uid)
+                : _getWorkshopAwardsCollectionRef(user.uid)
                     .orderBy('awardedToUid')
                     .snapshots()
                     .map((snap) => snap.docs),
           )
           .map((docs) => docs
               .map((d) =>
-                  MarathonMedalModel.fromMap(d.data()! as Map<String, dynamic>))
+                  WorkshopMedalModel.fromMap(d.data()! as Map<String, dynamic>))
               .toList())
           .shareReplay();
 
-  Stream<bool> get canAssignMarathonAwards$ => marathonAwards$
+  Stream<bool> get canAssignWorkshopAwards$ => workshopAwards$
       .map((awards) => awards.length < MEDALS_LIMIT)
       .shareReplay();
 
@@ -50,18 +50,18 @@ class MedalsService {
         }
 
         /// validate player can send medals
-        final bool canSendAward = await canAssignMarathonAwards$.first;
+        final bool canSendAward = await canAssignWorkshopAwards$.first;
         if (!canSendAward) {
           return false;
         }
 
-        final MarathonMedalModel assignedMedal =
-            MarathonMedalModel(awardedToUid: teammateUid);
+        final WorkshopMedalModel assignedMedal =
+            WorkshopMedalModel(awardedToUid: teammateUid);
 
         final WriteBatch batch = _fFirestore.batch();
 
         final CollectionReference currentPlayerAwards =
-            _getMarathonAwardsCollectionRef(currentUser.uid);
+            _getWorkshopAwardsCollectionRef(currentUser.uid);
 
         batch.set(currentPlayerAwards.doc(), assignedMedal.toMap());
 
@@ -72,6 +72,6 @@ class MedalsService {
     );
   }
 
-  CollectionReference _getMarathonAwardsCollectionRef(String uid) =>
-      _fFirestore.collection('players').doc(uid).collection('marathon-awards');
+  CollectionReference _getWorkshopAwardsCollectionRef(String uid) =>
+      _fFirestore.collection('players').doc(uid).collection('workshop-awards');
 }

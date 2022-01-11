@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
-import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
-import 'package:lab_movil_2222/city/ui/widgets/cities-map.dart';
-import 'package:lab_movil_2222/city/ui/widgets/home-background.dart';
+import 'package:lab_movil_2222/home-map/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/home-map/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/cities-map.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/home-background.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/workshop-button.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -60,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold2222.navigation(
       backgroundColor: Colors2222.black,
       activePage: Lab2222NavigationBarPages.home,
@@ -82,14 +84,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     HomeBackground(),
 
                     /// scroll content
-                    SingleChildScrollView(
-                      clipBehavior: Clip.none,
-                      controller: _scrollController,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
-                        child: CitiesMap(citiesWithPositions: _cities!),
-                      ),
-                    ),
+                    ListView(
+                        clipBehavior: Clip.none,
+                        controller: _scrollController,
+                        children: [
+                          /// button
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: 40,
+                              left: size.width * .04,
+                              right: size.width * .04,
+                            ),
+                            alignment: Alignment.center,
+                            child: const WorkshopMapButton(),
+                          ),
+
+                          /// cities map
+                          Padding(
+                            padding: EdgeInsets.only(top: 40),
+                            child: CitiesMap(citiesWithPositions: _cities!),
+                          )
+                        ]),
                   ],
                 ),
               ),

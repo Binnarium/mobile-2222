@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/models/city-resources.dto.dart';
 import 'package:lab_movil_2222/services/load-city-resources.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';

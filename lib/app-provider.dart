@@ -24,8 +24,8 @@ import 'package:lab_movil_2222/cities/contribution/services/contribution-activit
 import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
-import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/home-map/services/cities.service.dart';
+import 'package:lab_movil_2222/home-map/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/player/gamification-explanation/services/gamification-explanation.service.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
@@ -46,6 +46,7 @@ import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-web-warning.service.dart';
+import 'package:lab_movil_2222/workshop-medals/services/workshop-medals.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
@@ -122,6 +123,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => LoadProjectFiles(ctx)),
 
             Provider(create: (ctx) => MedalsService(ctx)),
+            Provider(create: (ctx) => WorkshopMedalsService(ctx)),
 
             Provider(create: (ctx) => UploadProjectService(ctx)),
 

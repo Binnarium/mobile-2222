@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/micro-meso-macro/models/micro-meso-macro.model.dart';
 import 'package:lab_movil_2222/cities/micro-meso-macro/services/load-micro-meso-macro.service.dart';
 import 'package:lab_movil_2222/cities/micro-meso-macro/ui/widgets/micro-meso-macro-description-text.widget.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-logo.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';

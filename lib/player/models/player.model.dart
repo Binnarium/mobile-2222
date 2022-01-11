@@ -13,6 +13,7 @@ class PlayerModel {
     required this.projectAwards,
     required this.contributionsAwards,
     required this.clubhouseAwards,
+    required this.workshopAwards,
     required this.marathonAwards,
     required this.avatarImage,
     required this.groupId,
@@ -47,6 +48,9 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['marathonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
+      workshopAwards:
+          PlayerModel._getAwardsFromPayload(payload['workshopAwards']),
+
       allowWebAccess: (payload['allowWebAccess'] as bool?) == true,
     );
   }
@@ -63,6 +67,8 @@ class PlayerModel {
   final List<AwardModel> contributionsAwards;
   final List<AwardModel> clubhouseAwards;
   final List<AwardModel> marathonAwards;
+  final List<AwardModel> workshopAwards;
+
 
   /// player pub
   final String pubCode;
@@ -95,6 +101,7 @@ Map<String, dynamic> createNewPlayerMap({
     'contributionsAwards': <void>[],
     'clubhouseAwards': <void>[],
     'marathonAwards': <void>[],
+    'workshopAwards': <void>[],
     'courseStatus': null,
     'pubCode': Random().generateString(size: 8),
     'avatarImage': null,

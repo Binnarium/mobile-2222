@@ -23,7 +23,7 @@ import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.d
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
-import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
+import 'package:lab_movil_2222/home-map/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
 import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
@@ -36,6 +36,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.da
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
+import 'package:lab_movil_2222/workshop-medals/ui/screens/workshop-awards.screen.dart';
 import 'package:provider/provider.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
@@ -258,6 +259,10 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               return FinalVideoScreen(
                 cityModel: args.city,
               );
+            }
+
+            if (settings.name == WorkshopAwardsScreen.route) {
+              return const WorkshopAwardsScreen();
             }
 
             print('-----------------');

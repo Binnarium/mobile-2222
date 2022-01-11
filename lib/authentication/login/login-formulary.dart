@@ -3,7 +3,7 @@ import 'package:lab_movil_2222/authentication/login/login-form.model.dart';
 import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
 import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/widgets/authentication-snackbar.dart';
-import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
+import 'package:lab_movil_2222/home-map/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/shared/forms/forms-validators.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
