@@ -65,7 +65,7 @@ class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
   void initState() {
     super.initState();
 
-    _teammatesSub = _playersGroupService.group$.listen(
+    _teammatesSub = _playersGroupService.workshop$.listen(
       (players) => setState(() => teammates = players),
     );
 
