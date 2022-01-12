@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/authentication/login/login-form.model.dart';
 import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
+import 'package:lab_movil_2222/authentication/recover-password/recover-password.screen.dart';
 import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/widgets/authentication-snackbar.dart';
 import 'package:lab_movil_2222/home-map/ui/screen/home.screen.dart';
@@ -82,6 +83,21 @@ class _LoginFormularyState extends State<LoginFormulary> {
             style: TextButton.styleFrom(primary: Colors2222.white),
             child: const Text('¿No tienes cuenta? Registrate aquí'),
           ),
+
+Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+  child:   Divider(
+    color: Colors2222.white.withOpacity(0.6),thickness: 2),
+),
+
+                    /// recover password
+          TextButton(
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, RecoverPasswordScreen.route),
+            style: TextButton.styleFrom(primary: Colors2222.white),
+            child: const Text('Olvidaste tu contraseña? Recuperala aquí'),
+          ),
+
         ],
       ),
     );

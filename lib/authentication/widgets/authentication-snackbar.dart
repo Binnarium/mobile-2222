@@ -105,6 +105,22 @@ class AuthenticationSnackbar extends SnackBar {
           content: Text('Bienvenido $displayName'),
         );
 
+  /// This snackbar will appear if the login is successful
+  AuthenticationSnackbar.successRecover({
+    required BuildContext context,
+    Key? key,
+  }) : super(
+          key: key,
+          content:
+              const Text('Se ha enviado el enlace de recuperación a tu correo'),
+          action: SnackBarAction(
+            label: 'Regresar al Ingreso!',
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, LoginScreen.route),
+          ),
+        );
+
+
   /// show invalid form values where provided
   const AuthenticationSnackbar.invalidForm({
     Key? key,

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
 import 'package:lab_movil_2222/authentication/login/login.screen.dart';
+import 'package:lab_movil_2222/authentication/recover-password/recover-password.screen.dart';
 import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/splash/splash.screen.dart';
 import 'package:lab_movil_2222/authentication/start-video/start-video.screen.dart';
@@ -75,6 +76,10 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
 
             if (settings.name == LoginScreen.route) {
               return const LoginScreen();
+            }
+
+            if (settings.name == RecoverPasswordScreen.route) {
+              return const RecoverPasswordScreen();
             }
 
             if (settings.name == RegisterScreen.route) {

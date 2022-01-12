@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/assets/audio/services/upload-audio.service.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
 import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
+import 'package:lab_movil_2222/authentication/recover-password/recover-password.service.dart';
 import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
 import 'package:lab_movil_2222/authentication/sign-out/sign-out.service.dart';
 import 'package:lab_movil_2222/authentication/splash/is-user-signed-in.service.dart';
@@ -69,6 +70,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => SignOutService()),
             Provider(create: (ctx) => RegisterService()),
             Provider(create: (ctx) => LoginService()),
+            Provider(create: (_) => RecoveryPasswordService()),
             Provider(create: (_) => ConnectivityCheckService()),
 
             /// player services
