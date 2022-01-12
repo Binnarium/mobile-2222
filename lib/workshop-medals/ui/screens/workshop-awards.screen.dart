@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
+import 'package:lab_movil_2222/player/ui/widgets/search-player-input.widget.dart';
 import 'package:lab_movil_2222/project-awards/ui/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
@@ -50,6 +51,11 @@ class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
 
   ///
   List<PlayerModel>? teammates;
+  List<PlayerModel>? searchPlayers;
+
+  List<PlayerModel>? get resultPlayers => searchPlayers == null 
+  ? teammates 
+  : searchPlayers!.where((player) => teammates?.any((search) => search.uid == player.uid) == true).toList();
 
   List<WorkshopMedalModel> awardedMedals = [];
 
@@ -131,6 +137,7 @@ class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
               ),
             ),
           ),
+
           Padding(
             padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 32),
             child: CurrentPlayerWorkshopAwards(),
@@ -145,13 +152,23 @@ class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
           ),
 
           ///If players no load
-          if (teammates == null)
+          if (resultPlayers == null)
             const AppLoading()
 
           /// show a list of all players of group
           else ...[
+            /// search input
+            Padding(
+              padding: EdgeInsets.fromLTRB(sidePadding, 0, sidePadding, 20),
+              child: SearchPlayersWidget(
+                onValueChange: (players) {
+                  setState(() => searchPlayers = players);
+                },
+              ),
+            ),
+
             /// chats items
-            for (PlayerModel player in teammates!)
+            for (PlayerModel player in resultPlayers!)
               AssignMedalListItem(
                 participant: player,
                 context: context,
@@ -161,6 +178,7 @@ class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
                 callback: () => _createMedal(player.uid),
               ),
           ],
+          const SizedBox.square(dimension: 40),
         ],
       ),
     );
