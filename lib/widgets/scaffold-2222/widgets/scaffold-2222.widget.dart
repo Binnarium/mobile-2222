@@ -180,7 +180,7 @@ class _Scaffold2222State extends State<Scaffold2222> {
               },
             ),
 
-          if (showWebWarning)
+          if (showWebWarning && false)
             Positioned(
               bottom: 0,
               left: 0,
