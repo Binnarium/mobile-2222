@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
+import 'package:lab_movil_2222/authentication/authentication-home/authentication-home.screen.dart';
 import 'package:lab_movil_2222/authentication/login/login.screen.dart';
 import 'package:lab_movil_2222/authentication/recover-password/recover-password.screen.dart';
 import 'package:lab_movil_2222/authentication/register/register.screen.dart';
@@ -74,6 +75,9 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               return const TeamScreen();
             }
 
+            if (settings.name == AuthenticationHomeScreen.route) {
+              return const AuthenticationHomeScreen();
+            }
             if (settings.name == LoginScreen.route) {
               return const LoginScreen();
             }
