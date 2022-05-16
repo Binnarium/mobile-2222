@@ -5,6 +5,7 @@ import 'package:lab_movil_2222/player/models/award.model.dart';
 import 'package:lab_movil_2222/player/models/course-status.enum.dart';
 import 'package:lab_movil_2222/shared/pipes/random-string.extencion.dart';
 
+const COURSE_VERSION = 'COURSE#2';
 class PlayerModel {
   PlayerModel._({
     required this.uid,
@@ -17,6 +18,7 @@ class PlayerModel {
     required this.marathonAwards,
     required this.avatarImage,
     required this.groupId,
+    required this.courseVersion,
     required this.pubCode,
     required this.courseStatus,
     required this.proactivity,
@@ -38,6 +40,7 @@ class PlayerModel {
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       playerType: payload['playerType'] as String?,
+      courseVersion: payload['courseVersion'] as String?,
       groupId: payload['groupId'] as String?,
       courseStatus: courseStatusFromString(payload['courseStatus'] as String?),
       clubhouseAwards:
@@ -69,6 +72,8 @@ class PlayerModel {
   final List<AwardModel> marathonAwards;
   final List<AwardModel> workshopAwards;
 
+/// course version
+  final String? courseVersion;
 
   /// player pub
   final String pubCode;
@@ -109,5 +114,8 @@ Map<String, dynamic> createNewPlayerMap({
     'proactivity': 0,
     'pubUserId': null,
     'allowWebAccess': false,
+    'courseVersion': COURSE_VERSION,
+
+    /// TODO: change every course
   };
 }
