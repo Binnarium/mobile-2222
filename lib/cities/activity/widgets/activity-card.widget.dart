@@ -38,6 +38,7 @@ class ActivityCardWidget extends StatelessWidget {
 
               /// card inner content
               child: Container(
+                width: double.infinity,
                 padding:
                     const EdgeInsets.symmetric(vertical: 32.0, horizontal: 30),
                 child: Column(

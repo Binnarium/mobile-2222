@@ -87,23 +87,24 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             const AppLoading()
           else ...[
             /// contribution card
-            if (widget.city.enabledPages.enableContribution)
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 12,
-                  left: sidePadding,
-                  right: sidePadding,
-                ),
-                child: ActivityCardWidget(
-                  color: widget.city.color,
-                  content: _activity!.contribution,
-                  iconPath: 'assets/icons/multiple_choice_activity_icon.png',
-                  onTap: () =>
-                      CityNavigator.getContributionNextScreen(widget.city)
-                          .builder(context),
-                  title: 'Manifiesto-wiki por la Educación',
-                ),
-              ),
+            // TODO: REMOVED BY BRUNO
+            // if (widget.city.enabledPages.enableContribution)
+            //   Padding(
+            //     padding: EdgeInsets.only(
+            //       top: 12,
+            //       left: sidePadding,
+            //       right: sidePadding,
+            //     ),
+            //     child: ActivityCardWidget(
+            //       color: widget.city.color,
+            //       content: _activity!.contribution,
+            //       iconPath: 'assets/icons/multiple_choice_activity_icon.png',
+            //       onTap: () =>
+            //           CityNavigator.getContributionNextScreen(widget.city)
+            //               .builder(context),
+            //       title: 'Manifiesto-wiki por la Educación',
+            //     ),
+            //   ),
 
             /// clubhouse event
             if (widget.city.enabledPages.enableClubhouse)

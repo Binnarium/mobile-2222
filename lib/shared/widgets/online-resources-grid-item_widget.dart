@@ -17,11 +17,13 @@ class ExternalLinkCard extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final double sidePadding = MediaQuery.of(context).size.width * 0.04;
     return Material(
+      
       type: MaterialType.transparency,
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () => launch(externalLinkDto.link),
         child: Container(
+          width: double.maxFinite,
           padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

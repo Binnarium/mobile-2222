@@ -77,12 +77,13 @@ class WorkshopMapButton extends StatelessWidget {
             Positioned(
               top: size + (smallFont ? 4 : 8),
               bottom: null,
-              left: -size,
-              right: -size,
+              left: -size * 1.5,
+              right: -size * 1.5,
               child: Center(
                 child: Text(
                   'Premiación Taller de Ideación',
                   style: smallFont ? textTheme.button : textTheme.headline5,
+                  softWrap: false,
                 ),
               ),
             )

@@ -18,7 +18,6 @@ class PlayerGamification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         /// player's gamification
@@ -42,13 +41,13 @@ class PlayerGamification extends StatelessWidget {
           height: 75,
           color: Colors2222.white.withOpacity(0.5),
         ),
-
-        ObtainedMedalsCardWidget(
-          numberOfMedals: player.contributionsAwards.length,
-          label: 'Manifiesto -\nWiki'.toUpperCase(),
-          image: const MedalImage.contribution(),
-          numberColor: Colors2222.darkGrey,
-        ),
+        // TODO: REMOVED BY BRUNO
+        // ObtainedMedalsCardWidget(
+        //   numberOfMedals: player.contributionsAwards.length,
+        //   label: 'Manifiesto -\nWiki'.toUpperCase(),
+        //   image: const MedalImage.contribution(),
+        //   numberColor: Colors2222.darkGrey,
+        // ),
 
         const SizedBox(height: 25),
 
