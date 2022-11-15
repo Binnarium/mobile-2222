@@ -29,10 +29,6 @@ class LoadPlayerScoreboardService {
               .where('playerType', isEqualTo: player?.playerType)
               .orderBy('proactivity', descending: true);
 
-          if (player?.courseVersion != null)
-            query =
-                query.where('courseVersion', isEqualTo: player?.courseVersion);
-
           return query.limit(10).snapshots();
         })
 

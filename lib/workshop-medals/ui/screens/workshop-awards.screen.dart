@@ -6,7 +6,6 @@ import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
 import 'package:lab_movil_2222/player/ui/widgets/search-player-input.widget.dart';
-import 'package:lab_movil_2222/project-awards/ui/participants-list-medals.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -15,6 +14,7 @@ import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/scaffold-2222.widge
 import 'package:lab_movil_2222/workshop-medals/models/workshop-medal.model.dart';
 import 'package:lab_movil_2222/workshop-medals/services/workshop-medals.service.dart';
 import 'package:lab_movil_2222/workshop-medals/ui/current-player-workshop-awards.widgets.dart';
+import 'package:lab_movil_2222/workshop-medals/ui/participants-list-medals.widget.dart';
 import 'package:provider/provider.dart';
 
 const String explanationText = '''
@@ -53,9 +53,12 @@ class _WorkshopAwardsScreenState extends State<WorkshopAwardsScreen> {
   List<PlayerModel>? teammates;
   List<PlayerModel>? searchPlayers;
 
-  List<PlayerModel>? get resultPlayers => searchPlayers == null 
-  ? teammates 
-  : searchPlayers!.where((player) => teammates?.any((search) => search.uid == player.uid) == true).toList();
+  List<PlayerModel>? get resultPlayers => searchPlayers == null
+      ? teammates
+      : searchPlayers!
+          .where((player) =>
+              teammates?.any((search) => search.uid == player.uid) == true)
+          .toList();
 
   List<WorkshopMedalModel> awardedMedals = [];
 

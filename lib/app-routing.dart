@@ -23,12 +23,12 @@ import 'package:lab_movil_2222/cities/contribution/ui/screens/contribution-expla
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
+import 'package:lab_movil_2222/cities/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
 import 'package:lab_movil_2222/home-map/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
-import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';

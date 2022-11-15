@@ -16,10 +16,6 @@ class LoadPlayerService {
 
         /// turn snapshot data into player object, if props found
         .map((objet) => objet == null ? null : PlayerModel.fromMap(objet))
-        .map((player) => player == null
-            ? null
-            : player.courseVersion == COURSE_VERSION
-                ? player
-                : null);
+        .map((player) => player);
   }
 }

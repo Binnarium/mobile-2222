@@ -24,6 +24,7 @@ import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.ser
 import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
+import 'package:lab_movil_2222/cities/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/home-map/services/cities.service.dart';
 import 'package:lab_movil_2222/home-map/services/load-cities-with-map-position.service.dart';
@@ -33,7 +34,6 @@ import 'package:lab_movil_2222/player/services/list-players-of-group.service.dar
 import 'package:lab_movil_2222/player/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
-import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';

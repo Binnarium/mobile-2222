@@ -41,6 +41,7 @@ class PlayerGamification extends StatelessWidget {
           height: 75,
           color: Colors2222.white.withOpacity(0.5),
         ),
+        
         // TODO: REMOVED BY BRUNO
         // ObtainedMedalsCardWidget(
         //   numberOfMedals: player.contributionsAwards.length,

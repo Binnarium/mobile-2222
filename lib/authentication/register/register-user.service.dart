@@ -45,9 +45,10 @@ class RegisterService {
     /// create player
     final Map<String, dynamic> newPlayerMap = createNewPlayerMap(
       uid: user.uid,
-      displayName: '${playerInscribed.name} ${playerInscribed.lastName}',
+      displayName: playerInscribed.displayName,
       email: formModel.email!,
       playerType: playerInscribed.playerType,
+      identification: playerInscribed.identification,
     );
 
     final PlayerModel newPlayer = await _createPlayer(user.uid, newPlayerMap);

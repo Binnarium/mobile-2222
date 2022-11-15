@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/assets/upload-asset.factory.dart';
 
@@ -32,12 +31,23 @@ class UploadPdfService extends UploadAssetFactory<PdfDto> {
             }
 
             try {
-              final File projectFile = File(selectedFile.path!);
               final String fileName = selectedFile.name.split('/').last;
               final String uploadPath = '$path/$fileName';
-
               final Reference uploadRef = _fStorage.ref(uploadPath);
-              final UploadTask uploadTask = uploadRef.putFile(projectFile);
+
+              UploadTask uploadTask;
+              final Uint8List? projectFile = selectedFile.bytes;
+
+              /// method with bites
+              if (projectFile != null) {
+                uploadTask = uploadRef.putData(projectFile);
+              }
+
+              /// error fallback
+              else {
+                throw FileNotLoaded();
+              }
+
               final String url = await uploadTask.then((snapshot) async {
                 if (snapshot.state == TaskState.success) {
                   return uploadRef.getDownloadURL();
@@ -50,6 +60,7 @@ class UploadPdfService extends UploadAssetFactory<PdfDto> {
                 url: url,
               );
             } catch (e) {
+              print(e);
               throw FileNotLoaded();
             }
           },
