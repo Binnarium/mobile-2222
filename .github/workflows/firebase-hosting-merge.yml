@@ -7,29 +7,29 @@ name: Deploy to Firebase Hosting on merge
     branches:
       - main
 jobs:
-  test:
-    name: Run Tests
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
+  # test:
+  #   name: Run Tests
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v1
         
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable'
-          flutter-version: 3.3.6
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v1
+  #       with:
+  #         channel: 'stable'
+  #         flutter-version: 3.3.6
 
           
-      - name: Install pub Dependencies
-        run: flutter pub get
+  #     - name: Install pub Dependencies
+  #       run: flutter pub get
         
-      - name: Run Tests
-        run: flutter test
+  #     - name: Run Tests
+  #       run: flutter test
   
   build-webapp:
     name:  Build Web App for release
-    needs: test
+    # needs: test
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -75,50 +75,50 @@ jobs:
           channelId: live
           projectId: lab-movil-2222
 
-  build-android-ios:
-    name:  Build Mobile applications for release
-    needs: test
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
+  # build-android-ios:
+  #   name:  Build Mobile applications for release
+  #   needs: test
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v1
         
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '15'
-          distribution: 'adopt'
+  #     - name: Set up Java
+  #       uses: actions/setup-java@v2
+  #       with:
+  #         java-version: '15'
+  #         distribution: 'adopt'
           
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable'
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v1
+  #       with:
+  #         channel: 'stable'
           
-      - name: Install pub Dependencies
-        run: flutter pub get
+  #     - name: Install pub Dependencies
+  #       run: flutter pub get
         
-      - name: Build Android App 
-        run: flutter build apk --split-per-abi
+  #     - name: Build Android App 
+  #       run: flutter build apk --split-per-abi
 
-      - name: Build iOS App
-        run: |
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
-          zip -r app.ipa Payload
+  #     - name: Build iOS App
+  #       run: |
+  #         flutter build ios --no-codesign
+  #         cd build/ios/iphoneos
+  #         mkdir Payload
+  #         cd Payload
+  #         ln -s ../Runner.app
+  #         cd ..
+  #         zip -r app.ipa Payload
 
-      - name: Cache android application
-        uses: actions/upload-artifact@v2
-        with:
-          name: android-2222
-          path: build/app/outputs/apk/release
+  #     - name: Cache android application
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: android-2222
+  #         path: build/app/outputs/apk/release
 
-      - name: Cache ios application
-        uses: actions/upload-artifact@v2
-        with:
-          name: ios-2222
-          path: build/ios/iphoneos/
+  #     - name: Cache ios application
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: ios-2222
+  #         path: build/ios/iphoneos/
   
