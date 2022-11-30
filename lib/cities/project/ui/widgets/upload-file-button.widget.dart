@@ -91,7 +91,7 @@ class _UploadFileButtonState extends State<UploadFileButton> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'No se pudo subir el documento, vuelve a intentarlo',
+                  'No se pudo subir el audio, vuelve a intentarlo',
                 ),
               ),
             );
@@ -108,22 +108,22 @@ class _UploadFileButtonState extends State<UploadFileButton> {
             (file) => _uploadProjectService.project$(widget.city, file),
           )
           .listen(
-        (sended) {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          if (!sended)
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'No se pudo subir el documento, vuelve a intentarlo',
-                ),
-              ),
-            );
-        },
-        onDone: () {
-          _uploadFileSub?.cancel();
-          _uploadFileSub = null;
-        },
-      );
+            (sended) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              if (!sended)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'No se pudo subir el documento, vuelve a intentarlo',
+                    ),
+                  ),
+                );
+            },
+            onDone: () {
+              _uploadFileSub?.cancel();
+              _uploadFileSub = null;
+            },
+          );
     }
   }
 }
