@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/audio/ui/audio-player.widget.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/video-player.widget.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/models/content-dto.dto.dart';
 import 'package:lab_movil_2222/services/load-contents-screen-information.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';

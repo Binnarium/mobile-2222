@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lab_movil_2222/assets/audio/services/current-audio.provider.dart';
 import 'package:lab_movil_2222/assets/video/ui/screens/detailed-video.screen.dart';
+import 'package:lab_movil_2222/authentication/authentication-home/authentication-home.screen.dart';
 import 'package:lab_movil_2222/authentication/login/login.screen.dart';
+import 'package:lab_movil_2222/authentication/recover-password/recover-password.screen.dart';
 import 'package:lab_movil_2222/authentication/register/register.screen.dart';
 import 'package:lab_movil_2222/authentication/splash/splash.screen.dart';
 import 'package:lab_movil_2222/authentication/start-video/start-video.screen.dart';
@@ -21,12 +23,12 @@ import 'package:lab_movil_2222/cities/contribution/ui/screens/contribution-expla
 import 'package:lab_movil_2222/cities/final-video/widgets/final-video.screen.dart';
 import 'package:lab_movil_2222/cities/manual-video/widgets/manual-video.screen.dart';
 import 'package:lab_movil_2222/cities/monster/ui/screens/stageMonster.screen.dart';
+import 'package:lab_movil_2222/cities/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/cities/project-video/widgets/project-video.screen.dart';
 import 'package:lab_movil_2222/cities/project/ui/screens/project.screen.dart';
-import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
+import 'package:lab_movil_2222/home-map/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/profile.screen.dart';
 import 'package:lab_movil_2222/player/ui/screens/scoreboard.screen.dart';
-import 'package:lab_movil_2222/project-awards/ui/screens/project-awards.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/city-introduction.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/content.screen.dart';
 import 'package:lab_movil_2222/screens/chapter_screens/introductory-video.screen.dart';
@@ -36,6 +38,7 @@ import 'package:lab_movil_2222/screens/chapter_screens/stageobjectives.screen.da
 import 'package:lab_movil_2222/screens/welcome.screen.dart';
 import 'package:lab_movil_2222/team/ui/screens/team.screen.dart';
 import 'package:lab_movil_2222/thanks-videos/widgets/next-phase-video.screen.dart';
+import 'package:lab_movil_2222/workshop-medals/ui/screens/workshop-awards.screen.dart';
 import 'package:provider/provider.dart';
 
 import 'cities/micro-meso-macro/ui/screens/micro-meso-macro.screen.dart';
@@ -72,8 +75,15 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               return const TeamScreen();
             }
 
+            if (settings.name == AuthenticationHomeScreen.route) {
+              return const AuthenticationHomeScreen();
+            }
             if (settings.name == LoginScreen.route) {
               return const LoginScreen();
+            }
+
+            if (settings.name == RecoverPasswordScreen.route) {
+              return const RecoverPasswordScreen();
             }
 
             if (settings.name == RegisterScreen.route) {
@@ -258,6 +268,10 @@ class Lab2222Routing extends MaterialPageRoute<Widget> {
               return FinalVideoScreen(
                 cityModel: args.city,
               );
+            }
+
+            if (settings.name == WorkshopAwardsScreen.route) {
+              return const WorkshopAwardsScreen();
             }
 
             print('-----------------');

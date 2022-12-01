@@ -1,4 +1,4 @@
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 
 class CityWithMapPositionModel {
   /// constructor

@@ -3,7 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/asset.dto.dart';
 import 'package:lab_movil_2222/cities/project/models/player-projects.model.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/player.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';

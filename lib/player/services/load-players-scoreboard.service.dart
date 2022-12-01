@@ -23,14 +23,14 @@ class LoadPlayerScoreboardService {
     /// select players with the highest level of [proactivity], and also in the same group
     /// limit select to 30 players
     leaderBoard$ ??= _currentPlayerService.player$
-        .switchMap(
-          (player) => _fFirestore
+        .switchMap((player) {
+          Query query = _fFirestore
               .collection('players')
               .where('playerType', isEqualTo: player?.playerType)
-              .orderBy('proactivity', descending: true)
-              .limit(10)
-              .snapshots(),
-        )
+              .orderBy('proactivity', descending: true);
+
+          return query.limit(10).snapshots();
+        })
 
         /// obtain docs of payload
         .map(

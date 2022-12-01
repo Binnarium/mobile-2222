@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
-import 'package:lab_movil_2222/city/ui/widgets/city-map-button.dart';
+import 'package:lab_movil_2222/home-map/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/city-map-button.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 

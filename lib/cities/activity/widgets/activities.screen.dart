@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/activity/model/city-activity.model.dart';
 import 'package:lab_movil_2222/cities/activity/services/load-activity.service.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/cities-navigation.service.dart';
@@ -87,23 +87,24 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             const AppLoading()
           else ...[
             /// contribution card
-            if (widget.city.enabledPages.enableContribution)
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 12,
-                  left: sidePadding,
-                  right: sidePadding,
-                ),
-                child: ActivityCardWidget(
-                  color: widget.city.color,
-                  content: _activity!.contribution,
-                  iconPath: 'assets/icons/multiple_choice_activity_icon.png',
-                  onTap: () =>
-                      CityNavigator.getContributionNextScreen(widget.city)
-                          .builder(context),
-                  title: 'Manifiesto-wiki por la Educación',
-                ),
-              ),
+            // TODO: REMOVED BY BRUNO
+            // if (widget.city.enabledPages.enableContribution)
+            //   Padding(
+            //     padding: EdgeInsets.only(
+            //       top: 12,
+            //       left: sidePadding,
+            //       right: sidePadding,
+            //     ),
+            //     child: ActivityCardWidget(
+            //       color: widget.city.color,
+            //       content: _activity!.contribution,
+            //       iconPath: 'assets/icons/multiple_choice_activity_icon.png',
+            //       onTap: () =>
+            //           CityNavigator.getContributionNextScreen(widget.city)
+            //               .builder(context),
+            //       title: 'Manifiesto-wiki por la Educación',
+            //     ),
+            //   ),
 
             /// clubhouse event
             if (widget.city.enabledPages.enableClubhouse)

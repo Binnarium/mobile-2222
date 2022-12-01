@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/markdown/markdown.widget.dart';
@@ -180,7 +180,7 @@ class _Scaffold2222State extends State<Scaffold2222> {
               },
             ),
 
-          if (showWebWarning)
+          if (showWebWarning && false)
             Positioned(
               bottom: 0,
               left: 0,

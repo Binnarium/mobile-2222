@@ -4,6 +4,7 @@ import 'package:lab_movil_2222/assets/audio/services/upload-audio.service.dart';
 import 'package:lab_movil_2222/assets/image/services/upload-image.service.dart';
 import 'package:lab_movil_2222/assets/video/services/load-better-video.service.dart';
 import 'package:lab_movil_2222/authentication/login/login-user.service.dart';
+import 'package:lab_movil_2222/authentication/recover-password/recover-password.service.dart';
 import 'package:lab_movil_2222/authentication/register/register-user.service.dart';
 import 'package:lab_movil_2222/authentication/sign-out/sign-out.service.dart';
 import 'package:lab_movil_2222/authentication/splash/is-user-signed-in.service.dart';
@@ -23,16 +24,16 @@ import 'package:lab_movil_2222/cities/clubhouse/services/load-user-clubhouse.ser
 import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
 import 'package:lab_movil_2222/cities/contribution/services/get-contribution-explanation.service.dart';
 import 'package:lab_movil_2222/cities/monster/services/load-monster.service.dart';
+import 'package:lab_movil_2222/cities/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
-import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/home-map/services/cities.service.dart';
+import 'package:lab_movil_2222/home-map/services/load-cities-with-map-position.service.dart';
 import 'package:lab_movil_2222/player/gamification-explanation/services/gamification-explanation.service.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/player/services/list-players-of-group.service.dart';
 import 'package:lab_movil_2222/player/services/load-players-scoreboard.service.dart';
 import 'package:lab_movil_2222/player/services/search-players.service.dart';
 import 'package:lab_movil_2222/player/services/update-avatar.service.dart';
-import 'package:lab_movil_2222/project-awards/services/medals.service.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:lab_movil_2222/services/load-city-introduction.service.dart';
 import 'package:lab_movil_2222/services/load-city-introductory-video.service.dart';
@@ -46,6 +47,7 @@ import 'package:lab_movil_2222/thanks-videos/services/load-thanks-video.service.
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/connectivity-check.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-web-warning.service.dart';
+import 'package:lab_movil_2222/workshop-medals/services/workshop-medals.service.dart';
 import 'package:provider/provider.dart';
 
 import 'assets/video/services/upload-video.service.dart';
@@ -68,6 +70,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (_) => SignOutService()),
             Provider(create: (ctx) => RegisterService()),
             Provider(create: (ctx) => LoginService()),
+            Provider(create: (_) => RecoveryPasswordService()),
             Provider(create: (_) => ConnectivityCheckService()),
 
             /// player services
@@ -122,6 +125,7 @@ class AppProvider extends MultiProvider {
             Provider(create: (ctx) => LoadProjectFiles(ctx)),
 
             Provider(create: (ctx) => MedalsService(ctx)),
+            Provider(create: (ctx) => WorkshopMedalsService(ctx)),
 
             Provider(create: (ctx) => UploadProjectService(ctx)),
 

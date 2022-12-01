@@ -5,27 +5,28 @@ name: Test and Deploy preview site to Firebase Hosting  on PR
 'on': pull_request
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
+  # test:
+  #   name: Run Tests
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v1
         
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable'
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v1
+  #       with:
+  #         channel: 'stable'
+  #         flutter-version: 3.3.6
           
-      - name: Install pub Dependencies
-        run: flutter pub get
+  #     - name: Install pub Dependencies
+  #       run: flutter pub get
         
-      - name: Run Tests
-        run: flutter test
+  #     - name: Run Tests
+  #       run: flutter test
   
   build:
     name:  Build Web App for preview
-    needs: test
+    # needs: test
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -35,6 +36,7 @@ jobs:
         uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
+          flutter-version: 3.3.6
           
       - name: Install pub Dependencies
         run: flutter pub get

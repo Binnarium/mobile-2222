@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/assets/video/ui/widgets/background-video.widget.dart';
 import 'package:lab_movil_2222/authentication/splash/is-user-signed-in.service.dart';
 import 'package:lab_movil_2222/authentication/start-video/start-video.screen.dart';
-import 'package:lab_movil_2222/city/ui/screen/home.screen.dart';
+import 'package:lab_movil_2222/home-map/ui/screen/home.screen.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/services/show-user-guide.service.dart';

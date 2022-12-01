@@ -10,12 +10,15 @@ class PlayerModel {
     required this.uid,
     required this.displayName,
     required this.email,
+    required this.identification,
     required this.projectAwards,
     required this.contributionsAwards,
     required this.clubhouseAwards,
+    required this.workshopAwards,
     required this.marathonAwards,
     required this.avatarImage,
     required this.groupId,
+    required this.marathonGroupId,
     required this.pubCode,
     required this.courseStatus,
     required this.proactivity,
@@ -33,11 +36,15 @@ class PlayerModel {
       uid: payload['uid'] as String,
       email: payload['email'] as String,
       pubCode: payload['pubCode'] as String,
+      identification: payload['identification'] as String?,
       proactivity: payload['proactivity'] as int? ?? 0,
       pubUserId: payload['pubUserId'] as String?,
       displayName: payload['displayName'] as String? ?? '',
       playerType: payload['playerType'] as String?,
+
       groupId: payload['groupId'] as String?,
+      marathonGroupId: payload['marathonGroupId'] as String?,
+      
       courseStatus: courseStatusFromString(payload['courseStatus'] as String?),
       clubhouseAwards:
           PlayerModel._getAwardsFromPayload(payload['clubhouseAwards']),
@@ -47,15 +54,20 @@ class PlayerModel {
           PlayerModel._getAwardsFromPayload(payload['marathonAwards']),
       projectAwards:
           PlayerModel._getAwardsFromPayload(payload['projectAwards']),
+      workshopAwards:
+          PlayerModel._getAwardsFromPayload(payload['workshopAwards']),
       allowWebAccess: (payload['allowWebAccess'] as bool?) == true,
     );
   }
 
   final String uid;
   final String displayName;
+  final String? identification;
   final String email;
-  final String? groupId;
   final int proactivity;
+
+  final String? groupId;
+  final String? marathonGroupId;
 
   final ImageDto? avatarImage;
 
@@ -63,6 +75,7 @@ class PlayerModel {
   final List<AwardModel> contributionsAwards;
   final List<AwardModel> clubhouseAwards;
   final List<AwardModel> marathonAwards;
+  final List<AwardModel> workshopAwards;
 
   /// player pub
   final String pubCode;
@@ -84,6 +97,7 @@ Map<String, dynamic> createNewPlayerMap({
   required String uid,
   required String displayName,
   required String email,
+  required String identification,
   String? playerType,
 }) {
   return <String, dynamic>{
@@ -91,14 +105,17 @@ Map<String, dynamic> createNewPlayerMap({
     'displayName': displayName,
     'email': email,
     'playerType': playerType,
+    'identification': identification,
     'projectAwards': <void>[],
     'contributionsAwards': <void>[],
     'clubhouseAwards': <void>[],
     'marathonAwards': <void>[],
+    'workshopAwards': <void>[],
     'courseStatus': null,
     'pubCode': Random().generateString(size: 8),
     'avatarImage': null,
     'groupId': null,
+    'marathonGroupId': null,
     'proactivity': 0,
     'pubUserId': null,
     'allowWebAccess': false,

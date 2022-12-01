@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
-import 'package:lab_movil_2222/city/services/load-cities-with-map-position.service.dart';
-import 'package:lab_movil_2222/city/ui/widgets/cities-map.dart';
-import 'package:lab_movil_2222/city/ui/widgets/home-background.dart';
+import 'package:lab_movil_2222/home-map/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/home-map/services/load-cities-with-map-position.service.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/cities-map.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/home-background.dart';
+import 'package:lab_movil_2222/home-map/ui/widgets/workshop-button.dart';
+import 'package:lab_movil_2222/player/models/course-status.enum.dart';
+import 'package:lab_movil_2222/player/models/player.model.dart';
+import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/shared/widgets/fade-in-delayed.widget.dart';
 import 'package:lab_movil_2222/themes/colors.dart';
@@ -30,12 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
   CitiesMapPositionsService get _allCitiesLoader =>
       Provider.of<CitiesMapPositionsService>(context, listen: false);
 
+  CurrentPlayerService get _currenPlayerService =>
+      Provider.of<CurrentPlayerService>(context, listen: false);
+
+  PlayerModel? currenPlayer;
+
   /// list of cities with their position in the map
   List<CityWithMapPositionModel>? _cities;
 
   final ScrollController _scrollController = ScrollController();
 
   StreamSubscription? _citiesSub;
+  StreamSubscription? _playerSub;
 
   @override
   void initState() {
@@ -50,16 +60,21 @@ class _HomeScreenState extends State<HomeScreen> {
         Timer(const Duration(microseconds: 0), _scrollMapBottom);
       }
     });
+
+    _playerSub = _currenPlayerService.player$
+        .listen((event) => setState(() => currenPlayer = event));
   }
 
   @override
   void dispose() {
     _citiesSub?.cancel();
+    _playerSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold2222.navigation(
       backgroundColor: Colors2222.black,
       activePage: Lab2222NavigationBarPages.home,
@@ -82,14 +97,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     HomeBackground(),
 
                     /// scroll content
-                    SingleChildScrollView(
-                      clipBehavior: Clip.none,
-                      controller: _scrollController,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
-                        child: CitiesMap(citiesWithPositions: _cities!),
-                      ),
-                    ),
+                    ListView(
+                        clipBehavior: Clip.none,
+                        controller: _scrollController,
+                        children: [
+                          if (currenPlayer?.courseStatus ==
+                              CourseStatus
+                                  .approvedContinueNextPhaseWithContentAccess)
+
+                            /// button
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: 40,
+                                left: size.width * .04,
+                                right: size.width * .04,
+                              ),
+                              alignment: Alignment.center,
+                              child: const WorkshopMapButton(),
+                            ),
+
+                          /// cities map
+                          Padding(
+                            padding: EdgeInsets.only(top: 40),
+                            child: CitiesMap(citiesWithPositions: _cities!),
+                          )
+                        ]),
                   ],
                 ),
               ),

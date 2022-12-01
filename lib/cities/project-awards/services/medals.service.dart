@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/player/models/award.model.dart';
+import 'package:lab_movil_2222/cities/project-awards/models/marathon-medal.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
-import 'package:lab_movil_2222/project-awards/models/marathon-medal.model.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -75,18 +74,4 @@ class MedalsService {
 
   CollectionReference _getMarathonAwardsCollectionRef(String uid) =>
       _fFirestore.collection('players').doc(uid).collection('marathon-awards');
-}
-
-class UpdatePlayerWithMarathonMedal {
-  UpdatePlayerWithMarathonMedal({
-    required this.maratonAward,
-  });
-
-  final AwardModel maratonAward;
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'marathonAward': FieldValue.arrayUnion(<dynamic>[maratonAward.toMap()]),
-    };
-  }
 }

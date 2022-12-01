@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lab_movil_2222/city/models/city-with-map-position.model.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
-import 'package:lab_movil_2222/city/services/cities.service.dart';
+import 'package:lab_movil_2222/home-map/models/city-with-map-position.model.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/services/cities.service.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CitiesMapPositionsService {
-
   CitiesMapPositionsService(BuildContext context)
       : _citiesService = Provider.of<CitiesService>(context, listen: false);
 

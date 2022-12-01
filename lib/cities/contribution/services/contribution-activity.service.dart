@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/contribution/models/contribution.model.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/models/city-history.dto.dart';
 import 'package:lab_movil_2222/services/load-city-history.service.dart';
 import 'package:provider/provider.dart';

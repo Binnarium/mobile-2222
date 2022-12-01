@@ -60,12 +60,15 @@ class _VideoPlayerState extends State<VideoPlayer> {
         borderRadius: BorderRadius.circular(8),
         child: Stack(
           children: [
+            /// placeholder
             Image.asset(
               'assets/images/video-placeholder.png',
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
             ),
+
+            /// background of video
             if (betterVideo?.previewUrl != null)
               _VideoPreview(
                 preview: NetworkImage(betterVideo!.previewUrl!),

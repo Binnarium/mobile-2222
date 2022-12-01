@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/services/arguments-ideas.service.dart';
 import 'package:lab_movil_2222/cities/argument-ideas/ui/widget/idea-bubble.widget.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';
 import 'package:lab_movil_2222/widgets/decorated-background/background-decoration.widget.dart';
 import 'package:lab_movil_2222/widgets/scaffold-2222/widgets/header-logos.widget.dart';

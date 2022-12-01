@@ -7,7 +7,7 @@ import 'package:lab_movil_2222/cities/contribution/models/contribution.model.dar
 import 'package:lab_movil_2222/cities/contribution/services/contribution-activity.service.dart';
 import 'package:lab_movil_2222/cities/contribution/ui/widget/goto-pub-button.dart';
 import 'package:lab_movil_2222/cities/project/ui/widgets/coins_check.widget.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/player/models/coinsImages.model.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:lab_movil_2222/shared/widgets/app-loading.widget.dart';

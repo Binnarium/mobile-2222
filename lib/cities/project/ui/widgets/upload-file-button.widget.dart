@@ -5,7 +5,7 @@ import 'package:lab_movil_2222/assets/audio/services/upload-audio.service.dart';
 import 'package:lab_movil_2222/cities/project/models/project-activity.model.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-file.service.dart';
 import 'package:lab_movil_2222/cities/project/services/upload-project.service.dart';
-import 'package:lab_movil_2222/city/models/city.dto.dart';
+import 'package:lab_movil_2222/home-map/models/city.dto.dart';
 import 'package:lab_movil_2222/player/services/current-player.service.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -91,7 +91,7 @@ class _UploadFileButtonState extends State<UploadFileButton> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'No se pudo subir el documento, vuelve a intentarlo',
+                  'No se pudo subir el audio, vuelve a intentarlo',
                 ),
               ),
             );
@@ -108,22 +108,22 @@ class _UploadFileButtonState extends State<UploadFileButton> {
             (file) => _uploadProjectService.project$(widget.city, file),
           )
           .listen(
-        (sended) {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          if (!sended)
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'No se pudo subir el documento, vuelve a intentarlo',
-                ),
-              ),
-            );
-        },
-        onDone: () {
-          _uploadFileSub?.cancel();
-          _uploadFileSub = null;
-        },
-      );
+            (sended) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              if (!sended)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'No se pudo subir el documento, vuelve a intentarlo',
+                    ),
+                  ),
+                );
+            },
+            onDone: () {
+              _uploadFileSub?.cancel();
+              _uploadFileSub = null;
+            },
+          );
     }
   }
 }
